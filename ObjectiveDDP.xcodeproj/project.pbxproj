@@ -1,0 +1,336 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		4000D63A170E880400296229 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4000D639170E880400296229 /* Foundation.framework */; };
+		4000D63F170E880400296229 /* ObjectiveDDP.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4000D63E170E880400296229 /* ObjectiveDDP.h */; };
+		4000D641170E880400296229 /* ObjectiveDDP.m in Sources */ = {isa = PBXBuildFile; fileRef = 4000D640170E880400296229 /* ObjectiveDDP.m */; };
+		401AEB7E170E9EC7008B38EA /* libicucore.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 401AEB7D170E9EC7008B38EA /* libicucore.dylib */; };
+		401AEB80170E9ECC008B38EA /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 401AEB7F170E9ECC008B38EA /* SystemConfiguration.framework */; };
+		401AEB82170E9ED2008B38EA /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 401AEB81170E9ED2008B38EA /* CFNetwork.framework */; };
+		401AEB84170E9EEB008B38EA /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 401AEB83170E9EEB008B38EA /* Security.framework */; };
+		9D3C062D54114FB1AC5700F0 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 22BE0B3F1B814D98AAAE26CF /* libPods.a */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		401AEB62170E9BAA008B38EA /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 401AEB5E170E9BA9008B38EA /* Example.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 401AEB32170E9B4D008B38EA;
+			remoteInfo = Example;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		4000D634170E880400296229 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "include/${PRODUCT_NAME}";
+			dstSubfolderSpec = 16;
+			files = (
+				4000D63F170E880400296229 /* ObjectiveDDP.h in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		22BE0B3F1B814D98AAAE26CF /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		4000D636170E880400296229 /* libObjectiveDDP.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libObjectiveDDP.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		4000D639170E880400296229 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		4000D63D170E880400296229 /* ObjectiveDDP-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ObjectiveDDP-Prefix.pch"; sourceTree = "<group>"; };
+		4000D63E170E880400296229 /* ObjectiveDDP.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ObjectiveDDP.h; sourceTree = "<group>"; };
+		4000D640170E880400296229 /* ObjectiveDDP.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ObjectiveDDP.m; sourceTree = "<group>"; };
+		401AEB5E170E9BA9008B38EA /* Example.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Example.xcodeproj; path = Example/Example.xcodeproj; sourceTree = "<group>"; };
+		401AEB7D170E9EC7008B38EA /* libicucore.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libicucore.dylib; path = usr/lib/libicucore.dylib; sourceTree = SDKROOT; };
+		401AEB7F170E9ECC008B38EA /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		401AEB81170E9ED2008B38EA /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
+		401AEB83170E9EEB008B38EA /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		5286FA1887BC49AFB425645B /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = SOURCE_ROOT; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		4000D633170E880400296229 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				401AEB84170E9EEB008B38EA /* Security.framework in Frameworks */,
+				401AEB82170E9ED2008B38EA /* CFNetwork.framework in Frameworks */,
+				401AEB80170E9ECC008B38EA /* SystemConfiguration.framework in Frameworks */,
+				401AEB7E170E9EC7008B38EA /* libicucore.dylib in Frameworks */,
+				4000D63A170E880400296229 /* Foundation.framework in Frameworks */,
+				9D3C062D54114FB1AC5700F0 /* libPods.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		4000D62D170E880400296229 = {
+			isa = PBXGroup;
+			children = (
+				401AEB64170E9BC4008B38EA /* Example */,
+				4000D63B170E880400296229 /* ObjectiveDDP */,
+				4000D638170E880400296229 /* Frameworks */,
+				4000D637170E880400296229 /* Products */,
+				5286FA1887BC49AFB425645B /* Pods.xcconfig */,
+			);
+			sourceTree = "<group>";
+		};
+		4000D637170E880400296229 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				4000D636170E880400296229 /* libObjectiveDDP.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		4000D638170E880400296229 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				22BE0B3F1B814D98AAAE26CF /* libPods.a */,
+				401AEB7D170E9EC7008B38EA /* libicucore.dylib */,
+				401AEB83170E9EEB008B38EA /* Security.framework */,
+				401AEB81170E9ED2008B38EA /* CFNetwork.framework */,
+				401AEB7F170E9ECC008B38EA /* SystemConfiguration.framework */,
+				4000D639170E880400296229 /* Foundation.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		4000D63B170E880400296229 /* ObjectiveDDP */ = {
+			isa = PBXGroup;
+			children = (
+				4000D63E170E880400296229 /* ObjectiveDDP.h */,
+				4000D640170E880400296229 /* ObjectiveDDP.m */,
+				4000D63C170E880400296229 /* Supporting Files */,
+			);
+			path = ObjectiveDDP;
+			sourceTree = "<group>";
+		};
+		4000D63C170E880400296229 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				4000D63D170E880400296229 /* ObjectiveDDP-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		401AEB5F170E9BA9008B38EA /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				401AEB63170E9BAA008B38EA /* Example.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		401AEB64170E9BC4008B38EA /* Example */ = {
+			isa = PBXGroup;
+			children = (
+				401AEB5E170E9BA9008B38EA /* Example.xcodeproj */,
+			);
+			name = Example;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		4000D635170E880400296229 /* ObjectiveDDP */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 4000D644170E880400296229 /* Build configuration list for PBXNativeTarget "ObjectiveDDP" */;
+			buildPhases = (
+				4000D632170E880400296229 /* Sources */,
+				4000D633170E880400296229 /* Frameworks */,
+				4000D634170E880400296229 /* CopyFiles */,
+				648CA590930A4D87BE530DBD /* Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = ObjectiveDDP;
+			productName = ObjectiveDDP;
+			productReference = 4000D636170E880400296229 /* libObjectiveDDP.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		4000D62E170E880400296229 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0460;
+				ORGANIZATIONNAME = Rebounds;
+			};
+			buildConfigurationList = 4000D631170E880400296229 /* Build configuration list for PBXProject "ObjectiveDDP" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 4000D62D170E880400296229;
+			productRefGroup = 4000D637170E880400296229 /* Products */;
+			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 401AEB5F170E9BA9008B38EA /* Products */;
+					ProjectRef = 401AEB5E170E9BA9008B38EA /* Example.xcodeproj */;
+				},
+			);
+			projectRoot = "";
+			targets = (
+				4000D635170E880400296229 /* ObjectiveDDP */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		401AEB63170E9BAA008B38EA /* Example.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = Example.app;
+			remoteRef = 401AEB62170E9BAA008B38EA /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		648CA590930A4D87BE530DBD /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Pods-resources.sh\"\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		4000D632170E880400296229 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4000D641170E880400296229 /* ObjectiveDDP.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		4000D642170E880400296229 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		4000D643170E880400296229 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		4000D645170E880400296229 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 5286FA1887BC49AFB425645B /* Pods.xcconfig */;
+			buildSettings = {
+				DSTROOT = /tmp/ObjectiveDDP.dst;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "ObjectiveDDP/ObjectiveDDP-Prefix.pch";
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
+		4000D646170E880400296229 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 5286FA1887BC49AFB425645B /* Pods.xcconfig */;
+			buildSettings = {
+				DSTROOT = /tmp/ObjectiveDDP.dst;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "ObjectiveDDP/ObjectiveDDP-Prefix.pch";
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		4000D631170E880400296229 /* Build configuration list for PBXProject "ObjectiveDDP" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4000D642170E880400296229 /* Debug */,
+				4000D643170E880400296229 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		4000D644170E880400296229 /* Build configuration list for PBXNativeTarget "ObjectiveDDP" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4000D645170E880400296229 /* Debug */,
+				4000D646170E880400296229 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 4000D62E170E880400296229 /* Project object */;
+}
