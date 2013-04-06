@@ -27,6 +27,8 @@
 		4079F9F4170EB36700194B4A /* libicucore.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 401AEB7D170E9EC7008B38EA /* libicucore.dylib */; };
 		4079F9F5170EB39200194B4A /* ObjectiveDDP.m in Sources */ = {isa = PBXBuildFile; fileRef = 4000D640170E880400296229 /* ObjectiveDDP.m */; };
 		4079F9F7170EB3B000194B4A /* ObjectiveDDPSpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4079F9F6170EB3B000194B4A /* ObjectiveDDPSpec.mm */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		430E052376C3079A7A0F324D /* MockObjectiveDDPDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 430E0D1EE665B0D79A3824E5 /* MockObjectiveDDPDelegate.m */; };
+		430E0F844F34DD85993FC283 /* MockSRWebSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = 430E090F0158DB2CB4513066 /* MockSRWebSocket.m */; };
 		570DE62F4BD74C18AE51ED8C /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2C1F0C9084EA4B2DBD349673 /* libPods.a */; };
 		9D3C062D54114FB1AC5700F0 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 22BE0B3F1B814D98AAAE26CF /* libPods.a */; };
 /* End PBXBuildFile section */
@@ -67,6 +69,10 @@
 		4079F9E8170EB31E00194B4A /* Cedar-iOS.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = "Cedar-iOS.framework"; path = "Specs/Frameworks/Cedar-iOS.framework"; sourceTree = "<group>"; };
 		4079F9EA170EB31E00194B4A /* ExampleSpec.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = ExampleSpec.mm; sourceTree = "<group>"; };
 		4079F9F6170EB3B000194B4A /* ObjectiveDDPSpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ObjectiveDDPSpec.mm; sourceTree = "<group>"; };
+		430E00C044EA8302EC9B6D86 /* MockSRWebSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MockSRWebSocket.h; sourceTree = "<group>"; };
+		430E056E0747CA14FCE562C4 /* MockObjectiveDDPDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MockObjectiveDDPDelegate.h; sourceTree = "<group>"; };
+		430E090F0158DB2CB4513066 /* MockSRWebSocket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MockSRWebSocket.m; sourceTree = "<group>"; };
+		430E0D1EE665B0D79A3824E5 /* MockObjectiveDDPDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MockObjectiveDDPDelegate.m; sourceTree = "<group>"; };
 		5286FA1887BC49AFB425645B /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
@@ -165,6 +171,10 @@
 				4079F9EA170EB31E00194B4A /* ExampleSpec.mm */,
 				2459525257B94E909C3CA1DF /* Pods.xcconfig */,
 				4079F9E0170EB31D00194B4A /* Supporting Files */,
+				430E0D1EE665B0D79A3824E5 /* MockObjectiveDDPDelegate.m */,
+				430E056E0747CA14FCE562C4 /* MockObjectiveDDPDelegate.h */,
+				430E090F0158DB2CB4513066 /* MockSRWebSocket.m */,
+				430E00C044EA8302EC9B6D86 /* MockSRWebSocket.h */,
 			);
 			path = Specs;
 			sourceTree = "<group>";
@@ -305,6 +315,8 @@
 				4079F9E6170EB31D00194B4A /* main.m in Sources */,
 				4079F9EB170EB31E00194B4A /* ExampleSpec.mm in Sources */,
 				4079F9F7170EB3B000194B4A /* ObjectiveDDPSpec.mm in Sources */,
+				430E052376C3079A7A0F324D /* MockObjectiveDDPDelegate.m in Sources */,
+				430E0F844F34DD85993FC283 /* MockSRWebSocket.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
