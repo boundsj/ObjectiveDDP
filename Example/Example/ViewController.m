@@ -1,5 +1,4 @@
 #import "ViewController.h"
-#import <ObjectiveDDP/ObjectiveDDP.h>
 
 @interface ViewController () <ObjectiveDDPDelegate>
 @property (strong, nonatomic) ObjectiveDDP *ddp;
