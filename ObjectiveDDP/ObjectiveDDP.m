@@ -1,9 +1,5 @@
 #import "ObjectiveDDP.h"
-#import "SRWebSocket.h"
-
-@interface ObjectiveDDP () <SRWebSocketDelegate>
-@property (strong, nonatomic) SRWebSocket *_webSocket;
-@end
+#import <SocketRocket/SRWebSocket.h>
 
 @implementation ObjectiveDDP
 

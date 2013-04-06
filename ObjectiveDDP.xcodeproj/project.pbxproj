@@ -31,16 +31,6 @@
 		9D3C062D54114FB1AC5700F0 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 22BE0B3F1B814D98AAAE26CF /* libPods.a */; };
 /* End PBXBuildFile section */
 
-/* Begin PBXContainerItemProxy section */
-		401AEB62170E9BAA008B38EA /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 401AEB5E170E9BA9008B38EA /* Example.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 401AEB32170E9B4D008B38EA;
-			remoteInfo = Example;
-		};
-/* End PBXContainerItemProxy section */
-
 /* Begin PBXCopyFilesBuildPhase section */
 		4000D634170E880400296229 /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
@@ -63,7 +53,6 @@
 		4000D63D170E880400296229 /* ObjectiveDDP-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ObjectiveDDP-Prefix.pch"; sourceTree = "<group>"; };
 		4000D63E170E880400296229 /* ObjectiveDDP.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ObjectiveDDP.h; sourceTree = "<group>"; };
 		4000D640170E880400296229 /* ObjectiveDDP.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ObjectiveDDP.m; sourceTree = "<group>"; };
-		401AEB5E170E9BA9008B38EA /* Example.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Example.xcodeproj; path = Example/Example.xcodeproj; sourceTree = "<group>"; };
 		401AEB7D170E9EC7008B38EA /* libicucore.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libicucore.dylib; path = usr/lib/libicucore.dylib; sourceTree = SDKROOT; };
 		401AEB7F170E9ECC008B38EA /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		401AEB81170E9ED2008B38EA /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
@@ -117,7 +106,6 @@
 		4000D62D170E880400296229 = {
 			isa = PBXGroup;
 			children = (
-				401AEB64170E9BC4008B38EA /* Example */,
 				4000D63B170E880400296229 /* ObjectiveDDP */,
 				4079F9DF170EB31D00194B4A /* Specs */,
 				4000D638170E880400296229 /* Frameworks */,
@@ -168,22 +156,6 @@
 				4000D63D170E880400296229 /* ObjectiveDDP-Prefix.pch */,
 			);
 			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
-		401AEB5F170E9BA9008B38EA /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				401AEB63170E9BAA008B38EA /* Example.app */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
-		401AEB64170E9BC4008B38EA /* Example */ = {
-			isa = PBXGroup;
-			children = (
-				401AEB5E170E9BA9008B38EA /* Example.xcodeproj */,
-			);
-			name = Example;
 			sourceTree = "<group>";
 		};
 		4079F9DF170EB31D00194B4A /* Specs */ = {
@@ -266,12 +238,6 @@
 			mainGroup = 4000D62D170E880400296229;
 			productRefGroup = 4000D637170E880400296229 /* Products */;
 			projectDirPath = "";
-			projectReferences = (
-				{
-					ProductGroup = 401AEB5F170E9BA9008B38EA /* Products */;
-					ProjectRef = 401AEB5E170E9BA9008B38EA /* Example.xcodeproj */;
-				},
-			);
 			projectRoot = "";
 			targets = (
 				4000D635170E880400296229 /* ObjectiveDDP */,
@@ -279,16 +245,6 @@
 			);
 		};
 /* End PBXProject section */
-
-/* Begin PBXReferenceProxy section */
-		401AEB63170E9BAA008B38EA /* Example.app */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.application;
-			path = Example.app;
-			remoteRef = 401AEB62170E9BAA008B38EA /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		4079F9D7170EB31D00194B4A /* Resources */ = {
