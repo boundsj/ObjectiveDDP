@@ -1,3 +1,4 @@
 platform :ios, '6.0'
 
 pod 'ObjectiveDDP', :git => 'https://github.com/boundsj/ObjectiveDDP.git'
+pod 'SocketRocket', :git => 'git@github.com:square/SocketRocket.git'
