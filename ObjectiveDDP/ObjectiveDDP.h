@@ -18,6 +18,9 @@
                delegate:(id <ObjectiveDDPDelegate>)delegate;
 
 - (void)reconnect;
+- (void)connectWithSession:(NSString *)session
+                   version:(NSString *)version
+                   support:(NSString *)support;
 
 @end
 
@@ -25,5 +28,6 @@
 @protocol ObjectiveDDPDelegate
 
 - (void)didOpen;
+- (void)didReceiveConnectionError:(NSError *)error;
 
 @end

@@ -51,6 +51,37 @@ describe(@"ObjectiveDDP", ^{
                     fakeDelegate should have_received("didOpen");
                 });
             });
+
+            describe(@"when the websocket open fails", ^{
+                beforeEach(^{
+                    [fakeSRWebSocket failure];
+                });
+
+                it(@"should notify its delegate", ^{
+                    fakeDelegate should have_received("didReceiveConnectionError:");
+                });
+            });
+        });
+
+        describe(@"when connect is called with no session or support", ^{
+            beforeEach(^{
+                [ddp reconnect];
+                [ddp connectWithSession:nil
+                                version:@"smersion"
+                                support:nil];
+            });
+
+            it(@"should call the web socket with correct JSON", ^{
+                NSString *expected = @"{\"msg\":\"connect\",\"version\":\"smersion\"}";
+                fakeSRWebSocket should have_received("send:").with(expected);
+            });
+
+            xdescribe(@"when the call is successful", ^{
+                true should equal(false);
+            });
+
+            xdescribe(@"when the call is not successful", ^{
+            });
         });
     });
 });

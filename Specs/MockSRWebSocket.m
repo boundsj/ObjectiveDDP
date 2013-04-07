@@ -6,8 +6,14 @@
    [self.delegate webSocketDidOpen:self];
 }
 
-- (void)open {
-
+- (void)failure {
+    NSError *error = [[NSError alloc] initWithDomain:@"domain"
+                                                code:42
+                                            userInfo:nil];
+    [self.delegate webSocket:self didFailWithError:error];
 }
+
+- (void)open { /* mock no op */ }
+- (void)send:(id)data { /* mock no op */ }
 
 @end
