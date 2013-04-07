@@ -9,8 +9,8 @@
 
 - (void)viewWillAppear:(BOOL)animated
 {
-    self.ddp = [[ObjectiveDDP alloc] initWithURLString:@"wss://ddptester.meteor.com/websocket" delegate:self];
-    
+    self.ddp = [[ObjectiveDDP alloc] initWithURLString:@"wss://ddptester.meteor.com/websocket"
+                                              delegate:self];
     [self.ddp reconnect];
 }
 

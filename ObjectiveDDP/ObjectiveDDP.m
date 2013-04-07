@@ -28,21 +28,22 @@
 - (void)reconnect
 {
     [self _closeConnection];
-    [self _setupWebSocket];
-    
     [self.webSocket open];
 }
 
-- (void)_setupWebSocket {
+- (void)_setupWebSocket
+{
     NSURL *url = [NSURL URLWithString:self.urlString];
     NSURLRequest *request = [NSURLRequest requestWithURL:url];
     self.webSocket = self.getSocket(request);
     self.webSocket.delegate = self;
 }
 
-- (void)_closeConnection {
+- (void)_closeConnection
+{
     [self.webSocket close];
     self.webSocket = nil;
+    [self _setupWebSocket];
 }
 
 #pragma mark <SRWebSocketDelegate>
@@ -52,7 +53,8 @@
     [self.delegate didOpen];
 }
 
-- (void)webSocket:(SRWebSocket *)webSocket didReceiveMessage:(id)message {
+- (void)webSocket:(SRWebSocket *)webSocket didReceiveMessage:(id)message
+{
     NSLog(@"================> did recieve message");
 }
 
