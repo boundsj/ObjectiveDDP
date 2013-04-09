@@ -10,18 +10,18 @@ SPEC_BEGIN(ObjectiveDDPSpec)
 describe(@"ObjectiveDDP", ^{
     __block ObjectiveDDP *ddp;
     __block MockSRWebSocket *fakeSRWebSocket;
-    __block MockObjectiveDDPDelegate<CedarDouble> *fakeDelegate;
+    __block MockObjectiveDDPDelegate<CedarDouble> *fakeDDPDelegate;
 
     describe(@"when the framework is initialized", ^{
         beforeEach(^{
             fakeSRWebSocket = [[MockSRWebSocket alloc] init];
-            fakeDelegate = nice_fake_for(@protocol(ObjectiveDDPDelegate));
+            fakeDDPDelegate = nice_fake_for(@protocol(ObjectiveDDPDelegate));
 
             spy_on(fakeSRWebSocket);
-            spy_on(fakeDelegate);
+            spy_on(fakeDDPDelegate);
 
             ddp = [[ObjectiveDDP alloc] initWithURLString:@"websocket"
-                                                 delegate:fakeDelegate];
+                                                 delegate:fakeDDPDelegate];
             fakeSRWebSocket.delegate = ddp;
 
             ddp.getSocket = ^SRWebSocket *(NSURLRequest *request) {
@@ -33,9 +33,9 @@ describe(@"ObjectiveDDP", ^{
             ddp.urlString should equal(@"websocket");
         });
 
-        describe(@"when reconnect is called ", ^{
+        describe(@"when connectWebSocket is called ", ^{
             beforeEach(^{
-                [ddp reconnect];
+                [ddp connectWebSocket];
             });
 
             it(@"should open the websocket", ^{
@@ -44,28 +44,29 @@ describe(@"ObjectiveDDP", ^{
 
             describe(@"when the websocket is opened successfully", ^{
                 beforeEach(^{
-                    [fakeSRWebSocket success];
+                    [fakeSRWebSocket connectionSuccess];
                 });
 
                 it(@"should notify its delegate", ^{
-                    fakeDelegate should have_received("didOpen");
+                    fakeDDPDelegate should have_received("didOpen");
                 });
             });
 
             describe(@"when the websocket open fails", ^{
                 beforeEach(^{
-                    [fakeSRWebSocket failure];
+                    [fakeSRWebSocket connectionFailure];
                 });
 
                 it(@"should notify its delegate", ^{
-                    fakeDelegate should have_received("didReceiveConnectionError:");
+                    fakeDDPDelegate should have_received("didReceiveConnectionError:");
                 });
             });
         });
 
         describe(@"when connect is called with no session or support", ^{
             beforeEach(^{
-                [ddp reconnect];
+                [ddp connectWebSocket];
+                [fakeSRWebSocket connectionSuccess];
                 [ddp connectWithSession:nil
                                 version:@"smersion"
                                 support:nil];
@@ -76,11 +77,36 @@ describe(@"ObjectiveDDP", ^{
                 fakeSRWebSocket should have_received("send:").with(expected);
             });
 
-            xdescribe(@"when the call is successful", ^{
-                true should equal(false);
+            describe(@"when the websocket is opened successfully", ^{
+                beforeEach(^{
+                    [fakeSRWebSocket connectionSuccess];
+                });
+
+                it(@"should notify its delegate", ^{
+                    fakeDDPDelegate should have_received("didOpen");
+                });
             });
 
-            xdescribe(@"when the call is not successful", ^{
+            describe(@"when the call is successful", ^{
+                beforeEach(^{
+                    [fakeSRWebSocket respondWithJSONString:@"{\"msg\":\"connected\",\"session\":\"SERVER-GEN-SESSION-ID-VAL\"}"];
+                });
+
+                it(@"it should notify its delegate", ^{
+                    NSDictionary *expected = @{@"msg": @"connected", @"session":@"SERVER-GEN-SESSION-ID-VAL"};
+                    fakeDDPDelegate should have_received("didReceiveMessage:").with(expected);
+                });
+            });
+
+            describe(@"when the call is not successful", ^{
+                beforeEach(^{
+                    [fakeSRWebSocket respondWithJSONString:@"{\"msg\":\"failed\",\"version\":\"smersion2\"}"];
+                });
+
+                it(@"should notify its delegate", ^{
+                    NSDictionary *expected = @{@"msg": @"failed", @"version":@"smersion2"};
+                    fakeDDPDelegate should have_received("didReceiveMessage:").with(expected);
+                });
             });
         });
     });

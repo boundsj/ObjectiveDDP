@@ -26,29 +26,30 @@
 
 #pragma mark Public API
 
+// connect to the underlying websocket
+- (void)connectWebSocket {
+    [self _closeConnection];
+    [self.webSocket open];
+}
+
 //connect (client -> server)
-//  session: string (if trying to reconnect to an existing DDP session)
+//  session: string (if trying to connectWebSocket to an existing DDP session)
 //  version: string (the proposed protocol version)
 //  support: array of strings (protocol versions supported by the client, in order of preference)
 - (void)connectWithSession:(NSString *)session
                    version:(NSString *)version
                    support:(NSString *)support {
-    NSMutableDictionary *fields= [self _buildFields:version];
+    NSMutableDictionary *fields = [self _buildFields:version];
     NSString *json= [self _buildJSON:fields];
     [self.webSocket send:json];
-}
-
-// connect to the underlying websocket
-- (void)reconnect {
-    [self _closeConnection];
-    [self.webSocket open];
 }
 
 #pragma mark private utilities
 
 - (NSString *)_buildJSON:(NSMutableDictionary *)fields {
+    // TODO: write tests for bad serialization (error handling)
     NSData *data = [NSJSONSerialization dataWithJSONObject:fields
-                                                   options:nil
+                                                   options:kNilOptions
                                                      error:nil];
     return [[NSString alloc] initWithData:data
                                  encoding:NSUTF8StringEncoding];
@@ -83,12 +84,16 @@
 - (void)webSocket:(SRWebSocket *)webSocket
  didFailWithError:(NSError *)error {
     [self.delegate didReceiveConnectionError:error];
-
 }
 
 - (void)webSocket:(SRWebSocket *)webSocket
 didReceiveMessage:(id)message {
-    NSLog(@"================> did recieve message");
+    // TODO: write test case for parse error (handle)
+    NSData *data = [(NSString *)message dataUsingEncoding:NSUTF8StringEncoding];
+    NSDictionary *dictionary = [NSJSONSerialization JSONObjectWithData:data
+                                                               options:kNilOptions
+                                                                 error:nil];
+    [self.delegate didReceiveMessage:dictionary];
 }
 
 @end

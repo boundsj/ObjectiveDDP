@@ -3,8 +3,9 @@
 
 @interface MockSRWebSocket : SRWebSocket
 
-- (void)success;
-- (void)failure;
+- (void)connectionSuccess;
+- (void)connectionFailure;
+- (void)respondWithJSONString:(NSString *)json;
 
 @property (nonatomic, assign) id <SRWebSocketDelegate> delegate;
 
