@@ -39,27 +39,52 @@
 - (void)connectWithSession:(NSString *)session
                    version:(NSString *)version
                    support:(NSString *)support {
-    NSMutableDictionary *fields = [self _buildFields:version];
-    NSString *json= [self _buildJSON:fields];
+    NSDictionary *fields = @{@"msg": @"connect", @"version": version};
+    NSString *json = [self _buildJSONWithFields:fields parameters:nil];
+
+    [self.webSocket send:json];
+}
+
+//sub (client -> server):
+//  id: string (an arbitrary client-determined identifier for this subscription)
+//  name: string (the name of the subscription)
+//  params: optional array of EJSON items (parameters to the subscription)
+- (void)subscribeWith:(NSString *)id
+                 name:(NSString *)name
+           parameters:(NSArray *)parameters {
+    NSMutableDictionary *fields = @{@"msg": @"sub", @"name": name, @"id": id};
+    NSString *json = [self _buildJSONWithFields:fields parameters:parameters];
+
+    [self.webSocket send:json];
+}
+
+//method (client -> server):
+//  method: string (method name)
+//  params: optional array of EJSON items (parameters to the method)
+//  id: string (an arbitrary client-determined identifier for this method call)
+- (void)methodWith:(NSString *)id
+              method:(NSString *)method
+        parameters:(NSArray *)parameters {
+    NSDictionary *fields = @{@"msg": @"method", @"method": method, @"id": id};
+    NSString *json = [self _buildJSONWithFields:fields parameters:parameters];
+
     [self.webSocket send:json];
 }
 
 #pragma mark private utilities
 
-- (NSString *)_buildJSON:(NSMutableDictionary *)fields {
-    // TODO: write tests for bad serialization (error handling)
-    NSData *data = [NSJSONSerialization dataWithJSONObject:fields
+- (NSString *)_buildJSONWithFields:(NSMutableDictionary *)fields
+                        parameters:(NSArray *)parameters {
+    NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithDictionary:fields];
+    if (parameters) {
+        [dict setObject:parameters forKey:@"params"];
+    }
+    NSData *data = [NSJSONSerialization dataWithJSONObject:dict
                                                    options:kNilOptions
                                                      error:nil];
+
     return [[NSString alloc] initWithData:data
                                  encoding:NSUTF8StringEncoding];
-}
-
-- (NSMutableDictionary *)_buildFields:(NSString *)version {
-    NSMutableDictionary *fields = [NSMutableDictionary dictionary];
-    [fields setObject:@"connect" forKey:@"msg"];
-    [fields setObject:version forKey:@"version"];
-    return fields;
 }
 
 - (void)_setupWebSocket {

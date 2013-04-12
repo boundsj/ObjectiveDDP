@@ -64,6 +64,7 @@ describe(@"ObjectiveDDP", ^{
         });
 
         describe(@"when connect is called with no session or support", ^{
+
             beforeEach(^{
                 [ddp connectWebSocket];
                 [fakeSRWebSocket connectionSuccess];
@@ -107,6 +108,35 @@ describe(@"ObjectiveDDP", ^{
                     NSDictionary *expected = @{@"msg": @"failed", @"version":@"smersion2"};
                     fakeDDPDelegate should have_received("didReceiveMessage:").with(expected);
                 });
+            });
+        });
+
+        describe(@"when subscribe is called with nil parameters", ^{
+            beforeEach(^{
+                [ddp connectWebSocket];
+                [fakeSRWebSocket connectionSuccess];
+                [ddp subscribeWith:@"id1"
+                              name:@"publishedCollection"
+                        parameters:nil];
+            });
+
+            it(@"should call the websocket correctly", ^{
+                NSString *expected = @"{\"msg\":\"sub\",\"name\":\"publishedCollection\",\"id\":\"id1\"}";
+                fakeSRWebSocket should have_received("send:").with(expected);
+            });
+        });
+
+        describe(@"when method is called", ^{
+            beforeEach(^{
+                [ddp connectWebSocket];
+                [fakeSRWebSocket connectionSuccess];
+                NSArray *params = @[@{@"_id": @"abc", @"msg": @"ohai"}];
+                [ddp methodWith:@"id" method:@"/do/something" parameters:params];
+            });
+
+            it(@"should call the websocket correctly", ^{
+                NSString *expected = @"{\"method\":\"\\/do\\/something\",\"id\":\"id\",\"params\":[{\"_id\":\"abc\",\"msg\":\"ohai\"}],\"msg\":\"method\"}";
+                fakeSRWebSocket should have_received("send:").with(expected);
             });
         });
     });

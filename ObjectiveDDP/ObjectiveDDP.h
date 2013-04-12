@@ -21,9 +21,18 @@
                delegate:(id <ObjectiveDDPDelegate>)delegate;
 
 - (void)connectWebSocket;
+
 - (void)connectWithSession:(NSString *)session
                    version:(NSString *)version
                    support:(NSString *)support;
+
+- (void)subscribeWith:(NSString *)id
+                 name:(NSString *)name
+           parameters:(NSArray *)parameters;
+
+- (void)methodWith:(NSString *)id
+            method:(NSString *)method
+        parameters:(NSArray *)parameters;
 
 @end
 
