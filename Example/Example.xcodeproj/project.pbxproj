@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		1DC6AD6ACE2A462CAEF2650D /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 76DEBC654F5B42F786F72A3E /* libPods.a */; settings = {}; };
+		1DC6AD6ACE2A462CAEF2650D /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 76DEBC654F5B42F786F72A3E /* libPods.a */; };
 		401AEB36170E9B4D008B38EA /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 401AEB35170E9B4D008B38EA /* UIKit.framework */; };
 		401AEB38170E9B4D008B38EA /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 401AEB37170E9B4D008B38EA /* Foundation.framework */; };
 		401AEB3A170E9B4D008B38EA /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 401AEB39170E9B4D008B38EA /* CoreGraphics.framework */; };
@@ -23,6 +23,8 @@
 		401AEB78170E9E16008B38EA /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 401AEB77170E9E16008B38EA /* SystemConfiguration.framework */; };
 		401AEB7A170E9E20008B38EA /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 401AEB79170E9E20008B38EA /* CFNetwork.framework */; };
 		401AEB7C170E9E28008B38EA /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 401AEB7B170E9E28008B38EA /* Security.framework */; };
+		40A59C381718E9180095E30E /* AddViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 40A59C361718E9180095E30E /* AddViewController.m */; };
+		40A59C391718E9180095E30E /* AddViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 40A59C371718E9180095E30E /* AddViewController.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -47,8 +49,12 @@
 		401AEB77170E9E16008B38EA /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		401AEB79170E9E20008B38EA /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		401AEB7B170E9E28008B38EA /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		408F41E617190C0600C91A92 /* libcommonCrypto.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libcommonCrypto.dylib; path = usr/lib/system/libcommonCrypto.dylib; sourceTree = SDKROOT; };
+		40A59C351718E9180095E30E /* AddViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddViewController.h; sourceTree = "<group>"; };
+		40A59C361718E9180095E30E /* AddViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddViewController.m; sourceTree = "<group>"; };
+		40A59C371718E9180095E30E /* AddViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AddViewController.xib; sourceTree = "<group>"; };
 		56C0A81D083A463FBDF5E25F /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = SOURCE_ROOT; };
-		76DEBC654F5B42F786F72A3E /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; name = libPods.a; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		76DEBC654F5B42F786F72A3E /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -73,6 +79,7 @@
 		401AEB29170E9B4D008B38EA = {
 			isa = PBXGroup;
 			children = (
+				408F41E617190C0600C91A92 /* libcommonCrypto.dylib */,
 				401AEB3B170E9B4D008B38EA /* Example */,
 				401AEB34170E9B4D008B38EA /* Frameworks */,
 				401AEB33170E9B4D008B38EA /* Products */,
@@ -113,6 +120,9 @@
 				401AEB4E170E9B4E008B38EA /* ViewController.m */,
 				401AEB50170E9B4E008B38EA /* ViewController.xib */,
 				401AEB3C170E9B4D008B38EA /* Supporting Files */,
+				40A59C351718E9180095E30E /* AddViewController.h */,
+				40A59C361718E9180095E30E /* AddViewController.m */,
+				40A59C371718E9180095E30E /* AddViewController.xib */,
 			);
 			path = Example;
 			sourceTree = "<group>";
@@ -172,8 +182,6 @@
 			mainGroup = 401AEB29170E9B4D008B38EA;
 			productRefGroup = 401AEB33170E9B4D008B38EA /* Products */;
 			projectDirPath = "";
-			projectReferences = (
-			);
 			projectRoot = "";
 			targets = (
 				401AEB31170E9B4D008B38EA /* Example */,
@@ -191,6 +199,7 @@
 				401AEB4A170E9B4E008B38EA /* Default@2x.png in Resources */,
 				401AEB4C170E9B4E008B38EA /* Default-568h@2x.png in Resources */,
 				401AEB52170E9B4E008B38EA /* ViewController.xib in Resources */,
+				40A59C391718E9180095E30E /* AddViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -224,7 +233,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Pods-resources.sh\"\n";
-			showEnvVarsInLog = 1;
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -236,6 +244,7 @@
 				401AEB42170E9B4D008B38EA /* main.m in Sources */,
 				401AEB46170E9B4E008B38EA /* AppDelegate.m in Sources */,
 				401AEB4F170E9B4E008B38EA /* ViewController.m in Sources */,
+				40A59C381718E9180095E30E /* AddViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -327,6 +336,7 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/../../../../Library/Developer/Xcode/DerivedData/ObjectiveDDP-fbjuojybfxkaafeddpfidrvkqmuz/Build/Products/Debug-iphoneos\"",
+					"\"$(SDKROOT)/usr/lib/system\"",
 				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -344,6 +354,7 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/../../../../Library/Developer/Xcode/DerivedData/ObjectiveDDP-fbjuojybfxkaafeddpfidrvkqmuz/Build/Products/Debug-iphoneos\"",
+					"\"$(SDKROOT)/usr/lib/system\"",
 				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
