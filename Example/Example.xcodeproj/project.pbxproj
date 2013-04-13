@@ -25,6 +25,7 @@
 		401AEB7C170E9E28008B38EA /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 401AEB7B170E9E28008B38EA /* Security.framework */; };
 		40A59C381718E9180095E30E /* AddViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 40A59C361718E9180095E30E /* AddViewController.m */; };
 		40A59C391718E9180095E30E /* AddViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 40A59C371718E9180095E30E /* AddViewController.xib */; };
+		430E0D74939F6EDF3BD81A8B /* BSONIdGenerator.m in Sources */ = {isa = PBXBuildFile; fileRef = 430E0E9A0ECDBAE7D19DE279 /* BSONIdGenerator.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -53,6 +54,8 @@
 		40A59C351718E9180095E30E /* AddViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddViewController.h; sourceTree = "<group>"; };
 		40A59C361718E9180095E30E /* AddViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddViewController.m; sourceTree = "<group>"; };
 		40A59C371718E9180095E30E /* AddViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AddViewController.xib; sourceTree = "<group>"; };
+		430E02AE27D2CE70426FE529 /* BSONIdGenerator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BSONIdGenerator.h; sourceTree = "<group>"; };
+		430E0E9A0ECDBAE7D19DE279 /* BSONIdGenerator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BSONIdGenerator.m; sourceTree = "<group>"; };
 		56C0A81D083A463FBDF5E25F /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = SOURCE_ROOT; };
 		76DEBC654F5B42F786F72A3E /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -123,6 +126,8 @@
 				40A59C351718E9180095E30E /* AddViewController.h */,
 				40A59C361718E9180095E30E /* AddViewController.m */,
 				40A59C371718E9180095E30E /* AddViewController.xib */,
+				430E02AE27D2CE70426FE529 /* BSONIdGenerator.h */,
+				430E0E9A0ECDBAE7D19DE279 /* BSONIdGenerator.m */,
 			);
 			path = Example;
 			sourceTree = "<group>";
@@ -245,6 +250,7 @@
 				401AEB46170E9B4E008B38EA /* AppDelegate.m in Sources */,
 				401AEB4F170E9B4E008B38EA /* ViewController.m in Sources */,
 				40A59C381718E9180095E30E /* AddViewController.m in Sources */,
+				430E0D74939F6EDF3BD81A8B /* BSONIdGenerator.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

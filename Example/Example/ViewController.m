@@ -1,5 +1,6 @@
 #import "ViewController.h"
 #import <ObjectiveDDP/ObjectiveDDP.h>
+#import "BSONIdGenerator.h"
 
 @interface ViewController () <ObjectiveDDPDelegate>
 
@@ -128,7 +129,8 @@ static int uniqueId = 1;
 
 - (void)didAddThing:(NSString *)message {
     [self dismissViewControllerAnimated:YES completion:nil];
-    NSString *uid = [NSString stringWithFormat:@"%d", uniqueId++];
+    //NSString *uid = [NSString stringWithFormat:@"%d", uniqueId++];
+    NSString *uid = [[BSONIdGenerator generate] substringToIndex:15];
     [self.ddp methodWith:uid
                   method:@"/things/insert"
               parameters:@[@{@"_id": uid, @"msg": message}]];
