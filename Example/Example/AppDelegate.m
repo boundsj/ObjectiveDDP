@@ -1,6 +1,6 @@
 #import "AppDelegate.h"
 #import "ViewController.h"
-#import <ObjectiveDDP/ObjectiveDDP.h>
+
 
 @implementation AppDelegate
 
@@ -9,7 +9,8 @@
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
 
     self.viewController = [[ViewController alloc] initWithNibName:@"ViewController" bundle:nil];
-    ObjectiveDDP *ddp = [[ObjectiveDDP alloc] initWithURLString:@"ws://10.0.1.7:3000/websocket"
+    //ObjectiveDDP *ddp = [[ObjectiveDDP alloc] initWithURLString:@"ws://10.0.1.7:3000/websocket"
+    ObjectiveDDP *ddp = [[ObjectiveDDP alloc] initWithURLString:@"ws://localhost:3000/websocket"
                                                        delegate:self.viewController];
     self.viewController.ddp = ddp;
 
