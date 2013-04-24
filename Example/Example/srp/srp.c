@@ -1,8 +1,11 @@
 /*
- * Secure Remote Password 6a implementation
+ * Meteor adaptation of Secure Remote Password 6a implementation by Tom Cocagne.
+ *
+ * Copyright (c) 2013 Jesse Bounds. All rights reserved.
+ *
  * Copyright (c) 2010 Tom Cocagne. All rights reserved.
  * http://csrp.googlecode.com/p/csrp/
- * 
+ *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
  *   * Redistributions of source code must retain the above copyright
@@ -144,7 +147,6 @@ static struct NGHex global_Ng_constants[] = {
  {0,0} /* null sentinel */
 };
 
-
 static NGConstant * new_ng( SRP_NGType ng_type, const char * n_hex, const char * g_hex )
 {
     NGConstant * ng   = (NGConstant *) malloc( sizeof(NGConstant) );
@@ -178,15 +180,12 @@ static void delete_ng( NGConstant * ng )
    }
 }
 
-
-
 typedef union 
 {
     SHA_CTX    sha;
     SHA256_CTX sha256;
     SHA512_CTX sha512;
 } HashCTX;
-
 
 struct SRPVerifier
 {
@@ -202,7 +201,6 @@ struct SRPVerifier
     unsigned char session_key [SHA512_DIGEST_LENGTH];
 };
 
-
 struct SRPUser
 {
     SRP_HashAlgorithm  hash_alg;
@@ -213,8 +211,9 @@ struct SRPUser
     BIGNUM *S;
 
     const unsigned char * bytes_A;
+    const char *          Astr;
     int                   authenticated;
-    
+
     const char *          username;
     const unsigned char * password;
     int                   password_len;
@@ -223,7 +222,6 @@ struct SRPUser
     unsigned char H_AMK       [SHA512_DIGEST_LENGTH];
     unsigned char session_key [SHA512_DIGEST_LENGTH];
 };
-
 
 static int hash_init( SRP_HashAlgorithm alg, HashCTX *c )
 {
@@ -236,8 +234,9 @@ static int hash_init( SRP_HashAlgorithm alg, HashCTX *c )
       case SRP_SHA512: return SHA512_Init( &c->sha512 );
       default:
         return -1;
-    };
+    }
 }
+
 static int hash_update( SRP_HashAlgorithm alg, HashCTX *c, const void *data, size_t len )
 {
     switch (alg)
@@ -249,8 +248,9 @@ static int hash_update( SRP_HashAlgorithm alg, HashCTX *c, const void *data, siz
       case SRP_SHA512: return SHA512_Update( &c->sha512, data, len );
       default:
         return -1;
-    };
+    }
 }
+
 static int hash_final( SRP_HashAlgorithm alg, HashCTX *c, unsigned char *md )
 {
     switch (alg)
@@ -262,8 +262,9 @@ static int hash_final( SRP_HashAlgorithm alg, HashCTX *c, unsigned char *md )
       case SRP_SHA512: return SHA512_Final( md, &c->sha512 );
       default:
         return -1;
-    };
+    }
 }
+
 static unsigned char * hash( SRP_HashAlgorithm alg, const unsigned char *d, size_t n, unsigned char *md )
 {
     switch (alg)
@@ -275,8 +276,9 @@ static unsigned char * hash( SRP_HashAlgorithm alg, const unsigned char *d, size
       case SRP_SHA512: return SHA512( d, n, md );
       default:
         return 0;
-    };
+    }
 }
+
 static int hash_length( SRP_HashAlgorithm alg )
 {
     switch (alg)
@@ -288,9 +290,8 @@ static int hash_length( SRP_HashAlgorithm alg )
       case SRP_SHA512: return SHA512_DIGEST_LENGTH;
       default:
         return -1;
-    };
+    }
 }
-
 
 static BIGNUM * H_nn( SRP_HashAlgorithm alg, const BIGNUM * n1, const BIGNUM * n2 )
 {
@@ -406,7 +407,6 @@ static void calculate_H_AMK( SRP_HashAlgorithm alg, unsigned char *dest, const B
     hash_final( alg, &ctx, dest );
 }
 
-
 static void init_random()
 {    
     if (g_initialized)
@@ -420,17 +420,11 @@ static void init_random()
     
     unsigned char buff[64];
 
-    
 #ifdef WIN32
-
         CryptAcquireContext(&wctx, NULL, NULL, PROV_RSA_FULL, CRYPT_VERIFYCONTEXT);
-        
         CryptGenRandom(wctx, sizeof(buff), (BYTE*) buff);
-        
         CryptReleaseContext(wctx, 0);
-
         g_initialized = 1;
-        
 #else
         fp = fopen("/dev/urandom", "r");
         
@@ -446,12 +440,23 @@ static void init_random()
        RAND_seed( buff, sizeof(buff) );
 }
 
+char * convert_to_lower( const char *val )
+{
+    char *lower_val = malloc(strlen(val) + 1);
 
-/***********************************************************************************************************
- *
- *  Exported Functions
- *
- ***********************************************************************************************************/
+    for (int i = 0; i < strlen(val) + 1; i++) {
+        if(val[i]>='A' && val[i]<='Z')
+            lower_val[i] = tolower(val[i]);
+        else
+            lower_val[i] = val[i];
+    }
+
+    return lower_val;
+}
+
+///
+// External API functions
+///
 
 void srp_random_seed( const unsigned char * random_data, int data_length )
 {
@@ -460,7 +465,6 @@ void srp_random_seed( const unsigned char * random_data, int data_length )
     if (random_data)
         RAND_seed( random_data, data_length );
 }
-
 
 void srp_create_salted_verification_key( SRP_HashAlgorithm alg, 
                                          SRP_NGType ng_type, const char * username,
@@ -508,7 +512,6 @@ void srp_create_salted_verification_key( SRP_HashAlgorithm alg,
     BN_free(x);
     BN_CTX_free(ctx);
 }
-
 
 
 /* Out: bytes_B, len_B.
@@ -623,9 +626,6 @@ struct SRPVerifier *  srp_verifier_new( SRP_HashAlgorithm alg, SRP_NGType ng_typ
     return ver;
 }
 
-                                        
-
-
 void srp_verifier_delete( struct SRPVerifier * ver )
 {
    if (ver)
@@ -638,19 +638,15 @@ void srp_verifier_delete( struct SRPVerifier * ver )
    }
 }
 
-
-
 int srp_verifier_is_authenticated( struct SRPVerifier * ver )
 {
     return ver->authenticated;
 }
 
-
 const char * srp_verifier_get_username( struct SRPVerifier * ver )
 {
     return ver->username;
 }
-
 
 const unsigned char * srp_verifier_get_session_key( struct SRPVerifier * ver, int * key_length )
 {
@@ -659,12 +655,10 @@ const unsigned char * srp_verifier_get_session_key( struct SRPVerifier * ver, in
     return ver->session_key;
 }
 
-
-int                   srp_verifier_get_session_key_length( struct SRPVerifier * ver )
+int srp_verifier_get_session_key_length( struct SRPVerifier * ver )
 {
     return hash_length( ver->hash_alg );
 }
-
 
 /* user_M must be exactly SHA512_DIGEST_LENGTH bytes in size */
 void srp_verifier_verify_session( struct SRPVerifier * ver, const unsigned char * user_M, const unsigned char ** bytes_HAMK )
@@ -677,8 +671,6 @@ void srp_verifier_verify_session( struct SRPVerifier * ver, const unsigned char 
     else
         *bytes_HAMK = NULL;
 }
-
-/*******************************************************************************/
 
 struct SRPUser * srp_user_new( SRP_HashAlgorithm alg, SRP_NGType ng_type, const char * username, 
                                const unsigned char * bytes_password, int len_password,
@@ -737,8 +729,6 @@ struct SRPUser * srp_user_new( SRP_HashAlgorithm alg, SRP_NGType ng_type, const 
     return 0;
 }
 
-
-
 void srp_user_delete( struct SRPUser * usr )
 {
    if( usr )
@@ -762,20 +752,15 @@ void srp_user_delete( struct SRPUser * usr )
    }
 }
 
-
-
 int srp_user_is_authenticated( struct SRPUser * usr)
 {
     return usr->authenticated;
 }
 
-
 const char * srp_user_get_username( struct SRPUser * usr )
 {
     return usr->username;
 }
-
-
 
 const unsigned char * srp_user_get_session_key( struct SRPUser * usr, int * key_length )
 {
@@ -784,32 +769,20 @@ const unsigned char * srp_user_get_session_key( struct SRPUser * usr, int * key_
     return usr->session_key;
 }
 
-
-int                   srp_user_get_session_key_length( struct SRPUser * usr )
+int srp_user_get_session_key_length( struct SRPUser * usr )
 {
     return hash_length( usr->hash_alg );
 }
 
-
-
-/* Output: username, bytes_A, len_A */
-void  srp_user_start_authentication( struct SRPUser * usr, const char ** username, 
-                                     const unsigned char ** bytes_A, int * len_A )
+/* Output: username, bytes_A, len_A, Astr */
+void  srp_user_start_authentication( struct SRPUser * usr, const char ** username,
+                                     const unsigned char ** bytes_A, int * len_A, const char ** Astr )
 {
     BN_CTX  *ctx  = BN_CTX_new();
     
-    //BN_rand(usr->a, 256, -1, 0);
+    BN_rand(usr->a, 256, -1, 0);
 
-    BIGNUM const *static_rand = BN_new();
-    char *static_rand_str = "d88cddbb33cb985914718c88922f9ac338ca";
-    BN_hex2bn(&static_rand, static_rand_str);
-
-    usr->a = static_rand;
-
-    BN_mod_exp(usr->A, usr->ng->g, static_rand, usr->ng->N, ctx);
-    //BN_mod_exp(usr->A, usr->ng->g, usr->a, usr->ng->N, ctx);
-
-    char *aStr = BN_bn2hex(usr->A);
+    BN_mod_exp(usr->A, usr->ng->g, usr->a, usr->ng->N, ctx);
 
     BN_CTX_free(ctx);
     
@@ -825,23 +798,12 @@ void  srp_user_start_authentication( struct SRPUser * usr, const char ** usernam
     }
         
     BN_bn2bin( usr->A, (unsigned char *) *bytes_A );
-    
     usr->bytes_A = *bytes_A;
+
+    usr->Astr = convert_to_lower( BN_bn2hex(usr->A) );
+    *Astr = usr->Astr;
+
     *username = usr->username;
-}
-
-char * convert_to_lower( const char *val )
-{
-    char *lower_val = malloc(strlen(val) + 1);
-
-    for (int i = 0; i < strlen(val) + 1; i++) {
-       if(val[i]>='A' && val[i]<='Z')
-           lower_val[i] = tolower(val[i]);
-       else
-           lower_val[i] = val[i];
-    }
-
-    return lower_val;
 }
 
 char * srp_user_respond_to_meteor_challenge( struct SRPUser * usr,
