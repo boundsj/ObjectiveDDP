@@ -182,8 +182,7 @@ char * srp_user_process_meteor_challenge( struct SRPUser * usr,
         const  char * salt,
         const  char * identity,
         const char * A,
-        const  char * B,
-        const unsigned char ** bytes_M, int * len_M );
+        const  char * B );
 
 /* Output: bytes_M, len_M  (len_M may be null and will always be
  *                          srp_user_get_session_key_length() bytes in size) */

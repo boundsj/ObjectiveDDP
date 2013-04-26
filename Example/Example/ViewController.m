@@ -15,28 +15,12 @@
 struct SRPVerifier * ver;
 struct SRPUser     * usr;
 
-const unsigned char * bytes_s = 0;
-const unsigned char * bytes_v = 0;
-const unsigned char * bytes_B = 0;
-const unsigned char * bytes_M = 0;
-const unsigned char * bytes_HAMK = 0;
-
-int len_s   = 0;
-int len_v   = 0;
-int len_B   = 0;
-int len_M   = 0;
-
 const char * username = "jesse@rebounds.net";
 const char * password = "airport";
-
 const char * auth_username = 0;
 
 SRP_HashAlgorithm alg     = SRP_SHA256;
 SRP_NGType        ng_type = SRP_NG_1024;
-
-// TODO: remove this and use BSONIDGenerator
-// TODO: Make BSONIDGenerator a pods package, I think
-static int uniqueId = 1;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -161,7 +145,7 @@ static int uniqueId = 1;
         const char *A = [self.A_string cStringUsingEncoding:NSASCIIStringEncoding];
 
         // TODO: pass in ref for Mstr, remove refs for bytes_M and len_M
-        const char * M_ret = srp_user_process_meteor_challenge(usr, salt, identity, A, B, &bytes_M, &len_M);
+        const char * M_ret = srp_user_process_meteor_challenge(usr, salt, identity, A, B);
         NSString *M_final = [NSString stringWithCString:M_ret encoding:NSASCIIStringEncoding];
 
         NSArray *params = @[@{@"srp":@{@"M":M_final}}];
@@ -177,6 +161,7 @@ static int uniqueId = 1;
                    && message[@"result"][@"id"]
                    && message[@"result"][@"HAMK"]
                    && message[@"result"][@"token"]) {
+
         self.userId = message[@"result"][@"id"];
 
     // meteor is not happy with us, note that fact and move on
@@ -241,7 +226,7 @@ static int uniqueId = 1;
         commitEditingStyle:(UITableViewCellEditingStyle)editingStyle
         forRowAtIndexPath:(NSIndexPath *)indexPath {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
-        NSString *uid = [NSString stringWithFormat:@"%d", uniqueId++];
+        NSString *uid = [[BSONIdGenerator generate] substringToIndex:15];
         NSDictionary *thing = self.things[indexPath.row];
 
         // Specifically NOT removing the object locally

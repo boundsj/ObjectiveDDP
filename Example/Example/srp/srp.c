@@ -810,8 +810,7 @@ char * srp_user_process_meteor_challenge( struct SRPUser * usr,
                                            const  char * salt,
                                            const  char * identity,
                                            const char * A,
-                                           const  char * B,
-                                           const unsigned char ** bytes_M, int * len_M )
+                                           const  char * B )
 {
     BN_CTX *ctx         = BN_CTX_new();
     BIGNUM *u           = 0;
@@ -909,7 +908,7 @@ char * srp_user_process_meteor_challenge( struct SRPUser * usr,
     const char * S_str = BN_bn2hex(S);
     char * S_str_lower = convert_to_lower(S_str);
 
-    //var M = H(self.Astr + self.Bstr + S.toString(16));
+    // derive M
     char *catString_A_B_S = malloc(strlen(static_A_str) + strlen(static_B_str) + strlen(S_str_lower) + 1);
     strcpy(catString_A_B_S, static_A_str);
     strcat(catString_A_B_S, static_B_str);
@@ -921,7 +920,15 @@ char * srp_user_process_meteor_challenge( struct SRPUser * usr,
     char * M_final = convert_to_lower(M_str);
 
     return M_final;
-    
+
+//  cleanup_and_exit:
+//
+//    BN_free(B);
+//    BN_free(u);
+//    BN_free(x);
+//    BN_free(k);
+//    BN_CTX_free(ctx);
+
 //    *bytes_M = usr->M;
 //    if (len_M)
 //        *len_M = hash_length( usr->hash_alg );
