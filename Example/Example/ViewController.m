@@ -7,6 +7,7 @@
 @property (strong, nonatomic) NSMutableArray *things;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *addButton;
 @property (weak, nonatomic) IBOutlet UITableView *tableview;
+@property (copy, nonatomic) NSString *userId;
 @end
 
 @implementation ViewController
@@ -159,13 +160,8 @@ static int uniqueId = 1;
         //       after srp refactor to use it's own Astr, remove this AND the saving of it above
         const char *A = [self.A_string cStringUsingEncoding:NSASCIIStringEncoding];
 
-        // TODO: these should be able to be removed, they are not used
-        len_s = 0;
-        len_B = 0;
-
-        // TODO: only need usr, salt, ident, B (although might want to stick with the pass be reference API tradition for Mstr
-        //       instead of returning M_ret...
-        const char * M_ret = srp_user_respond_to_meteor_challenge(usr, bytes_B, len_B, bytes_s, len_s, salt, identity, A, B, &bytes_M, &len_M);
+        // TODO: pass in ref for Mstr, remove refs for bytes_M and len_M
+        const char * M_ret = srp_user_process_meteor_challenge(usr, salt, identity, A, B, &bytes_M, &len_M);
         NSString *M_final = [NSString stringWithCString:M_ret encoding:NSASCIIStringEncoding];
 
         NSArray *params = @[@{@"srp":@{@"M":M_final}}];
@@ -174,6 +170,14 @@ static int uniqueId = 1;
         [self.ddp methodWith:uid
                       method:@"login"
                   parameters:params];
+
+    // meteor HAMK response
+    } else if (msg && [msg isEqualToString:@"result"]
+                   && message[@"result"]
+                   && message[@"result"][@"id"]
+                   && message[@"result"][@"HAMK"]
+                   && message[@"result"][@"token"]) {
+        self.userId = message[@"result"][@"id"];
 
     // meteor is not happy with us, note that fact and move on
     } else if (message[@"error"]) {
@@ -261,8 +265,7 @@ static int uniqueId = 1;
                   method:@"/things/insert"
               parameters:@[@{@"_id": uid,
                            @"msg": message,
-                           // TODO: owner is hard coded here, should store owner (id) when we get the HAMK response
-                           @"owner": @"o2gPnQ4nJ6hmeax6d"}]];
+                           @"owner": self.userId}]];
 }
 
 @end

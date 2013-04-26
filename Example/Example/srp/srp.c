@@ -806,45 +806,30 @@ void  srp_user_start_authentication( struct SRPUser * usr, const char ** usernam
     *username = usr->username;
 }
 
-char * srp_user_respond_to_meteor_challenge( struct SRPUser * usr,
-                                           const unsigned char * bytes_B, int len_B,
-                                           const unsigned char * bytes_s, int len_s,
+char * srp_user_process_meteor_challenge( struct SRPUser * usr,
                                            const  char * salt,
                                            const  char * identity,
                                            const char * A,
                                            const  char * B,
                                            const unsigned char ** bytes_M, int * len_M )
 {
-    BN_CTX *ctx  = BN_CTX_new();
-    BIGNUM *v    = BN_new();
-    BIGNUM *tmp1 = BN_new();
-    BIGNUM *tmp2 = BN_new();
-    BIGNUM *tmp3 = BN_new();
+    BN_CTX *ctx         = BN_CTX_new();
+    BIGNUM *u           = 0;
+    BIGNUM *x           = 0;
+    BIGNUM *x_inner     = 0;
+    BIGNUM *k           = 0;
 
-    //BIGNUM *B    = BN_bin2bn(bytes_B, len_B, NULL);
-    //const char *Bstr = BN_bn2hex(B);
-
-    BIGNUM *u    = 0;
-    BIGNUM *x    = 0;
-    BIGNUM *x_inner    = 0;
-    BIGNUM *s    = BN_bin2bn(bytes_s, len_s, NULL);
-    BIGNUM *k    = 0;
-
-    *len_M = 0;
-    *bytes_M = 0;
-
+    // todo: bring this back and add a cleanup_and_exit
 //    BN_mod(tmp1, B, usr->ng->N, ctx);
 //    if (BN_is_zero(tmp1)) {
 //        printf("woops!");
 //    }
 
     BIGNUM const *static_A = BN_new();
-    //char *static_A_str = "81cb9047673848ee67f0d97656c6c1bf1c68684caae14d64346868b19e81f591b0d8108e73497f54d5bdf83ebeb0e09ce8704212229d99cf368f54ac4ff7fe3ed98f4652ee2b07fedc2ab476b473e43ff412200f752c2e5c2594fa2020570b65ec320a09791c41e1122e9505c0176011ed77a99cafc9336a0de5808d62d8907a";
     char * static_A_str = A;
     BN_hex2bn(&static_A, static_A_str);
 
     BIGNUM const *static_B = BN_new();
-    //char *static_B_str = "2185d7b8a3eab0040e8ad84b9d998a24c3ad3571c4a67845fe8cb10096fa4ca420236dd4d959cd01d69c63f979fc62a01ef80d61d90b6223fb4480115226ffb2ef37872d8d7a5e6031aa4467b8098e95050d474f47bce2eb24a05c0b678c1e1ff357fa8fae8df503931c2dbd2baadab74fef070337b11c9ce5324d5d478b32ce";
     char *static_B_str = B;
     BN_hex2bn(&static_B, static_B_str);
 
@@ -859,8 +844,6 @@ char * srp_user_respond_to_meteor_challenge( struct SRPUser * usr,
 
     char *static_salt_str = salt;
     char *static_ident_str = identity;
-    //char *static_salt_str = "vY9nFYrLm35hoWzNg";
-    //char *static_ident_str = "n2WXbK9a8MtWBESrk";
 
     //x = calculate_meteor_x( usr->hash_alg, s, identity, usr->password, usr->password_len );
     // build the inner string
@@ -907,7 +890,6 @@ char * srp_user_respond_to_meteor_challenge( struct SRPUser * usr,
     BN_mul(kgx, inner_kgx, k, ctx);
     const char * kgx_str = BN_bn2hex(kgx);
 
-
     //var aux = self.a.add(u.multiply(x));
     const char * a_str = BN_bn2hex(usr->a);
     BIGNUM *ux = BN_new();
@@ -917,8 +899,6 @@ char * srp_user_respond_to_meteor_challenge( struct SRPUser * usr,
     //int BN_add(BIGNUM *r, const BIGNUM *a, const BIGNUM *b);
     BN_add(aux, usr->a, ux);
     const char * aux_str = BN_bn2hex(aux);
-
-
 
     //var S = self.B.subtract(kgx).modPow(aux, N);
     BIGNUM *bkgx = BN_new();
@@ -939,18 +919,6 @@ char * srp_user_respond_to_meteor_challenge( struct SRPUser * usr,
     M = BN_bin2bn(buff, hash_length(usr->hash_alg), NULL);
     const char * M_str = BN_bn2hex(M);
     char * M_final = convert_to_lower(M_str);
-
-    printf("x_inner_lower\n");
-    printf(x_innerStr_lower);
-    printf("\n");
-    printf("ng_lower");
-    printf("\n");
-    printf(ng);
-    printf("\n");
-    printf("S_str_lower");
-    printf("\n");
-    printf(S_str_lower);
-    printf("\n");
 
     return M_final;
     
@@ -1069,7 +1037,6 @@ void  srp_user_process_challenge( struct SRPUser * usr,
     BN_free(tmp3);
     BN_CTX_free(ctx);
 }
-                                                  
 
 void srp_user_verify_session( struct SRPUser * usr, const unsigned char * bytes_HAMK )
 {
