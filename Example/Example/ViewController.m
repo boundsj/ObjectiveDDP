@@ -1,23 +1,22 @@
 #import "ViewController.h"
 #import "BSONIdGenerator.h"
 #import "srp.h"
-#import "bn.h"
 
 @interface ViewController ()
 @property (strong, nonatomic) NSMutableArray *things;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *addButton;
 @property (weak, nonatomic) IBOutlet UITableView *tableview;
 @property (copy, nonatomic) NSString *userId;
+@property (copy, nonatomic) NSString *userName;
+@property (copy, nonatomic) NSString *password;
 @end
 
 @implementation ViewController
 
-struct SRPVerifier * ver;
+///
+// SRP vars
+///
 struct SRPUser     * usr;
-
-const char * username = "jesse@rebounds.net";
-const char * password = "airport";
-const char * auth_username = 0;
 
 SRP_HashAlgorithm alg     = SRP_SHA256;
 SRP_NGType        ng_type = SRP_NG_1024;
@@ -26,7 +25,12 @@ SRP_NGType        ng_type = SRP_NG_1024;
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         self.things = [NSMutableArray array];
+
+        // TODO: get these values from login screen
+        self.userName = @"jesse@rebounds.net";
+        self.password = @"airport";
     }
+
     return self;
 }
 
@@ -38,11 +42,15 @@ SRP_NGType        ng_type = SRP_NG_1024;
 }
 
 - (IBAction)didTouchLoginButton:(id)sender {
+
+    // XXX: !!!
+    // TODO: should not allow login attempt until connection is open!
+
     NSLog(@"login");
     NSString *uid = [[BSONIdGenerator generate] substringToIndex:15];
 
     NSArray *params = @[@{@"A": [self generateVerificationKey],
-                          @"user": @{@"email":@"jesse@rebounds.net"}}];
+                          @"user": @{@"email":self.userName}}];
 
     [self.ddp methodWith:uid
                   method:@"beginPasswordExchange"
@@ -50,17 +58,22 @@ SRP_NGType        ng_type = SRP_NG_1024;
 }
 
 - (NSString *)generateVerificationKey {
-
+    //TODO: don't really need to keep bytes_A and len_A here, could remove them
+    // and push into srp lib
     const unsigned char * bytes_A = 0;
     int len_A   = 0;
     const char * Astr = 0;
+    const char * auth_username = 0;
+
+    const char * username_str = [self.userName cStringUsingEncoding:NSASCIIStringEncoding];
+    const char * password_str = [self.password cStringUsingEncoding:NSASCIIStringEncoding];
 
     /* Begin authentication process */
     usr = srp_user_new(alg,
             ng_type,
-            username,
-            password,
-            strlen(password),
+            username_str,
+            password_str,
+            strlen(password_str),
             NULL,
             NULL);
 
@@ -70,20 +83,7 @@ SRP_NGType        ng_type = SRP_NG_1024;
             &len_A,
             &Astr);
 
-    self.A_string = [NSString stringWithCString:Astr encoding:NSASCIIStringEncoding];
-
-    return self.A_string;
-}
-
-// TODO: remove this when M comes back as char *
-- (NSString *)_getHexByteStringWithData:(NSData *)data {
-    NSUInteger dataLength = [data length];
-    NSMutableString *string = [NSMutableString stringWithCapacity:dataLength*2];
-    const unsigned char *dataBytes = [data bytes];
-    for (NSInteger idx = 0; idx < dataLength; ++idx) {
-        [string appendFormat:@"%02x", dataBytes[idx]];
-    }
-    return string;
+    return [NSString stringWithCString:Astr encoding:NSASCIIStringEncoding];
 }
 
 #pragma mark <ObjectiveDDPDelegate>
@@ -140,14 +140,10 @@ SRP_NGType        ng_type = SRP_NG_1024;
         NSString *identity_string = message[@"result"][@"identity"];
         const  char *identity = [identity_string cStringUsingEncoding:NSASCIIStringEncoding];
 
-        // TODO: should not need to do this since srp library stores off Astr in usr struct
-        //       after srp refactor to use it's own Astr, remove this AND the saving of it above
-        const char *A = [self.A_string cStringUsingEncoding:NSASCIIStringEncoding];
-
-        // TODO: pass in ref for Mstr, remove refs for bytes_M and len_M
-        const char * M_ret = srp_user_process_meteor_challenge(usr, salt, identity, A, B);
-        NSString *M_final = [NSString stringWithCString:M_ret encoding:NSASCIIStringEncoding];
-
+        const char * password_str = [self.password cStringUsingEncoding:NSASCIIStringEncoding];
+        const char * Mstr;
+        srp_user_process_meteor_challenge(usr, password_str, salt, identity, B, &Mstr);
+        NSString *M_final = [NSString stringWithCString:Mstr encoding:NSASCIIStringEncoding];
         NSArray *params = @[@{@"srp":@{@"M":M_final}}];
 
         // send login (challenge reponse) to meteor

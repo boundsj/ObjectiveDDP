@@ -178,11 +178,12 @@ int                   srp_user_get_session_key_length( struct SRPUser * usr );
 void                  srp_user_start_authentication( struct SRPUser * usr, const char ** username,
                                                      const unsigned char ** bytes_A, int * len_A, const char ** Astr );
 
-char * srp_user_process_meteor_challenge( struct SRPUser * usr,
-        const  char * salt,
-        const  char * identity,
-        const char * A,
-        const  char * B );
+void srp_user_process_meteor_challenge( struct SRPUser * usr,
+        const char * password,
+        const char * salt,
+        const char * identity,
+        const char * Bstr,
+        const char ** Mstr );
 
 /* Output: bytes_M, len_M  (len_M may be null and will always be
  *                          srp_user_get_session_key_length() bytes in size) */

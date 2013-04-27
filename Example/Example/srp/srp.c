@@ -45,6 +45,7 @@
 #include <openssl/crypto.h>
 #include <openssl/rand.h>
 #import <ctype.h>
+//#import <c++/4.2.1/ext/functional>
 
 
 #include "srp.h"
@@ -806,162 +807,241 @@ void  srp_user_start_authentication( struct SRPUser * usr, const char ** usernam
     *username = usr->username;
 }
 
-char * srp_user_process_meteor_challenge( struct SRPUser * usr,
-                                           const  char * salt,
-                                           const  char * identity,
-                                           const char * A,
-                                           const  char * B )
+void meteor_user_generate_u( struct SRPUser *usr,
+                             char const *Bstr,
+                             unsigned char *buff,
+                             BIGNUM **u )
 {
-    BN_CTX *ctx         = BN_CTX_new();
-    BIGNUM *u           = 0;
-    BIGNUM *x           = 0;
-    BIGNUM *x_inner     = 0;
-    BIGNUM *k           = 0;
-
-    // todo: bring this back and add a cleanup_and_exit
-//    BN_mod(tmp1, B, usr->ng->N, ctx);
-//    if (BN_is_zero(tmp1)) {
-//        printf("woops!");
-//    }
-
-    BIGNUM const *static_A = BN_new();
-    char * static_A_str = A;
-    BN_hex2bn(&static_A, static_A_str);
-
-    BIGNUM const *static_B = BN_new();
-    char *static_B_str = B;
-    BN_hex2bn(&static_B, static_B_str);
-
-    unsigned char buff[ SHA256_DIGEST_LENGTH ];
-    char *catString_u = malloc(strlen(static_A_str)+strlen(static_B_str)+1);
-    strcpy(catString_u, static_A_str);
-    strcat(catString_u, static_B_str);
+    char *catString_u = malloc( strlen(usr->Astr)+strlen(Bstr)+1 );
+    strcpy( catString_u, usr->Astr );
+    strcat( catString_u, Bstr );
 
     hash( usr->hash_alg, catString_u, strlen(catString_u), buff );
-    u = BN_bin2bn(buff, hash_length(usr->hash_alg), NULL);
-    char *uStr = BN_bn2hex(u);
+    *u = BN_bin2bn(buff, hash_length(usr->hash_alg), NULL);
+}
 
-    char *static_salt_str = salt;
-    char *static_ident_str = identity;
+void meteor_user_generate_x( struct SRPUser *usr,
+                             char const *identity,
+                             char const *salt,
+                             char const *password,
+                             unsigned char *buff,
+                             BIGNUM **x )
+{
+    const char * static_delim   = ":";
+    BIGNUM     * x_inner        = 0;
 
-    //x = calculate_meteor_x( usr->hash_alg, s, identity, usr->password, usr->password_len );
-    // build the inner string
-    const char * static_pw_str = "airport";
-    const char * static_delim = ":";
-    const char * catString_i_p = malloc(strlen(static_ident_str)+strlen(static_pw_str)+1);
-    strcpy(catString_i_p, static_ident_str);
+    const char * catString_i_p  = malloc(strlen(identity) + strlen(password) + 1);
+    strcpy(catString_i_p, identity);
     strcat(catString_i_p, static_delim);
-    strcat(catString_i_p, static_pw_str);
-    // hash the inner string and get its hex string value
+    strcat(catString_i_p, password);
+
     hash( usr->hash_alg, catString_i_p, strlen(catString_i_p), buff );
     x_inner = BN_bin2bn(buff, hash_length(usr->hash_alg), NULL);
-    // note: this should now equal salt value
-    const char * x_innerStr = BN_bn2hex(x_inner);
-    char * x_innerStr_lower = convert_to_lower(x_innerStr);
-    // to get x, combine the salt hex string and the hashed ident:password hex string and hash them
-    char * catString_s_i_p = malloc(strlen(static_salt_str) + strlen(x_innerStr_lower) + 1);
-    strcpy(catString_s_i_p, static_salt_str);
-    strcat(catString_s_i_p, x_innerStr_lower);
-    hash( usr->hash_alg, catString_s_i_p, strlen(catString_s_i_p), buff );
-    x = BN_bin2bn(buff, hash_length(usr->hash_alg), NULL);
-    char *x_Str = BN_bn2hex(x);
-    //free(x_innerStr_lower);
 
-    //k = H_nn(usr->hash_alg, usr->ng->N, usr->ng->g);
-    char *N_Str = BN_bn2hex(usr->ng->N);
+    if ( !x_inner )
+        goto cleanup_and_exit;
+
+    // x_innerStr should now equal salt value
+    const char * x_inner_str = BN_bn2hex(x_inner);
+    char * x_inner_str_lower = convert_to_lower(x_inner_str);
+
+    char * catString_s_i_p = malloc(strlen(salt) + strlen(x_inner_str_lower) + 1);
+    strcpy(catString_s_i_p, salt);
+    strcat(catString_s_i_p, x_inner_str_lower);
+
+    hash( usr->hash_alg, catString_s_i_p, strlen(catString_s_i_p), buff );
+    *x = BN_bin2bn(buff, hash_length(usr->hash_alg), NULL);
+
+  cleanup_and_exit:
+
+    BN_free( x_inner );
+}
+
+void meteor_user_generate_k( struct SRPUser *usr,
+                             unsigned char *buff,
+                             BIGNUM **k )
+{
+    char * N_str = BN_bn2hex( usr->ng->N );
+
     // generator (g) is always 0x02 but bn2hex represents string as 02 and meteor (javascript) lib represents as 2
     // so hard coding this value to 2 to be able to generate what meteor expects us to
-    const char *g_Str = "2";
-    char *catString_n_g = malloc(strlen(N_Str) + strlen(g_Str) + 1);
-    strcpy(catString_n_g, N_Str);
-    strcat(catString_n_g, g_Str);
-    char * ng = convert_to_lower(catString_n_g);
+    const char * g_str = "2";
+
+    char * cat_string_n_g = malloc( strlen(N_str) + strlen(g_str) + 1 );
+    strcpy( cat_string_n_g, N_str );
+    strcat( cat_string_n_g, g_str );
+
+    char * ng = convert_to_lower( cat_string_n_g );
     hash( usr->hash_alg, ng, strlen(ng), buff );
-    k = BN_bin2bn(buff, hash_length(usr->hash_alg), NULL);
-    char *kStr = BN_bn2hex(k);
 
-    // kgx = k * (g.modPow(x, N))
-    //int BN_mul(BIGNUM *r, BIGNUM *a, BIGNUM *b, BN_CTX *ctx);
+    *k = BN_bin2bn( buff, hash_length(usr->hash_alg), NULL );
+}
+
+void meteor_user_generate_kgx( struct SRPUser *usr,
+                               BN_CTX *ctx,
+                               BIGNUM *x,
+                               BIGNUM *k,
+                               BIGNUM **kgx )
+{
     BIGNUM *inner_kgx = BN_new();
-    BN_mod_exp(inner_kgx, usr->ng->g, x, usr->ng->N, ctx);
-    const char * inner_kgx_str = BN_bn2hex(inner_kgx);
-    BIGNUM *kgx = BN_new();
-    BN_mul(kgx, inner_kgx, k, ctx);
-    const char * kgx_str = BN_bn2hex(kgx);
 
-    //var aux = self.a.add(u.multiply(x));
-    const char * a_str = BN_bn2hex(usr->a);
+    BN_mod_exp( inner_kgx, usr->ng->g, x, usr->ng->N, ctx );
+
+    if ( !inner_kgx )
+        goto cleanup_and_exit;
+
+    BN_mul( *kgx, inner_kgx, k, ctx );
+
+  cleanup_and_exit:
+
+    BN_free(inner_kgx);
+}
+
+void meteor_user_generate_aux( struct SRPUser *usr,
+                               BN_CTX *ctx,
+                               BIGNUM *u,
+                               BIGNUM *x,
+                               BIGNUM **aux )
+{
     BIGNUM *ux = BN_new();
+
     BN_mul(ux, u, x, ctx);
-    const char * ux_str = BN_bn2hex(ux);
-    BIGNUM *aux = BN_new();
-    //int BN_add(BIGNUM *r, const BIGNUM *a, const BIGNUM *b);
-    BN_add(aux, usr->a, ux);
-    const char * aux_str = BN_bn2hex(aux);
 
-    //var S = self.B.subtract(kgx).modPow(aux, N);
-    BIGNUM *bkgx = BN_new();
-    BN_sub(bkgx, static_B, kgx);
-    const char * bkgx_str = BN_bn2hex(bkgx);
-    BIGNUM *S = BN_new();
+    if ( !ux )
+        goto cleanup_and_exit;
+
+    BN_add(*aux, usr->a, ux);
+
+  cleanup_and_exit:
+
+    BN_free(ux);
+}
+
+void meteor_user_generate_S_string( struct SRPUser *usr,
+                                    BN_CTX * ctx,
+                                    BIGNUM * kgx,
+                                    BIGNUM * aux,
+                                    const char * B_str,
+                                    char ** S_str)
+{
+    BIGNUM const *B         = BN_new();
+    BIGNUM *bkgx            = BN_new();
+    BIGNUM *S               = BN_new();
+
+    BN_hex2bn( &B, B_str );
+
+    if ( !B )
+        goto cleanup_and_exit;
+
+    BN_sub( bkgx, B, kgx );
+
+    if ( !bkgx )
+        goto cleanup_and_exit;
+
     BN_mod_exp(S, bkgx, aux, usr->ng->N, ctx);
-    const char * S_str = BN_bn2hex(S);
-    char * S_str_lower = convert_to_lower(S_str);
 
-    // derive M
-    char *catString_A_B_S = malloc(strlen(static_A_str) + strlen(static_B_str) + strlen(S_str_lower) + 1);
-    strcpy(catString_A_B_S, static_A_str);
-    strcat(catString_A_B_S, static_B_str);
-    strcat(catString_A_B_S, S_str_lower);
-    hash( usr->hash_alg, catString_A_B_S, strlen(catString_A_B_S), buff );
+    if ( !S )
+        goto cleanup_and_exit;
+
+    *S_str = convert_to_lower( BN_bn2hex(S) );
+
+  cleanup_and_exit:
+
+    BN_free(B);
+    BN_free(bkgx);
+    BN_free(S);
+}
+
+void meteor_user_generate_M_string( struct SRPUser *usr,
+                                    const char * S_str,
+                                    unsigned char *buff,
+                                    const char * B_str,
+                                    char ** M_str )
+{
     BIGNUM *M = BN_new();
-    M = BN_bin2bn(buff, hash_length(usr->hash_alg), NULL);
-    const char * M_str = BN_bn2hex(M);
-    char * M_final = convert_to_lower(M_str);
 
-    return M_final;
+    char *ABS = malloc( strlen(usr->Astr) + strlen(B_str) + strlen(S_str) + 1 );
+    strcpy(ABS, usr->Astr);
+    strcat(ABS, B_str);
+    strcat(ABS, S_str);
 
-//  cleanup_and_exit:
-//
-//    BN_free(B);
-//    BN_free(u);
-//    BN_free(x);
-//    BN_free(k);
-//    BN_CTX_free(ctx);
+    hash( usr->hash_alg, ABS, strlen(ABS), buff );
 
-//    *bytes_M = usr->M;
-//    if (len_M)
-//        *len_M = hash_length( usr->hash_alg );
+    M = BN_bin2bn( buff, hash_length(usr->hash_alg), NULL );
 
+    if ( !M )
+        goto cleanup_and_exit;
 
-    /* SRP-6a safety check */
-//    if ( !BN_is_zero(B) && !BN_is_zero(u) )
-//    {
-//        BN_mod_exp(v, usr->ng->g, x, usr->ng->N, ctx);
-//
-//        /* S = (B - k*(g^x)) ^ (a + ux) */
-//        BN_mul(tmp1, u, x, ctx);
-//        BN_add(tmp2, usr->a, tmp1);             /* tmp2 = (a + ux)      */
-//        BN_mod_exp(tmp1, usr->ng->g, x, usr->ng->N, ctx);
-//        BN_mul(tmp3, k, tmp1, ctx);             /* tmp3 = k*(g^x)       */
-//        BN_sub(tmp1, B, tmp3);                  /* tmp1 = (B - K*(g^x)) */
-//        BN_mod_exp(usr->S, tmp1, tmp2, usr->ng->N, ctx);
-//
-//        hash_num(usr->hash_alg, usr->S, usr->session_key);
-//
-//        calculate_M( usr->hash_alg, usr->ng, usr->M, usr->username, s, usr->A, B, usr->session_key );
-//        calculate_H_AMK( usr->hash_alg, usr->H_AMK, usr->A, usr->M, usr->session_key );
-//
-//        *bytes_M = usr->M;
-//        if (len_M)
-//            *len_M = hash_length( usr->hash_alg );
-//    }
-//    else
-//    {
-//        *bytes_M = NULL;
-//        if (len_M)
-//            *len_M   = 0;
-//    }
+    *M_str = convert_to_lower( BN_bn2hex(M) );
+
+  cleanup_and_exit:
+
+    BN_free(M);
+    BN_free(ABS);
+}
+
+void srp_user_process_meteor_challenge( struct SRPUser * usr,
+                                        const char * password,
+                                        const char * salt,
+                                        const char * identity,
+                                        const char * Bstr,
+                                        const char ** Mstr )
+{
+    unsigned char buff[ SHA256_DIGEST_LENGTH ];
+
+    BN_CTX *ctx         = BN_CTX_new();
+    BIGNUM *u           = BN_new();
+    BIGNUM *x           = BN_new();
+    BIGNUM *k           = BN_new();
+    BIGNUM *kgx         = BN_new();
+    BIGNUM *aux         = BN_new();
+
+    if( !salt || !identity || !Bstr || !Mstr || !ctx )
+        goto cleanup_and_exit;
+
+    meteor_user_generate_u(usr, Bstr, buff, &u);
+
+    if( !u )
+        goto cleanup_and_exit;
+
+    meteor_user_generate_x( usr, identity, salt, password, buff, &x );
+
+    if( !x )
+        goto cleanup_and_exit;
+
+    meteor_user_generate_k( usr, buff, &k );
+
+    if( !k )
+        goto cleanup_and_exit;
+
+    meteor_user_generate_kgx( usr, ctx, x, k, &kgx );
+
+    if ( !kgx )
+        goto cleanup_and_exit;
+
+    meteor_user_generate_aux(usr, ctx, u, x, &aux);
+
+    if ( !aux )
+        goto cleanup_and_exit;
+
+    char * S_str;
+    meteor_user_generate_S_string(usr, ctx, kgx, aux, Bstr, &S_str);
+
+    if ( !S_str )
+        goto cleanup_and_exit;
+
+    char * M_str;
+    meteor_user_generate_M_string( usr, S_str, buff, Bstr, &M_str );
+    *Mstr = M_str;
+
+  cleanup_and_exit:
+
+    BN_free(u);
+    BN_free(x);
+    BN_free(k);
+    BN_free(kgx);
+    BN_free(S_str);
+    BN_CTX_free(ctx);
 }
 
 /* Output: bytes_M. Buffer length is SHA512_DIGEST_LENGTH */

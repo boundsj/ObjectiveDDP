@@ -6,5 +6,4 @@
 
 @interface ViewController : UIViewController <ObjectiveDDPDelegate, UITableViewDataSource, AddViewControllerDelegate>
 @property (strong, nonatomic) ObjectiveDDP *ddp;
-@property (copy, nonatomic) NSString *A_string;
 @end
