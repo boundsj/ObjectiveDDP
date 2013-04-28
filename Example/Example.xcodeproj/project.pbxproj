@@ -30,6 +30,11 @@
 		40D0816E1726566C00434EB3 /* srp.c in Sources */ = {isa = PBXBuildFile; fileRef = 40D0816C1726566C00434EB3 /* srp.c */; };
 		40D08172172CE5DA00434EB3 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 40D08170172CE5DA00434EB3 /* LoginViewController.m */; };
 		40D08173172CE5DA00434EB3 /* LoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 40D08171172CE5DA00434EB3 /* LoginViewController.xib */; };
+		40D08177172CEECD00434EB3 /* MeteorClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 40D08176172CEECD00434EB3 /* MeteorClient.m */; };
+		40D08180172CF93F00434EB3 /* green_light.png in Resources */ = {isa = PBXBuildFile; fileRef = 40D0817C172CF93F00434EB3 /* green_light.png */; };
+		40D08181172CF93F00434EB3 /* green_light@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 40D0817D172CF93F00434EB3 /* green_light@2x.png */; };
+		40D08182172CF93F00434EB3 /* red_light.png in Resources */ = {isa = PBXBuildFile; fileRef = 40D0817E172CF93F00434EB3 /* red_light.png */; };
+		40D08183172CF93F00434EB3 /* red_light@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 40D0817F172CF93F00434EB3 /* red_light@2x.png */; };
 		430E0D74939F6EDF3BD81A8B /* BSONIdGenerator.m in Sources */ = {isa = PBXBuildFile; fileRef = 430E0E9A0ECDBAE7D19DE279 /* BSONIdGenerator.m */; };
 /* End PBXBuildFile section */
 
@@ -140,6 +145,12 @@
 		40D0816F172CE5DA00434EB3 /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
 		40D08170172CE5DA00434EB3 /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
 		40D08171172CE5DA00434EB3 /* LoginViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LoginViewController.xib; sourceTree = "<group>"; };
+		40D08175172CEECD00434EB3 /* MeteorClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MeteorClient.h; sourceTree = "<group>"; };
+		40D08176172CEECD00434EB3 /* MeteorClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MeteorClient.m; sourceTree = "<group>"; };
+		40D0817C172CF93F00434EB3 /* green_light.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = green_light.png; sourceTree = "<group>"; };
+		40D0817D172CF93F00434EB3 /* green_light@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "green_light@2x.png"; sourceTree = "<group>"; };
+		40D0817E172CF93F00434EB3 /* red_light.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = red_light.png; sourceTree = "<group>"; };
+		40D0817F172CF93F00434EB3 /* red_light@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "red_light@2x.png"; sourceTree = "<group>"; };
 		430E02AE27D2CE70426FE529 /* BSONIdGenerator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BSONIdGenerator.h; sourceTree = "<group>"; };
 		430E0E9A0ECDBAE7D19DE279 /* BSONIdGenerator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BSONIdGenerator.m; sourceTree = "<group>"; };
 		56C0A81D083A463FBDF5E25F /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = SOURCE_ROOT; };
@@ -208,6 +219,8 @@
 			children = (
 				401AEB44170E9B4D008B38EA /* AppDelegate.h */,
 				401AEB45170E9B4E008B38EA /* AppDelegate.m */,
+				40D08175172CEECD00434EB3 /* MeteorClient.h */,
+				40D08176172CEECD00434EB3 /* MeteorClient.m */,
 				40D0816B1726566C00434EB3 /* srp */,
 				408F423B1719C72300C91A92 /* openssl */,
 				40D08174172CE98300434EB3 /* views */,
@@ -220,6 +233,10 @@
 		401AEB3C170E9B4D008B38EA /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				40D0817C172CF93F00434EB3 /* green_light.png */,
+				40D0817D172CF93F00434EB3 /* green_light@2x.png */,
+				40D0817E172CF93F00434EB3 /* red_light.png */,
+				40D0817F172CF93F00434EB3 /* red_light@2x.png */,
 				401AEB3D170E9B4D008B38EA /* Example-Info.plist */,
 				401AEB3E170E9B4D008B38EA /* InfoPlist.strings */,
 				401AEB41170E9B4D008B38EA /* main.m */,
@@ -407,6 +424,10 @@
 				401AEB52170E9B4E008B38EA /* ViewController.xib in Resources */,
 				40A59C391718E9180095E30E /* AddViewController.xib in Resources */,
 				40D08173172CE5DA00434EB3 /* LoginViewController.xib in Resources */,
+				40D08180172CF93F00434EB3 /* green_light.png in Resources */,
+				40D08181172CF93F00434EB3 /* green_light@2x.png in Resources */,
+				40D08182172CF93F00434EB3 /* red_light.png in Resources */,
+				40D08183172CF93F00434EB3 /* red_light@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -455,6 +476,7 @@
 				430E0D74939F6EDF3BD81A8B /* BSONIdGenerator.m in Sources */,
 				40D0816E1726566C00434EB3 /* srp.c in Sources */,
 				40D08172172CE5DA00434EB3 /* LoginViewController.m in Sources */,
+				40D08177172CEECD00434EB3 /* MeteorClient.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

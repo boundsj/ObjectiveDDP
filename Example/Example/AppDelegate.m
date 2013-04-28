@@ -1,19 +1,28 @@
 #import "AppDelegate.h"
 #import "ViewController.h"
 #import "LoginViewController.h"
+#import "MeteorClient.h"
 
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
 
+    self.meteorClient = [[MeteorClient alloc] init];
+
     self.viewController = [[ViewController alloc] initWithNibName:@"ViewController" bundle:nil];
+    LoginViewController *loginController = [[LoginViewController alloc] initWithNibName:@"LoginViewController" bundle:nil];
+
     ObjectiveDDP *ddp = [[ObjectiveDDP alloc] initWithURLString:@"wss://ddptester.meteor.com/websocket"
     //ObjectiveDDP *ddp = [[ObjectiveDDP alloc] initWithURLString:@"ws://localhost:3000/websocket"
-                                                       delegate:self.viewController];
+                                                       delegate:self.meteorClient];
+
+    self.meteorClient.ddp = ddp;
     self.viewController.ddp = ddp;
 
-    LoginViewController *loginController = [[LoginViewController alloc] initWithNibName:@"LoginViewController" bundle:nil];
+    self.meteorClient.dataDelegate = self.viewController;
+    self.meteorClient.authDelegate = loginController;
+
     self.navController = [[UINavigationController alloc] initWithRootViewController:loginController];
     self.navController.navigationBarHidden = YES;
 
@@ -38,7 +47,9 @@
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
-    // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+    // this will start the process of connecting to meteor
+    // connection is ONLY a websocket connetcion, it does NOT mean that any
+    // subscription requests will be made or that authorization will be performed
     [self.viewController.ddp connectWebSocket];
 }
 

@@ -27,4 +27,12 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (void)didConnectToMeteorServer {
+    self.connectionStatusText.text = @"Connected to Todo Server";
+
+    UIImage *image = [UIImage imageNamed: @"green_light.png"];
+    [self.connectionStatusLight setImage:image];
+}
+
+
 @end
