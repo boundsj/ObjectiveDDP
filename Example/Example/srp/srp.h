@@ -60,7 +60,6 @@
 #ifndef SRP_H
 #define SRP_H
 
-
 struct SRPVerifier;
 struct SRPUser;
 
@@ -81,7 +80,6 @@ typedef enum
     SRP_SHA384, 
     SRP_SHA512
 } SRP_HashAlgorithm;
-
 
 /* This library will automatically seed the OpenSSL random number generator
  * using cryptographically sound random data on Windows & Linux. If this is
@@ -105,7 +103,6 @@ typedef enum
  */
 void srp_random_seed( const unsigned char * random_data, int data_length );
 
-
 /* Out: bytes_s, len_s, bytes_v, len_v
  * 
  * The caller is responsible for freeing the memory allocated for bytes_s and bytes_v
@@ -119,7 +116,6 @@ void srp_create_salted_verification_key( SRP_HashAlgorithm alg,
                                          const unsigned char ** bytes_s, int * len_s, 
                                          const unsigned char ** bytes_v, int * len_v,
                                          const char * n_hex, const char * g_hex );
-
 
 /* Out: bytes_B, len_B.
  * 
@@ -137,18 +133,14 @@ struct SRPVerifier *  srp_verifier_new( SRP_HashAlgorithm alg, SRP_NGType ng_typ
 
 void                  srp_verifier_delete( struct SRPVerifier * ver );
 
-
 int                   srp_verifier_is_authenticated( struct SRPVerifier * ver );
-
 
 const char *          srp_verifier_get_username( struct SRPVerifier * ver );
 
 /* key_length may be null */
 const unsigned char * srp_verifier_get_session_key( struct SRPVerifier * ver, int * key_length );
 
-
 int                   srp_verifier_get_session_key_length( struct SRPVerifier * ver );
-
 
 /* user_M must be exactly srp_verifier_get_session_key_length() bytes in size */
 void                  srp_verifier_verify_session( struct SRPVerifier * ver,
@@ -166,7 +158,6 @@ void                  srp_user_delete( struct SRPUser * usr );
 
 int                   srp_user_is_authenticated( struct SRPUser * usr);
 
-
 const char *          srp_user_get_username( struct SRPUser * usr );
 
 /* key_length may be null */
@@ -178,13 +169,6 @@ int                   srp_user_get_session_key_length( struct SRPUser * usr );
 void                  srp_user_start_authentication( struct SRPUser * usr, const char ** username,
                                                      const unsigned char ** bytes_A, int * len_A, const char ** Astr );
 
-void srp_user_process_meteor_challenge( struct SRPUser * usr,
-        const char * password,
-        const char * salt,
-        const char * identity,
-        const char * Bstr,
-        const char ** Mstr );
-
 /* Output: bytes_M, len_M  (len_M may be null and will always be
  *                          srp_user_get_session_key_length() bytes in size) */
 void                  srp_user_process_challenge( struct SRPUser * usr, 
@@ -194,5 +178,14 @@ void                  srp_user_process_challenge( struct SRPUser * usr,
                                                   
 /* bytes_HAMK must be exactly srp_user_get_session_key_length() bytes in size */
 void                  srp_user_verify_session( struct SRPUser * usr, const unsigned char * bytes_HAMK );
+
+void srp_user_process_meteor_challenge( struct SRPUser * usr,
+                                            const char * password,
+                                            const char * salt,
+                                            const char * identity,
+                                            const char * Bstr,
+                                            const char ** Mstr );
+
+void srp_user_verify_meteor_session( struct SRPUser * usr, const char * HAMK_meteor );
 
 #endif /* Include Guard */

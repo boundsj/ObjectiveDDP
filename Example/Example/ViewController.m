@@ -9,6 +9,7 @@
 @property (copy, nonatomic) NSString *userId;
 @property (copy, nonatomic) NSString *userName;
 @property (copy, nonatomic) NSString *password;
+@property (copy, nonatomic) NSString *HAMK;
 @end
 
 @implementation ViewController
@@ -26,7 +27,7 @@ SRP_NGType        ng_type = SRP_NG_1024;
     if (self) {
         self.things = [NSMutableArray array];
 
-        // TODO: get these values from login screen
+        // TODO: get these values from login screen (forthcoming)
         self.userName = @"jesse@rebounds.net";
         self.password = @"airport";
     }
@@ -158,7 +159,13 @@ SRP_NGType        ng_type = SRP_NG_1024;
                    && message[@"result"][@"HAMK"]
                    && message[@"result"][@"token"]) {
 
-        self.userId = message[@"result"][@"id"];
+        self.HAMK = message[@"result"][@"HAMK"];
+        srp_user_verify_meteor_session(usr, [self.HAMK cStringUsingEncoding:NSASCIIStringEncoding]);
+
+        if (srp_user_is_authenticated) {
+            // TODO: set app state to "logged in" (whatever that means) here
+            self.userId = message[@"result"][@"id"];
+        }
 
     // meteor is not happy with us, note that fact and move on
     } else if (message[@"error"]) {

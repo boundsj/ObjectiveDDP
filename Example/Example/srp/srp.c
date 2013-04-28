@@ -196,7 +196,7 @@ struct SRPVerifier
     const char          * username;
     const unsigned char * bytes_B;
     int                   authenticated;
-    
+
     unsigned char M           [SHA512_DIGEST_LENGTH];
     unsigned char H_AMK       [SHA512_DIGEST_LENGTH];
     unsigned char session_key [SHA512_DIGEST_LENGTH];
@@ -211,8 +211,9 @@ struct SRPUser
     BIGNUM *A;
     BIGNUM *S;
 
+    const char          * HAMK;
     const unsigned char * bytes_A;
-    const char *          Astr;
+    const char          * Astr;
     int                   authenticated;
 
     const char *          username;
@@ -980,6 +981,20 @@ void meteor_user_generate_M_string( struct SRPUser *usr,
     BN_free(ABS);
 }
 
+void meteor_user_generate_HAMK( struct SRPUser *usr,
+                                unsigned char *buff,
+                                const char * M_str,
+                                const char * S_str )
+{
+    char * AMS = malloc( strlen(usr->Astr) + strlen(M_str) + strlen(S_str) + 1 );
+    strcpy( AMS, usr->Astr );
+    strcat( AMS, M_str );
+    strcat( AMS, S_str );
+
+    hash( usr->hash_alg, AMS, strlen(AMS), buff );
+    usr->HAMK = convert_to_lower( BN_bn2hex(BN_bin2bn(buff, hash_length(usr->hash_alg), NULL)) );
+}
+
 void srp_user_process_meteor_challenge( struct SRPUser * usr,
                                         const char * password,
                                         const char * salt,
@@ -1019,20 +1034,23 @@ void srp_user_process_meteor_challenge( struct SRPUser * usr,
     if ( !kgx )
         goto cleanup_and_exit;
 
-    meteor_user_generate_aux(usr, ctx, u, x, &aux);
+    meteor_user_generate_aux( usr, ctx, u, x, &aux );
 
     if ( !aux )
         goto cleanup_and_exit;
 
     char * S_str;
-    meteor_user_generate_S_string(usr, ctx, kgx, aux, Bstr, &S_str);
+    meteor_user_generate_S_string( usr, ctx, kgx, aux, Bstr, &S_str );
 
     if ( !S_str )
         goto cleanup_and_exit;
 
-    char * M_str;
+    const char * M_str;
     meteor_user_generate_M_string( usr, S_str, buff, Bstr, &M_str );
     *Mstr = M_str;
+
+    // calculate and store HAMK for verfication later
+    meteor_user_generate_HAMK( usr, buff, M_str, S_str );
 
   cleanup_and_exit:
 
@@ -1123,6 +1141,11 @@ void  srp_user_process_challenge( struct SRPUser * usr,
     BN_free(tmp2);
     BN_free(tmp3);
     BN_CTX_free(ctx);
+}
+
+void srp_user_verify_meteor_session( struct SRPUser * usr, const char * HAMK_meteor )
+{
+    usr->authenticated = strcmp(usr->HAMK, HAMK_meteor) ? 0 : 1;
 }
 
 void srp_user_verify_session( struct SRPUser * usr, const unsigned char * bytes_HAMK )
