@@ -28,6 +28,8 @@
 		40A59C381718E9180095E30E /* AddViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 40A59C361718E9180095E30E /* AddViewController.m */; };
 		40A59C391718E9180095E30E /* AddViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 40A59C371718E9180095E30E /* AddViewController.xib */; };
 		40D0816E1726566C00434EB3 /* srp.c in Sources */ = {isa = PBXBuildFile; fileRef = 40D0816C1726566C00434EB3 /* srp.c */; };
+		40D08172172CE5DA00434EB3 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 40D08170172CE5DA00434EB3 /* LoginViewController.m */; };
+		40D08173172CE5DA00434EB3 /* LoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 40D08171172CE5DA00434EB3 /* LoginViewController.xib */; };
 		430E0D74939F6EDF3BD81A8B /* BSONIdGenerator.m in Sources */ = {isa = PBXBuildFile; fileRef = 430E0E9A0ECDBAE7D19DE279 /* BSONIdGenerator.m */; };
 /* End PBXBuildFile section */
 
@@ -135,6 +137,9 @@
 		40A59C371718E9180095E30E /* AddViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AddViewController.xib; sourceTree = "<group>"; };
 		40D0816C1726566C00434EB3 /* srp.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = srp.c; sourceTree = "<group>"; };
 		40D0816D1726566C00434EB3 /* srp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = srp.h; sourceTree = "<group>"; };
+		40D0816F172CE5DA00434EB3 /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
+		40D08170172CE5DA00434EB3 /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
+		40D08171172CE5DA00434EB3 /* LoginViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LoginViewController.xib; sourceTree = "<group>"; };
 		430E02AE27D2CE70426FE529 /* BSONIdGenerator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BSONIdGenerator.h; sourceTree = "<group>"; };
 		430E0E9A0ECDBAE7D19DE279 /* BSONIdGenerator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BSONIdGenerator.m; sourceTree = "<group>"; };
 		56C0A81D083A463FBDF5E25F /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = SOURCE_ROOT; };
@@ -201,16 +206,11 @@
 		401AEB3B170E9B4D008B38EA /* Example */ = {
 			isa = PBXGroup;
 			children = (
-				40D0816B1726566C00434EB3 /* srp */,
-				408F423B1719C72300C91A92 /* openssl */,
 				401AEB44170E9B4D008B38EA /* AppDelegate.h */,
 				401AEB45170E9B4E008B38EA /* AppDelegate.m */,
-				401AEB4D170E9B4E008B38EA /* ViewController.h */,
-				401AEB4E170E9B4E008B38EA /* ViewController.m */,
-				401AEB50170E9B4E008B38EA /* ViewController.xib */,
-				40A59C351718E9180095E30E /* AddViewController.h */,
-				40A59C361718E9180095E30E /* AddViewController.m */,
-				40A59C371718E9180095E30E /* AddViewController.xib */,
+				40D0816B1726566C00434EB3 /* srp */,
+				408F423B1719C72300C91A92 /* openssl */,
+				40D08174172CE98300434EB3 /* views */,
 				408F423A1719C19300C91A92 /* bsonidgenerator */,
 				401AEB3C170E9B4D008B38EA /* Supporting Files */,
 			);
@@ -331,6 +331,22 @@
 			path = srp;
 			sourceTree = "<group>";
 		};
+		40D08174172CE98300434EB3 /* views */ = {
+			isa = PBXGroup;
+			children = (
+				40A59C351718E9180095E30E /* AddViewController.h */,
+				40A59C361718E9180095E30E /* AddViewController.m */,
+				40A59C371718E9180095E30E /* AddViewController.xib */,
+				401AEB4D170E9B4E008B38EA /* ViewController.h */,
+				401AEB4E170E9B4E008B38EA /* ViewController.m */,
+				401AEB50170E9B4E008B38EA /* ViewController.xib */,
+				40D0816F172CE5DA00434EB3 /* LoginViewController.h */,
+				40D08170172CE5DA00434EB3 /* LoginViewController.m */,
+				40D08171172CE5DA00434EB3 /* LoginViewController.xib */,
+			);
+			name = views;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -390,6 +406,7 @@
 				401AEB4C170E9B4E008B38EA /* Default-568h@2x.png in Resources */,
 				401AEB52170E9B4E008B38EA /* ViewController.xib in Resources */,
 				40A59C391718E9180095E30E /* AddViewController.xib in Resources */,
+				40D08173172CE5DA00434EB3 /* LoginViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -437,6 +454,7 @@
 				40A59C381718E9180095E30E /* AddViewController.m in Sources */,
 				430E0D74939F6EDF3BD81A8B /* BSONIdGenerator.m in Sources */,
 				40D0816E1726566C00434EB3 /* srp.c in Sources */,
+				40D08172172CE5DA00434EB3 /* LoginViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
