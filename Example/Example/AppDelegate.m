@@ -10,8 +10,12 @@
 
     self.meteorClient = [[MeteorClient alloc] init];
 
-    self.viewController = [[ViewController alloc] initWithNibName:@"ViewController" bundle:nil];
-    LoginViewController *loginController = [[LoginViewController alloc] initWithNibName:@"LoginViewController" bundle:nil];
+    self.viewController = [[ViewController alloc] initWithNibName:@"ViewController"
+                                                           bundle:nil];
+
+    LoginViewController *loginController = [[LoginViewController alloc] initWithNibName:@"LoginViewController"
+                                                                                 bundle:nil];
+    loginController.meteor = self.meteorClient;
 
     ObjectiveDDP *ddp = [[ObjectiveDDP alloc] initWithURLString:@"wss://ddptester.meteor.com/websocket"
     //ObjectiveDDP *ddp = [[ObjectiveDDP alloc] initWithURLString:@"ws://localhost:3000/websocket"

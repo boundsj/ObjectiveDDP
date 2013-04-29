@@ -1,35 +1,18 @@
 #import "ViewController.h"
-#import "BSONIdGenerator.h"
-#import "srp.h"
 
 @interface ViewController ()
 @property (strong, nonatomic) NSMutableArray *things;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *addButton;
 @property (weak, nonatomic) IBOutlet UITableView *tableview;
 @property (copy, nonatomic) NSString *userId;
-@property (copy, nonatomic) NSString *userName;
-@property (copy, nonatomic) NSString *password;
-@property (copy, nonatomic) NSString *HAMK;
 @end
 
 @implementation ViewController
-
-///
-// SRP vars
-///
-struct SRPUser     * usr;
-
-SRP_HashAlgorithm alg     = SRP_SHA256;
-SRP_NGType        ng_type = SRP_NG_1024;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         self.things = [NSMutableArray array];
-
-        // TODO: get these values from login screen (forthcoming)
-        self.userName = @"jesse@rebounds.net";
-        self.password = @"airport";
     }
 
     return self;
@@ -40,51 +23,6 @@ SRP_NGType        ng_type = SRP_NG_1024;
                                                                            bundle:nil];
     addController.delegate = self;
     [self presentViewController:addController animated:YES completion:nil];
-}
-
-- (IBAction)didTouchLoginButton:(id)sender {
-
-    // XXX: !!!
-    // TODO: should not allow login attempt until connection is open!
-
-    NSLog(@"login");
-    NSString *uid = [[BSONIdGenerator generate] substringToIndex:15];
-
-    NSArray *params = @[@{@"A": [self generateVerificationKey],
-                          @"user": @{@"email":self.userName}}];
-
-    [self.ddp methodWith:uid
-                  method:@"beginPasswordExchange"
-              parameters:params];
-}
-
-- (NSString *)generateVerificationKey {
-    //TODO: don't really need to keep bytes_A and len_A here, could remove them
-    // and push into srp lib
-    const unsigned char * bytes_A = 0;
-    int len_A   = 0;
-    const char * Astr = 0;
-    const char * auth_username = 0;
-
-    const char * username_str = [self.userName cStringUsingEncoding:NSASCIIStringEncoding];
-    const char * password_str = [self.password cStringUsingEncoding:NSASCIIStringEncoding];
-
-    /* Begin authentication process */
-    usr = srp_user_new(alg,
-            ng_type,
-            username_str,
-            password_str,
-            strlen(password_str),
-            NULL,
-            NULL);
-
-    srp_user_start_authentication(usr,
-            &auth_username,
-            &bytes_A,
-            &len_A,
-            &Astr);
-
-    return [NSString stringWithCString:Astr encoding:NSASCIIStringEncoding];
 }
 
 #pragma mark <ObjectiveDDPDelegate>
@@ -125,47 +63,6 @@ SRP_NGType        ng_type = SRP_NG_1024;
     // a thing was removed from the things collection
     } else if (msg && [msg isEqualToString:@"removed"] && [message[@"collection"] isEqualToString:@"things"]) {
         [self _parseRemoved:message];
-
-    // meteor login challenge
-    } else if (msg && [msg isEqualToString:@"result"]
-                   && message[@"result"]
-                   && message[@"result"][@"identity"]
-                   && message[@"result"][@"salt"]) {
-
-        NSString *B_string = message[@"result"][@"B"];
-        const  char *B = [B_string cStringUsingEncoding:NSASCIIStringEncoding];
-
-        NSString *salt_string = message[@"result"][@"salt"];
-        const  char *salt = [salt_string cStringUsingEncoding:NSASCIIStringEncoding];
-
-        NSString *identity_string = message[@"result"][@"identity"];
-        const  char *identity = [identity_string cStringUsingEncoding:NSASCIIStringEncoding];
-
-        const char * password_str = [self.password cStringUsingEncoding:NSASCIIStringEncoding];
-        const char * Mstr;
-        srp_user_process_meteor_challenge(usr, password_str, salt, identity, B, &Mstr);
-        NSString *M_final = [NSString stringWithCString:Mstr encoding:NSASCIIStringEncoding];
-        NSArray *params = @[@{@"srp":@{@"M":M_final}}];
-
-        // send login (challenge reponse) to meteor
-        [self.ddp methodWith:uid
-                      method:@"login"
-                  parameters:params];
-
-    // meteor HAMK response
-    } else if (msg && [msg isEqualToString:@"result"]
-                   && message[@"result"]
-                   && message[@"result"][@"id"]
-                   && message[@"result"][@"HAMK"]
-                   && message[@"result"][@"token"]) {
-
-        self.HAMK = message[@"result"][@"HAMK"];
-        srp_user_verify_meteor_session(usr, [self.HAMK cStringUsingEncoding:NSASCIIStringEncoding]);
-
-        if (srp_user_is_authenticated) {
-            // TODO: set app state to "logged in" (whatever that means) here
-            self.userId = message[@"result"][@"id"];
-        }
 
     // meteor is not happy with us, note that fact and move on
     } else if (message[@"error"]) {
