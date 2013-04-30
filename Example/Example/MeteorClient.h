@@ -8,7 +8,9 @@
 @property (strong, nonatomic) ObjectiveDDP *ddp;
 // TODO: this should be an array (for multiple views that need to know about data events):
 @property (weak, nonatomic) id<DDPDataDelegate> dataDelegate;
+
 @property (weak, nonatomic) id<DDPAuthDelegate> authDelegate;
+@property (strong, nonatomic) NSDictionary *subscriptions;
 
 - (void) sendWithMethodName:(NSString *)methodName parameters:(NSArray *)parameters;
 
@@ -21,3 +23,10 @@
 - (void) didReceiveHAMKVerificationWithRespons:(NSDictionary *)response;
 
 @end
+
+@protocol DDPDataDelegate <NSObject>
+
+- (void) didReceiveUpdate;
+
+@end
+

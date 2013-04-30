@@ -3,6 +3,15 @@
 
 @implementation MeteorClient
 
+- (id)init
+{
+    self = [super init];
+    if (self) {
+        self.subscriptions = @{@"things": [NSMutableArray array]};
+    }
+    return self;
+}
+
 #pragma mark Meteor API
 
 - (void) sendWithMethodName:(NSString *)methodName parameters:(NSArray *)parameters {
@@ -16,17 +25,10 @@
 - (void)didOpen {
     NSLog(@"================> didOpen");
 
-    // TODO: tell data delgate
-    // tell auth delegate:
     [self.authDelegate didConnectToMeteorServer];
 
-    // Send a connect message:
     // TODO: pre1 should be a setting
     [self.ddp connectWithSession:nil version:@"pre1" support:nil];
-
-    // Make nessesary data subscriptions to meteor server
-    //NSString *uid = [[BSONIdGenerator generate] substringToIndex:15];
-    //[self.ddp subscribeWith:uid name:@"things" parameters:nil];
 }
 
 - (void)didReceiveMessage:(NSDictionary *)message {
@@ -52,11 +54,33 @@
 
         NSDictionary *response = message[@"result"];
         [self.authDelegate didReceiveHAMKVerificationWithRespons:response];
+
+        // Make data subscriptions to meteor server
+        for (NSString *key in [self.subscriptions allKeys]) {
+            NSString *uid = [[BSONIdGenerator generate] substringToIndex:15];
+            [self.ddp subscribeWith:uid name:key parameters:nil];
+        }
+
+    } else if (msg && [msg isEqualToString:@"added"] && [message[@"collection"] isEqualToString:@"things"]) {
+
+        [self _parseAdded:message];
+
+        [self.dataDelegate didReceiveUpdate];
     }
 }
 
 - (void)didReceiveConnectionError:(NSError *)error {
     NSLog(@"================> didReceiveConnectionError: %@", error);
+}
+
+#pragma mark Meteor Data Managment
+
+- (void)_parseAdded:(NSDictionary *)message {
+    NSMutableDictionary *thing = [NSMutableDictionary dictionaryWithDictionary:@{@"id": message[@"id"]}];
+    for (id key in message[@"fields"]) {
+        thing[key] = message[@"fields"][key];
+    }
+    [self.subscriptions[@"things"] addObject:thing];
 }
 
 @end

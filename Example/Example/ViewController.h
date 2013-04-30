@@ -1,9 +1,9 @@
 #import <UIKit/UIKit.h>
-#import <ObjectiveDDP/ObjectiveDDP.h>
 #import "AddViewController.h"
+#import "MeteorClient.h"
 
-@class ObjectiveDDP;
+@interface ViewController : UIViewController <UITableViewDataSource, AddViewControllerDelegate, DDPDataDelegate>
 
-@interface ViewController : UIViewController <ObjectiveDDPDelegate, UITableViewDataSource, AddViewControllerDelegate>
-@property (strong, nonatomic) ObjectiveDDP *ddp;
+@property (strong, nonatomic) MeteorClient *meteor;
+
 @end

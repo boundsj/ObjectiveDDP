@@ -1,5 +1,6 @@
 #import "LoginViewController.h"
 #import "srp.h"
+#import "ViewController.h"
 
 @interface LoginViewController ()
 
@@ -62,16 +63,16 @@ SRP_NGType        ng_type = SRP_NG_1024;
 }
 
 - (void)didReceiveHAMKVerificationWithRespons:(NSDictionary *)response {
-    //self.HAMK = message[@"result"][@"HAMK"];
-
     srp_user_verify_meteor_session(usr, [response[@"HAMK"] cStringUsingEncoding:NSASCIIStringEncoding]);
 
     // TODO: set app state to "logged in" (whatever that means) here
     if (srp_user_is_authenticated) {
         //self.userId = message[@"result"][@"id"];
-        NSLog(@"=========> logged in");
-
-        // push the todo list controller on the stack with whatever state makes sense
+        ViewController *controller = [[ViewController alloc] initWithNibName:@"ViewController"
+                                                                      bundle:nil];
+        controller.meteor = self.meteor;
+        self.meteor.dataDelegate = controller;
+        [self.navigationController pushViewController:controller animated:YES];
     }
 }
 

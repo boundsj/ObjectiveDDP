@@ -10,8 +10,8 @@
 
     self.meteorClient = [[MeteorClient alloc] init];
 
-    self.viewController = [[ViewController alloc] initWithNibName:@"ViewController"
-                                                           bundle:nil];
+//    self.viewController = [[ViewController alloc] initWithNibName:@"ViewController"
+//                                                           bundle:nil];
 
     LoginViewController *loginController = [[LoginViewController alloc] initWithNibName:@"LoginViewController"
                                                                                  bundle:nil];
@@ -22,7 +22,7 @@
                                                        delegate:self.meteorClient];
 
     self.meteorClient.ddp = ddp;
-    self.viewController.ddp = ddp;
+    //self.viewController.ddp = ddp;
 
     self.meteorClient.dataDelegate = self.viewController;
     self.meteorClient.authDelegate = loginController;
@@ -54,7 +54,7 @@
     // this will start the process of connecting to meteor
     // connection is ONLY a websocket connetcion, it does NOT mean that any
     // subscription requests will be made or that authorization will be performed
-    [self.viewController.ddp connectWebSocket];
+    [self.meteorClient.ddp connectWebSocket];
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application {

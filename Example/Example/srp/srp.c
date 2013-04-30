@@ -978,7 +978,6 @@ void meteor_user_generate_M_string( struct SRPUser *usr,
   cleanup_and_exit:
 
     BN_free(M);
-    BN_free(ABS);
 }
 
 void meteor_user_generate_HAMK( struct SRPUser *usr,
@@ -1058,7 +1057,6 @@ void srp_user_process_meteor_challenge( struct SRPUser * usr,
     BN_free(x);
     BN_free(k);
     BN_free(kgx);
-    BN_free(S_str);
     BN_CTX_free(ctx);
 }
 
