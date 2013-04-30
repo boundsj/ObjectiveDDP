@@ -10,9 +10,6 @@
 
     self.meteorClient = [[MeteorClient alloc] init];
 
-//    self.viewController = [[ViewController alloc] initWithNibName:@"ViewController"
-//                                                           bundle:nil];
-
     LoginViewController *loginController = [[LoginViewController alloc] initWithNibName:@"LoginViewController"
                                                                                  bundle:nil];
     loginController.meteor = self.meteorClient;
@@ -22,8 +19,6 @@
                                                        delegate:self.meteorClient];
 
     self.meteorClient.ddp = ddp;
-    //self.viewController.ddp = ddp;
-
     self.meteorClient.dataDelegate = self.viewController;
     self.meteorClient.authDelegate = loginController;
 

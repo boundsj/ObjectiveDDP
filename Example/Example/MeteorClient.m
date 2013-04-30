@@ -36,13 +36,11 @@
 
     NSString *msg = [message objectForKey:@"msg"];
 
-    //
     if (msg && [msg isEqualToString:@"result"]
             && message[@"result"]
             && message[@"result"][@"B"]
             && message[@"result"][@"identity"]
             && message[@"result"][@"salt"]) {
-
         NSDictionary *response = message[@"result"];
         [self.authDelegate didReceiveLoginChallengeWithResponse:response];
 
@@ -51,7 +49,6 @@
                    && message[@"result"][@"id"]
                    && message[@"result"][@"HAMK"]
                    && message[@"result"][@"token"]) {
-
         NSDictionary *response = message[@"result"];
         [self.authDelegate didReceiveHAMKVerificationWithRespons:response];
 
@@ -62,9 +59,11 @@
         }
 
     } else if (msg && [msg isEqualToString:@"added"] && [message[@"collection"] isEqualToString:@"things"]) {
-
         [self _parseAdded:message];
+        [self.dataDelegate didReceiveUpdate];
 
+    } else if (msg && [msg isEqualToString:@"removed"] && [message[@"collection"] isEqualToString:@"things"]) {
+        [self _parseRemoved:message];
         [self.dataDelegate didReceiveUpdate];
     }
 }
@@ -81,6 +80,20 @@
         thing[key] = message[@"fields"][key];
     }
     [self.subscriptions[@"things"] addObject:thing];
+}
+
+- (void)_parseRemoved:(NSDictionary *)message {
+    NSString *removedId = [message objectForKey:@"id"];
+    int indexOfRemovedThing = 0;
+
+    for (NSDictionary *thing in self.subscriptions[@"things"]) {
+        if ([thing[@"id"] isEqualToString:removedId]) {
+            break;
+        }
+        indexOfRemovedThing++;
+    }
+
+    [self.subscriptions[@"things"] removeObjectAtIndex:indexOfRemovedThing];
 }
 
 @end

@@ -18,18 +18,6 @@ struct SRPUser     * usr;
 SRP_HashAlgorithm alg     = SRP_SHA256;
 SRP_NGType        ng_type = SRP_NG_1024;
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
-}
-
-- (void)viewDidLoad {
-    [super viewDidLoad];
-}
-
 #pragma mark <DDPAuthDelegate>
 
 - (void)didConnectToMeteorServer {
@@ -38,6 +26,10 @@ SRP_NGType        ng_type = SRP_NG_1024;
     UIImage *image = [UIImage imageNamed: @"green_light.png"];
     [self.connectionStatusLight setImage:image];
 }
+
+// TODO: probably makes sense to move these next to methods out of here
+// and do everything on the MeteorClient - the MeteorClient can just
+// call this delegate with a "success" or "failure" callback
 
 - (void)didReceiveLoginChallengeWithResponse:(NSDictionary *)response {
     NSString *B_string = response[@"B"];
@@ -67,10 +59,10 @@ SRP_NGType        ng_type = SRP_NG_1024;
 
     // TODO: set app state to "logged in" (whatever that means) here
     if (srp_user_is_authenticated) {
-        //self.userId = message[@"result"][@"id"];
         ViewController *controller = [[ViewController alloc] initWithNibName:@"ViewController"
                                                                       bundle:nil];
         controller.meteor = self.meteor;
+        controller.userId = response[@"id"];
         self.meteor.dataDelegate = controller;
         [self.navigationController pushViewController:controller animated:YES];
     }
@@ -97,7 +89,7 @@ SRP_NGType        ng_type = SRP_NG_1024;
 }
 
 
-// TODO: This should be moved to a shared library
+// TODO: This should be moved to a shared library (or maybe just Meteor client)
 #pragma mark SRP
 
 - (NSString *)generateVerificationKey {
