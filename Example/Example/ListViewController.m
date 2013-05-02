@@ -10,8 +10,6 @@
 
 @implementation ListViewController
 
-// TODO: Add list deletion
-
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
                meteor:(MeteorClient *)meteor {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -30,10 +28,6 @@
                                              selector:@selector(didReceiveUpdate)
                                                  name:@"added"
                                                object:nil];
-}
-
-- (void)viewWillDisappear:(BOOL)animated {
-    //[[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (void)didReceiveUpdate {
