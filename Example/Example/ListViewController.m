@@ -61,6 +61,19 @@
     return cell;
 }
 
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
+    return YES;
+}
+
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle
+                                            forRowAtIndexPath:(NSIndexPath *)indexPath {
+
+    NSDictionary *list = self.lists[indexPath.row];
+    [self.meteor sendWithMethodName:@"/lists/remove"
+                         parameters:@[@{@"_id": list[@"id"]}]];
+}
+
+
 #pragma mark <UITableViewDelegate>
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
