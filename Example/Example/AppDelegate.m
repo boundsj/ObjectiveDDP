@@ -14,12 +14,11 @@
                                                                                  bundle:nil];
     loginController.meteor = self.meteorClient;
 
-    ObjectiveDDP *ddp = [[ObjectiveDDP alloc] initWithURLString:@"wss://ddptester.meteor.com/websocket"
-    //ObjectiveDDP *ddp = [[ObjectiveDDP alloc] initWithURLString:@"ws://localhost:3000/websocket"
+    //ObjectiveDDP *ddp = [[ObjectiveDDP alloc] initWithURLString:@"wss://ddptester.meteor.com/websocket"
+    ObjectiveDDP *ddp = [[ObjectiveDDP alloc] initWithURLString:@"ws://localhost:3000/websocket"
                                                        delegate:self.meteorClient];
 
     self.meteorClient.ddp = ddp;
-    self.meteorClient.dataDelegate = self.viewController;
     self.meteorClient.authDelegate = loginController;
 
     self.navController = [[UINavigationController alloc] initWithRootViewController:loginController];

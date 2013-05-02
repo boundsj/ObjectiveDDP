@@ -5,16 +5,49 @@
 
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *addButton;
 @property (weak, nonatomic) IBOutlet UITableView *tableview;
+@property (strong, nonatomic) NSMutableArray *things;
+@property (copy, nonatomic) NSString *listName;
 
 @end
 
 @implementation ViewController
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
+- (id)initWithNibName:(NSString *)nibNameOrNil
+               bundle:(NSBundle *)nibBundleOrNil
+               meteor:(MeteorClient *)meteor
+             listName:(NSString *) listName {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
+        self.meteor = meteor;
+        self.things = meteor.subscriptions[@"things"];
+        self.listName = listName;
     }
     return self;
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    self.navigationItem.title = self.listName;
+    UIBarButtonItem *addButton = [[UIBarButtonItem alloc ] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd
+                                                                                target:self
+                                                                                action:@selector(didTouchAdd:)];
+    [self.navigationItem setRightBarButtonItem:addButton];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(didReceiveUpdate)
+                                                 name:@"added"
+                                               object:nil];
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+- (void)didReceiveUpdate {
+    [self.tableview reloadData];
+}
+
+- (NSArray *)computedList {
+    NSPredicate *pred = [NSPredicate predicateWithFormat:@"(listName like %@)", self.listName];
+    return [self.things filteredArrayUsingPredicate:pred];
 }
 
 #pragma mark UI Actions
@@ -29,7 +62,8 @@
 #pragma mark <UITableViewDataSource>
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return [self.meteor.subscriptions[@"things"] count];
+    NSArray *temp = self.computedList;
+    return [self.computedList count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -41,7 +75,7 @@
                                       reuseIdentifier:cellIdentifier];
     }
 
-    NSDictionary *thing = self.meteor.subscriptions[@"things"][indexPath.row];
+    NSDictionary *thing = self.computedList[indexPath.row];
     cell.textLabel.text = thing[@"msg"];
 
     return cell;
@@ -56,7 +90,7 @@
         commitEditingStyle:(UITableViewCellEditingStyle)editingStyle
         forRowAtIndexPath:(NSIndexPath *)indexPath {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
-        NSDictionary *thing = self.meteor.subscriptions[@"things"][indexPath.row];
+        NSDictionary *thing = self.computedList[indexPath.row];
 
         // Specifically NOT removing the object locally
         // we'll get a notification from the meteor server when this has been done
@@ -78,13 +112,8 @@
     [self.meteor sendWithMethodName:@"/things/insert"
                          parameters:@[@{@"_id": uid,
                                       @"msg": message,
-                                      @"owner": self.userId}]];
-}
-
-#pragma mark <DDPDataDelegate>
-
-- (void)didReceiveUpdate {
-    [self.tableview reloadData];
+                                      @"owner": self.userId,
+                                      @"listName": self.listName}]];
 }
 
 @end

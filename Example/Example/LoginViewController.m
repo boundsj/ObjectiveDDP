@@ -1,6 +1,7 @@
 #import "LoginViewController.h"
 #import "srp.h"
 #import "ViewController.h"
+#import "ListViewController.h"
 
 @interface LoginViewController ()
 
@@ -54,18 +55,18 @@ SRP_NGType        ng_type = SRP_NG_1024;
                          parameters:params];
 }
 
-- (void)didReceiveHAMKVerificationWithRespons:(NSDictionary *)response {
+- (void)didReceiveHAMKVerificationWithResponse:(NSDictionary *)response {
     srp_user_verify_meteor_session(usr, [response[@"HAMK"] cStringUsingEncoding:NSASCIIStringEncoding]);
 
-    // TODO: set app state to "logged in" (whatever that means) here
     if (srp_user_is_authenticated) {
-        ViewController *controller = [[ViewController alloc] initWithNibName:@"ViewController"
-                                                                      bundle:nil];
-        controller.meteor = self.meteor;
+        ListViewController *controller = [[ListViewController alloc] initWithNibName:@"ListViewController"
+                                                                              bundle:nil
+                                                                              meteor:self.meteor];
         controller.userId = response[@"id"];
-        self.meteor.dataDelegate = controller;
         [self.navigationController pushViewController:controller animated:YES];
     }
+
+    // TODO: handle not authenticated case here
 }
 
 #pragma mark UI Actions
@@ -87,7 +88,6 @@ SRP_NGType        ng_type = SRP_NG_1024;
     [self.meteor sendWithMethodName:@"beginPasswordExchange"
                          parameters:params];
 }
-
 
 // TODO: This should be moved to a shared library (or maybe just Meteor client)
 #pragma mark SRP
@@ -120,4 +120,5 @@ SRP_NGType        ng_type = SRP_NG_1024;
 
     return [NSString stringWithCString:Astr encoding:NSASCIIStringEncoding];
 }
+
 @end

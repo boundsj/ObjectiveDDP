@@ -7,7 +7,14 @@
 {
     self = [super init];
     if (self) {
-        self.subscriptions = @{@"things": [NSMutableArray array]};
+        // declare meteor data subscriptions
+        // TODO: do this as a dependency to make this class more reusable
+        self.subscriptions = @{
+                @"things": [NSMutableArray array],
+                @"lists": [NSMutableArray array]
+        };
+
+        // TODO: subscription version should be set here
     }
     return self;
 }
@@ -36,6 +43,8 @@
 
     NSString *msg = [message objectForKey:@"msg"];
 
+    // TODO: handle auth login failure with auth delegate call (with meteor server error message)
+
     if (msg && [msg isEqualToString:@"result"]
             && message[@"result"]
             && message[@"result"][@"B"]
@@ -50,21 +59,20 @@
                    && message[@"result"][@"HAMK"]
                    && message[@"result"][@"token"]) {
         NSDictionary *response = message[@"result"];
-        [self.authDelegate didReceiveHAMKVerificationWithRespons:response];
+        [self.authDelegate didReceiveHAMKVerificationWithResponse:response];
 
-        // Make data subscriptions to meteor server
-        for (NSString *key in [self.subscriptions allKeys]) {
-            NSString *uid = [[BSONIdGenerator generate] substringToIndex:15];
-            [self.ddp subscribeWith:uid name:key parameters:nil];
-        }
+        // it's now a great time to subscribe to the meteor data subscriptions
+        [self makeMeteorDataSubscriptions];
 
-    } else if (msg && [msg isEqualToString:@"added"] && [message[@"collection"] isEqualToString:@"things"]) {
+    } else if (msg && [msg isEqualToString:@"added"]
+                   && message[@"collection"]) {
         [self _parseAdded:message];
-        [self.dataDelegate didReceiveUpdate];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"added" object:self];
 
-    } else if (msg && [msg isEqualToString:@"removed"] && [message[@"collection"] isEqualToString:@"things"]) {
+    } else if (msg && [msg isEqualToString:@"removed"]
+                   && message[@"collection"]) {
         [self _parseRemoved:message];
-        [self.dataDelegate didReceiveUpdate];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"added" object:self];
     }
 }
 
@@ -74,26 +82,37 @@
 
 #pragma mark Meteor Data Managment
 
-- (void)_parseAdded:(NSDictionary *)message {
-    NSMutableDictionary *thing = [NSMutableDictionary dictionaryWithDictionary:@{@"id": message[@"id"]}];
-    for (id key in message[@"fields"]) {
-        thing[key] = message[@"fields"][key];
+- (void)makeMeteorDataSubscriptions {
+    for (NSString *key in [self.subscriptions allKeys]) {
+        NSString *uid = [[BSONIdGenerator generate] substringToIndex:15];
+        [self.ddp subscribeWith:uid name:key parameters:nil];
     }
-    [self.subscriptions[@"things"] addObject:thing];
+}
+
+- (void)_parseAdded:(NSDictionary *)message {
+    NSMutableDictionary *object = [NSMutableDictionary dictionaryWithDictionary:@{@"id": message[@"id"]}];
+
+    for (id key in message[@"fields"]) {
+        object[key] = message[@"fields"][key];
+    }
+    NSMutableArray *subscription = self.subscriptions[message[@"collection"]];
+    [subscription addObject:object];
 }
 
 - (void)_parseRemoved:(NSDictionary *)message {
     NSString *removedId = [message objectForKey:@"id"];
-    int indexOfRemovedThing = 0;
+    int indexOfRemovedObject = 0;
 
-    for (NSDictionary *thing in self.subscriptions[@"things"]) {
-        if ([thing[@"id"] isEqualToString:removedId]) {
+    NSMutableArray *subscription = self.subscriptions[message[@"collection"]];
+
+    for (NSDictionary *object in subscription) {
+        if ([object[@"id"] isEqualToString:removedId]) {
             break;
         }
-        indexOfRemovedThing++;
+        indexOfRemovedObject++;
     }
 
-    [self.subscriptions[@"things"] removeObjectAtIndex:indexOfRemovedThing];
+    [subscription removeObjectAtIndex:indexOfRemovedObject];
 }
 
 @end

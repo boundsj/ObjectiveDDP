@@ -15,17 +15,6 @@
     return self;
 }
 
-- (void)viewDidLoad
-{
-    [super viewDidLoad];
-}
-
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
 - (IBAction)didTouchAddButton:(id)sender {
     [self.delegate didAddThing: self.messageTextView.text];
 }
