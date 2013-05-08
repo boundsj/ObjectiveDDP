@@ -19,7 +19,7 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         self.meteor = meteor;
-        self.things = meteor.subscriptions[@"things"];
+        self.things = meteor.collections[@"things"];
         self.listName = listName;
     }
     return self;
@@ -32,8 +32,12 @@
                                                                                 action:@selector(didTouchAdd:)];
     [self.navigationItem setRightBarButtonItem:addButton];
     [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(didReceiveUpdate)
+                                             selector:@selector(didReceiveUpdate:)
                                                  name:@"added"
+                                               object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(didReceiveUpdate:)
+                                                 name:@"removed"
                                                object:nil];
 }
 
@@ -41,7 +45,7 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
-- (void)didReceiveUpdate {
+- (void)didReceiveUpdate:(NSNotification *)notification {
     [self.tableview reloadData];
 }
 
@@ -102,7 +106,7 @@
         // and syncing subscription to server later
 
         [self.meteor sendWithMethodName:@"/things/remove"
-                             parameters:@[@{@"_id": thing[@"id"]}]];
+                             parameters:@[@{@"_id": thing[@"_id"]}]];
     }
 }
 

@@ -15,7 +15,7 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         self.meteor = meteor;
-        self.lists = self.meteor.subscriptions[@"lists"];
+        self.lists = self.meteor.collections[@"lists"];
     }
     return self;
 }
@@ -25,12 +25,16 @@
     self.navigationController.navigationBarHidden = NO;
     self.navigationItem.hidesBackButton = YES;
     [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(didReceiveUpdate)
+                                             selector:@selector(didReceiveUpdate:)
                                                  name:@"added"
+                                               object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(didReceiveUpdate:)
+                                                 name:@"removed"
                                                object:nil];
 }
 
-- (void)didReceiveUpdate {
+- (void)didReceiveUpdate:(NSNotification *)notification {
     [self.tableview reloadData];
 }
 
@@ -64,7 +68,7 @@
 
     NSDictionary *list = self.lists[indexPath.row];
     [self.meteor sendWithMethodName:@"/lists/remove"
-                         parameters:@[@{@"_id": list[@"id"]}]];
+                         parameters:@[@{@"_id": list[@"_id"]}]];
 }
 
 
