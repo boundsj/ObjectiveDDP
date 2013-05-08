@@ -1,0 +1,19 @@
+PODS:
+  - ObjectiveDDP (0.0.3)
+  - SocketRocket (0.3.1-beta2)
+
+DEPENDENCIES:
+  - ObjectiveDDP (from `/Users/boundsj/workspace/ios/ObjectiveDDP`)
+  - SocketRocket (from `git@github.com:square/SocketRocket.git`)
+
+EXTERNAL SOURCES:
+  ObjectiveDDP:
+    :git: /Users/boundsj/workspace/ios/ObjectiveDDP
+  SocketRocket:
+    :git: git@github.com:square/SocketRocket.git
+
+SPEC CHECKSUMS:
+  ObjectiveDDP: 885825e2f608ab57be310c6c3ca8360ddb86e37c
+  SocketRocket: 9cbe08469513356cddc0afcab1ff160bd190296a
+
+COCOAPODS: 0.17.2
