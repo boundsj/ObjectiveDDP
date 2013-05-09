@@ -1,5 +1,5 @@
 #import <UIKit/UIKit.h>
-#import "MeteorClient.h"
+#import <ObjectiveDDP/MeteorClient.h>
 
 @interface LoginViewController : UIViewController<DDPAuthDelegate>
 

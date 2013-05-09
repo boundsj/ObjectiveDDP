@@ -1,5 +1,7 @@
 platform :ios, '6.0'
 
+#dependency 'RestKit/UI'
+
 #pod 'ObjectiveDDP', :git => 'https://github.com/boundsj/ObjectiveDDP.git'
-pod 'ObjectiveDDP', :git => '/Users/boundsj/workspace/ios/ObjectiveDDP'
+pod 'ObjectiveDDP', :path => '/Users/jesse/workspace/ios/ObjectiveDDP'
 pod 'SocketRocket', :git => 'git@github.com:square/SocketRocket.git'

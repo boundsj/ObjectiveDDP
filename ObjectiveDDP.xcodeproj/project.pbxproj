@@ -29,6 +29,8 @@
 		430E014E41C9666E08613FCE /* MockSRWebSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = 430E02ACD0BC78CC53F31D72 /* MockSRWebSocket.m */; };
 		430E08B6E86CA801EE954D0F /* MockObjectiveDDPDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 430E092B95390D2D558E5F3B /* MockObjectiveDDPDelegate.m */; };
 		570DE62F4BD74C18AE51ED8C /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2C1F0C9084EA4B2DBD349673 /* libPods.a */; };
+		888B6DFC173B6508001EED80 /* MeteorClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 888B6DFB173B6508001EED80 /* MeteorClient.m */; };
+		888B6DFF173B66EA001EED80 /* BSONIdGenerator.m in Sources */ = {isa = PBXBuildFile; fileRef = 888B6DFE173B66EA001EED80 /* BSONIdGenerator.m */; };
 		9D3C062D54114FB1AC5700F0 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 22BE0B3F1B814D98AAAE26CF /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -72,6 +74,11 @@
 		430E0AEA2F4C48D01B0BC222 /* MockSRWebSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MockSRWebSocket.h; sourceTree = "<group>"; };
 		430E0F1E6C3E7422A8791E24 /* MockObjectiveDDPDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MockObjectiveDDPDelegate.h; sourceTree = "<group>"; };
 		5286FA1887BC49AFB425645B /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = SOURCE_ROOT; };
+		888B6DFA173B6508001EED80 /* MeteorClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MeteorClient.h; sourceTree = "<group>"; };
+		888B6DFB173B6508001EED80 /* MeteorClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MeteorClient.m; sourceTree = "<group>"; };
+		888B6DFD173B66EA001EED80 /* BSONIdGenerator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BSONIdGenerator.h; sourceTree = "<group>"; };
+		888B6DFE173B66EA001EED80 /* BSONIdGenerator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BSONIdGenerator.m; sourceTree = "<group>"; };
+		888B6E00173B67AB001EED80 /* libcommonCrypto.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libcommonCrypto.dylib; path = usr/lib/system/libcommonCrypto.dylib; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -131,6 +138,8 @@
 			children = (
 				2C1F0C9084EA4B2DBD349673 /* libPods.a */,
 				401AEB7D170E9EC7008B38EA /* libicucore.dylib */,
+				888B6E00173B67AB001EED80 /* libcommonCrypto.dylib */,
+				4079F9DD170EB31D00194B4A /* CoreGraphics.framework */,
 				4079F9E8170EB31E00194B4A /* Cedar-iOS.framework */,
 				401AEB83170E9EEB008B38EA /* Security.framework */,
 				401AEB81170E9ED2008B38EA /* CFNetwork.framework */,
@@ -138,7 +147,6 @@
 				4000D639170E880400296229 /* Foundation.framework */,
 				4079F9DA170EB31D00194B4A /* UIKit.framework */,
 				2C1F0C9084EA4B2DBD349673 /* libPods.a */,
-				4079F9DD170EB31D00194B4A /* CoreGraphics.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -146,7 +154,10 @@
 		4000D63B170E880400296229 /* ObjectiveDDP */ = {
 			isa = PBXGroup;
 			children = (
-				5286FA1887BC49AFB425645B /* Pods.xcconfig */,
+				888B6DFD173B66EA001EED80 /* BSONIdGenerator.h */,
+				888B6DFE173B66EA001EED80 /* BSONIdGenerator.m */,
+				888B6DFA173B6508001EED80 /* MeteorClient.h */,
+				888B6DFB173B6508001EED80 /* MeteorClient.m */,
 				4000D63E170E880400296229 /* ObjectiveDDP.h */,
 				4000D640170E880400296229 /* ObjectiveDDP.m */,
 				4000D63C170E880400296229 /* Supporting Files */,
@@ -157,6 +168,7 @@
 		4000D63C170E880400296229 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				5286FA1887BC49AFB425645B /* Pods.xcconfig */,
 				4000D63D170E880400296229 /* ObjectiveDDP-Prefix.pch */,
 			);
 			name = "Supporting Files";
@@ -166,7 +178,6 @@
 			isa = PBXGroup;
 			children = (
 				4079F9F6170EB3B000194B4A /* ObjectiveDDPSpec.mm */,
-				2459525257B94E909C3CA1DF /* Pods.xcconfig */,
 				4079F9E0170EB31D00194B4A /* Supporting Files */,
 				430E092A40EC4FAED3B6C76B /* Mocks */,
 			);
@@ -176,6 +187,7 @@
 		4079F9E0170EB31D00194B4A /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				2459525257B94E909C3CA1DF /* Pods.xcconfig */,
 				4079F9E1170EB31D00194B4A /* Specs-Info.plist */,
 				4079F9E2170EB31D00194B4A /* InfoPlist.strings */,
 				4079F9E5170EB31D00194B4A /* main.m */,
@@ -309,6 +321,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				4000D641170E880400296229 /* ObjectiveDDP.m in Sources */,
+				888B6DFC173B6508001EED80 /* MeteorClient.m in Sources */,
+				888B6DFF173B66EA001EED80 /* BSONIdGenerator.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -398,6 +412,10 @@
 				DSTROOT = /tmp/ObjectiveDDP.dst;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "ObjectiveDDP/ObjectiveDDP-Prefix.pch";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SDKROOT)/usr/lib/system\"",
+				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -411,6 +429,10 @@
 				DSTROOT = /tmp/ObjectiveDDP.dst;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "ObjectiveDDP/ObjectiveDDP-Prefix.pch";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SDKROOT)/usr/lib/system\"",
+				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
