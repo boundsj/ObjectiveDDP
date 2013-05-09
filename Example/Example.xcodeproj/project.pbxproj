@@ -23,8 +23,8 @@
 		401AEB78170E9E16008B38EA /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 401AEB77170E9E16008B38EA /* SystemConfiguration.framework */; };
 		401AEB7A170E9E20008B38EA /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 401AEB79170E9E20008B38EA /* CFNetwork.framework */; };
 		401AEB7C170E9E28008B38EA /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 401AEB7B170E9E28008B38EA /* Security.framework */; };
-		408F42881719C93A00C91A92 /* libssl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 408F42871719C93A00C91A92 /* libssl.a */; };
-		408F428A1719CABA00C91A92 /* libcrypto.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 408F42891719CABA00C91A92 /* libcrypto.a */; };
+		408151E3173B4E8800CFC5B2 /* libcrypto.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 408F42891719CABA00C91A92 /* libcrypto.a */; };
+		408151E4173B4E8800CFC5B2 /* libssl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 408F42871719C93A00C91A92 /* libssl.a */; };
 		40A59C381718E9180095E30E /* AddViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 40A59C361718E9180095E30E /* AddViewController.m */; };
 		40A59C391718E9180095E30E /* AddViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 40A59C371718E9180095E30E /* AddViewController.xib */; };
 		40D0816E1726566C00434EB3 /* srp.c in Sources */ = {isa = PBXBuildFile; fileRef = 40D0816C1726566C00434EB3 /* srp.c */; };
@@ -137,8 +137,8 @@
 		408F42841719C72400C91A92 /* x509.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = x509.h; sourceTree = "<group>"; };
 		408F42851719C72400C91A92 /* x509_vfy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = x509_vfy.h; sourceTree = "<group>"; };
 		408F42861719C72400C91A92 /* x509v3.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = x509v3.h; sourceTree = "<group>"; };
-		408F42871719C93A00C91A92 /* libssl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libssl.a; path = "../../ios-openssl/lib/libssl.a"; sourceTree = "<group>"; };
-		408F42891719CABA00C91A92 /* libcrypto.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcrypto.a; path = "../../ios-openssl/lib/libcrypto.a"; sourceTree = "<group>"; };
+		408F42871719C93A00C91A92 /* libssl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libssl.a; path = Example/libssl.a; sourceTree = "<group>"; };
+		408F42891719CABA00C91A92 /* libcrypto.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcrypto.a; path = Example/libcrypto.a; sourceTree = "<group>"; };
 		40A59C351718E9180095E30E /* AddViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddViewController.h; sourceTree = "<group>"; };
 		40A59C361718E9180095E30E /* AddViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddViewController.m; sourceTree = "<group>"; };
 		40A59C371718E9180095E30E /* AddViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AddViewController.xib; sourceTree = "<group>"; };
@@ -167,8 +167,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				408F428A1719CABA00C91A92 /* libcrypto.a in Frameworks */,
-				408F42881719C93A00C91A92 /* libssl.a in Frameworks */,
+				408151E3173B4E8800CFC5B2 /* libcrypto.a in Frameworks */,
+				408151E4173B4E8800CFC5B2 /* libssl.a in Frameworks */,
 				401AEB76170E9E08008B38EA /* libicucore.dylib in Frameworks */,
 				401AEB7C170E9E28008B38EA /* Security.framework in Frameworks */,
 				401AEB7A170E9E20008B38EA /* CFNetwork.framework in Frameworks */,
@@ -186,8 +186,6 @@
 		401AEB29170E9B4D008B38EA = {
 			isa = PBXGroup;
 			children = (
-				408F42891719CABA00C91A92 /* libcrypto.a */,
-				408F42871719C93A00C91A92 /* libssl.a */,
 				401AEB3B170E9B4D008B38EA /* Example */,
 				401AEB34170E9B4D008B38EA /* Frameworks */,
 				401AEB33170E9B4D008B38EA /* Products */,
@@ -206,6 +204,8 @@
 		401AEB34170E9B4D008B38EA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				408F42891719CABA00C91A92 /* libcrypto.a */,
+				408F42871719C93A00C91A92 /* libssl.a */,
 				401AEB73170E9DFD008B38EA /* libObjectiveDDP.a */,
 				401AEB75170E9E08008B38EA /* libicucore.dylib */,
 				401AEB7B170E9E28008B38EA /* Security.framework */,
