@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = 'ObjectiveDDP'
-  s.version      = '0.0.3'
+  s.version      = '0.0.4'
   s.license      = 'MIT'
   s.summary      = 'Facilitates communication between iOS clients and meteor.js servers'
   s.homepage     = 'https://github.com/boundsj/ObjectiveDDP.git'

@@ -1,5 +1,5 @@
 #import "ViewController.h"
-#import "BSONIdGenerator.h"
+#import <ObjectiveDDP/BSONIdGenerator.h>
 
 @interface ViewController ()
 
