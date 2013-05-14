@@ -1,4 +1,4 @@
-#import <ObjectiveDDP/ObjectiveDDP.h>
+#import "ObjectiveDDP.h"
 
 @protocol DDPAuthDelegate;
 
@@ -9,8 +9,8 @@
 @property (strong, nonatomic) NSMutableDictionary *subscriptions;
 @property (strong, nonatomic) NSMutableDictionary *collections;
 
-
 - (void)sendWithMethodName:(NSString *)methodName parameters:(NSArray *)parameters;
+- (void)addSubscription:(NSString *)subscriptionName;
 
 @end
 

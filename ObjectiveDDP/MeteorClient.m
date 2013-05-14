@@ -14,12 +14,19 @@
     return self;
 }
 
-#pragma mark Meteor API
+#pragma mark MeteorClient public API
 
 - (void)sendWithMethodName:(NSString *)methodName parameters:(NSArray *)parameters {
     [self.ddp methodWith:[[BSONIdGenerator generate] substringToIndex:15]
                   method:methodName
               parameters:parameters];
+}
+
+- (void)addSubscription:(NSString *)subscriptionName {
+    [self.subscriptions setObject:[NSArray array]
+                           forKey:subscriptionName];
+    NSString *uid = [[BSONIdGenerator generate] substringToIndex:15];
+    [self.ddp subscribeWith:uid name:subscriptionName parameters:nil];
 }
 
 #pragma mark <ObjectiveDDPDelegate>
@@ -56,9 +63,6 @@
         NSDictionary *response = message[@"result"];
         [self.authDelegate didReceiveHAMKVerificationWithResponse:response];
 
-        // it's now a great time to subscribe to the meteor data subscriptions
-        [self makeMeteorDataSubscriptions];
-
     } else if (msg && [msg isEqualToString:@"added"]
             && message[@"collection"]) {
         NSDictionary *object = [self _parseObjectAndAddToCollection:message];
@@ -75,7 +79,6 @@
         [[NSNotificationCenter defaultCenter] postNotificationName:@"changed" object:self userInfo:object];
 
     } else if (msg && [msg isEqualToString:@"connected"]) {
-        // TODO: This is the default behavior but user should be able to turn this off and do selective subs
         [self makeMeteorDataSubscriptions];
     }
 }
