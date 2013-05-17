@@ -23,7 +23,6 @@
 		401AEB78170E9E16008B38EA /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 401AEB77170E9E16008B38EA /* SystemConfiguration.framework */; };
 		401AEB7A170E9E20008B38EA /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 401AEB79170E9E20008B38EA /* CFNetwork.framework */; };
 		401AEB7C170E9E28008B38EA /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 401AEB7B170E9E28008B38EA /* Security.framework */; };
-		408151E3173B4E8800CFC5B2 /* libcrypto.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 408F42891719CABA00C91A92 /* libcrypto.a */; };
 		408151E4173B4E8800CFC5B2 /* libssl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 408F42871719C93A00C91A92 /* libssl.a */; };
 		40A59C381718E9180095E30E /* AddViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 40A59C361718E9180095E30E /* AddViewController.m */; };
 		40A59C391718E9180095E30E /* AddViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 40A59C371718E9180095E30E /* AddViewController.xib */; };
@@ -161,7 +160,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				408151E3173B4E8800CFC5B2 /* libcrypto.a in Frameworks */,
 				408151E4173B4E8800CFC5B2 /* libssl.a in Frameworks */,
 				401AEB76170E9E08008B38EA /* libicucore.dylib in Frameworks */,
 				401AEB7C170E9E28008B38EA /* Security.framework in Frameworks */,
