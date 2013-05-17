@@ -9,7 +9,7 @@ Pod::Spec.new do |s|
   s.source_files = 'ObjectiveDDP/*.{h,m,c}'
   s.resource     = 'ObjectiveDDP/libcrypto.a'
   #s.xcconfig    = { 'OTHER_LDFLAGS' => '$(PODS_ROOT)/ObjectiveDDP/ObjectiveDDP/libcrypto.a' }
-  s.xconfig      = { 'LIBRARY_SEARCH_PATHS' => "$(SRCROOT)/Pods/**" }
+  s.xconfig      = { 'LIBRARY_SEARCH_PATHS' => '$(SRCROOT)/Pods/**' }
   s.requires_arc = true
 end
 
