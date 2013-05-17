@@ -1,2955 +1,660 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
-<plist version="1.0">
-<dict>
-	<key>archiveVersion</key>
-	<string>1</string>
-	<key>classes</key>
-	<dict/>
-	<key>objectVersion</key>
-	<string>46</string>
-	<key>objects</key>
-	<dict>
-		<key>00107B61A8CD476496B07D9A</key>
-		<dict>
-			<key>includeInIndex</key>
-			<string>1</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>name</key>
-			<string>ui.h</string>
-			<key>path</key>
-			<string>ObjectiveDDP/ObjectiveDDP/openssl/ui.h</string>
-			<key>sourceTree</key>
-			<string>SOURCE_ROOT</string>
-		</dict>
-		<key>002765CD086B401488F29835</key>
-		<dict>
-			<key>includeInIndex</key>
-			<string>1</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>name</key>
-			<string>objects.h</string>
-			<key>path</key>
-			<string>ObjectiveDDP/ObjectiveDDP/openssl/objects.h</string>
-			<key>sourceTree</key>
-			<string>SOURCE_ROOT</string>
-		</dict>
-		<key>0031AE0EB1CC44CD889BA35D</key>
-		<dict>
-			<key>includeInIndex</key>
-			<string>1</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>name</key>
-			<string>err.h</string>
-			<key>path</key>
-			<string>ObjectiveDDP/ObjectiveDDP/openssl/err.h</string>
-			<key>sourceTree</key>
-			<string>SOURCE_ROOT</string>
-		</dict>
-		<key>0041F03979314F449003055E</key>
-		<dict>
-			<key>fileRef</key>
-			<string>E7CAEA83C00B44AE8C115968</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-			<key>settings</key>
-			<dict/>
-		</dict>
-		<key>014F6276CBA743A09C42096F</key>
-		<dict>
-			<key>includeInIndex</key>
-			<string>1</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>name</key>
-			<string>Pods-prefix.pch</string>
-			<key>path</key>
-			<string>Pods-prefix.pch</string>
-			<key>sourceTree</key>
-			<string>SOURCE_ROOT</string>
-		</dict>
-		<key>02D077725FED44179A57FECA</key>
-		<dict>
-			<key>fileRef</key>
-			<string>95889017B6BE4FBCB3F8EA09</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-			<key>settings</key>
-			<dict/>
-		</dict>
-		<key>041EF256984E47C792791BB6</key>
-		<dict>
-			<key>includeInIndex</key>
-			<string>1</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>name</key>
-			<string>ocsp.h</string>
-			<key>path</key>
-			<string>ObjectiveDDP/ObjectiveDDP/openssl/ocsp.h</string>
-			<key>sourceTree</key>
-			<string>SOURCE_ROOT</string>
-		</dict>
-		<key>04C3C5C080D24D338E52F549</key>
-		<dict>
-			<key>fileRef</key>
-			<string>F35ED55453F64AF2A0AE5601</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-			<key>settings</key>
-			<dict/>
-		</dict>
-		<key>05CE6938310446109B3AD09E</key>
-		<dict>
-			<key>includeInIndex</key>
-			<string>1</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>name</key>
-			<string>rc4.h</string>
-			<key>path</key>
-			<string>ObjectiveDDP/ObjectiveDDP/openssl/rc4.h</string>
-			<key>sourceTree</key>
-			<string>SOURCE_ROOT</string>
-		</dict>
-		<key>0B5FF483CE6F4C2183EFAE42</key>
-		<dict>
-			<key>includeInIndex</key>
-			<string>1</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>name</key>
-			<string>dh.h</string>
-			<key>path</key>
-			<string>ObjectiveDDP/ObjectiveDDP/openssl/dh.h</string>
-			<key>sourceTree</key>
-			<string>SOURCE_ROOT</string>
-		</dict>
-		<key>0BA2A3CF8E8A4759861BA61A</key>
-		<dict>
-			<key>includeInIndex</key>
-			<string>1</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>name</key>
-			<string>pem.h</string>
-			<key>path</key>
-			<string>ObjectiveDDP/ObjectiveDDP/openssl/pem.h</string>
-			<key>sourceTree</key>
-			<string>SOURCE_ROOT</string>
-		</dict>
-		<key>0BEF3DD8B22B4E20A691E39D</key>
-		<dict>
-			<key>includeInIndex</key>
-			<string>1</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>name</key>
-			<string>srp.h</string>
-			<key>path</key>
-			<string>ObjectiveDDP/ObjectiveDDP/openssl/srp.h</string>
-			<key>sourceTree</key>
-			<string>SOURCE_ROOT</string>
-		</dict>
-		<key>0BF5730F39B54011932558A4</key>
-		<dict>
-			<key>fileRef</key>
-			<string>40ACA732F88948B0A0B23988</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-			<key>settings</key>
-			<dict/>
-		</dict>
-		<key>0C8295F3283F4302BF8472D4</key>
-		<dict>
-			<key>fileRef</key>
-			<string>DADD0239213945BFBE54F997</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-			<key>settings</key>
-			<dict/>
-		</dict>
-		<key>0FBE5B539CA64193B219C0BC</key>
-		<dict>
-			<key>includeInIndex</key>
-			<string>1</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>name</key>
-			<string>ssl23.h</string>
-			<key>path</key>
-			<string>ObjectiveDDP/ObjectiveDDP/openssl/ssl23.h</string>
-			<key>sourceTree</key>
-			<string>SOURCE_ROOT</string>
-		</dict>
-		<key>11AE098452EF4AF08F66CFEC</key>
-		<dict>
-			<key>includeInIndex</key>
-			<string>1</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>name</key>
-			<string>obj_mac.h</string>
-			<key>path</key>
-			<string>ObjectiveDDP/ObjectiveDDP/openssl/obj_mac.h</string>
-			<key>sourceTree</key>
-			<string>SOURCE_ROOT</string>
-		</dict>
-		<key>144BDB459604466EAD685056</key>
-		<dict>
-			<key>includeInIndex</key>
-			<string>1</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>name</key>
-			<string>asn1_mac.h</string>
-			<key>path</key>
-			<string>ObjectiveDDP/ObjectiveDDP/openssl/asn1_mac.h</string>
-			<key>sourceTree</key>
-			<string>SOURCE_ROOT</string>
-		</dict>
-		<key>18EE862E402848BE9FFDA79B</key>
-		<dict>
-			<key>includeInIndex</key>
-			<string>1</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>name</key>
-			<string>ui_compat.h</string>
-			<key>path</key>
-			<string>ObjectiveDDP/ObjectiveDDP/openssl/ui_compat.h</string>
-			<key>sourceTree</key>
-			<string>SOURCE_ROOT</string>
-		</dict>
-		<key>1989108E34954CF1B2B747C2</key>
-		<dict>
-			<key>includeInIndex</key>
-			<string>1</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>name</key>
-			<string>MeteorClient.h</string>
-			<key>path</key>
-			<string>ObjectiveDDP/ObjectiveDDP/MeteorClient.h</string>
-			<key>sourceTree</key>
-			<string>SOURCE_ROOT</string>
-		</dict>
-		<key>1CB00921AD894AFEA4340D9F</key>
-		<dict>
-			<key>fileRef</key>
-			<string>45A18509E8064A3D9DE4C8E4</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-			<key>settings</key>
-			<dict>
-				<key>COMPILER_FLAGS</key>
-				<string>-fobjc-arc -DOS_OBJECT_USE_OBJC=0</string>
-			</dict>
-		</dict>
-		<key>1D563BD955B8441BA1EE7066</key>
-		<dict>
-			<key>includeInIndex</key>
-			<string>1</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>name</key>
-			<string>idea.h</string>
-			<key>path</key>
-			<string>ObjectiveDDP/ObjectiveDDP/openssl/idea.h</string>
-			<key>sourceTree</key>
-			<string>SOURCE_ROOT</string>
-		</dict>
-		<key>20399379B7504617BBE08A7D</key>
-		<dict>
-			<key>includeInIndex</key>
-			<string>1</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>name</key>
-			<string>ssl.h</string>
-			<key>path</key>
-			<string>ObjectiveDDP/ObjectiveDDP/openssl/ssl.h</string>
-			<key>sourceTree</key>
-			<string>SOURCE_ROOT</string>
-		</dict>
-		<key>2198ED54E5F944C8889F6FFA</key>
-		<dict>
-			<key>fileRef</key>
-			<string>2E096006A17D467782E3520E</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-			<key>settings</key>
-			<dict/>
-		</dict>
-		<key>2455303FC30A4F7890F3A878</key>
-		<dict>
-			<key>explicitFileType</key>
-			<string>archive.ar</string>
-			<key>includeInIndex</key>
-			<string>0</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>name</key>
-			<string>libPods.a</string>
-			<key>path</key>
-			<string>libPods.a</string>
-			<key>sourceTree</key>
-			<string>BUILT_PRODUCTS_DIR</string>
-		</dict>
-		<key>253E33114C1948E0B98793C6</key>
-		<dict>
-			<key>includeInIndex</key>
-			<string>1</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>name</key>
-			<string>krb5_asn.h</string>
-			<key>path</key>
-			<string>ObjectiveDDP/ObjectiveDDP/openssl/krb5_asn.h</string>
-			<key>sourceTree</key>
-			<string>SOURCE_ROOT</string>
-		</dict>
-		<key>257740BEFF7D4F58AB1EB03B</key>
-		<dict>
-			<key>fileRef</key>
-			<string>0BEF3DD8B22B4E20A691E39D</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-			<key>settings</key>
-			<dict/>
-		</dict>
-		<key>26F90265CBBE4A7DAD05B9B5</key>
-		<dict>
-			<key>fileRef</key>
-			<string>47B170D3405B4E76BB188E1C</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-			<key>settings</key>
-			<dict/>
-		</dict>
-		<key>281BB4B1E4864FEA9CD7A1F8</key>
-		<dict>
-			<key>fileRef</key>
-			<string>F26C09CE602145ABB0F6EA0A</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-			<key>settings</key>
-			<dict/>
-		</dict>
-		<key>288817717F8B4DC69BE5E77B</key>
-		<dict>
-			<key>fileRef</key>
-			<string>1D563BD955B8441BA1EE7066</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-			<key>settings</key>
-			<dict/>
-		</dict>
-		<key>29D743D6500347AD893B4F17</key>
-		<dict>
-			<key>includeInIndex</key>
-			<string>1</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>name</key>
-			<string>ecdh.h</string>
-			<key>path</key>
-			<string>ObjectiveDDP/ObjectiveDDP/openssl/ecdh.h</string>
-			<key>sourceTree</key>
-			<string>SOURCE_ROOT</string>
-		</dict>
-		<key>2E096006A17D467782E3520E</key>
-		<dict>
-			<key>includeInIndex</key>
-			<string>1</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>name</key>
-			<string>srp.h</string>
-			<key>path</key>
-			<string>ObjectiveDDP/ObjectiveDDP/srp/srp.h</string>
-			<key>sourceTree</key>
-			<string>SOURCE_ROOT</string>
-		</dict>
-		<key>2E5109B95C0C4FBCB25F7446</key>
-		<dict>
-			<key>fileRef</key>
-			<string>DC548E005D7B4252812520E4</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-			<key>settings</key>
-			<dict/>
-		</dict>
-		<key>31E48A2FA10140CD844CFEDF</key>
-		<dict>
-			<key>fileRef</key>
-			<string>ACCB70FF00B64DD8A43988C0</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-			<key>settings</key>
-			<dict/>
-		</dict>
-		<key>32A227D6372E4D21905AD6C3</key>
-		<dict>
-			<key>fileRef</key>
-			<string>3F7B67AAE29846539BBA2023</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-			<key>settings</key>
-			<dict/>
-		</dict>
-		<key>34785C6999584EFEA902DAB8</key>
-		<dict>
-			<key>includeInIndex</key>
-			<string>1</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>name</key>
-			<string>opensslv.h</string>
-			<key>path</key>
-			<string>ObjectiveDDP/ObjectiveDDP/openssl/opensslv.h</string>
-			<key>sourceTree</key>
-			<string>SOURCE_ROOT</string>
-		</dict>
-		<key>356DF15B3396495BA60AE331</key>
-		<dict>
-			<key>includeInIndex</key>
-			<string>1</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>name</key>
-			<string>modes.h</string>
-			<key>path</key>
-			<string>ObjectiveDDP/ObjectiveDDP/openssl/modes.h</string>
-			<key>sourceTree</key>
-			<string>SOURCE_ROOT</string>
-		</dict>
-		<key>35717BE8AD264F498B0549C6</key>
-		<dict>
-			<key>includeInIndex</key>
-			<string>1</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>wrapper.framework</string>
-			<key>name</key>
-			<string>CFNetwork.framework</string>
-			<key>path</key>
-			<string>Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS6.1.sdk/System/Library/Frameworks/CFNetwork.framework</string>
-			<key>sourceTree</key>
-			<string>DEVELOPER_DIR</string>
-		</dict>
-		<key>36B8F1C715C5435E9CEB706C</key>
-		<dict>
-			<key>fileRef</key>
-			<string>79EB6F557BCF4201AF38AB89</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-			<key>settings</key>
-			<dict/>
-		</dict>
-		<key>383D4B8065584056A7730B98</key>
-		<dict>
-			<key>fileRef</key>
-			<string>5AAF330252FB42A0A45A0B11</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-			<key>settings</key>
-			<dict/>
-		</dict>
-		<key>38704BB886C149B5B582E0DB</key>
-		<dict>
-			<key>includeInIndex</key>
-			<string>1</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>name</key>
-			<string>cmac.h</string>
-			<key>path</key>
-			<string>ObjectiveDDP/ObjectiveDDP/openssl/cmac.h</string>
-			<key>sourceTree</key>
-			<string>SOURCE_ROOT</string>
-		</dict>
-		<key>39899399FF734AF3B1DB30FF</key>
-		<dict>
-			<key>fileRef</key>
-			<string>47F4E48EF8E64822AE87428A</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-			<key>settings</key>
-			<dict/>
-		</dict>
-		<key>3A12A6671F4742F3B3E70228</key>
-		<dict>
-			<key>includeInIndex</key>
-			<string>1</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>name</key>
-			<string>dtls1.h</string>
-			<key>path</key>
-			<string>ObjectiveDDP/ObjectiveDDP/openssl/dtls1.h</string>
-			<key>sourceTree</key>
-			<string>SOURCE_ROOT</string>
-		</dict>
-		<key>3ABFDF211D75410CBD3A0699</key>
-		<dict>
-			<key>buildConfigurations</key>
-			<array>
-				<string>D7E882A58265455D8A1FF001</string>
-				<string>E5810036A4434BFE88AC7E71</string>
-			</array>
-			<key>defaultConfigurationIsVisible</key>
-			<string>0</string>
-			<key>defaultConfigurationName</key>
-			<string>Release</string>
-			<key>isa</key>
-			<string>XCConfigurationList</string>
-		</dict>
-		<key>3BCD9272EBE04A00BE398937</key>
-		<dict>
-			<key>fileRef</key>
-			<string>A01176A8E93F4ACE82E1F13D</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-			<key>settings</key>
-			<dict/>
-		</dict>
-		<key>3BF9941EEFAD440DA92D411D</key>
-		<dict>
-			<key>fileRef</key>
-			<string>0FBE5B539CA64193B219C0BC</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-			<key>settings</key>
-			<dict/>
-		</dict>
-		<key>3DD7FFEAAF314A61AE2D676A</key>
-		<dict>
-			<key>children</key>
-			<array>
-				<string>2455303FC30A4F7890F3A878</string>
-			</array>
-			<key>isa</key>
-			<string>PBXGroup</string>
-			<key>name</key>
-			<string>Products</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>3E71F7F629F54B99AF2CEF0A</key>
-		<dict>
-			<key>fileRef</key>
-			<string>20399379B7504617BBE08A7D</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-			<key>settings</key>
-			<dict/>
-		</dict>
-		<key>3F7B67AAE29846539BBA2023</key>
-		<dict>
-			<key>includeInIndex</key>
-			<string>1</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>wrapper.framework</string>
-			<key>name</key>
-			<string>Foundation.framework</string>
-			<key>path</key>
-			<string>Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS6.1.sdk/System/Library/Frameworks/Foundation.framework</string>
-			<key>sourceTree</key>
-			<string>DEVELOPER_DIR</string>
-		</dict>
-		<key>402606BA47B946B1B081230E</key>
-		<dict>
-			<key>fileRef</key>
-			<string>4198E07B61AF44CDA1BF51EA</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-			<key>settings</key>
-			<dict/>
-		</dict>
-		<key>40ACA732F88948B0A0B23988</key>
-		<dict>
-			<key>includeInIndex</key>
-			<string>1</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>name</key>
-			<string>x509v3.h</string>
-			<key>path</key>
-			<string>ObjectiveDDP/ObjectiveDDP/openssl/x509v3.h</string>
-			<key>sourceTree</key>
-			<string>SOURCE_ROOT</string>
-		</dict>
-		<key>4198E07B61AF44CDA1BF51EA</key>
-		<dict>
-			<key>includeInIndex</key>
-			<string>1</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>name</key>
-			<string>lhash.h</string>
-			<key>path</key>
-			<string>ObjectiveDDP/ObjectiveDDP/openssl/lhash.h</string>
-			<key>sourceTree</key>
-			<string>SOURCE_ROOT</string>
-		</dict>
-		<key>421228768BD847538CC7360F</key>
-		<dict>
-			<key>includeInIndex</key>
-			<string>1</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>name</key>
-			<string>kssl.h</string>
-			<key>path</key>
-			<string>ObjectiveDDP/ObjectiveDDP/openssl/kssl.h</string>
-			<key>sourceTree</key>
-			<string>SOURCE_ROOT</string>
-		</dict>
-		<key>45A18509E8064A3D9DE4C8E4</key>
-		<dict>
-			<key>includeInIndex</key>
-			<string>1</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>name</key>
-			<string>srp.c</string>
-			<key>path</key>
-			<string>ObjectiveDDP/ObjectiveDDP/srp/srp.c</string>
-			<key>sourceTree</key>
-			<string>SOURCE_ROOT</string>
-		</dict>
-		<key>4629FBF80E304DC8BD588CEC</key>
-		<dict>
-			<key>fileRef</key>
-			<string>FB95AE8D8D7E4611A3CAD4B4</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-			<key>settings</key>
-			<dict/>
-		</dict>
-		<key>4636D52A410949DDADD7FDFA</key>
-		<dict>
-			<key>includeInIndex</key>
-			<string>1</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>name</key>
-			<string>ts.h</string>
-			<key>path</key>
-			<string>ObjectiveDDP/ObjectiveDDP/openssl/ts.h</string>
-			<key>sourceTree</key>
-			<string>SOURCE_ROOT</string>
-		</dict>
-		<key>46D5C3E168174ADFAF9BBD57</key>
-		<dict>
-			<key>includeInIndex</key>
-			<string>1</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>name</key>
-			<string>ssl3.h</string>
-			<key>path</key>
-			<string>ObjectiveDDP/ObjectiveDDP/openssl/ssl3.h</string>
-			<key>sourceTree</key>
-			<string>SOURCE_ROOT</string>
-		</dict>
-		<key>47B170D3405B4E76BB188E1C</key>
-		<dict>
-			<key>includeInIndex</key>
-			<string>1</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>name</key>
-			<string>pkcs12.h</string>
-			<key>path</key>
-			<string>ObjectiveDDP/ObjectiveDDP/openssl/pkcs12.h</string>
-			<key>sourceTree</key>
-			<string>SOURCE_ROOT</string>
-		</dict>
-		<key>47F4E48EF8E64822AE87428A</key>
-		<dict>
-			<key>includeInIndex</key>
-			<string>1</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>name</key>
-			<string>pkcs7.h</string>
-			<key>path</key>
-			<string>ObjectiveDDP/ObjectiveDDP/openssl/pkcs7.h</string>
-			<key>sourceTree</key>
-			<string>SOURCE_ROOT</string>
-		</dict>
-		<key>4A843DC4D35245F093F07BDD</key>
-		<dict>
-			<key>fileRef</key>
-			<string>00107B61A8CD476496B07D9A</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-			<key>settings</key>
-			<dict/>
-		</dict>
-		<key>4C3179EB813A4B06994DCD6E</key>
-		<dict>
-			<key>includeInIndex</key>
-			<string>1</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>name</key>
-			<string>SRWebSocket.h</string>
-			<key>path</key>
-			<string>SocketRocket/SocketRocket/SRWebSocket.h</string>
-			<key>sourceTree</key>
-			<string>SOURCE_ROOT</string>
-		</dict>
-		<key>4CF5137965FA4647B9170376</key>
-		<dict>
-			<key>fileRef</key>
-			<string>4C3179EB813A4B06994DCD6E</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-			<key>settings</key>
-			<dict/>
-		</dict>
-		<key>4DFBF4B186604583AD9B17B0</key>
-		<dict>
-			<key>includeInIndex</key>
-			<string>1</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>name</key>
-			<string>asn1t.h</string>
-			<key>path</key>
-			<string>ObjectiveDDP/ObjectiveDDP/openssl/asn1t.h</string>
-			<key>sourceTree</key>
-			<string>SOURCE_ROOT</string>
-		</dict>
-		<key>508F0B34398F43BE95593D0B</key>
-		<dict>
-			<key>includeInIndex</key>
-			<string>1</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>name</key>
-			<string>ObjectiveDDP.h</string>
-			<key>path</key>
-			<string>ObjectiveDDP/ObjectiveDDP/ObjectiveDDP.h</string>
-			<key>sourceTree</key>
-			<string>SOURCE_ROOT</string>
-		</dict>
-		<key>5143099856C747848EA71E41</key>
-		<dict>
-			<key>fileRef</key>
-			<string>4636D52A410949DDADD7FDFA</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-			<key>settings</key>
-			<dict/>
-		</dict>
-		<key>53BB036AE73B4B21B2507F85</key>
-		<dict>
-			<key>fileRef</key>
-			<string>D2881E6DB54A48D4BF4EA1E6</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-			<key>settings</key>
-			<dict/>
-		</dict>
-		<key>53FBE9C5CF8C480F94923658</key>
-		<dict>
-			<key>includeInIndex</key>
-			<string>1</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>name</key>
-			<string>e_os2.h</string>
-			<key>path</key>
-			<string>ObjectiveDDP/ObjectiveDDP/openssl/e_os2.h</string>
-			<key>sourceTree</key>
-			<string>SOURCE_ROOT</string>
-		</dict>
-		<key>5511A23C5F564B8793088F7B</key>
-		<dict>
-			<key>fileRef</key>
-			<string>7B6580FE2B864624BE242DC8</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-			<key>settings</key>
-			<dict/>
-		</dict>
-		<key>5554DD3AB5024BFC81CBD09C</key>
-		<dict>
-			<key>fileRef</key>
-			<string>1989108E34954CF1B2B747C2</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-			<key>settings</key>
-			<dict/>
-		</dict>
-		<key>5581ABA60B7B4FD8A307DE71</key>
-		<dict>
-			<key>includeInIndex</key>
-			<string>1</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>name</key>
-			<string>symhacks.h</string>
-			<key>path</key>
-			<string>ObjectiveDDP/ObjectiveDDP/openssl/symhacks.h</string>
-			<key>sourceTree</key>
-			<string>SOURCE_ROOT</string>
-		</dict>
-		<key>573753A4BFB34959B0EE2A93</key>
-		<dict>
-			<key>baseConfigurationReference</key>
-			<string>EA46E2955FDF48FBAACA8438</string>
-			<key>buildSettings</key>
-			<dict>
-				<key>ALWAYS_SEARCH_USER_PATHS</key>
-				<string>NO</string>
-				<key>ARCHS</key>
-				<string>$(ARCHS_STANDARD_32_BIT)</string>
-				<key>COPY_PHASE_STRIP</key>
-				<string>YES</string>
-				<key>DSTROOT</key>
-				<string>/tmp/xcodeproj.dst</string>
-				<key>GCC_C_LANGUAGE_STANDARD</key>
-				<string>gnu99</string>
-				<key>GCC_PRECOMPILE_PREFIX_HEADER</key>
-				<string>YES</string>
-				<key>GCC_PREFIX_HEADER</key>
-				<string>Pods-prefix.pch</string>
-				<key>GCC_VERSION</key>
-				<string>com.apple.compilers.llvm.clang.1_0</string>
-				<key>INSTALL_PATH</key>
-				<string>$(BUILT_PRODUCTS_DIR)</string>
-				<key>IPHONEOS_DEPLOYMENT_TARGET</key>
-				<string>6.0</string>
-				<key>OTHER_CFLAGS</key>
-				<array>
-					<string>-DNS_BLOCK_ASSERTIONS=1</string>
-					<string>$(inherited)</string>
-				</array>
-				<key>OTHER_CPLUSPLUSFLAGS</key>
-				<array>
-					<string>-DNS_BLOCK_ASSERTIONS=1</string>
-					<string>$(inherited)</string>
-				</array>
-				<key>OTHER_LDFLAGS</key>
-				<string></string>
-				<key>PODS_HEADERS_SEARCH_PATHS</key>
-				<string>${PODS_BUILD_HEADERS_SEARCH_PATHS}</string>
-				<key>PODS_ROOT</key>
-				<string>${SRCROOT}</string>
-				<key>PRODUCT_NAME</key>
-				<string>$(TARGET_NAME)</string>
-				<key>PUBLIC_HEADERS_FOLDER_PATH</key>
-				<string>$(TARGET_NAME)</string>
-				<key>SDKROOT</key>
-				<string>iphoneos</string>
-				<key>SKIP_INSTALL</key>
-				<string>YES</string>
-				<key>VALIDATE_PRODUCT</key>
-				<string>YES</string>
-			</dict>
-			<key>isa</key>
-			<string>XCBuildConfiguration</string>
-			<key>name</key>
-			<string>Release</string>
-		</dict>
-		<key>57EB647F8DDF44E68E2CC930</key>
-		<dict>
-			<key>fileRef</key>
-			<string>05CE6938310446109B3AD09E</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-			<key>settings</key>
-			<dict/>
-		</dict>
-		<key>581969D1501E47CF8525E541</key>
-		<dict>
-			<key>includeInIndex</key>
-			<string>1</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.objc</string>
-			<key>name</key>
-			<string>BSONIdGenerator.m</string>
-			<key>path</key>
-			<string>ObjectiveDDP/ObjectiveDDP/BSONIdGenerator.m</string>
-			<key>sourceTree</key>
-			<string>SOURCE_ROOT</string>
-		</dict>
-		<key>5AAF330252FB42A0A45A0B11</key>
-		<dict>
-			<key>includeInIndex</key>
-			<string>1</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>name</key>
-			<string>bn.h</string>
-			<key>path</key>
-			<string>ObjectiveDDP/ObjectiveDDP/openssl/bn.h</string>
-			<key>sourceTree</key>
-			<string>SOURCE_ROOT</string>
-		</dict>
-		<key>5BB836F528A34FFEA83517D7</key>
-		<dict>
-			<key>buildActionMask</key>
-			<string>2147483647</string>
-			<key>files</key>
-			<array>
-				<string>7204262E1188426FA4B3C060</string>
-				<string>B96CBC502B4D494BB7AF4860</string>
-				<string>C6161E39BA524796A264649B</string>
-				<string>1CB00921AD894AFEA4340D9F</string>
-				<string>696ADDDE684E4792948445FD</string>
-				<string>FCF17BE48A8646CD8BCBDB2D</string>
-				<string>704462150E7D40BA85B8AC66</string>
-				<string>F2D963CDCD8D4245B802B70E</string>
-			</array>
-			<key>isa</key>
-			<string>PBXSourcesBuildPhase</string>
-			<key>runOnlyForDeploymentPostprocessing</key>
-			<string>0</string>
-		</dict>
-		<key>5CE66D99CA7D40F9B3BCEE06</key>
-		<dict>
-			<key>children</key>
-			<array>
-				<string>916B1C26AADB4C869346B26C</string>
-				<string>67948C9D9BDC48FF95EFE96B</string>
-			</array>
-			<key>isa</key>
-			<string>PBXGroup</string>
-			<key>name</key>
-			<string>Pods</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>5D8E7262B0A0471793B910A9</key>
-		<dict>
-			<key>fileRef</key>
-			<string>67589EC60B0A4669A15FA8B0</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-			<key>settings</key>
-			<dict/>
-		</dict>
-		<key>5E944A11167E42B2AC0DDC47</key>
-		<dict>
-			<key>includeInIndex</key>
-			<string>1</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>name</key>
-			<string>evp.h</string>
-			<key>path</key>
-			<string>ObjectiveDDP/ObjectiveDDP/openssl/evp.h</string>
-			<key>sourceTree</key>
-			<string>SOURCE_ROOT</string>
-		</dict>
-		<key>61C536C17A38452883A7487E</key>
-		<dict>
-			<key>includeInIndex</key>
-			<string>1</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>name</key>
-			<string>Pods-resources.sh</string>
-			<key>path</key>
-			<string>Pods-resources.sh</string>
-			<key>sourceTree</key>
-			<string>SOURCE_ROOT</string>
-		</dict>
-		<key>64D272F248A546288BEA12B3</key>
-		<dict>
-			<key>fileRef</key>
-			<string>8411D2D7C2864427B695B8A7</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-			<key>settings</key>
-			<dict/>
-		</dict>
-		<key>65FAB2F820A744C1BD360BA6</key>
-		<dict>
-			<key>fileRef</key>
-			<string>041EF256984E47C792791BB6</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-			<key>settings</key>
-			<dict/>
-		</dict>
-		<key>66BE85EC60B340A9950B9537</key>
-		<dict>
-			<key>includeInIndex</key>
-			<string>1</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>name</key>
-			<string>Pods-acknowledgements.plist</string>
-			<key>path</key>
-			<string>Pods-acknowledgements.plist</string>
-			<key>sourceTree</key>
-			<string>SOURCE_ROOT</string>
-		</dict>
-		<key>67589EC60B0A4669A15FA8B0</key>
-		<dict>
-			<key>includeInIndex</key>
-			<string>1</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>name</key>
-			<string>engine.h</string>
-			<key>path</key>
-			<string>ObjectiveDDP/ObjectiveDDP/openssl/engine.h</string>
-			<key>sourceTree</key>
-			<string>SOURCE_ROOT</string>
-		</dict>
-		<key>677D56B4DF874D06BBFA49BA</key>
-		<dict>
-			<key>fileRef</key>
-			<string>0031AE0EB1CC44CD889BA35D</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-			<key>settings</key>
-			<dict/>
-		</dict>
-		<key>678A94C6F8444E60AB351CCB</key>
-		<dict>
-			<key>fileRef</key>
-			<string>AA3BF4C06ABE450DA4E0D8AF</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-			<key>settings</key>
-			<dict/>
-		</dict>
-		<key>67948C9D9BDC48FF95EFE96B</key>
-		<dict>
-			<key>children</key>
-			<array>
-				<string>FA3BA15FFAF942AF97B3713B</string>
-				<string>DC548E005D7B4252812520E4</string>
-				<string>CBDBCF84299E4D8EB1EE2F67</string>
-				<string>84D673277EFE462DB1D0A741</string>
-				<string>4C3179EB813A4B06994DCD6E</string>
-				<string>ACD5C0A886C84C0B930A9F22</string>
-			</array>
-			<key>isa</key>
-			<string>PBXGroup</string>
-			<key>name</key>
-			<string>SocketRocket</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>68F08731309143D2BD4A3547</key>
-		<dict>
-			<key>buildConfigurations</key>
-			<array>
-				<string>573753A4BFB34959B0EE2A93</string>
-				<string>7C1F11AF1EC14A0393D919EC</string>
-			</array>
-			<key>defaultConfigurationIsVisible</key>
-			<string>0</string>
-			<key>defaultConfigurationName</key>
-			<string>Release</string>
-			<key>isa</key>
-			<string>XCConfigurationList</string>
-		</dict>
-		<key>696ADDDE684E4792948445FD</key>
-		<dict>
-			<key>fileRef</key>
-			<string>FA3BA15FFAF942AF97B3713B</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-			<key>settings</key>
-			<dict>
-				<key>COMPILER_FLAGS</key>
-				<string>-fobjc-arc -DOS_OBJECT_USE_OBJC=0</string>
-			</dict>
-		</dict>
-		<key>699834A783924690930B2F00</key>
-		<dict>
-			<key>includeInIndex</key>
-			<string>1</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.objc</string>
-			<key>name</key>
-			<string>ObjectiveDDP.m</string>
-			<key>path</key>
-			<string>ObjectiveDDP/ObjectiveDDP/ObjectiveDDP.m</string>
-			<key>sourceTree</key>
-			<string>SOURCE_ROOT</string>
-		</dict>
-		<key>6CD1E59E35EE49BB98074422</key>
-		<dict>
-			<key>fileRef</key>
-			<string>9DD6F22232CF4707BB0D5670</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-			<key>settings</key>
-			<dict/>
-		</dict>
-		<key>6CE11C69B51B4A4C9B147099</key>
-		<dict>
-			<key>fileRef</key>
-			<string>5581ABA60B7B4FD8A307DE71</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-			<key>settings</key>
-			<dict/>
-		</dict>
-		<key>6D563666FA1D446398C3DBE2</key>
-		<dict>
-			<key>fileRef</key>
-			<string>29D743D6500347AD893B4F17</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-			<key>settings</key>
-			<dict/>
-		</dict>
-		<key>6D65C85E44B14B819E42994B</key>
-		<dict>
-			<key>includeInIndex</key>
-			<string>1</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>name</key>
-			<string>rsa.h</string>
-			<key>path</key>
-			<string>ObjectiveDDP/ObjectiveDDP/openssl/rsa.h</string>
-			<key>sourceTree</key>
-			<string>SOURCE_ROOT</string>
-		</dict>
-		<key>700429DCDE2545808A651727</key>
-		<dict>
-			<key>fileRef</key>
-			<string>002765CD086B401488F29835</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-			<key>settings</key>
-			<dict/>
-		</dict>
-		<key>704462150E7D40BA85B8AC66</key>
-		<dict>
-			<key>fileRef</key>
-			<string>ACD5C0A886C84C0B930A9F22</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-			<key>settings</key>
-			<dict>
-				<key>COMPILER_FLAGS</key>
-				<string>-fobjc-arc -DOS_OBJECT_USE_OBJC=0</string>
-			</dict>
-		</dict>
-		<key>7124BD50F1994C2CB84D7409</key>
-		<dict>
-			<key>children</key>
-			<array>
-				<string>EA46E2955FDF48FBAACA8438</string>
-				<string>AD5688E7839F428F9D9C7203</string>
-				<string>014F6276CBA743A09C42096F</string>
-				<string>61C536C17A38452883A7487E</string>
-				<string>66BE85EC60B340A9950B9537</string>
-				<string>EC49D537DF4F4031A530044E</string>
-				<string>DCCF897A97AB42A49256DF64</string>
-			</array>
-			<key>isa</key>
-			<string>PBXGroup</string>
-			<key>name</key>
-			<string>Pods</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>7204262E1188426FA4B3C060</key>
-		<dict>
-			<key>fileRef</key>
-			<string>581969D1501E47CF8525E541</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-			<key>settings</key>
-			<dict>
-				<key>COMPILER_FLAGS</key>
-				<string>-fobjc-arc -DOS_OBJECT_USE_OBJC=0</string>
-			</dict>
-		</dict>
-		<key>73B8AAE27DB04F8EBFB702AF</key>
-		<dict>
-			<key>fileRef</key>
-			<string>FBB342AD67174A6B94BB9CE9</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-			<key>settings</key>
-			<dict/>
-		</dict>
-		<key>74CFA8581D6247BCBAE260D2</key>
-		<dict>
-			<key>children</key>
-			<array>
-				<string>7E8D5B24B3024970B2C760DE</string>
-			</array>
-			<key>isa</key>
-			<string>PBXGroup</string>
-			<key>name</key>
-			<string>ObjectiveDDP</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>757B8997B4234FC18AF510F0</key>
-		<dict>
-			<key>fileRef</key>
-			<string>CB7592909D5E4994B96619B0</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-			<key>settings</key>
-			<dict/>
-		</dict>
-		<key>75D5221933A149AA86A836BD</key>
-		<dict>
-			<key>includeInIndex</key>
-			<string>1</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>name</key>
-			<string>ssl2.h</string>
-			<key>path</key>
-			<string>ObjectiveDDP/ObjectiveDDP/openssl/ssl2.h</string>
-			<key>sourceTree</key>
-			<string>SOURCE_ROOT</string>
-		</dict>
-		<key>777CF8908090438F8A0AD2BF</key>
-		<dict>
-			<key>includeInIndex</key>
-			<string>1</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>name</key>
-			<string>md5.h</string>
-			<key>path</key>
-			<string>ObjectiveDDP/ObjectiveDDP/openssl/md5.h</string>
-			<key>sourceTree</key>
-			<string>SOURCE_ROOT</string>
-		</dict>
-		<key>7830B97EEC0040B4BBD9CCE8</key>
-		<dict>
-			<key>fileRef</key>
-			<string>46D5C3E168174ADFAF9BBD57</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-			<key>settings</key>
-			<dict/>
-		</dict>
-		<key>78F226DC78074D85AF9DCD33</key>
-		<dict>
-			<key>includeInIndex</key>
-			<string>1</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>name</key>
-			<string>sha.h</string>
-			<key>path</key>
-			<string>ObjectiveDDP/ObjectiveDDP/openssl/sha.h</string>
-			<key>sourceTree</key>
-			<string>SOURCE_ROOT</string>
-		</dict>
-		<key>79EB6F557BCF4201AF38AB89</key>
-		<dict>
-			<key>includeInIndex</key>
-			<string>1</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>name</key>
-			<string>hmac.h</string>
-			<key>path</key>
-			<string>ObjectiveDDP/ObjectiveDDP/openssl/hmac.h</string>
-			<key>sourceTree</key>
-			<string>SOURCE_ROOT</string>
-		</dict>
-		<key>7A46F55A65AA4E4EA1EC309F</key>
-		<dict>
-			<key>includeInIndex</key>
-			<string>1</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>name</key>
-			<string>pqueue.h</string>
-			<key>path</key>
-			<string>ObjectiveDDP/ObjectiveDDP/openssl/pqueue.h</string>
-			<key>sourceTree</key>
-			<string>SOURCE_ROOT</string>
-		</dict>
-		<key>7AD610FA7A094A06B172D123</key>
-		<dict>
-			<key>includeInIndex</key>
-			<string>1</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.objc</string>
-			<key>name</key>
-			<string>MeteorClient.m</string>
-			<key>path</key>
-			<string>ObjectiveDDP/ObjectiveDDP/MeteorClient.m</string>
-			<key>sourceTree</key>
-			<string>SOURCE_ROOT</string>
-		</dict>
-		<key>7B6580FE2B864624BE242DC8</key>
-		<dict>
-			<key>includeInIndex</key>
-			<string>1</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>name</key>
-			<string>tls1.h</string>
-			<key>path</key>
-			<string>ObjectiveDDP/ObjectiveDDP/openssl/tls1.h</string>
-			<key>sourceTree</key>
-			<string>SOURCE_ROOT</string>
-		</dict>
-		<key>7C1F11AF1EC14A0393D919EC</key>
-		<dict>
-			<key>baseConfigurationReference</key>
-			<string>EA46E2955FDF48FBAACA8438</string>
-			<key>buildSettings</key>
-			<dict>
-				<key>ALWAYS_SEARCH_USER_PATHS</key>
-				<string>NO</string>
-				<key>ARCHS</key>
-				<string>$(ARCHS_STANDARD_32_BIT)</string>
-				<key>COPY_PHASE_STRIP</key>
-				<string>NO</string>
-				<key>DSTROOT</key>
-				<string>/tmp/xcodeproj.dst</string>
-				<key>GCC_C_LANGUAGE_STANDARD</key>
-				<string>gnu99</string>
-				<key>GCC_DYNAMIC_NO_PIC</key>
-				<string>NO</string>
-				<key>GCC_OPTIMIZATION_LEVEL</key>
-				<string>0</string>
-				<key>GCC_PRECOMPILE_PREFIX_HEADER</key>
-				<string>YES</string>
-				<key>GCC_PREFIX_HEADER</key>
-				<string>Pods-prefix.pch</string>
-				<key>GCC_PREPROCESSOR_DEFINITIONS</key>
-				<array>
-					<string>DEBUG=1</string>
-					<string>$(inherited)</string>
-				</array>
-				<key>GCC_SYMBOLS_PRIVATE_EXTERN</key>
-				<string>NO</string>
-				<key>GCC_VERSION</key>
-				<string>com.apple.compilers.llvm.clang.1_0</string>
-				<key>INSTALL_PATH</key>
-				<string>$(BUILT_PRODUCTS_DIR)</string>
-				<key>IPHONEOS_DEPLOYMENT_TARGET</key>
-				<string>6.0</string>
-				<key>OTHER_LDFLAGS</key>
-				<string></string>
-				<key>PODS_HEADERS_SEARCH_PATHS</key>
-				<string>${PODS_BUILD_HEADERS_SEARCH_PATHS}</string>
-				<key>PODS_ROOT</key>
-				<string>${SRCROOT}</string>
-				<key>PRODUCT_NAME</key>
-				<string>$(TARGET_NAME)</string>
-				<key>PUBLIC_HEADERS_FOLDER_PATH</key>
-				<string>$(TARGET_NAME)</string>
-				<key>SDKROOT</key>
-				<string>iphoneos</string>
-				<key>SKIP_INSTALL</key>
-				<string>YES</string>
-			</dict>
-			<key>isa</key>
-			<string>XCBuildConfiguration</string>
-			<key>name</key>
-			<string>Debug</string>
-		</dict>
-		<key>7E8D5B24B3024970B2C760DE</key>
-		<dict>
-			<key>includeInIndex</key>
-			<string>1</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>archive.ar</string>
-			<key>name</key>
-			<string>libcrypto.a</string>
-			<key>path</key>
-			<string>ObjectiveDDP/ObjectiveDDP/libcrypto.a</string>
-			<key>sourceTree</key>
-			<string>SOURCE_ROOT</string>
-		</dict>
-		<key>7EA543A731834534BFCF8D56</key>
-		<dict>
-			<key>fileRef</key>
-			<string>508F0B34398F43BE95593D0B</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-			<key>settings</key>
-			<dict/>
-		</dict>
-		<key>82C9797685BE4CF1BA1140A5</key>
-		<dict>
-			<key>includeInIndex</key>
-			<string>1</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>name</key>
-			<string>rand.h</string>
-			<key>path</key>
-			<string>ObjectiveDDP/ObjectiveDDP/openssl/rand.h</string>
-			<key>sourceTree</key>
-			<string>SOURCE_ROOT</string>
-		</dict>
-		<key>82F0E6CE728747E8840CB2C6</key>
-		<dict>
-			<key>includeInIndex</key>
-			<string>1</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>name</key>
-			<string>cast.h</string>
-			<key>path</key>
-			<string>ObjectiveDDP/ObjectiveDDP/openssl/cast.h</string>
-			<key>sourceTree</key>
-			<string>SOURCE_ROOT</string>
-		</dict>
-		<key>83122B02EBF84D7A9F4DCAA4</key>
-		<dict>
-			<key>fileRef</key>
-			<string>6D65C85E44B14B819E42994B</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-			<key>settings</key>
-			<dict/>
-		</dict>
-		<key>8411D2D7C2864427B695B8A7</key>
-		<dict>
-			<key>includeInIndex</key>
-			<string>1</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>name</key>
-			<string>conf_api.h</string>
-			<key>path</key>
-			<string>ObjectiveDDP/ObjectiveDDP/openssl/conf_api.h</string>
-			<key>sourceTree</key>
-			<string>SOURCE_ROOT</string>
-		</dict>
-		<key>84D673277EFE462DB1D0A741</key>
-		<dict>
-			<key>includeInIndex</key>
-			<string>1</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.objc</string>
-			<key>name</key>
-			<string>NSData+SRB64Additions.m</string>
-			<key>path</key>
-			<string>SocketRocket/SocketRocket/NSData+SRB64Additions.m</string>
-			<key>sourceTree</key>
-			<string>SOURCE_ROOT</string>
-		</dict>
-		<key>87A282BA608C42408FF598DD</key>
-		<dict>
-			<key>fileRef</key>
-			<string>0BA2A3CF8E8A4759861BA61A</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-			<key>settings</key>
-			<dict/>
-		</dict>
-		<key>8B86F7E980BE4DCEB9B33728</key>
-		<dict>
-			<key>includeInIndex</key>
-			<string>1</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>name</key>
-			<string>camellia.h</string>
-			<key>path</key>
-			<string>ObjectiveDDP/ObjectiveDDP/openssl/camellia.h</string>
-			<key>sourceTree</key>
-			<string>SOURCE_ROOT</string>
-		</dict>
-		<key>8D8501AF538F4361A4F82271</key>
-		<dict>
-			<key>fileRef</key>
-			<string>D61332F0704E4DA591A2AAE8</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-			<key>settings</key>
-			<dict/>
-		</dict>
-		<key>8DB167A04E4844DEA37D02A5</key>
-		<dict>
-			<key>fileRef</key>
-			<string>38704BB886C149B5B582E0DB</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-			<key>settings</key>
-			<dict/>
-		</dict>
-		<key>8EEDF3A052C54D9CA66E2ECC</key>
-		<dict>
-			<key>fileRef</key>
-			<string>D6EDC30C0C96471B9F255DCF</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-			<key>settings</key>
-			<dict/>
-		</dict>
-		<key>8F10F9194DD84EE58D769E66</key>
-		<dict>
-			<key>includeInIndex</key>
-			<string>1</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>name</key>
-			<string>ec.h</string>
-			<key>path</key>
-			<string>ObjectiveDDP/ObjectiveDDP/openssl/ec.h</string>
-			<key>sourceTree</key>
-			<string>SOURCE_ROOT</string>
-		</dict>
-		<key>9146473135B04901994872B8</key>
-		<dict>
-			<key>children</key>
-			<array>
-				<string>7124BD50F1994C2CB84D7409</string>
-			</array>
-			<key>isa</key>
-			<string>PBXGroup</string>
-			<key>name</key>
-			<string>Targets Support Files</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>916B1C26AADB4C869346B26C</key>
-		<dict>
-			<key>children</key>
-			<array>
-				<string>E0B100F2A5C34536BCC15478</string>
-				<string>581969D1501E47CF8525E541</string>
-				<string>1989108E34954CF1B2B747C2</string>
-				<string>7AD610FA7A094A06B172D123</string>
-				<string>508F0B34398F43BE95593D0B</string>
-				<string>699834A783924690930B2F00</string>
-				<string>EDAA7A71589446CB8E30E27D</string>
-				<string>F35ED55453F64AF2A0AE5601</string>
-				<string>144BDB459604466EAD685056</string>
-				<string>4DFBF4B186604583AD9B17B0</string>
-				<string>976342F84EA946A28989C25B</string>
-				<string>BCC87F1E4B034897B8B5858B</string>
-				<string>5AAF330252FB42A0A45A0B11</string>
-				<string>C33BC5BC3791433F9C4B2D87</string>
-				<string>8B86F7E980BE4DCEB9B33728</string>
-				<string>82F0E6CE728747E8840CB2C6</string>
-				<string>38704BB886C149B5B582E0DB</string>
-				<string>F4128AB6E41C4D79AC416CC9</string>
-				<string>AA3BF4C06ABE450DA4E0D8AF</string>
-				<string>E7CAEA83C00B44AE8C115968</string>
-				<string>8411D2D7C2864427B695B8A7</string>
-				<string>DADD0239213945BFBE54F997</string>
-				<string>D2881E6DB54A48D4BF4EA1E6</string>
-				<string>98702D4E337F48F094EE577A</string>
-				<string>0B5FF483CE6F4C2183EFAE42</string>
-				<string>BECAC45D03054AF6836C682A</string>
-				<string>A47E15E2DFDC442EB522026A</string>
-				<string>3A12A6671F4742F3B3E70228</string>
-				<string>53FBE9C5CF8C480F94923658</string>
-				<string>95889017B6BE4FBCB3F8EA09</string>
-				<string>8F10F9194DD84EE58D769E66</string>
-				<string>29D743D6500347AD893B4F17</string>
-				<string>C047C7E511484D0FBC2E740D</string>
-				<string>67589EC60B0A4669A15FA8B0</string>
-				<string>0031AE0EB1CC44CD889BA35D</string>
-				<string>5E944A11167E42B2AC0DDC47</string>
-				<string>79EB6F557BCF4201AF38AB89</string>
-				<string>1D563BD955B8441BA1EE7066</string>
-				<string>253E33114C1948E0B98793C6</string>
-				<string>421228768BD847538CC7360F</string>
-				<string>4198E07B61AF44CDA1BF51EA</string>
-				<string>F26C09CE602145ABB0F6EA0A</string>
-				<string>777CF8908090438F8A0AD2BF</string>
-				<string>9DD6F22232CF4707BB0D5670</string>
-				<string>356DF15B3396495BA60AE331</string>
-				<string>11AE098452EF4AF08F66CFEC</string>
-				<string>002765CD086B401488F29835</string>
-				<string>041EF256984E47C792791BB6</string>
-				<string>FB95AE8D8D7E4611A3CAD4B4</string>
-				<string>34785C6999584EFEA902DAB8</string>
-				<string>D476EB35C89C4E5F817E0D25</string>
-				<string>0BA2A3CF8E8A4759861BA61A</string>
-				<string>AD6E65F2DBBC4C4EA6F8EA0C</string>
-				<string>47B170D3405B4E76BB188E1C</string>
-				<string>47F4E48EF8E64822AE87428A</string>
-				<string>7A46F55A65AA4E4EA1EC309F</string>
-				<string>82C9797685BE4CF1BA1140A5</string>
-				<string>CB7592909D5E4994B96619B0</string>
-				<string>05CE6938310446109B3AD09E</string>
-				<string>ACCB70FF00B64DD8A43988C0</string>
-				<string>6D65C85E44B14B819E42994B</string>
-				<string>F9C364B463764B7E9DD1ED43</string>
-				<string>D61332F0704E4DA591A2AAE8</string>
-				<string>78F226DC78074D85AF9DCD33</string>
-				<string>0BEF3DD8B22B4E20A691E39D</string>
-				<string>FBB342AD67174A6B94BB9CE9</string>
-				<string>20399379B7504617BBE08A7D</string>
-				<string>75D5221933A149AA86A836BD</string>
-				<string>0FBE5B539CA64193B219C0BC</string>
-				<string>46D5C3E168174ADFAF9BBD57</string>
-				<string>A01176A8E93F4ACE82E1F13D</string>
-				<string>5581ABA60B7B4FD8A307DE71</string>
-				<string>7B6580FE2B864624BE242DC8</string>
-				<string>4636D52A410949DDADD7FDFA</string>
-				<string>BD8FD045C6854E248E049866</string>
-				<string>00107B61A8CD476496B07D9A</string>
-				<string>18EE862E402848BE9FFDA79B</string>
-				<string>9FBDEEEA9C4840DB8218287E</string>
-				<string>D6EDC30C0C96471B9F255DCF</string>
-				<string>FCC63E2651A84F0D9FE439BB</string>
-				<string>40ACA732F88948B0A0B23988</string>
-				<string>45A18509E8064A3D9DE4C8E4</string>
-				<string>2E096006A17D467782E3520E</string>
-			</array>
-			<key>isa</key>
-			<string>PBXGroup</string>
-			<key>name</key>
-			<string>ObjectiveDDP</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>94C70895619349CD99D37C63</key>
-		<dict>
-			<key>fileRef</key>
-			<string>BD8FD045C6854E248E049866</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-			<key>settings</key>
-			<dict/>
-		</dict>
-		<key>9505A765B7B24332B4B85A7E</key>
-		<dict>
-			<key>fileRef</key>
-			<string>C33BC5BC3791433F9C4B2D87</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-			<key>settings</key>
-			<dict/>
-		</dict>
-		<key>95889017B6BE4FBCB3F8EA09</key>
-		<dict>
-			<key>includeInIndex</key>
-			<string>1</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>name</key>
-			<string>ebcdic.h</string>
-			<key>path</key>
-			<string>ObjectiveDDP/ObjectiveDDP/openssl/ebcdic.h</string>
-			<key>sourceTree</key>
-			<string>SOURCE_ROOT</string>
-		</dict>
-		<key>976342F84EA946A28989C25B</key>
-		<dict>
-			<key>includeInIndex</key>
-			<string>1</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>name</key>
-			<string>bio.h</string>
-			<key>path</key>
-			<string>ObjectiveDDP/ObjectiveDDP/openssl/bio.h</string>
-			<key>sourceTree</key>
-			<string>SOURCE_ROOT</string>
-		</dict>
-		<key>980ADDB1CE0F4027A12438DC</key>
-		<dict>
-			<key>buildActionMask</key>
-			<string>2147483647</string>
-			<key>files</key>
-			<array>
-				<string>A24A42E7D9A444FD8202100B</string>
-				<string>5554DD3AB5024BFC81CBD09C</string>
-				<string>7EA543A731834534BFCF8D56</string>
-				<string>A4AAA2A63AE94E70B98BBBED</string>
-				<string>04C3C5C080D24D338E52F549</string>
-				<string>B11D99B3134A49C9BA4279F7</string>
-				<string>E11209841AB543EDB051A118</string>
-				<string>C95882FFA1EB437684C4B11B</string>
-				<string>9CCABA82A3354EC6AC0480F0</string>
-				<string>383D4B8065584056A7730B98</string>
-				<string>9505A765B7B24332B4B85A7E</string>
-				<string>F868D508809B4167925A5BA9</string>
-				<string>A233307AFFDE4409A145FD98</string>
-				<string>8DB167A04E4844DEA37D02A5</string>
-				<string>D92BDB5BA0A249B7ABBAF9BE</string>
-				<string>678A94C6F8444E60AB351CCB</string>
-				<string>0041F03979314F449003055E</string>
-				<string>64D272F248A546288BEA12B3</string>
-				<string>0C8295F3283F4302BF8472D4</string>
-				<string>53BB036AE73B4B21B2507F85</string>
-				<string>EE48107603324A6EAE42DC5B</string>
-				<string>CB621405937F4B81AFFED959</string>
-				<string>EA0C394A56E144848F977678</string>
-				<string>CA6517B0BDAC4E8FA9B0B6CC</string>
-				<string>A633AB6AB6B24DB98CA1D021</string>
-				<string>CBE0DC170A03459EA6EB5581</string>
-				<string>02D077725FED44179A57FECA</string>
-				<string>CC99461CDEB744B082F92E7E</string>
-				<string>6D563666FA1D446398C3DBE2</string>
-				<string>E4B7E8929436498F980C0E58</string>
-				<string>5D8E7262B0A0471793B910A9</string>
-				<string>677D56B4DF874D06BBFA49BA</string>
-				<string>CFB2004D1D964462B12AF9CC</string>
-				<string>36B8F1C715C5435E9CEB706C</string>
-				<string>288817717F8B4DC69BE5E77B</string>
-				<string>C3AECE3F25AD44A484C047E9</string>
-				<string>AD9E175E4E754D449A608557</string>
-				<string>402606BA47B946B1B081230E</string>
-				<string>281BB4B1E4864FEA9CD7A1F8</string>
-				<string>DF1C841CB68B41709D53B56A</string>
-				<string>6CD1E59E35EE49BB98074422</string>
-				<string>BAA8692814DF4F1A9023B3DC</string>
-				<string>DB13BE8A6F5546A09AE31B41</string>
-				<string>700429DCDE2545808A651727</string>
-				<string>65FAB2F820A744C1BD360BA6</string>
-				<string>4629FBF80E304DC8BD588CEC</string>
-				<string>A8C9447EFF244957B64CE3A8</string>
-				<string>9A76F83A0F224CF8927F862A</string>
-				<string>87A282BA608C42408FF598DD</string>
-				<string>D5F46A7A07E54694A26E851C</string>
-				<string>26F90265CBBE4A7DAD05B9B5</string>
-				<string>39899399FF734AF3B1DB30FF</string>
-				<string>A18AC55BB88F48E19AAB839B</string>
-				<string>CDB00D1DC47043779DE00B99</string>
-				<string>757B8997B4234FC18AF510F0</string>
-				<string>57EB647F8DDF44E68E2CC930</string>
-				<string>31E48A2FA10140CD844CFEDF</string>
-				<string>83122B02EBF84D7A9F4DCAA4</string>
-				<string>B3B3AE3F780B4D12A11AE651</string>
-				<string>8D8501AF538F4361A4F82271</string>
-				<string>E9F0432E3BE049BDA9325B00</string>
-				<string>257740BEFF7D4F58AB1EB03B</string>
-				<string>73B8AAE27DB04F8EBFB702AF</string>
-				<string>3E71F7F629F54B99AF2CEF0A</string>
-				<string>D458FBA827644EE48E7D0E46</string>
-				<string>3BF9941EEFAD440DA92D411D</string>
-				<string>7830B97EEC0040B4BBD9CCE8</string>
-				<string>3BCD9272EBE04A00BE398937</string>
-				<string>6CE11C69B51B4A4C9B147099</string>
-				<string>5511A23C5F564B8793088F7B</string>
-				<string>5143099856C747848EA71E41</string>
-				<string>94C70895619349CD99D37C63</string>
-				<string>4A843DC4D35245F093F07BDD</string>
-				<string>D97D7F151E9F4640B65322F0</string>
-				<string>D3F32E7BF7E94D4085590170</string>
-				<string>8EEDF3A052C54D9CA66E2ECC</string>
-				<string>C879BD0AA31F40F1AD18F4F0</string>
-				<string>0BF5730F39B54011932558A4</string>
-				<string>2198ED54E5F944C8889F6FFA</string>
-				<string>2E5109B95C0C4FBCB25F7446</string>
-				<string>B21B8E786D554766B7F8653E</string>
-				<string>4CF5137965FA4647B9170376</string>
-			</array>
-			<key>isa</key>
-			<string>PBXHeadersBuildPhase</string>
-			<key>runOnlyForDeploymentPostprocessing</key>
-			<string>0</string>
-		</dict>
-		<key>98702D4E337F48F094EE577A</key>
-		<dict>
-			<key>includeInIndex</key>
-			<string>1</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>name</key>
-			<string>des_old.h</string>
-			<key>path</key>
-			<string>ObjectiveDDP/ObjectiveDDP/openssl/des_old.h</string>
-			<key>sourceTree</key>
-			<string>SOURCE_ROOT</string>
-		</dict>
-		<key>9A76F83A0F224CF8927F862A</key>
-		<dict>
-			<key>fileRef</key>
-			<string>D476EB35C89C4E5F817E0D25</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-			<key>settings</key>
-			<dict/>
-		</dict>
-		<key>9CCABA82A3354EC6AC0480F0</key>
-		<dict>
-			<key>fileRef</key>
-			<string>BCC87F1E4B034897B8B5858B</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-			<key>settings</key>
-			<dict/>
-		</dict>
-		<key>9DD6F22232CF4707BB0D5670</key>
-		<dict>
-			<key>includeInIndex</key>
-			<string>1</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>name</key>
-			<string>mdc2.h</string>
-			<key>path</key>
-			<string>ObjectiveDDP/ObjectiveDDP/openssl/mdc2.h</string>
-			<key>sourceTree</key>
-			<string>SOURCE_ROOT</string>
-		</dict>
-		<key>9FBDEEEA9C4840DB8218287E</key>
-		<dict>
-			<key>includeInIndex</key>
-			<string>1</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>name</key>
-			<string>whrlpool.h</string>
-			<key>path</key>
-			<string>ObjectiveDDP/ObjectiveDDP/openssl/whrlpool.h</string>
-			<key>sourceTree</key>
-			<string>SOURCE_ROOT</string>
-		</dict>
-		<key>A01176A8E93F4ACE82E1F13D</key>
-		<dict>
-			<key>includeInIndex</key>
-			<string>1</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>name</key>
-			<string>stack.h</string>
-			<key>path</key>
-			<string>ObjectiveDDP/ObjectiveDDP/openssl/stack.h</string>
-			<key>sourceTree</key>
-			<string>SOURCE_ROOT</string>
-		</dict>
-		<key>A18AC55BB88F48E19AAB839B</key>
-		<dict>
-			<key>fileRef</key>
-			<string>7A46F55A65AA4E4EA1EC309F</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-			<key>settings</key>
-			<dict/>
-		</dict>
-		<key>A233307AFFDE4409A145FD98</key>
-		<dict>
-			<key>fileRef</key>
-			<string>82F0E6CE728747E8840CB2C6</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-			<key>settings</key>
-			<dict/>
-		</dict>
-		<key>A24A42E7D9A444FD8202100B</key>
-		<dict>
-			<key>fileRef</key>
-			<string>E0B100F2A5C34536BCC15478</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-			<key>settings</key>
-			<dict/>
-		</dict>
-		<key>A2C3EF878A5E499D93494B4E</key>
-		<dict>
-			<key>children</key>
-			<array>
-				<string>F6DA521E16B54D29A2EEB850</string>
-				<string>5CE66D99CA7D40F9B3BCEE06</string>
-				<string>3DD7FFEAAF314A61AE2D676A</string>
-				<string>B7E3FFE58379418DA4EF0D95</string>
-				<string>9146473135B04901994872B8</string>
-				<string>E04BA243C77045239A76904A</string>
-			</array>
-			<key>isa</key>
-			<string>PBXGroup</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>A47E15E2DFDC442EB522026A</key>
-		<dict>
-			<key>includeInIndex</key>
-			<string>1</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>name</key>
-			<string>dso.h</string>
-			<key>path</key>
-			<string>ObjectiveDDP/ObjectiveDDP/openssl/dso.h</string>
-			<key>sourceTree</key>
-			<string>SOURCE_ROOT</string>
-		</dict>
-		<key>A4AAA2A63AE94E70B98BBBED</key>
-		<dict>
-			<key>fileRef</key>
-			<string>EDAA7A71589446CB8E30E27D</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-			<key>settings</key>
-			<dict/>
-		</dict>
-		<key>A633AB6AB6B24DB98CA1D021</key>
-		<dict>
-			<key>fileRef</key>
-			<string>3A12A6671F4742F3B3E70228</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-			<key>settings</key>
-			<dict/>
-		</dict>
-		<key>A8C9447EFF244957B64CE3A8</key>
-		<dict>
-			<key>fileRef</key>
-			<string>34785C6999584EFEA902DAB8</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-			<key>settings</key>
-			<dict/>
-		</dict>
-		<key>AA3BF4C06ABE450DA4E0D8AF</key>
-		<dict>
-			<key>includeInIndex</key>
-			<string>1</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>name</key>
-			<string>comp.h</string>
-			<key>path</key>
-			<string>ObjectiveDDP/ObjectiveDDP/openssl/comp.h</string>
-			<key>sourceTree</key>
-			<string>SOURCE_ROOT</string>
-		</dict>
-		<key>ACCB70FF00B64DD8A43988C0</key>
-		<dict>
-			<key>includeInIndex</key>
-			<string>1</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>name</key>
-			<string>ripemd.h</string>
-			<key>path</key>
-			<string>ObjectiveDDP/ObjectiveDDP/openssl/ripemd.h</string>
-			<key>sourceTree</key>
-			<string>SOURCE_ROOT</string>
-		</dict>
-		<key>ACD5C0A886C84C0B930A9F22</key>
-		<dict>
-			<key>includeInIndex</key>
-			<string>1</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.objc</string>
-			<key>name</key>
-			<string>SRWebSocket.m</string>
-			<key>path</key>
-			<string>SocketRocket/SocketRocket/SRWebSocket.m</string>
-			<key>sourceTree</key>
-			<string>SOURCE_ROOT</string>
-		</dict>
-		<key>AD5688E7839F428F9D9C7203</key>
-		<dict>
-			<key>includeInIndex</key>
-			<string>1</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>name</key>
-			<string>Pods-environment.h</string>
-			<key>path</key>
-			<string>Pods-environment.h</string>
-			<key>sourceTree</key>
-			<string>SOURCE_ROOT</string>
-		</dict>
-		<key>AD6E65F2DBBC4C4EA6F8EA0C</key>
-		<dict>
-			<key>includeInIndex</key>
-			<string>1</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>name</key>
-			<string>pem2.h</string>
-			<key>path</key>
-			<string>ObjectiveDDP/ObjectiveDDP/openssl/pem2.h</string>
-			<key>sourceTree</key>
-			<string>SOURCE_ROOT</string>
-		</dict>
-		<key>AD9E175E4E754D449A608557</key>
-		<dict>
-			<key>fileRef</key>
-			<string>421228768BD847538CC7360F</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-			<key>settings</key>
-			<dict/>
-		</dict>
-		<key>B11D99B3134A49C9BA4279F7</key>
-		<dict>
-			<key>fileRef</key>
-			<string>144BDB459604466EAD685056</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-			<key>settings</key>
-			<dict/>
-		</dict>
-		<key>B21B8E786D554766B7F8653E</key>
-		<dict>
-			<key>fileRef</key>
-			<string>CBDBCF84299E4D8EB1EE2F67</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-			<key>settings</key>
-			<dict/>
-		</dict>
-		<key>B3B3AE3F780B4D12A11AE651</key>
-		<dict>
-			<key>fileRef</key>
-			<string>F9C364B463764B7E9DD1ED43</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-			<key>settings</key>
-			<dict/>
-		</dict>
-		<key>B7E3FFE58379418DA4EF0D95</key>
-		<dict>
-			<key>children</key>
-			<array>
-				<string>74CFA8581D6247BCBAE260D2</string>
-			</array>
-			<key>isa</key>
-			<string>PBXGroup</string>
-			<key>name</key>
-			<string>Resources</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>B96CBC502B4D494BB7AF4860</key>
-		<dict>
-			<key>fileRef</key>
-			<string>7AD610FA7A094A06B172D123</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-			<key>settings</key>
-			<dict>
-				<key>COMPILER_FLAGS</key>
-				<string>-fobjc-arc -DOS_OBJECT_USE_OBJC=0</string>
-			</dict>
-		</dict>
-		<key>BAA8692814DF4F1A9023B3DC</key>
-		<dict>
-			<key>fileRef</key>
-			<string>356DF15B3396495BA60AE331</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-			<key>settings</key>
-			<dict/>
-		</dict>
-		<key>BCC87F1E4B034897B8B5858B</key>
-		<dict>
-			<key>includeInIndex</key>
-			<string>1</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>name</key>
-			<string>blowfish.h</string>
-			<key>path</key>
-			<string>ObjectiveDDP/ObjectiveDDP/openssl/blowfish.h</string>
-			<key>sourceTree</key>
-			<string>SOURCE_ROOT</string>
-		</dict>
-		<key>BD8FD045C6854E248E049866</key>
-		<dict>
-			<key>includeInIndex</key>
-			<string>1</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>name</key>
-			<string>txt_db.h</string>
-			<key>path</key>
-			<string>ObjectiveDDP/ObjectiveDDP/openssl/txt_db.h</string>
-			<key>sourceTree</key>
-			<string>SOURCE_ROOT</string>
-		</dict>
-		<key>BECAC45D03054AF6836C682A</key>
-		<dict>
-			<key>includeInIndex</key>
-			<string>1</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>name</key>
-			<string>dsa.h</string>
-			<key>path</key>
-			<string>ObjectiveDDP/ObjectiveDDP/openssl/dsa.h</string>
-			<key>sourceTree</key>
-			<string>SOURCE_ROOT</string>
-		</dict>
-		<key>C047C7E511484D0FBC2E740D</key>
-		<dict>
-			<key>includeInIndex</key>
-			<string>1</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>name</key>
-			<string>ecdsa.h</string>
-			<key>path</key>
-			<string>ObjectiveDDP/ObjectiveDDP/openssl/ecdsa.h</string>
-			<key>sourceTree</key>
-			<string>SOURCE_ROOT</string>
-		</dict>
-		<key>C33BC5BC3791433F9C4B2D87</key>
-		<dict>
-			<key>includeInIndex</key>
-			<string>1</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>name</key>
-			<string>buffer.h</string>
-			<key>path</key>
-			<string>ObjectiveDDP/ObjectiveDDP/openssl/buffer.h</string>
-			<key>sourceTree</key>
-			<string>SOURCE_ROOT</string>
-		</dict>
-		<key>C3AECE3F25AD44A484C047E9</key>
-		<dict>
-			<key>fileRef</key>
-			<string>253E33114C1948E0B98793C6</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-			<key>settings</key>
-			<dict/>
-		</dict>
-		<key>C6161E39BA524796A264649B</key>
-		<dict>
-			<key>fileRef</key>
-			<string>699834A783924690930B2F00</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-			<key>settings</key>
-			<dict>
-				<key>COMPILER_FLAGS</key>
-				<string>-fobjc-arc -DOS_OBJECT_USE_OBJC=0</string>
-			</dict>
-		</dict>
-		<key>C879BD0AA31F40F1AD18F4F0</key>
-		<dict>
-			<key>fileRef</key>
-			<string>FCC63E2651A84F0D9FE439BB</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-			<key>settings</key>
-			<dict/>
-		</dict>
-		<key>C8A6431ECD3F498A8BA3AF53</key>
-		<dict>
-			<key>buildActionMask</key>
-			<string>2147483647</string>
-			<key>files</key>
-			<array>
-				<string>32A227D6372E4D21905AD6C3</string>
-			</array>
-			<key>isa</key>
-			<string>PBXFrameworksBuildPhase</string>
-			<key>runOnlyForDeploymentPostprocessing</key>
-			<string>0</string>
-		</dict>
-		<key>C95882FFA1EB437684C4B11B</key>
-		<dict>
-			<key>fileRef</key>
-			<string>976342F84EA946A28989C25B</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-			<key>settings</key>
-			<dict/>
-		</dict>
-		<key>CA6517B0BDAC4E8FA9B0B6CC</key>
-		<dict>
-			<key>fileRef</key>
-			<string>A47E15E2DFDC442EB522026A</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-			<key>settings</key>
-			<dict/>
-		</dict>
-		<key>CB621405937F4B81AFFED959</key>
-		<dict>
-			<key>fileRef</key>
-			<string>0B5FF483CE6F4C2183EFAE42</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-			<key>settings</key>
-			<dict/>
-		</dict>
-		<key>CB7592909D5E4994B96619B0</key>
-		<dict>
-			<key>includeInIndex</key>
-			<string>1</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>name</key>
-			<string>rc2.h</string>
-			<key>path</key>
-			<string>ObjectiveDDP/ObjectiveDDP/openssl/rc2.h</string>
-			<key>sourceTree</key>
-			<string>SOURCE_ROOT</string>
-		</dict>
-		<key>CBDBCF84299E4D8EB1EE2F67</key>
-		<dict>
-			<key>includeInIndex</key>
-			<string>1</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>name</key>
-			<string>NSData+SRB64Additions.h</string>
-			<key>path</key>
-			<string>SocketRocket/SocketRocket/NSData+SRB64Additions.h</string>
-			<key>sourceTree</key>
-			<string>SOURCE_ROOT</string>
-		</dict>
-		<key>CBE0DC170A03459EA6EB5581</key>
-		<dict>
-			<key>fileRef</key>
-			<string>53FBE9C5CF8C480F94923658</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-			<key>settings</key>
-			<dict/>
-		</dict>
-		<key>CC3CF578F64B48559666AE34</key>
-		<dict>
-			<key>attributes</key>
-			<dict>
-				<key>LastUpgradeCheck</key>
-				<string>0450</string>
-			</dict>
-			<key>buildConfigurationList</key>
-			<string>3ABFDF211D75410CBD3A0699</string>
-			<key>compatibilityVersion</key>
-			<string>Xcode 3.2</string>
-			<key>developmentRegion</key>
-			<string>English</string>
-			<key>hasScannedForEncodings</key>
-			<string>0</string>
-			<key>isa</key>
-			<string>PBXProject</string>
-			<key>knownRegions</key>
-			<array>
-				<string>en</string>
-			</array>
-			<key>mainGroup</key>
-			<string>A2C3EF878A5E499D93494B4E</string>
-			<key>productRefGroup</key>
-			<string>3DD7FFEAAF314A61AE2D676A</string>
-			<key>projectReferences</key>
-			<array/>
-			<key>targets</key>
-			<array>
-				<string>EF55FB73BE9548609C17757A</string>
-			</array>
-		</dict>
-		<key>CC99461CDEB744B082F92E7E</key>
-		<dict>
-			<key>fileRef</key>
-			<string>8F10F9194DD84EE58D769E66</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-			<key>settings</key>
-			<dict/>
-		</dict>
-		<key>CDB00D1DC47043779DE00B99</key>
-		<dict>
-			<key>fileRef</key>
-			<string>82C9797685BE4CF1BA1140A5</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-			<key>settings</key>
-			<dict/>
-		</dict>
-		<key>CFB2004D1D964462B12AF9CC</key>
-		<dict>
-			<key>fileRef</key>
-			<string>5E944A11167E42B2AC0DDC47</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-			<key>settings</key>
-			<dict/>
-		</dict>
-		<key>D2881E6DB54A48D4BF4EA1E6</key>
-		<dict>
-			<key>includeInIndex</key>
-			<string>1</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>name</key>
-			<string>des.h</string>
-			<key>path</key>
-			<string>ObjectiveDDP/ObjectiveDDP/openssl/des.h</string>
-			<key>sourceTree</key>
-			<string>SOURCE_ROOT</string>
-		</dict>
-		<key>D3F32E7BF7E94D4085590170</key>
-		<dict>
-			<key>fileRef</key>
-			<string>9FBDEEEA9C4840DB8218287E</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-			<key>settings</key>
-			<dict/>
-		</dict>
-		<key>D458FBA827644EE48E7D0E46</key>
-		<dict>
-			<key>fileRef</key>
-			<string>75D5221933A149AA86A836BD</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-			<key>settings</key>
-			<dict/>
-		</dict>
-		<key>D476EB35C89C4E5F817E0D25</key>
-		<dict>
-			<key>includeInIndex</key>
-			<string>1</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>name</key>
-			<string>ossl_typ.h</string>
-			<key>path</key>
-			<string>ObjectiveDDP/ObjectiveDDP/openssl/ossl_typ.h</string>
-			<key>sourceTree</key>
-			<string>SOURCE_ROOT</string>
-		</dict>
-		<key>D5F46A7A07E54694A26E851C</key>
-		<dict>
-			<key>fileRef</key>
-			<string>AD6E65F2DBBC4C4EA6F8EA0C</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-			<key>settings</key>
-			<dict/>
-		</dict>
-		<key>D61332F0704E4DA591A2AAE8</key>
-		<dict>
-			<key>includeInIndex</key>
-			<string>1</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>name</key>
-			<string>seed.h</string>
-			<key>path</key>
-			<string>ObjectiveDDP/ObjectiveDDP/openssl/seed.h</string>
-			<key>sourceTree</key>
-			<string>SOURCE_ROOT</string>
-		</dict>
-		<key>D6EDC30C0C96471B9F255DCF</key>
-		<dict>
-			<key>includeInIndex</key>
-			<string>1</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>name</key>
-			<string>x509.h</string>
-			<key>path</key>
-			<string>ObjectiveDDP/ObjectiveDDP/openssl/x509.h</string>
-			<key>sourceTree</key>
-			<string>SOURCE_ROOT</string>
-		</dict>
-		<key>D7E882A58265455D8A1FF001</key>
-		<dict>
-			<key>buildSettings</key>
-			<dict>
-				<key>IPHONEOS_DEPLOYMENT_TARGET</key>
-				<string>6.0</string>
-			</dict>
-			<key>isa</key>
-			<string>XCBuildConfiguration</string>
-			<key>name</key>
-			<string>Release</string>
-		</dict>
-		<key>D92BDB5BA0A249B7ABBAF9BE</key>
-		<dict>
-			<key>fileRef</key>
-			<string>F4128AB6E41C4D79AC416CC9</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-			<key>settings</key>
-			<dict/>
-		</dict>
-		<key>D97D7F151E9F4640B65322F0</key>
-		<dict>
-			<key>fileRef</key>
-			<string>18EE862E402848BE9FFDA79B</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-			<key>settings</key>
-			<dict/>
-		</dict>
-		<key>DADD0239213945BFBE54F997</key>
-		<dict>
-			<key>includeInIndex</key>
-			<string>1</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>name</key>
-			<string>crypto.h</string>
-			<key>path</key>
-			<string>ObjectiveDDP/ObjectiveDDP/openssl/crypto.h</string>
-			<key>sourceTree</key>
-			<string>SOURCE_ROOT</string>
-		</dict>
-		<key>DB13BE8A6F5546A09AE31B41</key>
-		<dict>
-			<key>fileRef</key>
-			<string>11AE098452EF4AF08F66CFEC</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-			<key>settings</key>
-			<dict/>
-		</dict>
-		<key>DC548E005D7B4252812520E4</key>
-		<dict>
-			<key>includeInIndex</key>
-			<string>1</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>name</key>
-			<string>base64.h</string>
-			<key>path</key>
-			<string>SocketRocket/SocketRocket/base64.h</string>
-			<key>sourceTree</key>
-			<string>SOURCE_ROOT</string>
-		</dict>
-		<key>DCCF897A97AB42A49256DF64</key>
-		<dict>
-			<key>includeInIndex</key>
-			<string>1</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.objc</string>
-			<key>name</key>
-			<string>Pods-dummy.m</string>
-			<key>path</key>
-			<string>Pods-dummy.m</string>
-			<key>sourceTree</key>
-			<string>SOURCE_ROOT</string>
-		</dict>
-		<key>DF1C841CB68B41709D53B56A</key>
-		<dict>
-			<key>fileRef</key>
-			<string>777CF8908090438F8A0AD2BF</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-			<key>settings</key>
-			<dict/>
-		</dict>
-		<key>E04BA243C77045239A76904A</key>
-		<dict>
-			<key>includeInIndex</key>
-			<string>1</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>name</key>
-			<string>Podfile</string>
-			<key>path</key>
-			<string>../Podfile</string>
-			<key>sourceTree</key>
-			<string>SOURCE_ROOT</string>
-			<key>xcLanguageSpecificationIdentifier</key>
-			<string>xcode.lang.ruby</string>
-		</dict>
-		<key>E0B100F2A5C34536BCC15478</key>
-		<dict>
-			<key>includeInIndex</key>
-			<string>1</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>name</key>
-			<string>BSONIdGenerator.h</string>
-			<key>path</key>
-			<string>ObjectiveDDP/ObjectiveDDP/BSONIdGenerator.h</string>
-			<key>sourceTree</key>
-			<string>SOURCE_ROOT</string>
-		</dict>
-		<key>E11209841AB543EDB051A118</key>
-		<dict>
-			<key>fileRef</key>
-			<string>4DFBF4B186604583AD9B17B0</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-			<key>settings</key>
-			<dict/>
-		</dict>
-		<key>E4B7E8929436498F980C0E58</key>
-		<dict>
-			<key>fileRef</key>
-			<string>C047C7E511484D0FBC2E740D</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-			<key>settings</key>
-			<dict/>
-		</dict>
-		<key>E5810036A4434BFE88AC7E71</key>
-		<dict>
-			<key>buildSettings</key>
-			<dict>
-				<key>IPHONEOS_DEPLOYMENT_TARGET</key>
-				<string>6.0</string>
-			</dict>
-			<key>isa</key>
-			<string>XCBuildConfiguration</string>
-			<key>name</key>
-			<string>Debug</string>
-		</dict>
-		<key>E7670B6168264013AD3D0BB5</key>
-		<dict>
-			<key>includeInIndex</key>
-			<string>1</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>wrapper.framework</string>
-			<key>name</key>
-			<string>Security.framework</string>
-			<key>path</key>
-			<string>Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS6.1.sdk/System/Library/Frameworks/Security.framework</string>
-			<key>sourceTree</key>
-			<string>DEVELOPER_DIR</string>
-		</dict>
-		<key>E7CAEA83C00B44AE8C115968</key>
-		<dict>
-			<key>includeInIndex</key>
-			<string>1</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>name</key>
-			<string>conf.h</string>
-			<key>path</key>
-			<string>ObjectiveDDP/ObjectiveDDP/openssl/conf.h</string>
-			<key>sourceTree</key>
-			<string>SOURCE_ROOT</string>
-		</dict>
-		<key>E9F0432E3BE049BDA9325B00</key>
-		<dict>
-			<key>fileRef</key>
-			<string>78F226DC78074D85AF9DCD33</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-			<key>settings</key>
-			<dict/>
-		</dict>
-		<key>EA0C394A56E144848F977678</key>
-		<dict>
-			<key>fileRef</key>
-			<string>BECAC45D03054AF6836C682A</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-			<key>settings</key>
-			<dict/>
-		</dict>
-		<key>EA46E2955FDF48FBAACA8438</key>
-		<dict>
-			<key>includeInIndex</key>
-			<string>1</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>text.xcconfig</string>
-			<key>name</key>
-			<string>Pods.xcconfig</string>
-			<key>path</key>
-			<string>Pods.xcconfig</string>
-			<key>sourceTree</key>
-			<string>SOURCE_ROOT</string>
-		</dict>
-		<key>EC49D537DF4F4031A530044E</key>
-		<dict>
-			<key>includeInIndex</key>
-			<string>1</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>name</key>
-			<string>Pods-acknowledgements.markdown</string>
-			<key>path</key>
-			<string>Pods-acknowledgements.markdown</string>
-			<key>sourceTree</key>
-			<string>SOURCE_ROOT</string>
-		</dict>
-		<key>EDAA7A71589446CB8E30E27D</key>
-		<dict>
-			<key>includeInIndex</key>
-			<string>1</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>name</key>
-			<string>aes.h</string>
-			<key>path</key>
-			<string>ObjectiveDDP/ObjectiveDDP/openssl/aes.h</string>
-			<key>sourceTree</key>
-			<string>SOURCE_ROOT</string>
-		</dict>
-		<key>EE48107603324A6EAE42DC5B</key>
-		<dict>
-			<key>fileRef</key>
-			<string>98702D4E337F48F094EE577A</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-			<key>settings</key>
-			<dict/>
-		</dict>
-		<key>EF55FB73BE9548609C17757A</key>
-		<dict>
-			<key>buildConfigurationList</key>
-			<string>68F08731309143D2BD4A3547</string>
-			<key>buildPhases</key>
-			<array>
-				<string>5BB836F528A34FFEA83517D7</string>
-				<string>C8A6431ECD3F498A8BA3AF53</string>
-				<string>980ADDB1CE0F4027A12438DC</string>
-			</array>
-			<key>buildRules</key>
-			<array/>
-			<key>dependencies</key>
-			<array/>
-			<key>isa</key>
-			<string>PBXNativeTarget</string>
-			<key>name</key>
-			<string>Pods</string>
-			<key>productName</key>
-			<string>Pods</string>
-			<key>productReference</key>
-			<string>2455303FC30A4F7890F3A878</string>
-			<key>productType</key>
-			<string>com.apple.product-type.library.static</string>
-		</dict>
-		<key>F26C09CE602145ABB0F6EA0A</key>
-		<dict>
-			<key>includeInIndex</key>
-			<string>1</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>name</key>
-			<string>md4.h</string>
-			<key>path</key>
-			<string>ObjectiveDDP/ObjectiveDDP/openssl/md4.h</string>
-			<key>sourceTree</key>
-			<string>SOURCE_ROOT</string>
-		</dict>
-		<key>F2D963CDCD8D4245B802B70E</key>
-		<dict>
-			<key>fileRef</key>
-			<string>DCCF897A97AB42A49256DF64</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-			<key>settings</key>
-			<dict/>
-		</dict>
-		<key>F35ED55453F64AF2A0AE5601</key>
-		<dict>
-			<key>includeInIndex</key>
-			<string>1</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>name</key>
-			<string>asn1.h</string>
-			<key>path</key>
-			<string>ObjectiveDDP/ObjectiveDDP/openssl/asn1.h</string>
-			<key>sourceTree</key>
-			<string>SOURCE_ROOT</string>
-		</dict>
-		<key>F4128AB6E41C4D79AC416CC9</key>
-		<dict>
-			<key>includeInIndex</key>
-			<string>1</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>name</key>
-			<string>cms.h</string>
-			<key>path</key>
-			<string>ObjectiveDDP/ObjectiveDDP/openssl/cms.h</string>
-			<key>sourceTree</key>
-			<string>SOURCE_ROOT</string>
-		</dict>
-		<key>F6DA521E16B54D29A2EEB850</key>
-		<dict>
-			<key>children</key>
-			<array>
-				<string>35717BE8AD264F498B0549C6</string>
-				<string>3F7B67AAE29846539BBA2023</string>
-				<string>E7670B6168264013AD3D0BB5</string>
-			</array>
-			<key>isa</key>
-			<string>PBXGroup</string>
-			<key>name</key>
-			<string>Frameworks</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>F868D508809B4167925A5BA9</key>
-		<dict>
-			<key>fileRef</key>
-			<string>8B86F7E980BE4DCEB9B33728</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-			<key>settings</key>
-			<dict/>
-		</dict>
-		<key>F9C364B463764B7E9DD1ED43</key>
-		<dict>
-			<key>includeInIndex</key>
-			<string>1</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>name</key>
-			<string>safestack.h</string>
-			<key>path</key>
-			<string>ObjectiveDDP/ObjectiveDDP/openssl/safestack.h</string>
-			<key>sourceTree</key>
-			<string>SOURCE_ROOT</string>
-		</dict>
-		<key>FA3BA15FFAF942AF97B3713B</key>
-		<dict>
-			<key>includeInIndex</key>
-			<string>1</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>name</key>
-			<string>base64.c</string>
-			<key>path</key>
-			<string>SocketRocket/SocketRocket/base64.c</string>
-			<key>sourceTree</key>
-			<string>SOURCE_ROOT</string>
-		</dict>
-		<key>FB95AE8D8D7E4611A3CAD4B4</key>
-		<dict>
-			<key>includeInIndex</key>
-			<string>1</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>name</key>
-			<string>opensslconf.h</string>
-			<key>path</key>
-			<string>ObjectiveDDP/ObjectiveDDP/openssl/opensslconf.h</string>
-			<key>sourceTree</key>
-			<string>SOURCE_ROOT</string>
-		</dict>
-		<key>FBB342AD67174A6B94BB9CE9</key>
-		<dict>
-			<key>includeInIndex</key>
-			<string>1</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>name</key>
-			<string>srtp.h</string>
-			<key>path</key>
-			<string>ObjectiveDDP/ObjectiveDDP/openssl/srtp.h</string>
-			<key>sourceTree</key>
-			<string>SOURCE_ROOT</string>
-		</dict>
-		<key>FCC63E2651A84F0D9FE439BB</key>
-		<dict>
-			<key>includeInIndex</key>
-			<string>1</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>name</key>
-			<string>x509_vfy.h</string>
-			<key>path</key>
-			<string>ObjectiveDDP/ObjectiveDDP/openssl/x509_vfy.h</string>
-			<key>sourceTree</key>
-			<string>SOURCE_ROOT</string>
-		</dict>
-		<key>FCF17BE48A8646CD8BCBDB2D</key>
-		<dict>
-			<key>fileRef</key>
-			<string>84D673277EFE462DB1D0A741</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-			<key>settings</key>
-			<dict>
-				<key>COMPILER_FLAGS</key>
-				<string>-fobjc-arc -DOS_OBJECT_USE_OBJC=0</string>
-			</dict>
-		</dict>
-	</dict>
-	<key>rootObject</key>
-	<string>CC3CF578F64B48559666AE34</string>
-</dict>
-</plist>
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		02CF672C836541EA94B7D8C6 /* hmac.h in Headers */ = {isa = PBXBuildFile; fileRef = A6961D04784F4500B591966F /* hmac.h */; };
+		04E069CE2F674EA5A9777B7C /* ObjectiveDDP.m in Sources */ = {isa = PBXBuildFile; fileRef = F75EA3324CE3426281FE640C /* ObjectiveDDP.m */; settings = {COMPILER_FLAGS = "-fobjc-arc -DOS_OBJECT_USE_OBJC=0"; }; };
+		061B7C5C09154F9294D50E8B /* md5.h in Headers */ = {isa = PBXBuildFile; fileRef = B5FC6C8FD86740BB9FE29647 /* md5.h */; };
+		06888BC80A2044BBA35CFB34 /* opensslconf.h in Headers */ = {isa = PBXBuildFile; fileRef = D01D349D246C4A5A92B9BEE5 /* opensslconf.h */; };
+		07281067EB6642F5A5ACAE80 /* err.h in Headers */ = {isa = PBXBuildFile; fileRef = 8CF8D670734D41BB9219D1FA /* err.h */; };
+		07DE5D9812AC478F883C71CA /* whrlpool.h in Headers */ = {isa = PBXBuildFile; fileRef = 28C8845E8C7E42D38A0127BF /* whrlpool.h */; };
+		09E0533A26ED4C92943EC5AA /* NSData+SRB64Additions.h in Headers */ = {isa = PBXBuildFile; fileRef = 92139DAC7D3B4D54B56AECF7 /* NSData+SRB64Additions.h */; };
+		0EEB1E707FDA4E5386CAA8D9 /* mdc2.h in Headers */ = {isa = PBXBuildFile; fileRef = 8A9303A47311414BBDB45347 /* mdc2.h */; };
+		103F6D1DE7274842A9CFA328 /* ripemd.h in Headers */ = {isa = PBXBuildFile; fileRef = BA510B0F514C41459FEFF8B0 /* ripemd.h */; };
+		111E6D5DADA8495286DAC538 /* e_os2.h in Headers */ = {isa = PBXBuildFile; fileRef = 193634DB857C41E49ADE7CAD /* e_os2.h */; };
+		139F463D6BBF40A5916471BD /* md4.h in Headers */ = {isa = PBXBuildFile; fileRef = F0E38D41E763429A9B9FB602 /* md4.h */; };
+		16D979F85751418489770791 /* x509v3.h in Headers */ = {isa = PBXBuildFile; fileRef = 69F81D0102C44DFDA8DAF9CE /* x509v3.h */; };
+		1900F2DA597F426EA432A253 /* BSONIdGenerator.h in Headers */ = {isa = PBXBuildFile; fileRef = 8DD1FC24BAC147A9BB41619E /* BSONIdGenerator.h */; };
+		1B06B4D275C9424787025FF2 /* ecdsa.h in Headers */ = {isa = PBXBuildFile; fileRef = B9158360025649F286CB6576 /* ecdsa.h */; };
+		1CC75F683D7F46A3974F1646 /* evp.h in Headers */ = {isa = PBXBuildFile; fileRef = 8C67165621864F88A20D69E0 /* evp.h */; };
+		21B8D5FF4547456FADE62FF7 /* safestack.h in Headers */ = {isa = PBXBuildFile; fileRef = 265DDA27D3DA4370AC31614E /* safestack.h */; };
+		281E81651BAF44C9A5C9AF12 /* txt_db.h in Headers */ = {isa = PBXBuildFile; fileRef = C2671C9FD36E4A20A25DA936 /* txt_db.h */; };
+		2B80CFBE38D2460CA80BED8C /* stack.h in Headers */ = {isa = PBXBuildFile; fileRef = 94B992903DB54AB789C44C72 /* stack.h */; };
+		307897DAC00C4F93A3B6072D /* dso.h in Headers */ = {isa = PBXBuildFile; fileRef = 12178E6D7B7E40EE9C73D976 /* dso.h */; };
+		309CBD549E7C462CACEA00A0 /* srp.h in Headers */ = {isa = PBXBuildFile; fileRef = A57F6B95C1D64E24BFBE61F8 /* srp.h */; };
+		37C564BFEFD74FC994B7A9D8 /* asn1_mac.h in Headers */ = {isa = PBXBuildFile; fileRef = A5D13357AC0B4CF39D227857 /* asn1_mac.h */; };
+		38A2A03C6DD74908ADD39B6D /* ObjectiveDDP.h in Headers */ = {isa = PBXBuildFile; fileRef = 0A4B940D564F405E914FE1A6 /* ObjectiveDDP.h */; };
+		3BAF0203D5BE4F088545FF37 /* base64.h in Headers */ = {isa = PBXBuildFile; fileRef = 2F08B2635F9B4E06B3328E56 /* base64.h */; };
+		3F18A14013A44E2389C233D6 /* pkcs12.h in Headers */ = {isa = PBXBuildFile; fileRef = 3399BF78B7004C2C9D90C49B /* pkcs12.h */; };
+		40B19620F5B64B0DA115AB28 /* MeteorClient.h in Headers */ = {isa = PBXBuildFile; fileRef = 21D6106E3A18432E80563B3C /* MeteorClient.h */; };
+		43986F87C8EB4B7081DF1425 /* aes.h in Headers */ = {isa = PBXBuildFile; fileRef = 909E9E2F523B47609CB7B07F /* aes.h */; };
+		4527CD71443D4DF9AA5E7927 /* bio.h in Headers */ = {isa = PBXBuildFile; fileRef = 00015B38F85C4E14914059D4 /* bio.h */; };
+		473D353C5E5D435BA1AB9AB4 /* rsa.h in Headers */ = {isa = PBXBuildFile; fileRef = CF30990F9F2B433D965C645D /* rsa.h */; };
+		4F3C3465DDC246069EB3DF3C /* pqueue.h in Headers */ = {isa = PBXBuildFile; fileRef = 61EBCFA9AA7D457DA94B323A /* pqueue.h */; };
+		518BD21F440440D7B734A90F /* ecdh.h in Headers */ = {isa = PBXBuildFile; fileRef = C44E6DBDB4794C1DB86EF56D /* ecdh.h */; };
+		56E79C4DDA7242D093559005 /* srp.c in Sources */ = {isa = PBXBuildFile; fileRef = 2EC69372488240B3A7795BEC /* srp.c */; settings = {COMPILER_FLAGS = "-fobjc-arc -DOS_OBJECT_USE_OBJC=0"; }; };
+		5C40039A86A34BFD9B8D9BC5 /* Pods-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = FEB8C07BB872424581E2FA9B /* Pods-dummy.m */; };
+		5F81FE1DD9234A708F0D7830 /* bn.h in Headers */ = {isa = PBXBuildFile; fileRef = E05F436C3A6943AF8269CEE3 /* bn.h */; };
+		5FBC53C614AC49ECB3662A0D /* base64.c in Sources */ = {isa = PBXBuildFile; fileRef = 1B5118FD8A134D0A963BE300 /* base64.c */; settings = {COMPILER_FLAGS = "-fobjc-arc -DOS_OBJECT_USE_OBJC=0"; }; };
+		60694B5CA80F41058BC30480 /* pem2.h in Headers */ = {isa = PBXBuildFile; fileRef = 69BBC56DE3C74C5DA9BD5ADD /* pem2.h */; };
+		60EE25F89BA6471B90CB85CB /* NSData+SRB64Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = DB50D5FFBCC84930BB7A9A19 /* NSData+SRB64Additions.m */; settings = {COMPILER_FLAGS = "-fobjc-arc -DOS_OBJECT_USE_OBJC=0"; }; };
+		6A85B6CD23DF46428F410F49 /* seed.h in Headers */ = {isa = PBXBuildFile; fileRef = AC7977D831554D9BADB0140F /* seed.h */; };
+		745C40F999B54F439ABE1C18 /* sha.h in Headers */ = {isa = PBXBuildFile; fileRef = 98A9E44221BB4E91BFF02582 /* sha.h */; };
+		7C701498CFCA4B9585045BEC /* cast.h in Headers */ = {isa = PBXBuildFile; fileRef = 62E1F138620E48F6B3D24FC5 /* cast.h */; };
+		7D18A7D269794AFBA4E021C0 /* srp.h in Headers */ = {isa = PBXBuildFile; fileRef = C2C7FFE553DB413F82C49446 /* srp.h */; };
+		7E65CEFA2188480086E158B1 /* BSONIdGenerator.m in Sources */ = {isa = PBXBuildFile; fileRef = D0C48BDF69F14A6AACC2C390 /* BSONIdGenerator.m */; settings = {COMPILER_FLAGS = "-fobjc-arc -DOS_OBJECT_USE_OBJC=0"; }; };
+		7EFE3A43943A410F8D56AF45 /* engine.h in Headers */ = {isa = PBXBuildFile; fileRef = 50DF439AB66340628821AA9A /* engine.h */; };
+		7F47D591B0A64E0EA9F05405 /* idea.h in Headers */ = {isa = PBXBuildFile; fileRef = 11D992A165E94E67AB0A512E /* idea.h */; };
+		85F7905A6A444BF990932BDA /* pkcs7.h in Headers */ = {isa = PBXBuildFile; fileRef = 8FDF25DD851546F3ADBDF808 /* pkcs7.h */; };
+		893B201A40C645E8BCA2B695 /* buffer.h in Headers */ = {isa = PBXBuildFile; fileRef = C88D4EF370B448BD84FD72EB /* buffer.h */; };
+		8ACE894FA9BB4526ACAD5AB9 /* ssl.h in Headers */ = {isa = PBXBuildFile; fileRef = 03D3963DC43C431B87BB5601 /* ssl.h */; };
+		8ADEE83D51EB4FFEBA5E0487 /* ui.h in Headers */ = {isa = PBXBuildFile; fileRef = 459272FEF8084F34AC94F7CD /* ui.h */; };
+		8CCED87538684F8D8A8AD8DC /* des.h in Headers */ = {isa = PBXBuildFile; fileRef = BF41137690404138A808A308 /* des.h */; };
+		8E0EED4332DB442693D69843 /* obj_mac.h in Headers */ = {isa = PBXBuildFile; fileRef = 1E4EFA2AFAE840E5935DB1B9 /* obj_mac.h */; };
+		8FE5A0915F644297A937CBE8 /* asn1.h in Headers */ = {isa = PBXBuildFile; fileRef = 3890D396F1D04C19B5D428ED /* asn1.h */; };
+		91F59503AB6843F0BEA79F9E /* krb5_asn.h in Headers */ = {isa = PBXBuildFile; fileRef = 0506F17B71D947548A65535C /* krb5_asn.h */; };
+		92F54094687E46A18CF7081F /* asn1t.h in Headers */ = {isa = PBXBuildFile; fileRef = 13FA150B5F9241CD9D340E5D /* asn1t.h */; };
+		93396250F74742EFB0B3C553 /* ec.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DF59376E0A245C9A4F7C379 /* ec.h */; };
+		967C1248DBE846FBA02A1130 /* ssl2.h in Headers */ = {isa = PBXBuildFile; fileRef = 0845AB71E2024FC78C54EE14 /* ssl2.h */; };
+		9B76A3446AF24C4DB27B65F2 /* modes.h in Headers */ = {isa = PBXBuildFile; fileRef = 1EB9C0129D3A4B33882BCD4D /* modes.h */; };
+		9C089C0F747444CE86C80DC2 /* rc4.h in Headers */ = {isa = PBXBuildFile; fileRef = 52E92828C5DB40818EF7752C /* rc4.h */; };
+		A0464E20853F44C3B6126317 /* x509_vfy.h in Headers */ = {isa = PBXBuildFile; fileRef = 5599BA4E236245D09A8689DE /* x509_vfy.h */; };
+		A17F7EEDDC7F4DE28222F648 /* symhacks.h in Headers */ = {isa = PBXBuildFile; fileRef = AA4407744A234DB88BE54372 /* symhacks.h */; };
+		A993866EFCE34364A5576F6B /* opensslv.h in Headers */ = {isa = PBXBuildFile; fileRef = 18404656216D4470A40B85E7 /* opensslv.h */; };
+		B04A7C29E4DE4FBABC46ADCC /* ocsp.h in Headers */ = {isa = PBXBuildFile; fileRef = FCE15346E3324ECCAF2F6182 /* ocsp.h */; };
+		B2C3F9CBB6DE43E495482E3F /* des_old.h in Headers */ = {isa = PBXBuildFile; fileRef = 08CBA580871148AA8FF6F7F5 /* des_old.h */; };
+		B3C87A1165C44BA9B5E694EA /* srtp.h in Headers */ = {isa = PBXBuildFile; fileRef = 6631327A8D814CB183336FFF /* srtp.h */; };
+		B4D66B7660CC4291AD7CF052 /* crypto.h in Headers */ = {isa = PBXBuildFile; fileRef = F004ED68AF584D099DFD427F /* crypto.h */; };
+		B732D649E2A240768D53BBB6 /* rand.h in Headers */ = {isa = PBXBuildFile; fileRef = 635E3B15583D46B7A07A1ACE /* rand.h */; };
+		B770468219E4462B913B6433 /* blowfish.h in Headers */ = {isa = PBXBuildFile; fileRef = BAC8948C6B9B4DA58768E44D /* blowfish.h */; };
+		BA2615CEF1DE4DD3A051ACDD /* SRWebSocket.h in Headers */ = {isa = PBXBuildFile; fileRef = 0AA967FA62E0463D9EAB8861 /* SRWebSocket.h */; };
+		C11E2041B3EF4FDE92F79096 /* ts.h in Headers */ = {isa = PBXBuildFile; fileRef = 766298F468074FA2AA5C7C9E /* ts.h */; };
+		C14C2DA9D63141A0B7CCF258 /* ssl23.h in Headers */ = {isa = PBXBuildFile; fileRef = EB6E25E602A146C7B576FCD1 /* ssl23.h */; };
+		C67940AF05494CC288D73904 /* x509.h in Headers */ = {isa = PBXBuildFile; fileRef = 0D78B5CC0C604504BF3FC9C6 /* x509.h */; };
+		CE491759F9E14A1EB810F8EA /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B422F34F67C649828207EA54 /* Foundation.framework */; };
+		D16BD215CA20442E88B5A9A6 /* ossl_typ.h in Headers */ = {isa = PBXBuildFile; fileRef = 8F08994A282A4CC59005A1AC /* ossl_typ.h */; };
+		D6C265C231FB443282F2B878 /* dsa.h in Headers */ = {isa = PBXBuildFile; fileRef = B315A65A29AA437D9BBE1D61 /* dsa.h */; };
+		DA5FD33E6B1C48BD8D0C19DC /* lhash.h in Headers */ = {isa = PBXBuildFile; fileRef = 630BF7497D904F1194F85D4F /* lhash.h */; };
+		DBD7A3953AB14E89A2CD7170 /* ui_compat.h in Headers */ = {isa = PBXBuildFile; fileRef = 1EAF1FADB54E474584ED4ADF /* ui_compat.h */; };
+		DC5FFDC6128D435CAA28BAAE /* conf.h in Headers */ = {isa = PBXBuildFile; fileRef = 0288B16B3D73473283F83A6C /* conf.h */; };
+		DCB2E31BCF9F40A1A79B892A /* cmac.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A8324B1C2A14CA2A726A1CF /* cmac.h */; };
+		E416A5FEBCB542F799B955AC /* objects.h in Headers */ = {isa = PBXBuildFile; fileRef = B2A4B73AD31F4CFEBCA86278 /* objects.h */; };
+		EB2C3903FD23432A8D5430E1 /* ssl3.h in Headers */ = {isa = PBXBuildFile; fileRef = 4F00756EA57C4CD1B3260BF4 /* ssl3.h */; };
+		EC478978F3E44886919A8954 /* ebcdic.h in Headers */ = {isa = PBXBuildFile; fileRef = B7823066E3A94852AFF6E3B2 /* ebcdic.h */; };
+		EFC5AF05F24A4FE5A652AD57 /* kssl.h in Headers */ = {isa = PBXBuildFile; fileRef = FFB8A1C6E65A417FAEE2537D /* kssl.h */; };
+		EFE20E4F572249BFBAF9A7AA /* rc2.h in Headers */ = {isa = PBXBuildFile; fileRef = C139DE7F85804CB6BBD8B8E7 /* rc2.h */; };
+		F07EC520F0B74BD29E28F82E /* pem.h in Headers */ = {isa = PBXBuildFile; fileRef = DDB2FA204E364EBEA44CE027 /* pem.h */; };
+		F093E78FF3674D2E87AF4270 /* comp.h in Headers */ = {isa = PBXBuildFile; fileRef = F0D67F428A67439C94A8FFCE /* comp.h */; };
+		F13833AE2520437EA5F2294D /* camellia.h in Headers */ = {isa = PBXBuildFile; fileRef = F3C9B6C37CEA4FB1ADDFF5B2 /* camellia.h */; };
+		F49357DD6AFE480795B139BD /* tls1.h in Headers */ = {isa = PBXBuildFile; fileRef = F5DD4DA1F1BE48A7AD03428F /* tls1.h */; };
+		F699AA228D124753A7FBA9F7 /* conf_api.h in Headers */ = {isa = PBXBuildFile; fileRef = 92C73F87BE024BCD931CA852 /* conf_api.h */; };
+		F76DEEAC8165408BA4BC4CEE /* dtls1.h in Headers */ = {isa = PBXBuildFile; fileRef = 901444589D9440A8AD7E7C1B /* dtls1.h */; };
+		F8DE4EA500964ED99FECDB61 /* MeteorClient.m in Sources */ = {isa = PBXBuildFile; fileRef = A4D5896C997C4C4A96B30E13 /* MeteorClient.m */; settings = {COMPILER_FLAGS = "-fobjc-arc -DOS_OBJECT_USE_OBJC=0"; }; };
+		F9A6D91200D04BCA82F66758 /* cms.h in Headers */ = {isa = PBXBuildFile; fileRef = CBF2DD0D83E04D8DA57D602D /* cms.h */; };
+		FC6667777B094B3ABA319888 /* dh.h in Headers */ = {isa = PBXBuildFile; fileRef = B39D128710724DF98AB72D5F /* dh.h */; };
+		FEBCF9244D0E4CD5A6E5DAEB /* SRWebSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = BA8DBCC792FC47FDB92103D5 /* SRWebSocket.m */; settings = {COMPILER_FLAGS = "-fobjc-arc -DOS_OBJECT_USE_OBJC=0"; }; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		00015B38F85C4E14914059D4 /* bio.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = bio.h; path = ObjectiveDDP/ObjectiveDDP/openssl/bio.h; sourceTree = SOURCE_ROOT; };
+		0288B16B3D73473283F83A6C /* conf.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = conf.h; path = ObjectiveDDP/ObjectiveDDP/openssl/conf.h; sourceTree = SOURCE_ROOT; };
+		03D3963DC43C431B87BB5601 /* ssl.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ssl.h; path = ObjectiveDDP/ObjectiveDDP/openssl/ssl.h; sourceTree = SOURCE_ROOT; };
+		0506F17B71D947548A65535C /* krb5_asn.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = krb5_asn.h; path = ObjectiveDDP/ObjectiveDDP/openssl/krb5_asn.h; sourceTree = SOURCE_ROOT; };
+		064E38DD646F4ED3B6D66E18 /* Pods-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-prefix.pch"; sourceTree = SOURCE_ROOT; };
+		0845AB71E2024FC78C54EE14 /* ssl2.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ssl2.h; path = ObjectiveDDP/ObjectiveDDP/openssl/ssl2.h; sourceTree = SOURCE_ROOT; };
+		08CBA580871148AA8FF6F7F5 /* des_old.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = des_old.h; path = ObjectiveDDP/ObjectiveDDP/openssl/des_old.h; sourceTree = SOURCE_ROOT; };
+		0A4B940D564F405E914FE1A6 /* ObjectiveDDP.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ObjectiveDDP.h; path = ObjectiveDDP/ObjectiveDDP/ObjectiveDDP.h; sourceTree = SOURCE_ROOT; };
+		0AA967FA62E0463D9EAB8861 /* SRWebSocket.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SRWebSocket.h; path = SocketRocket/SocketRocket/SRWebSocket.h; sourceTree = SOURCE_ROOT; };
+		0D78B5CC0C604504BF3FC9C6 /* x509.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = x509.h; path = ObjectiveDDP/ObjectiveDDP/openssl/x509.h; sourceTree = SOURCE_ROOT; };
+		11D992A165E94E67AB0A512E /* idea.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = idea.h; path = ObjectiveDDP/ObjectiveDDP/openssl/idea.h; sourceTree = SOURCE_ROOT; };
+		12178E6D7B7E40EE9C73D976 /* dso.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = dso.h; path = ObjectiveDDP/ObjectiveDDP/openssl/dso.h; sourceTree = SOURCE_ROOT; };
+		13FA150B5F9241CD9D340E5D /* asn1t.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = asn1t.h; path = ObjectiveDDP/ObjectiveDDP/openssl/asn1t.h; sourceTree = SOURCE_ROOT; };
+		18404656216D4470A40B85E7 /* opensslv.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = opensslv.h; path = ObjectiveDDP/ObjectiveDDP/openssl/opensslv.h; sourceTree = SOURCE_ROOT; };
+		193634DB857C41E49ADE7CAD /* e_os2.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = e_os2.h; path = ObjectiveDDP/ObjectiveDDP/openssl/e_os2.h; sourceTree = SOURCE_ROOT; };
+		1A591A2FE94A4AFFBDE33ED2 /* CFNetwork.framework */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS6.1.sdk/System/Library/Frameworks/CFNetwork.framework; sourceTree = DEVELOPER_DIR; };
+		1A8324B1C2A14CA2A726A1CF /* cmac.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = cmac.h; path = ObjectiveDDP/ObjectiveDDP/openssl/cmac.h; sourceTree = SOURCE_ROOT; };
+		1B5118FD8A134D0A963BE300 /* base64.c */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.c; name = base64.c; path = SocketRocket/SocketRocket/base64.c; sourceTree = SOURCE_ROOT; };
+		1E4EFA2AFAE840E5935DB1B9 /* obj_mac.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = obj_mac.h; path = ObjectiveDDP/ObjectiveDDP/openssl/obj_mac.h; sourceTree = SOURCE_ROOT; };
+		1EAF1FADB54E474584ED4ADF /* ui_compat.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ui_compat.h; path = ObjectiveDDP/ObjectiveDDP/openssl/ui_compat.h; sourceTree = SOURCE_ROOT; };
+		1EB9C0129D3A4B33882BCD4D /* modes.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = modes.h; path = ObjectiveDDP/ObjectiveDDP/openssl/modes.h; sourceTree = SOURCE_ROOT; };
+		21D6106E3A18432E80563B3C /* MeteorClient.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = MeteorClient.h; path = ObjectiveDDP/ObjectiveDDP/MeteorClient.h; sourceTree = SOURCE_ROOT; };
+		265DDA27D3DA4370AC31614E /* safestack.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = safestack.h; path = ObjectiveDDP/ObjectiveDDP/openssl/safestack.h; sourceTree = SOURCE_ROOT; };
+		28C8845E8C7E42D38A0127BF /* whrlpool.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = whrlpool.h; path = ObjectiveDDP/ObjectiveDDP/openssl/whrlpool.h; sourceTree = SOURCE_ROOT; };
+		291ACBC7A41A42F18FC721E3 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		2EC69372488240B3A7795BEC /* srp.c */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.c; name = srp.c; path = ObjectiveDDP/ObjectiveDDP/srp/srp.c; sourceTree = SOURCE_ROOT; };
+		2F08B2635F9B4E06B3328E56 /* base64.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = base64.h; path = SocketRocket/SocketRocket/base64.h; sourceTree = SOURCE_ROOT; };
+		3399BF78B7004C2C9D90C49B /* pkcs12.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = pkcs12.h; path = ObjectiveDDP/ObjectiveDDP/openssl/pkcs12.h; sourceTree = SOURCE_ROOT; };
+		3890D396F1D04C19B5D428ED /* asn1.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = asn1.h; path = ObjectiveDDP/ObjectiveDDP/openssl/asn1.h; sourceTree = SOURCE_ROOT; };
+		459272FEF8084F34AC94F7CD /* ui.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ui.h; path = ObjectiveDDP/ObjectiveDDP/openssl/ui.h; sourceTree = SOURCE_ROOT; };
+		4F00756EA57C4CD1B3260BF4 /* ssl3.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ssl3.h; path = ObjectiveDDP/ObjectiveDDP/openssl/ssl3.h; sourceTree = SOURCE_ROOT; };
+		50DF439AB66340628821AA9A /* engine.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = engine.h; path = ObjectiveDDP/ObjectiveDDP/openssl/engine.h; sourceTree = SOURCE_ROOT; };
+		5161C6F64B404A28A5F13945 /* Pods-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-resources.sh"; sourceTree = SOURCE_ROOT; };
+		52E92828C5DB40818EF7752C /* rc4.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = rc4.h; path = ObjectiveDDP/ObjectiveDDP/openssl/rc4.h; sourceTree = SOURCE_ROOT; };
+		5599BA4E236245D09A8689DE /* x509_vfy.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = x509_vfy.h; path = ObjectiveDDP/ObjectiveDDP/openssl/x509_vfy.h; sourceTree = SOURCE_ROOT; };
+		5DF59376E0A245C9A4F7C379 /* ec.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ec.h; path = ObjectiveDDP/ObjectiveDDP/openssl/ec.h; sourceTree = SOURCE_ROOT; };
+		61EBCFA9AA7D457DA94B323A /* pqueue.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = pqueue.h; path = ObjectiveDDP/ObjectiveDDP/openssl/pqueue.h; sourceTree = SOURCE_ROOT; };
+		62E1F138620E48F6B3D24FC5 /* cast.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = cast.h; path = ObjectiveDDP/ObjectiveDDP/openssl/cast.h; sourceTree = SOURCE_ROOT; };
+		630BF7497D904F1194F85D4F /* lhash.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = lhash.h; path = ObjectiveDDP/ObjectiveDDP/openssl/lhash.h; sourceTree = SOURCE_ROOT; };
+		635E3B15583D46B7A07A1ACE /* rand.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = rand.h; path = ObjectiveDDP/ObjectiveDDP/openssl/rand.h; sourceTree = SOURCE_ROOT; };
+		6631327A8D814CB183336FFF /* srtp.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = srtp.h; path = ObjectiveDDP/ObjectiveDDP/openssl/srtp.h; sourceTree = SOURCE_ROOT; };
+		69BBC56DE3C74C5DA9BD5ADD /* pem2.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = pem2.h; path = ObjectiveDDP/ObjectiveDDP/openssl/pem2.h; sourceTree = SOURCE_ROOT; };
+		69F81D0102C44DFDA8DAF9CE /* x509v3.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = x509v3.h; path = ObjectiveDDP/ObjectiveDDP/openssl/x509v3.h; sourceTree = SOURCE_ROOT; };
+		6E0ABF3647664B5D88A4B916 /* Pods-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-acknowledgements.markdown"; sourceTree = SOURCE_ROOT; };
+		766298F468074FA2AA5C7C9E /* ts.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ts.h; path = ObjectiveDDP/ObjectiveDDP/openssl/ts.h; sourceTree = SOURCE_ROOT; };
+		78959017E879491EA3F76AEA /* Podfile */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		8A9303A47311414BBDB45347 /* mdc2.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = mdc2.h; path = ObjectiveDDP/ObjectiveDDP/openssl/mdc2.h; sourceTree = SOURCE_ROOT; };
+		8C67165621864F88A20D69E0 /* evp.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = evp.h; path = ObjectiveDDP/ObjectiveDDP/openssl/evp.h; sourceTree = SOURCE_ROOT; };
+		8CF8D670734D41BB9219D1FA /* err.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = err.h; path = ObjectiveDDP/ObjectiveDDP/openssl/err.h; sourceTree = SOURCE_ROOT; };
+		8DD1FC24BAC147A9BB41619E /* BSONIdGenerator.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = BSONIdGenerator.h; path = ObjectiveDDP/ObjectiveDDP/BSONIdGenerator.h; sourceTree = SOURCE_ROOT; };
+		8F08994A282A4CC59005A1AC /* ossl_typ.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ossl_typ.h; path = ObjectiveDDP/ObjectiveDDP/openssl/ossl_typ.h; sourceTree = SOURCE_ROOT; };
+		8FDF25DD851546F3ADBDF808 /* pkcs7.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = pkcs7.h; path = ObjectiveDDP/ObjectiveDDP/openssl/pkcs7.h; sourceTree = SOURCE_ROOT; };
+		901444589D9440A8AD7E7C1B /* dtls1.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = dtls1.h; path = ObjectiveDDP/ObjectiveDDP/openssl/dtls1.h; sourceTree = SOURCE_ROOT; };
+		909E9E2F523B47609CB7B07F /* aes.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = aes.h; path = ObjectiveDDP/ObjectiveDDP/openssl/aes.h; sourceTree = SOURCE_ROOT; };
+		92139DAC7D3B4D54B56AECF7 /* NSData+SRB64Additions.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "NSData+SRB64Additions.h"; path = "SocketRocket/SocketRocket/NSData+SRB64Additions.h"; sourceTree = SOURCE_ROOT; };
+		92C73F87BE024BCD931CA852 /* conf_api.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = conf_api.h; path = ObjectiveDDP/ObjectiveDDP/openssl/conf_api.h; sourceTree = SOURCE_ROOT; };
+		94B992903DB54AB789C44C72 /* stack.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = stack.h; path = ObjectiveDDP/ObjectiveDDP/openssl/stack.h; sourceTree = SOURCE_ROOT; };
+		98A9E44221BB4E91BFF02582 /* sha.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = sha.h; path = ObjectiveDDP/ObjectiveDDP/openssl/sha.h; sourceTree = SOURCE_ROOT; };
+		A4D5896C997C4C4A96B30E13 /* MeteorClient.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = MeteorClient.m; path = ObjectiveDDP/ObjectiveDDP/MeteorClient.m; sourceTree = SOURCE_ROOT; };
+		A57F6B95C1D64E24BFBE61F8 /* srp.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = srp.h; path = ObjectiveDDP/ObjectiveDDP/srp/srp.h; sourceTree = SOURCE_ROOT; };
+		A5D13357AC0B4CF39D227857 /* asn1_mac.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = asn1_mac.h; path = ObjectiveDDP/ObjectiveDDP/openssl/asn1_mac.h; sourceTree = SOURCE_ROOT; };
+		A6961D04784F4500B591966F /* hmac.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = hmac.h; path = ObjectiveDDP/ObjectiveDDP/openssl/hmac.h; sourceTree = SOURCE_ROOT; };
+		A95EC4CCDB5E4B96B084EF3A /* libcrypto.a */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = archive.ar; name = libcrypto.a; path = ObjectiveDDP/ObjectiveDDP/libcrypto.a; sourceTree = SOURCE_ROOT; };
+		AA4407744A234DB88BE54372 /* symhacks.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = symhacks.h; path = ObjectiveDDP/ObjectiveDDP/openssl/symhacks.h; sourceTree = SOURCE_ROOT; };
+		AC7977D831554D9BADB0140F /* seed.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = seed.h; path = ObjectiveDDP/ObjectiveDDP/openssl/seed.h; sourceTree = SOURCE_ROOT; };
+		B089B4A005C842F98582F1E8 /* Pods-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-acknowledgements.plist"; sourceTree = SOURCE_ROOT; };
+		B0EBCA4955A74DBA93D820ED /* Pods-environment.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-environment.h"; sourceTree = SOURCE_ROOT; };
+		B2A4B73AD31F4CFEBCA86278 /* objects.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = objects.h; path = ObjectiveDDP/ObjectiveDDP/openssl/objects.h; sourceTree = SOURCE_ROOT; };
+		B315A65A29AA437D9BBE1D61 /* dsa.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = dsa.h; path = ObjectiveDDP/ObjectiveDDP/openssl/dsa.h; sourceTree = SOURCE_ROOT; };
+		B39D128710724DF98AB72D5F /* dh.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = dh.h; path = ObjectiveDDP/ObjectiveDDP/openssl/dh.h; sourceTree = SOURCE_ROOT; };
+		B422F34F67C649828207EA54 /* Foundation.framework */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS6.1.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
+		B5FC6C8FD86740BB9FE29647 /* md5.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = md5.h; path = ObjectiveDDP/ObjectiveDDP/openssl/md5.h; sourceTree = SOURCE_ROOT; };
+		B7823066E3A94852AFF6E3B2 /* ebcdic.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ebcdic.h; path = ObjectiveDDP/ObjectiveDDP/openssl/ebcdic.h; sourceTree = SOURCE_ROOT; };
+		B9158360025649F286CB6576 /* ecdsa.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ecdsa.h; path = ObjectiveDDP/ObjectiveDDP/openssl/ecdsa.h; sourceTree = SOURCE_ROOT; };
+		BA510B0F514C41459FEFF8B0 /* ripemd.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ripemd.h; path = ObjectiveDDP/ObjectiveDDP/openssl/ripemd.h; sourceTree = SOURCE_ROOT; };
+		BA8DBCC792FC47FDB92103D5 /* SRWebSocket.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = SRWebSocket.m; path = SocketRocket/SocketRocket/SRWebSocket.m; sourceTree = SOURCE_ROOT; };
+		BAC8948C6B9B4DA58768E44D /* blowfish.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = blowfish.h; path = ObjectiveDDP/ObjectiveDDP/openssl/blowfish.h; sourceTree = SOURCE_ROOT; };
+		BF41137690404138A808A308 /* des.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = des.h; path = ObjectiveDDP/ObjectiveDDP/openssl/des.h; sourceTree = SOURCE_ROOT; };
+		C139DE7F85804CB6BBD8B8E7 /* rc2.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = rc2.h; path = ObjectiveDDP/ObjectiveDDP/openssl/rc2.h; sourceTree = SOURCE_ROOT; };
+		C2671C9FD36E4A20A25DA936 /* txt_db.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = txt_db.h; path = ObjectiveDDP/ObjectiveDDP/openssl/txt_db.h; sourceTree = SOURCE_ROOT; };
+		C2C7FFE553DB413F82C49446 /* srp.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = srp.h; path = ObjectiveDDP/ObjectiveDDP/openssl/srp.h; sourceTree = SOURCE_ROOT; };
+		C3E35ED522C44717A1133715 /* Security.framework */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = wrapper.framework; name = Security.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS6.1.sdk/System/Library/Frameworks/Security.framework; sourceTree = DEVELOPER_DIR; };
+		C44E6DBDB4794C1DB86EF56D /* ecdh.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ecdh.h; path = ObjectiveDDP/ObjectiveDDP/openssl/ecdh.h; sourceTree = SOURCE_ROOT; };
+		C88D4EF370B448BD84FD72EB /* buffer.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = buffer.h; path = ObjectiveDDP/ObjectiveDDP/openssl/buffer.h; sourceTree = SOURCE_ROOT; };
+		C9D82B3C2461442589459858 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = Pods.xcconfig; sourceTree = SOURCE_ROOT; };
+		CBF2DD0D83E04D8DA57D602D /* cms.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = cms.h; path = ObjectiveDDP/ObjectiveDDP/openssl/cms.h; sourceTree = SOURCE_ROOT; };
+		CF30990F9F2B433D965C645D /* rsa.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = rsa.h; path = ObjectiveDDP/ObjectiveDDP/openssl/rsa.h; sourceTree = SOURCE_ROOT; };
+		D01D349D246C4A5A92B9BEE5 /* opensslconf.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = opensslconf.h; path = ObjectiveDDP/ObjectiveDDP/openssl/opensslconf.h; sourceTree = SOURCE_ROOT; };
+		D0C48BDF69F14A6AACC2C390 /* BSONIdGenerator.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = BSONIdGenerator.m; path = ObjectiveDDP/ObjectiveDDP/BSONIdGenerator.m; sourceTree = SOURCE_ROOT; };
+		DB50D5FFBCC84930BB7A9A19 /* NSData+SRB64Additions.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "NSData+SRB64Additions.m"; path = "SocketRocket/SocketRocket/NSData+SRB64Additions.m"; sourceTree = SOURCE_ROOT; };
+		DDB2FA204E364EBEA44CE027 /* pem.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = pem.h; path = ObjectiveDDP/ObjectiveDDP/openssl/pem.h; sourceTree = SOURCE_ROOT; };
+		E05F436C3A6943AF8269CEE3 /* bn.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = bn.h; path = ObjectiveDDP/ObjectiveDDP/openssl/bn.h; sourceTree = SOURCE_ROOT; };
+		EB6E25E602A146C7B576FCD1 /* ssl23.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ssl23.h; path = ObjectiveDDP/ObjectiveDDP/openssl/ssl23.h; sourceTree = SOURCE_ROOT; };
+		F004ED68AF584D099DFD427F /* crypto.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = crypto.h; path = ObjectiveDDP/ObjectiveDDP/openssl/crypto.h; sourceTree = SOURCE_ROOT; };
+		F0D67F428A67439C94A8FFCE /* comp.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = comp.h; path = ObjectiveDDP/ObjectiveDDP/openssl/comp.h; sourceTree = SOURCE_ROOT; };
+		F0E38D41E763429A9B9FB602 /* md4.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = md4.h; path = ObjectiveDDP/ObjectiveDDP/openssl/md4.h; sourceTree = SOURCE_ROOT; };
+		F3C9B6C37CEA4FB1ADDFF5B2 /* camellia.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = camellia.h; path = ObjectiveDDP/ObjectiveDDP/openssl/camellia.h; sourceTree = SOURCE_ROOT; };
+		F5DD4DA1F1BE48A7AD03428F /* tls1.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = tls1.h; path = ObjectiveDDP/ObjectiveDDP/openssl/tls1.h; sourceTree = SOURCE_ROOT; };
+		F75EA3324CE3426281FE640C /* ObjectiveDDP.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = ObjectiveDDP.m; path = ObjectiveDDP/ObjectiveDDP/ObjectiveDDP.m; sourceTree = SOURCE_ROOT; };
+		FCE15346E3324ECCAF2F6182 /* ocsp.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ocsp.h; path = ObjectiveDDP/ObjectiveDDP/openssl/ocsp.h; sourceTree = SOURCE_ROOT; };
+		FEB8C07BB872424581E2FA9B /* Pods-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-dummy.m"; sourceTree = SOURCE_ROOT; };
+		FFB8A1C6E65A417FAEE2537D /* kssl.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = kssl.h; path = ObjectiveDDP/ObjectiveDDP/openssl/kssl.h; sourceTree = SOURCE_ROOT; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		B552F97A9E3F405B85CA6567 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CE491759F9E14A1EB810F8EA /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		336935E4E2ED43D89A251781 = {
+			isa = PBXGroup;
+			children = (
+				EA9D5A9A03534E7A8E0AEFF0 /* Frameworks */,
+				E33B8AD24E294B6A8CF8A261 /* Pods */,
+				96AC7D5D52394EF0905EFB06 /* Products */,
+				E511C349879C4D3780D200E7 /* Resources */,
+				47908B92346B48E8AC517E61 /* Targets Support Files */,
+				78959017E879491EA3F76AEA /* Podfile */,
+			);
+			sourceTree = "<group>";
+		};
+		47908B92346B48E8AC517E61 /* Targets Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				4BBFD3E6589C424ABC4B4D38 /* Pods */,
+			);
+			name = "Targets Support Files";
+			sourceTree = "<group>";
+		};
+		4BBFD3E6589C424ABC4B4D38 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				C9D82B3C2461442589459858 /* Pods.xcconfig */,
+				B0EBCA4955A74DBA93D820ED /* Pods-environment.h */,
+				064E38DD646F4ED3B6D66E18 /* Pods-prefix.pch */,
+				5161C6F64B404A28A5F13945 /* Pods-resources.sh */,
+				B089B4A005C842F98582F1E8 /* Pods-acknowledgements.plist */,
+				6E0ABF3647664B5D88A4B916 /* Pods-acknowledgements.markdown */,
+				FEB8C07BB872424581E2FA9B /* Pods-dummy.m */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		6A409E45A50F4371862C71B3 /* SocketRocket */ = {
+			isa = PBXGroup;
+			children = (
+				1B5118FD8A134D0A963BE300 /* base64.c */,
+				2F08B2635F9B4E06B3328E56 /* base64.h */,
+				92139DAC7D3B4D54B56AECF7 /* NSData+SRB64Additions.h */,
+				DB50D5FFBCC84930BB7A9A19 /* NSData+SRB64Additions.m */,
+				0AA967FA62E0463D9EAB8861 /* SRWebSocket.h */,
+				BA8DBCC792FC47FDB92103D5 /* SRWebSocket.m */,
+			);
+			name = SocketRocket;
+			sourceTree = "<group>";
+		};
+		96AC7D5D52394EF0905EFB06 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				291ACBC7A41A42F18FC721E3 /* libPods.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		CEC4F6D98F8F4AC9B8128E43 /* ObjectiveDDP */ = {
+			isa = PBXGroup;
+			children = (
+				8DD1FC24BAC147A9BB41619E /* BSONIdGenerator.h */,
+				D0C48BDF69F14A6AACC2C390 /* BSONIdGenerator.m */,
+				21D6106E3A18432E80563B3C /* MeteorClient.h */,
+				A4D5896C997C4C4A96B30E13 /* MeteorClient.m */,
+				0A4B940D564F405E914FE1A6 /* ObjectiveDDP.h */,
+				F75EA3324CE3426281FE640C /* ObjectiveDDP.m */,
+				909E9E2F523B47609CB7B07F /* aes.h */,
+				3890D396F1D04C19B5D428ED /* asn1.h */,
+				A5D13357AC0B4CF39D227857 /* asn1_mac.h */,
+				13FA150B5F9241CD9D340E5D /* asn1t.h */,
+				00015B38F85C4E14914059D4 /* bio.h */,
+				BAC8948C6B9B4DA58768E44D /* blowfish.h */,
+				E05F436C3A6943AF8269CEE3 /* bn.h */,
+				C88D4EF370B448BD84FD72EB /* buffer.h */,
+				F3C9B6C37CEA4FB1ADDFF5B2 /* camellia.h */,
+				62E1F138620E48F6B3D24FC5 /* cast.h */,
+				1A8324B1C2A14CA2A726A1CF /* cmac.h */,
+				CBF2DD0D83E04D8DA57D602D /* cms.h */,
+				F0D67F428A67439C94A8FFCE /* comp.h */,
+				0288B16B3D73473283F83A6C /* conf.h */,
+				92C73F87BE024BCD931CA852 /* conf_api.h */,
+				F004ED68AF584D099DFD427F /* crypto.h */,
+				BF41137690404138A808A308 /* des.h */,
+				08CBA580871148AA8FF6F7F5 /* des_old.h */,
+				B39D128710724DF98AB72D5F /* dh.h */,
+				B315A65A29AA437D9BBE1D61 /* dsa.h */,
+				12178E6D7B7E40EE9C73D976 /* dso.h */,
+				901444589D9440A8AD7E7C1B /* dtls1.h */,
+				193634DB857C41E49ADE7CAD /* e_os2.h */,
+				B7823066E3A94852AFF6E3B2 /* ebcdic.h */,
+				5DF59376E0A245C9A4F7C379 /* ec.h */,
+				C44E6DBDB4794C1DB86EF56D /* ecdh.h */,
+				B9158360025649F286CB6576 /* ecdsa.h */,
+				50DF439AB66340628821AA9A /* engine.h */,
+				8CF8D670734D41BB9219D1FA /* err.h */,
+				8C67165621864F88A20D69E0 /* evp.h */,
+				A6961D04784F4500B591966F /* hmac.h */,
+				11D992A165E94E67AB0A512E /* idea.h */,
+				0506F17B71D947548A65535C /* krb5_asn.h */,
+				FFB8A1C6E65A417FAEE2537D /* kssl.h */,
+				630BF7497D904F1194F85D4F /* lhash.h */,
+				F0E38D41E763429A9B9FB602 /* md4.h */,
+				B5FC6C8FD86740BB9FE29647 /* md5.h */,
+				8A9303A47311414BBDB45347 /* mdc2.h */,
+				1EB9C0129D3A4B33882BCD4D /* modes.h */,
+				1E4EFA2AFAE840E5935DB1B9 /* obj_mac.h */,
+				B2A4B73AD31F4CFEBCA86278 /* objects.h */,
+				FCE15346E3324ECCAF2F6182 /* ocsp.h */,
+				D01D349D246C4A5A92B9BEE5 /* opensslconf.h */,
+				18404656216D4470A40B85E7 /* opensslv.h */,
+				8F08994A282A4CC59005A1AC /* ossl_typ.h */,
+				DDB2FA204E364EBEA44CE027 /* pem.h */,
+				69BBC56DE3C74C5DA9BD5ADD /* pem2.h */,
+				3399BF78B7004C2C9D90C49B /* pkcs12.h */,
+				8FDF25DD851546F3ADBDF808 /* pkcs7.h */,
+				61EBCFA9AA7D457DA94B323A /* pqueue.h */,
+				635E3B15583D46B7A07A1ACE /* rand.h */,
+				C139DE7F85804CB6BBD8B8E7 /* rc2.h */,
+				52E92828C5DB40818EF7752C /* rc4.h */,
+				BA510B0F514C41459FEFF8B0 /* ripemd.h */,
+				CF30990F9F2B433D965C645D /* rsa.h */,
+				265DDA27D3DA4370AC31614E /* safestack.h */,
+				AC7977D831554D9BADB0140F /* seed.h */,
+				98A9E44221BB4E91BFF02582 /* sha.h */,
+				C2C7FFE553DB413F82C49446 /* srp.h */,
+				6631327A8D814CB183336FFF /* srtp.h */,
+				03D3963DC43C431B87BB5601 /* ssl.h */,
+				0845AB71E2024FC78C54EE14 /* ssl2.h */,
+				EB6E25E602A146C7B576FCD1 /* ssl23.h */,
+				4F00756EA57C4CD1B3260BF4 /* ssl3.h */,
+				94B992903DB54AB789C44C72 /* stack.h */,
+				AA4407744A234DB88BE54372 /* symhacks.h */,
+				F5DD4DA1F1BE48A7AD03428F /* tls1.h */,
+				766298F468074FA2AA5C7C9E /* ts.h */,
+				C2671C9FD36E4A20A25DA936 /* txt_db.h */,
+				459272FEF8084F34AC94F7CD /* ui.h */,
+				1EAF1FADB54E474584ED4ADF /* ui_compat.h */,
+				28C8845E8C7E42D38A0127BF /* whrlpool.h */,
+				0D78B5CC0C604504BF3FC9C6 /* x509.h */,
+				5599BA4E236245D09A8689DE /* x509_vfy.h */,
+				69F81D0102C44DFDA8DAF9CE /* x509v3.h */,
+				2EC69372488240B3A7795BEC /* srp.c */,
+				A57F6B95C1D64E24BFBE61F8 /* srp.h */,
+			);
+			name = ObjectiveDDP;
+			sourceTree = "<group>";
+		};
+		E33B8AD24E294B6A8CF8A261 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				CEC4F6D98F8F4AC9B8128E43 /* ObjectiveDDP */,
+				6A409E45A50F4371862C71B3 /* SocketRocket */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		E511C349879C4D3780D200E7 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				EA63E88830164094A5E46857 /* ObjectiveDDP */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		EA63E88830164094A5E46857 /* ObjectiveDDP */ = {
+			isa = PBXGroup;
+			children = (
+				A95EC4CCDB5E4B96B084EF3A /* libcrypto.a */,
+			);
+			name = ObjectiveDDP;
+			sourceTree = "<group>";
+		};
+		EA9D5A9A03534E7A8E0AEFF0 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				1A591A2FE94A4AFFBDE33ED2 /* CFNetwork.framework */,
+				B422F34F67C649828207EA54 /* Foundation.framework */,
+				C3E35ED522C44717A1133715 /* Security.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		3427B157B7004400AE564C49 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1900F2DA597F426EA432A253 /* BSONIdGenerator.h in Headers */,
+				40B19620F5B64B0DA115AB28 /* MeteorClient.h in Headers */,
+				38A2A03C6DD74908ADD39B6D /* ObjectiveDDP.h in Headers */,
+				43986F87C8EB4B7081DF1425 /* aes.h in Headers */,
+				8FE5A0915F644297A937CBE8 /* asn1.h in Headers */,
+				37C564BFEFD74FC994B7A9D8 /* asn1_mac.h in Headers */,
+				92F54094687E46A18CF7081F /* asn1t.h in Headers */,
+				4527CD71443D4DF9AA5E7927 /* bio.h in Headers */,
+				B770468219E4462B913B6433 /* blowfish.h in Headers */,
+				5F81FE1DD9234A708F0D7830 /* bn.h in Headers */,
+				893B201A40C645E8BCA2B695 /* buffer.h in Headers */,
+				F13833AE2520437EA5F2294D /* camellia.h in Headers */,
+				7C701498CFCA4B9585045BEC /* cast.h in Headers */,
+				DCB2E31BCF9F40A1A79B892A /* cmac.h in Headers */,
+				F9A6D91200D04BCA82F66758 /* cms.h in Headers */,
+				F093E78FF3674D2E87AF4270 /* comp.h in Headers */,
+				DC5FFDC6128D435CAA28BAAE /* conf.h in Headers */,
+				F699AA228D124753A7FBA9F7 /* conf_api.h in Headers */,
+				B4D66B7660CC4291AD7CF052 /* crypto.h in Headers */,
+				8CCED87538684F8D8A8AD8DC /* des.h in Headers */,
+				B2C3F9CBB6DE43E495482E3F /* des_old.h in Headers */,
+				FC6667777B094B3ABA319888 /* dh.h in Headers */,
+				D6C265C231FB443282F2B878 /* dsa.h in Headers */,
+				307897DAC00C4F93A3B6072D /* dso.h in Headers */,
+				F76DEEAC8165408BA4BC4CEE /* dtls1.h in Headers */,
+				111E6D5DADA8495286DAC538 /* e_os2.h in Headers */,
+				EC478978F3E44886919A8954 /* ebcdic.h in Headers */,
+				93396250F74742EFB0B3C553 /* ec.h in Headers */,
+				518BD21F440440D7B734A90F /* ecdh.h in Headers */,
+				1B06B4D275C9424787025FF2 /* ecdsa.h in Headers */,
+				7EFE3A43943A410F8D56AF45 /* engine.h in Headers */,
+				07281067EB6642F5A5ACAE80 /* err.h in Headers */,
+				1CC75F683D7F46A3974F1646 /* evp.h in Headers */,
+				02CF672C836541EA94B7D8C6 /* hmac.h in Headers */,
+				7F47D591B0A64E0EA9F05405 /* idea.h in Headers */,
+				91F59503AB6843F0BEA79F9E /* krb5_asn.h in Headers */,
+				EFC5AF05F24A4FE5A652AD57 /* kssl.h in Headers */,
+				DA5FD33E6B1C48BD8D0C19DC /* lhash.h in Headers */,
+				139F463D6BBF40A5916471BD /* md4.h in Headers */,
+				061B7C5C09154F9294D50E8B /* md5.h in Headers */,
+				0EEB1E707FDA4E5386CAA8D9 /* mdc2.h in Headers */,
+				9B76A3446AF24C4DB27B65F2 /* modes.h in Headers */,
+				8E0EED4332DB442693D69843 /* obj_mac.h in Headers */,
+				E416A5FEBCB542F799B955AC /* objects.h in Headers */,
+				B04A7C29E4DE4FBABC46ADCC /* ocsp.h in Headers */,
+				06888BC80A2044BBA35CFB34 /* opensslconf.h in Headers */,
+				A993866EFCE34364A5576F6B /* opensslv.h in Headers */,
+				D16BD215CA20442E88B5A9A6 /* ossl_typ.h in Headers */,
+				F07EC520F0B74BD29E28F82E /* pem.h in Headers */,
+				60694B5CA80F41058BC30480 /* pem2.h in Headers */,
+				3F18A14013A44E2389C233D6 /* pkcs12.h in Headers */,
+				85F7905A6A444BF990932BDA /* pkcs7.h in Headers */,
+				4F3C3465DDC246069EB3DF3C /* pqueue.h in Headers */,
+				B732D649E2A240768D53BBB6 /* rand.h in Headers */,
+				EFE20E4F572249BFBAF9A7AA /* rc2.h in Headers */,
+				9C089C0F747444CE86C80DC2 /* rc4.h in Headers */,
+				103F6D1DE7274842A9CFA328 /* ripemd.h in Headers */,
+				473D353C5E5D435BA1AB9AB4 /* rsa.h in Headers */,
+				21B8D5FF4547456FADE62FF7 /* safestack.h in Headers */,
+				6A85B6CD23DF46428F410F49 /* seed.h in Headers */,
+				745C40F999B54F439ABE1C18 /* sha.h in Headers */,
+				7D18A7D269794AFBA4E021C0 /* srp.h in Headers */,
+				B3C87A1165C44BA9B5E694EA /* srtp.h in Headers */,
+				8ACE894FA9BB4526ACAD5AB9 /* ssl.h in Headers */,
+				967C1248DBE846FBA02A1130 /* ssl2.h in Headers */,
+				C14C2DA9D63141A0B7CCF258 /* ssl23.h in Headers */,
+				EB2C3903FD23432A8D5430E1 /* ssl3.h in Headers */,
+				2B80CFBE38D2460CA80BED8C /* stack.h in Headers */,
+				A17F7EEDDC7F4DE28222F648 /* symhacks.h in Headers */,
+				F49357DD6AFE480795B139BD /* tls1.h in Headers */,
+				C11E2041B3EF4FDE92F79096 /* ts.h in Headers */,
+				281E81651BAF44C9A5C9AF12 /* txt_db.h in Headers */,
+				8ADEE83D51EB4FFEBA5E0487 /* ui.h in Headers */,
+				DBD7A3953AB14E89A2CD7170 /* ui_compat.h in Headers */,
+				07DE5D9812AC478F883C71CA /* whrlpool.h in Headers */,
+				C67940AF05494CC288D73904 /* x509.h in Headers */,
+				A0464E20853F44C3B6126317 /* x509_vfy.h in Headers */,
+				16D979F85751418489770791 /* x509v3.h in Headers */,
+				309CBD549E7C462CACEA00A0 /* srp.h in Headers */,
+				3BAF0203D5BE4F088545FF37 /* base64.h in Headers */,
+				09E0533A26ED4C92943EC5AA /* NSData+SRB64Additions.h in Headers */,
+				BA2615CEF1DE4DD3A051ACDD /* SRWebSocket.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		8E1145F90E374B91A8FCFD27 /* Pods */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 26F98348070045DA9DD4AB3A /* Build configuration list for PBXNativeTarget "Pods" */;
+			buildPhases = (
+				8009CBBC00754D7FACB8B8A0 /* Sources */,
+				B552F97A9E3F405B85CA6567 /* Frameworks */,
+				3427B157B7004400AE564C49 /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Pods;
+			productName = Pods;
+			productReference = 291ACBC7A41A42F18FC721E3 /* libPods.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		58248DF7041F4B2084A3B2E4 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0450;
+			};
+			buildConfigurationList = 2170F28A5025499CAC80875E /* Build configuration list for PBXProject "Pods" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 336935E4E2ED43D89A251781;
+			productRefGroup = 96AC7D5D52394EF0905EFB06 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				8E1145F90E374B91A8FCFD27 /* Pods */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		8009CBBC00754D7FACB8B8A0 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7E65CEFA2188480086E158B1 /* BSONIdGenerator.m in Sources */,
+				F8DE4EA500964ED99FECDB61 /* MeteorClient.m in Sources */,
+				04E069CE2F674EA5A9777B7C /* ObjectiveDDP.m in Sources */,
+				56E79C4DDA7242D093559005 /* srp.c in Sources */,
+				5FBC53C614AC49ECB3662A0D /* base64.c in Sources */,
+				60EE25F89BA6471B90CB85CB /* NSData+SRB64Additions.m in Sources */,
+				FEBCF9244D0E4CD5A6E5DAEB /* SRWebSocket.m in Sources */,
+				5C40039A86A34BFD9B8D9BC5 /* Pods-dummy.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		184548FA29B1474DAB9E07BE /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = C9D82B3C2461442589459858 /* Pods.xcconfig */;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				COPY_PHASE_STRIP = NO;
+				DSTROOT = /tmp/xcodeproj.dst;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Pods-prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				HEADER_SEARCH_PATHS = "${PODS_HEADERS_SEARCH_PATHS}";
+				INSTALL_PATH = "$(BUILT_PRODUCTS_DIR)";
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				OTHER_LDFLAGS = "";
+				PODS_HEADERS_SEARCH_PATHS = "${PODS_BUILD_HEADERS_SEARCH_PATHS}";
+				PODS_ROOT = "${SRCROOT}";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PUBLIC_HEADERS_FOLDER_PATH = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
+		4182B0B7EC6E41CD9C51361E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+			};
+			name = Debug;
+		};
+		707FE80009B04531898D7D33 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = C9D82B3C2461442589459858 /* Pods.xcconfig */;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				COPY_PHASE_STRIP = YES;
+				DSTROOT = /tmp/xcodeproj.dst;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Pods-prefix.pch";
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				HEADER_SEARCH_PATHS = "${PODS_HEADERS_SEARCH_PATHS}";
+				INSTALL_PATH = "$(BUILT_PRODUCTS_DIR)";
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				OTHER_CFLAGS = (
+					"-DNS_BLOCK_ASSERTIONS=1",
+					"$(inherited)",
+				);
+				OTHER_CPLUSPLUSFLAGS = (
+					"-DNS_BLOCK_ASSERTIONS=1",
+					"$(inherited)",
+				);
+				OTHER_LDFLAGS = "";
+				PODS_HEADERS_SEARCH_PATHS = "${PODS_BUILD_HEADERS_SEARCH_PATHS}";
+				PODS_ROOT = "${SRCROOT}";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PUBLIC_HEADERS_FOLDER_PATH = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		F5DBBA916F6F4D9BB004E7C4 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		2170F28A5025499CAC80875E /* Build configuration list for PBXProject "Pods" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F5DBBA916F6F4D9BB004E7C4 /* Release */,
+				4182B0B7EC6E41CD9C51361E /* Debug */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		26F98348070045DA9DD4AB3A /* Build configuration list for PBXNativeTarget "Pods" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				707FE80009B04531898D7D33 /* Release */,
+				184548FA29B1474DAB9E07BE /* Debug */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 58248DF7041F4B2084A3B2E4 /* Project object */;
+}

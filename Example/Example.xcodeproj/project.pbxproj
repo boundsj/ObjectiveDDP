@@ -57,7 +57,6 @@
 		401AEB77170E9E16008B38EA /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		401AEB79170E9E20008B38EA /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		401AEB7B170E9E28008B38EA /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
-		408F42871719C93A00C91A92 /* libssl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libssl.a; path = Example/libssl.a; sourceTree = "<group>"; };
 		40A59C351718E9180095E30E /* AddViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddViewController.h; sourceTree = "<group>"; };
 		40A59C361718E9180095E30E /* AddViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddViewController.m; sourceTree = "<group>"; };
 		40A59C371718E9180095E30E /* AddViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AddViewController.xib; sourceTree = "<group>"; };
@@ -114,7 +113,6 @@
 		401AEB34170E9B4D008B38EA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				408F42871719C93A00C91A92 /* libssl.a */,
 				401AEB73170E9DFD008B38EA /* libObjectiveDDP.a */,
 				401AEB75170E9E08008B38EA /* libicucore.dylib */,
 				401AEB7B170E9E28008B38EA /* Security.framework */,
