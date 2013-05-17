@@ -15,6 +15,7 @@
 		401AEB82170E9ED2008B38EA /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 401AEB81170E9ED2008B38EA /* CFNetwork.framework */; };
 		401AEB84170E9EEB008B38EA /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 401AEB83170E9EEB008B38EA /* Security.framework */; };
 		405FD5F41745DABE001F8AE7 /* libcrypto.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 405FD5A71745DABE001F8AE7 /* libcrypto.a */; };
+		405FD5F81746BCD5001F8AE7 /* srp.c in Sources */ = {isa = PBXBuildFile; fileRef = 405FD5F61746BCD5001F8AE7 /* srp.c */; };
 		4079F9DB170EB31D00194B4A /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4079F9DA170EB31D00194B4A /* UIKit.framework */; };
 		4079F9DC170EB31D00194B4A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4000D639170E880400296229 /* Foundation.framework */; };
 		4079F9DE170EB31D00194B4A /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4079F9DD170EB31D00194B4A /* CoreGraphics.framework */; };
@@ -140,6 +141,8 @@
 		405FD5F11745DABE001F8AE7 /* x509.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = x509.h; sourceTree = "<group>"; };
 		405FD5F21745DABE001F8AE7 /* x509_vfy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = x509_vfy.h; sourceTree = "<group>"; };
 		405FD5F31745DABE001F8AE7 /* x509v3.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = x509v3.h; sourceTree = "<group>"; };
+		405FD5F61746BCD5001F8AE7 /* srp.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = srp.c; sourceTree = "<group>"; };
+		405FD5F71746BCD5001F8AE7 /* srp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = srp.h; sourceTree = "<group>"; };
 		4079F9D9170EB31D00194B4A /* Specs.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Specs.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4079F9DA170EB31D00194B4A /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		4079F9DD170EB31D00194B4A /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -169,10 +172,10 @@
 				401AEB84170E9EEB008B38EA /* Security.framework in Frameworks */,
 				401AEB82170E9ED2008B38EA /* CFNetwork.framework in Frameworks */,
 				401AEB80170E9ECC008B38EA /* SystemConfiguration.framework in Frameworks */,
-				401AEB7E170E9EC7008B38EA /* libicucore.dylib in Frameworks */,
 				4000D63A170E880400296229 /* Foundation.framework in Frameworks */,
-				9D3C062D54114FB1AC5700F0 /* libPods.a in Frameworks */,
 				405FD5F41745DABE001F8AE7 /* libcrypto.a in Frameworks */,
+				401AEB7E170E9EC7008B38EA /* libicucore.dylib in Frameworks */,
+				9D3C062D54114FB1AC5700F0 /* libPods.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -241,6 +244,7 @@
 				888B6DFB173B6508001EED80 /* MeteorClient.m */,
 				4000D63E170E880400296229 /* ObjectiveDDP.h */,
 				4000D640170E880400296229 /* ObjectiveDDP.m */,
+				405FD5F51746BCD5001F8AE7 /* srp */,
 				405FD5A81745DABE001F8AE7 /* openssl */,
 				4000D63C170E880400296229 /* Supporting Files */,
 			);
@@ -336,6 +340,15 @@
 				405FD5F31745DABE001F8AE7 /* x509v3.h */,
 			);
 			path = openssl;
+			sourceTree = "<group>";
+		};
+		405FD5F51746BCD5001F8AE7 /* srp */ = {
+			isa = PBXGroup;
+			children = (
+				405FD5F61746BCD5001F8AE7 /* srp.c */,
+				405FD5F71746BCD5001F8AE7 /* srp.h */,
+			);
+			path = srp;
 			sourceTree = "<group>";
 		};
 		4079F9DF170EB31D00194B4A /* Specs */ = {
@@ -488,6 +501,7 @@
 				4000D641170E880400296229 /* ObjectiveDDP.m in Sources */,
 				888B6DFC173B6508001EED80 /* MeteorClient.m in Sources */,
 				888B6DFF173B66EA001EED80 /* BSONIdGenerator.m in Sources */,
+				405FD5F81746BCD5001F8AE7 /* srp.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -580,6 +594,10 @@
 				DSTROOT = /tmp/ObjectiveDDP.dst;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "ObjectiveDDP/ObjectiveDDP-Prefix.pch";
+				HEADER_SEARCH_PATHS = (
+					"ObjectiveDDP/**",
+					"${PODS_HEADERS_SEARCH_PATHS}",
+				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SDKROOT)/usr/lib/system\"",
@@ -598,6 +616,10 @@
 				DSTROOT = /tmp/ObjectiveDDP.dst;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "ObjectiveDDP/ObjectiveDDP-Prefix.pch";
+				HEADER_SEARCH_PATHS = (
+					"ObjectiveDDP/**",
+					"${PODS_HEADERS_SEARCH_PATHS}",
+				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SDKROOT)/usr/lib/system\"",
