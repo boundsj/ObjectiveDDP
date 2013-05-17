@@ -40,10 +40,10 @@
 #include <string.h>
 #include <stdio.h>
 
-#include <openssl/bn.h>
-#include <openssl/sha.h>
-#include <openssl/crypto.h>
-#include <openssl/rand.h>
+#include <bn.h>
+#include <sha.h>
+#include <crypto.h>
+#include <rand.h>
 #import <ctype.h>
 //#import <c++/4.2.1/ext/functional>
 
