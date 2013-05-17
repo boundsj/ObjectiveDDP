@@ -14,7 +14,7 @@ EXTERNAL SOURCES:
     :git: git@github.com:square/SocketRocket.git
 
 SPEC CHECKSUMS:
-  ObjectiveDDP: 4b7d7e4a1be1491a6917af4856fff5077edcf2a6
+  ObjectiveDDP: 3d42d04e21f0a5cfdaa9f22082ef9b2d25f68bb8
   SocketRocket: 9cbe08469513356cddc0afcab1ff160bd190296a
 
 COCOAPODS: 0.19.1
