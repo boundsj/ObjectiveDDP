@@ -135,7 +135,6 @@
 		408F42851719C72400C91A92 /* x509_vfy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = x509_vfy.h; sourceTree = "<group>"; };
 		408F42861719C72400C91A92 /* x509v3.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = x509v3.h; sourceTree = "<group>"; };
 		408F42871719C93A00C91A92 /* libssl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libssl.a; path = Example/libssl.a; sourceTree = "<group>"; };
-		408F42891719CABA00C91A92 /* libcrypto.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcrypto.a; path = Example/libcrypto.a; sourceTree = "<group>"; };
 		40A59C351718E9180095E30E /* AddViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddViewController.h; sourceTree = "<group>"; };
 		40A59C361718E9180095E30E /* AddViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddViewController.m; sourceTree = "<group>"; };
 		40A59C371718E9180095E30E /* AddViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AddViewController.xib; sourceTree = "<group>"; };
@@ -195,7 +194,6 @@
 		401AEB34170E9B4D008B38EA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				408F42891719CABA00C91A92 /* libcrypto.a */,
 				408F42871719C93A00C91A92 /* libssl.a */,
 				401AEB73170E9DFD008B38EA /* libObjectiveDDP.a */,
 				401AEB75170E9E08008B38EA /* libicucore.dylib */,
