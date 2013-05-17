@@ -1,13 +1,13 @@
 Pod::Spec.new do |s|
   s.name         = 'ObjectiveDDP'
-  s.version      = '0.0.11'
+  s.version      = '0.0.12'
   s.license      = 'MIT'
   s.summary      = 'Facilitates communication between iOS clients and meteor.js servers'
   s.homepage     = 'https://github.com/boundsj/ObjectiveDDP.git'
   s.author       = 'Jesse Bounds'
   s.source       = { :git => 'https://github.com/boundsj/ObjectiveDDP.git' }
   s.source_files = 'ObjectiveDDP/*.{h,m,c}'
-  s.resource =  'libcrypto.a'
+  s.resource =  'ObjectiveDDP/libcrypto.a'
   s.xcconfig = { 'OTHER_LDFLAGS' => '${SRCROOT}/Example/libcrypto.a' }
   s.requires_arc = true
 end

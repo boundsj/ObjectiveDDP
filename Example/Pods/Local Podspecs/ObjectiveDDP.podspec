@@ -6,9 +6,9 @@ Pod::Spec.new do |s|
   s.homepage     = 'https://github.com/boundsj/ObjectiveDDP.git'
   s.author       = 'Jesse Bounds'
   s.source       = { :git => 'https://github.com/boundsj/ObjectiveDDP.git' }
-  s.source_files = 'ObjectiveDDP/*.{h,m,c,a}'
-  s.preserve_paths = 'libcrypto.a'
-  s.xcconfig = { 'OTHER_LDFLAGS' => '$(PODS_ROOT)/ObjectiveDDP/ObjectiveDDP/libcrypto.a' }
+  s.source_files = 'ObjectiveDDP/*.{h,m,c}'
+  s.resource =  'libcrypto.a'
+  s.xcconfig = { 'OTHER_LDFLAGS' => '${SRCROOT}/Example/libcrypto.a' }
   s.requires_arc = true
 end
 
