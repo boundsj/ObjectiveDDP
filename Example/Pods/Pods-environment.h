@@ -10,7 +10,7 @@
 #define COCOAPODS_POD_AVAILABLE_ObjectiveDDP
 #define COCOAPODS_VERSION_MAJOR_ObjectiveDDP 0
 #define COCOAPODS_VERSION_MINOR_ObjectiveDDP 0
-#define COCOAPODS_VERSION_PATCH_ObjectiveDDP 4
+#define COCOAPODS_VERSION_PATCH_ObjectiveDDP 15
 
 // SocketRocket
 #define COCOAPODS_POD_AVAILABLE_SocketRocket

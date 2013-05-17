@@ -10,8 +10,8 @@
 
     self.meteorClient = [[MeteorClient alloc] init];
 
-    // TODO: Make subscription declaration api cleaner
-    self.meteorClient.subscriptions = @{@"things": [NSMutableArray array], @"lists": [NSMutableArray array]};
+    [self.meteorClient addSubscription:@"things"];
+    [self.meteorClient addSubscription:@"lists"];
 
     LoginViewController *loginController = [[LoginViewController alloc] initWithNibName:@"LoginViewController"
                                                                                  bundle:nil];

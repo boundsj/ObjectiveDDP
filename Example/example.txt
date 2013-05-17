@@ -1,0 +1,1 @@
+if you intend to do meteor auth with your ios client then add -lcrypto to other linker flags in settings
