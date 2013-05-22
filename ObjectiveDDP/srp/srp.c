@@ -675,7 +675,7 @@ void srp_verifier_verify_session( struct SRPVerifier * ver, const unsigned char 
 }
 
 struct SRPUser * srp_user_new( SRP_HashAlgorithm alg, SRP_NGType ng_type, const char * username, 
-                               const unsigned char * bytes_password, int len_password,
+                              const char * bytes_password, int len_password,
                                const char * n_hex, const char * g_hex )
 {
     struct SRPUser  *usr  = (struct SRPUser *) malloc( sizeof(struct SRPUser) );

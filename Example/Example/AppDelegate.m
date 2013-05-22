@@ -1,6 +1,8 @@
 #import "AppDelegate.h"
 #import "ViewController.h"
 #import "LoginViewController.h"
+#import "MeteorClient.h"
+#import "ObjectiveDDP.h"
 #import <ObjectiveDDP/MeteorClient.h>
 
 @implementation AppDelegate
@@ -48,9 +50,7 @@
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
-    // this will start the process of connecting to meteor
-    // connection is ONLY a websocket connetcion, it does NOT mean that any
-    // subscription requests will be made or that authorization will be performed
+    [self.meteorClient resetCollections];
     [self.meteorClient.ddp connectWebSocket];
 }
 
