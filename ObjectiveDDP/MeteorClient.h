@@ -8,9 +8,11 @@
 @property (weak, nonatomic) id<DDPAuthDelegate> authDelegate;
 @property (strong, nonatomic) NSMutableDictionary *subscriptions;
 @property (strong, nonatomic) NSMutableDictionary *collections;
+@property (copy, nonatomic) NSString *sessionToken;
 
 - (void)sendWithMethodName:(NSString *)methodName parameters:(NSArray *)parameters;
 - (void)addSubscription:(NSString *)subscriptionName;
+- (void)resetCollections;
 
 @end
 

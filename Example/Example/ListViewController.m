@@ -1,5 +1,6 @@
 #import "ListViewController.h"
 #import "ViewController.h"
+#import "MeteorClient.h"
 
 @interface ListViewController ()
 
@@ -44,6 +45,8 @@
     return [self.lists count];
 }
 
+static NSDictionary *selectedList;
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     static NSString *cellIdentifier = @"list";
 
@@ -54,9 +57,56 @@
     }
 
     NSDictionary *list = self.lists[indexPath.row];
+    selectedList = list;
     cell.textLabel.text = list[@"name"];
 
+    UIButton *shareButton = [UIButton buttonWithType:UIButtonTypeCustom];
+
+    shareButton.frame = CGRectMake(255.0f, 5.0f, 55.0f, 34.0f);
+    shareButton.backgroundColor = [UIColor greenColor];
+    [shareButton setTitle:@"Share" forState:UIControlStateNormal];
+    [shareButton addTarget:self action:@selector(didClickShareButton:forEvent:) forControlEvents:UIControlEventTouchUpInside];
+
+    // XXX: shareButton needs to be able to link to its list
+    // shareButton
+
+    [cell addSubview:shareButton];
+
     return cell;
+}
+
+static UITextField *shareWithTF;
+
+- (void)didClickShareButton:(id)sender forEvent:(UIEvent *)event {
+    UITouch *touch = [[event allTouches] anyObject];
+    CGPoint location = [touch locationInView:self.view];
+
+    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0.0, location.y, 320.0, 100.0)];
+    view.backgroundColor = [UIColor whiteColor];
+    UITextField *shareWithTextField = [[UITextField alloc] initWithFrame:CGRectMake(10.0, 50.0, 240.0, 44.0)];
+    shareWithTF = shareWithTextField;
+    shareWithTextField.borderStyle = UITextBorderStyleLine;
+    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+    button.frame = CGRectMake(255.0, 50.0, 60.0, 44.0);
+    button.backgroundColor = [UIColor greenColor];
+    [button setTitle:@"Send" forState:UIControlStateNormal];
+    [button addTarget:self action:@selector(didClickShareWithButton:) forControlEvents:UIControlEventTouchUpInside];
+    [view addSubview:shareWithTextField];
+    [view addSubview:button];
+
+    UIView *modalBackground = [[UIView alloc] initWithFrame:self.view.frame];
+    modalBackground.backgroundColor = [UIColor blackColor];
+    modalBackground.alpha = 0.7;
+
+    [self.view addSubview:modalBackground];
+    [self.view addSubview:view];
+}
+
+- (void)didClickShareWithButton:(id)sender {
+    [self.meteor sendWithMethodName:@"/lists/update"
+                         parameters:@[@{@"_id": selectedList[@"_id"]}, @{@"$set":@{@"share_with": shareWithTF.text}}]];
+    [[[self.view subviews] lastObject] removeFromSuperview];
+    [[[self.view subviews] lastObject] removeFromSuperview];
 }
 
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -70,7 +120,6 @@
     [self.meteor sendWithMethodName:@"/lists/remove"
                          parameters:@[@{@"_id": list[@"_id"]}]];
 }
-
 
 #pragma mark <UITableViewDelegate>
 
