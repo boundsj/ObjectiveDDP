@@ -1,6 +1,5 @@
 #import "LoginViewController.h"
 #import "srp.h"
-#import "ViewController.h"
 #import "ListViewController.h"
 
 @interface LoginViewController ()
@@ -63,6 +62,7 @@ SRP_NGType        ng_type = SRP_NG_1024;
                                                                               bundle:nil
                                                                               meteor:self.meteor];
         controller.userId = response[@"id"];
+        self.meteor.sessionToken = response[@"token"];
         [self.navigationController pushViewController:controller animated:YES];
     }
 

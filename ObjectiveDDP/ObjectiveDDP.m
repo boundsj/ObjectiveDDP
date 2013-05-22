@@ -52,7 +52,7 @@
 - (void)subscribeWith:(NSString *)id
                  name:(NSString *)name
            parameters:(NSArray *)parameters {
-    NSMutableDictionary *fields = @{@"msg": @"sub", @"name": name, @"id": id};
+    NSDictionary *fields = @{@"msg": @"sub", @"name": name, @"id": id};
     NSString *json = [self _buildJSONWithFields:fields parameters:parameters];
 
     [self.webSocket send:json];
@@ -73,7 +73,7 @@
 
 #pragma mark private utilities
 
-- (NSString *)_buildJSONWithFields:(NSMutableDictionary *)fields
+- (NSString *)_buildJSONWithFields:(NSDictionary *)fields
                         parameters:(NSArray *)parameters {
     NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithDictionary:fields];
     if (parameters) {

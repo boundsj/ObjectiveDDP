@@ -3,8 +3,7 @@
 
 @implementation MeteorClient
 
-- (id)init
-{
+- (id)init {
     self = [super init];
     if (self) {
         self.collections = [NSMutableDictionary dictionary];
@@ -12,6 +11,10 @@
         // TODO: subscription version should be set here
     }
     return self;
+}
+
+- (void)resetCollections {
+    [self.collections removeAllObjects];
 }
 
 #pragma mark MeteorClient public API
@@ -32,21 +35,15 @@
 #pragma mark <ObjectiveDDPDelegate>
 
 - (void)didOpen {
-    NSLog(@"================> didOpen");
-
     [self.authDelegate didConnectToMeteorServer];
-
     // TODO: pre1 should be a setting
     [self.ddp connectWithSession:nil version:@"pre1" support:nil];
 }
 
 - (void)didReceiveMessage:(NSDictionary *)message {
-    NSLog(@"================> didReceiveMessage: %@", message);
-
     NSString *msg = [message objectForKey:@"msg"];
 
     // TODO: handle auth login failure with auth delegate call (with meteor server error message)
-
     if (msg && [msg isEqualToString:@"result"]
             && message[@"result"]
             && message[@"result"][@"B"]
@@ -54,7 +51,6 @@
             && message[@"result"][@"salt"]) {
         NSDictionary *response = message[@"result"];
         [self.authDelegate didReceiveLoginChallengeWithResponse:response];
-
     } else if (msg && [msg isEqualToString:@"result"]
             && message[@"result"]
             && message[@"result"][@"id"]
@@ -62,23 +58,25 @@
             && message[@"result"][@"token"]) {
         NSDictionary *response = message[@"result"];
         [self.authDelegate didReceiveHAMKVerificationWithResponse:response];
-
     } else if (msg && [msg isEqualToString:@"added"]
             && message[@"collection"]) {
         NSDictionary *object = [self _parseObjectAndAddToCollection:message];
         [[NSNotificationCenter defaultCenter] postNotificationName:@"added" object:self userInfo:object];
-
     } else if (msg && [msg isEqualToString:@"removed"]
             && message[@"collection"]) {
         [self _parseRemoved:message];
         [[NSNotificationCenter defaultCenter] postNotificationName:@"removed" object:self userInfo:nil];
-
     } else if (msg && [msg isEqualToString:@"changed"]
             && message[@"collection"]) {
         NSDictionary *object = [self _parseObjectAndUpdateCollection:message];
         [[NSNotificationCenter defaultCenter] postNotificationName:@"changed" object:self userInfo:object];
-
     } else if (msg && [msg isEqualToString:@"connected"]) {
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"connected" object:nil];
+        if (self.sessionToken) {
+            NSArray *params = @[@{@"resume": self.sessionToken}];
+            [self sendWithMethodName:@"login"
+                          parameters:params];
+        }
         [self makeMeteorDataSubscriptions];
     }
 }
