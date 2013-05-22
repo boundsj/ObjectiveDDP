@@ -374,14 +374,10 @@
 			buildSettings = {
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Example/Example-Prefix.pch";
-				HEADER_SEARCH_PATHS = (
-					"Example/**",
-					"${PODS_HEADERS_SEARCH_PATHS}",
-				);
+				HEADER_SEARCH_PATHS = "${PODS_HEADERS_SEARCH_PATHS}";
 				INFOPLIST_FILE = "Example/Example-Info.plist";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/../../../../Library/Developer/Xcode/DerivedData/ObjectiveDDP-fbjuojybfxkaafeddpfidrvkqmuz/Build/Products/Debug-iphoneos\"",
 					"\"$(SDKROOT)/usr/lib/system\"",
 					"\"$(SRCROOT)/Example\"",
 					"\"$(SRCROOT)/../../ios-openssl/lib\"",
@@ -391,6 +387,7 @@
 					"-lcrypto",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos6.1;
 				USER_HEADER_SEARCH_PATHS = "";
 				WRAPPER_EXTENSION = app;
 			};
@@ -402,14 +399,10 @@
 			buildSettings = {
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Example/Example-Prefix.pch";
-				HEADER_SEARCH_PATHS = (
-					"Example/**",
-					"${PODS_HEADERS_SEARCH_PATHS}",
-				);
+				HEADER_SEARCH_PATHS = "${PODS_HEADERS_SEARCH_PATHS}";
 				INFOPLIST_FILE = "Example/Example-Info.plist";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/../../../../Library/Developer/Xcode/DerivedData/ObjectiveDDP-fbjuojybfxkaafeddpfidrvkqmuz/Build/Products/Debug-iphoneos\"",
 					"\"$(SDKROOT)/usr/lib/system\"",
 					"\"$(SRCROOT)/Example\"",
 					"\"$(SRCROOT)/../../ios-openssl/lib\"",
@@ -419,6 +412,7 @@
 					"-lcrypto",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos6.1;
 				USER_HEADER_SEARCH_PATHS = "";
 				WRAPPER_EXTENSION = app;
 			};
