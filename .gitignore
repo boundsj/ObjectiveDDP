@@ -1,4 +1,6 @@
 .idea
 ObjectiveDDP.xcworkspace/xcuserdata
-Example/Pods/Pods.xcodeproj/xcuserdata/
+ObjectiveDDP.xcworkspace/xcshareddata/
 Example/Example.xcworkspace/xcuserdata/
+Example/Example.xcworkspace/xcshareddata/
+Example/Pods

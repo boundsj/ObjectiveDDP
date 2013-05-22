@@ -151,7 +151,7 @@ void                  srp_verifier_verify_session( struct SRPVerifier * ver,
 
 /* The n_hex and g_hex parameters should be 0 unless SRP_NG_CUSTOM is used for ng_type */
 struct SRPUser *      srp_user_new( SRP_HashAlgorithm alg, SRP_NGType ng_type, const char * username,
-                                    const unsigned char * bytes_password, int len_password,
+                                    const char * bytes_password, int len_password,
                                     const char * n_hex, const char * g_hex );
                                     
 void                  srp_user_delete( struct SRPUser * usr );
