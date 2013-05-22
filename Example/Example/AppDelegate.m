@@ -1,6 +1,7 @@
 #import "AppDelegate.h"
 #import "ViewController.h"
 #import "LoginViewController.h"
+#import "MeteorClient.h"
 #import <ObjectiveDDP/MeteorClient.h>
 
 @implementation AppDelegate
@@ -17,8 +18,8 @@
                                                                                  bundle:nil];
     loginController.meteor = self.meteorClient;
 
-    //ObjectiveDDP *ddp = [[ObjectiveDDP alloc] initWithURLString:@"wss://ddptester.meteor.com/websocket"
-    ObjectiveDDP *ddp = [[ObjectiveDDP alloc] initWithURLString:@"ws://localhost:3000/websocket"
+    ObjectiveDDP *ddp = [[ObjectiveDDP alloc] initWithURLString:@"wss://ddptester.meteor.com/websocket"
+    //ObjectiveDDP *ddp = [[ObjectiveDDP alloc] initWithURLString:@"ws://localhost:3000/websocket"
                                                        delegate:self.meteorClient];
 
     self.meteorClient.ddp = ddp;
@@ -48,9 +49,7 @@
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
-    // this will start the process of connecting to meteor
-    // connection is ONLY a websocket connetcion, it does NOT mean that any
-    // subscription requests will be made or that authorization will be performed
+    [self.meteorClient resetCollections];
     [self.meteorClient.ddp connectWebSocket];
 }
 
