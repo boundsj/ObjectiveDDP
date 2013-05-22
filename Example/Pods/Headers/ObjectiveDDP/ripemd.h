@@ -1,1 +1,1 @@
-../../ObjectiveDDP/ObjectiveDDP/openssl/ripemd.h
+../../../../ObjectiveDDP/openssl/ripemd.h

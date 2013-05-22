@@ -3,9 +3,7 @@
 
 @interface ViewController ()
 
-@property (weak, nonatomic) IBOutlet UIBarButtonItem *addButton;
 @property (weak, nonatomic) IBOutlet UITableView *tableview;
-@property (strong, nonatomic) NSMutableArray *things;
 @property (copy, nonatomic) NSString *listName;
 
 @end
@@ -19,7 +17,6 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         self.meteor = meteor;
-        self.things = meteor.collections[@"things"];
         self.listName = listName;
     }
     return self;
@@ -35,6 +32,7 @@
                                              selector:@selector(didReceiveUpdate:)
                                                  name:@"added"
                                                object:nil];
+
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(didReceiveUpdate:)
                                                  name:@"removed"
@@ -51,7 +49,7 @@
 
 - (NSArray *)computedList {
     NSPredicate *pred = [NSPredicate predicateWithFormat:@"(listName like %@)", self.listName];
-    return [self.things filteredArrayUsingPredicate:pred];
+    return [self.meteor.collections[@"things"] filteredArrayUsingPredicate:pred];
 }
 
 #pragma mark UI Actions
@@ -66,7 +64,6 @@
 #pragma mark <UITableViewDataSource>
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    NSArray *temp = self.computedList;
     return [self.computedList count];
 }
 

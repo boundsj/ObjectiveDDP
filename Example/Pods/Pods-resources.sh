@@ -25,4 +25,4 @@ install_resource()
       ;;
   esac
 }
-install_resource 'ObjectiveDDP/ObjectiveDDP/libcrypto.a'
+install_resource '../../ObjectiveDDP/libcrypto.a'
