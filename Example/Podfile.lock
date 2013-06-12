@@ -3,12 +3,13 @@ PODS:
   - SocketRocket (0.3.1-beta2)
 
 DEPENDENCIES:
-  - ObjectiveDDP (from `/Users/boundsj/workspace/ios/ObjectiveDDP`)
+  - ObjectiveDDP (from `git@github.com:boundsj/ObjectiveDDP.git`, branch `master`)
   - SocketRocket (from `git@github.com:square/SocketRocket.git`)
 
 EXTERNAL SOURCES:
   ObjectiveDDP:
-    :path: /Users/boundsj/workspace/ios/ObjectiveDDP
+    :branch: master
+    :git: git@github.com:boundsj/ObjectiveDDP.git
   SocketRocket:
     :git: git@github.com:square/SocketRocket.git
 
