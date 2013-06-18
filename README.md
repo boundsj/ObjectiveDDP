@@ -41,10 +41,10 @@ _Note: ObjectiveDDP is a brand new project and is very much subject to change. P
 The example application illustrates everything you need to know about integrating ObjectiveDDP into your iOS application. You can also reference the technical walkthrough in the wiki [ios boilerplate] section for the step by step details of creating a simple iOS app that can connect to a meteor server.
 
 #### Development Branch: The Bleeding Edge ####
-TBD
+The master branch of this repo is "stable" and should generally be the one used for linking to projects via cocoapods. Active development happens on the development branch - feel free to use it to experiment with the latest features.
 
 #### Tests ####
-TBD
+All tests are in the Specs directory and tests (which are actually the best documenatation) for the DDP protocol implementation are in the [ddp tests] file.
 
 General Information
 --------------
@@ -56,6 +56,8 @@ License
 
 [git-repo-url]: git@github.com:boundsj/objectiveddp.git
 [ios boilerplate]: https://github.com/boundsj/ObjectiveDDP/wiki/ObjectiveDDP-iOS-Boilerplate
+[ddp tests]: https://github.com/boundsj/ObjectiveDDP/blob/master/Specs/ObjectiveDDPSpec.mm
+
 
   
   
