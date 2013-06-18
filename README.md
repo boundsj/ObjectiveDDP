@@ -30,7 +30,10 @@ ObjectiveDDP ships with a todo application (of course) that illustrates much abo
 
 * Back in xcode, build and run the app in the simluator with the run command: ⌘R
 
-**TODO: The app currently points to a hosted version of the meteor server and has a hardcoded user name. This will change soon.**
+Todo App Screenshots:
+![alt text](https://raw.github.com/boundsj/ObjectiveDDP/master/screenshots.png "Screenshots")
+
+**NOTE: The app currently points to a hosted version of the meteor server and has a hardcoded user name. This will change soon.**
     
 Development: Writing Your Own App
 --------------
