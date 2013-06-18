@@ -36,7 +36,7 @@ Development: Writing Your Own App
 _Note: ObjectiveDDP is a brand new project and is very much subject to change. Please check this readme and the project wiki frequently for updates._
 
 #### ObjectiveDDP Boilerplate ####
-The example application illustrates everything you need to know about integrating ObjectiveDDP into your iOS application. You can also reference the technical walkthrough in the wiki **[TBD]** for the step by step details of creating a simple iOS app that can connect to a meteor server.
+The example application illustrates everything you need to know about integrating ObjectiveDDP into your iOS application. You can also reference the technical walkthrough in the wiki [ios boilerplate] section for the step by step details of creating a simple iOS app that can connect to a meteor server.
 
 #### Development Branch: The Bleeding Edge ####
 TBD
@@ -53,5 +53,7 @@ License
 **MIT**
 
 [git-repo-url]: git@github.com:boundsj/objectiveddp.git
+[ios boilerplate]: https://github.com/boundsj/ObjectiveDDP/wiki/ObjectiveDDP-iOS-Boilerplate
+
   
   
