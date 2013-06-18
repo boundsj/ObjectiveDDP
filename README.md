@@ -15,6 +15,7 @@ ObjectiveDDP ships with a todo application (of course) that illustrates much abo
 * Clone this repo and navigate to the Example app:
 
     → git clone git@github.com:boundsj/ObjectiveDDP.git
+
     → cd Example/
     
 * Open the Example app in xcode:
@@ -24,6 +25,7 @@ ObjectiveDDP ships with a todo application (of course) that illustrates much abo
 * Start the todo meteor server:
 
     → cd todos
+    
     → meteor
 
 * Back in xcode, build and run the app in the simluator with the run command: ⌘R
