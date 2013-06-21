@@ -18,6 +18,14 @@ ObjectiveDDP ships with a todo application (of course) that illustrates much abo
 
     → cd Example/
     
+* Get the ObjectiveDDP cocoapod:    
+
+ (if you don't have cocoapods, [get it])
+
+    → git clone git@github.com:boundsj/ObjectiveDDP.git
+    
+    → pod install
+    
 * Open the Example app in xcode:
 
     → open Example.xcworkspace
@@ -60,6 +68,7 @@ License
 [git-repo-url]: git@github.com:boundsj/objectiveddp.git
 [ios boilerplate]: https://github.com/boundsj/ObjectiveDDP/wiki/ObjectiveDDP-iOS-Boilerplate
 [ddp tests]: https://github.com/boundsj/ObjectiveDDP/blob/master/Specs/ObjectiveDDPSpec.mm
+[get it]: http://docs.cocoapods.org/guides/installing_cocoapods.html
 
 
   
