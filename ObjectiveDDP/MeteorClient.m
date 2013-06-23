@@ -71,8 +71,9 @@
         NSDictionary *object = [self _parseObjectAndUpdateCollection:message];
         [[NSNotificationCenter defaultCenter] postNotificationName:@"changed" object:self userInfo:object];
     } else if (msg && [msg isEqualToString:@"connected"]) {
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"connected" object:nil];
         if (self.sessionToken) {
-            NSDictionary *params = @[@{@"resume": self.sessionToken}];
+            NSArray *params = @[@{@"resume": self.sessionToken}];
             [self sendWithMethodName:@"login"
                           parameters:params];
         }
