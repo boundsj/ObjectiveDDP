@@ -61,6 +61,11 @@ General Information
 --------------
 This project is independent, open source, and is not affiliated with Meteor. If you have questions, ideas about how to make it better, or want to help in any way, please feel free to leave issues and make pull requests on this repo! In particular documenatation pull requests are very much appreciated :)
 
+###Special Thanks##
+
+####ObjectiveDDP is supported by [ReachSocket]####
+![alt text](https://s3.amazonaws.com/rebounds-dev/github/reachsocket-github.png "Screenshots")
+
 License
 --------------
 **MIT**
@@ -69,6 +74,7 @@ License
 [ios boilerplate]: https://github.com/boundsj/ObjectiveDDP/wiki/ObjectiveDDP-iOS-Boilerplate
 [ddp tests]: https://github.com/boundsj/ObjectiveDDP/blob/master/Specs/ObjectiveDDPSpec.mm
 [get it]: http://docs.cocoapods.org/guides/installing_cocoapods.html
+[ReachSocket]: http://reachsocket.com/
 
 
   
