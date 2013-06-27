@@ -107,7 +107,6 @@ if (Meteor.isServer) {
       },
 
       remove: function(userId, doc) {
-        console.log(doc.share_with, userId, getEmailFromUserId(userId));
         return (userId && (doc.owner === userId || doc.share_with === getEmailFromUserId(userId) || doc.listOwner === userId));
       }
     });
