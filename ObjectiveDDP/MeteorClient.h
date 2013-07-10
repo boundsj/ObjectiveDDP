@@ -14,6 +14,10 @@
 - (void)addSubscription:(NSString *)subscriptionName;
 - (void)resetCollections;
 
+// TODO: These methods are only temporarily public, should be impl detail of MeteorClient
+- (NSString *)generateAuthVerificationKeyWithUsername:(NSString *)username password:(NSString *)password;
+//- (void)processMeteorChallenge
+
 @end
 
 @protocol DDPAuthDelegate <NSObject>

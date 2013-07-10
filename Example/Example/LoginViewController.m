@@ -15,8 +15,8 @@
 ///
 struct SRPUser     * usr;
 
-SRP_HashAlgorithm alg     = SRP_SHA256;
-SRP_NGType        ng_type = SRP_NG_1024;
+SRP_HashAlgorithm algLocal     = SRP_SHA256;
+SRP_NGType        ng_typeLocal = SRP_NG_1024;
 
 #pragma mark <DDPAuthDelegate>
 
@@ -104,8 +104,8 @@ SRP_NGType        ng_type = SRP_NG_1024;
     const char * password_str = [self.password.text cStringUsingEncoding:NSASCIIStringEncoding];
 
     /* Begin authentication process */
-    usr = srp_user_new(alg,
-            ng_type,
+    usr = srp_user_new(algLocal,
+            ng_typeLocal,
             username_str,
             password_str,
             strlen(password_str),

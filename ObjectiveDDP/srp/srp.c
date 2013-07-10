@@ -813,11 +813,11 @@ void meteor_user_generate_u( struct SRPUser *usr,
                              unsigned char *buff,
                              BIGNUM **u )
 {
-    char *catString_u = malloc( strlen(usr->Astr)+strlen(Bstr)+1 );
-    strcpy( catString_u, usr->Astr );
-    strcat( catString_u, Bstr );
+    unsigned char *catString_u = malloc( strlen(usr->Astr)+strlen(Bstr)+1 );
+    strcpy((char *)catString_u, usr->Astr);
+    strcat( (char *)catString_u, Bstr);
 
-    hash( usr->hash_alg, catString_u, strlen(catString_u), buff );
+    hash( usr->hash_alg, catString_u, strlen((char *)catString_u), buff );
     *u = BN_bin2bn(buff, hash_length(usr->hash_alg), NULL);
 }
 
@@ -831,12 +831,12 @@ void meteor_user_generate_x( struct SRPUser *usr,
     const char * static_delim   = ":";
     BIGNUM     * x_inner        = 0;
 
-    const char * catString_i_p  = malloc(strlen(identity) + strlen(password) + 1);
-    strcpy(catString_i_p, identity);
-    strcat(catString_i_p, static_delim);
-    strcat(catString_i_p, password);
+    const unsigned char * catString_i_p  = malloc(strlen(identity) + strlen(password) + 1);
+    strcpy((char *)catString_i_p, identity);
+    strcat((char *)catString_i_p, static_delim);
+    strcat((char *)catString_i_p, password);
 
-    hash( usr->hash_alg, catString_i_p, strlen(catString_i_p), buff );
+    hash( usr->hash_alg, catString_i_p, strlen((char *)catString_i_p), buff );
     x_inner = BN_bin2bn(buff, hash_length(usr->hash_alg), NULL);
 
     if ( !x_inner )
@@ -846,11 +846,11 @@ void meteor_user_generate_x( struct SRPUser *usr,
     const char * x_inner_str = BN_bn2hex(x_inner);
     char * x_inner_str_lower = convert_to_lower(x_inner_str);
 
-    char * catString_s_i_p = malloc(strlen(salt) + strlen(x_inner_str_lower) + 1);
-    strcpy(catString_s_i_p, salt);
-    strcat(catString_s_i_p, x_inner_str_lower);
+    const unsigned char * catString_s_i_p = malloc(strlen(salt) + strlen(x_inner_str_lower) + 1);
+    strcpy((char *)catString_s_i_p, salt);
+    strcat((char *)catString_s_i_p, x_inner_str_lower);
 
-    hash( usr->hash_alg, catString_s_i_p, strlen(catString_s_i_p), buff );
+    hash( usr->hash_alg, catString_s_i_p, strlen((char *)catString_s_i_p), buff );
     *x = BN_bin2bn(buff, hash_length(usr->hash_alg), NULL);
 
   cleanup_and_exit:
@@ -872,8 +872,8 @@ void meteor_user_generate_k( struct SRPUser *usr,
     strcpy( cat_string_n_g, N_str );
     strcat( cat_string_n_g, g_str );
 
-    char * ng = convert_to_lower( cat_string_n_g );
-    hash( usr->hash_alg, ng, strlen(ng), buff );
+    const char * ng = convert_to_lower( cat_string_n_g );
+    hash( usr->hash_alg, (const unsigned char *)ng, strlen(ng), buff );
 
     *k = BN_bin2bn( buff, hash_length(usr->hash_alg), NULL );
 }
@@ -925,9 +925,9 @@ void meteor_user_generate_S_string( struct SRPUser *usr,
                                     const char * B_str,
                                     char ** S_str)
 {
-    BIGNUM const *B         = BN_new();
-    BIGNUM *bkgx            = BN_new();
-    BIGNUM *S               = BN_new();
+    BIGNUM *B         = BN_new();
+    BIGNUM *bkgx      = BN_new();
+    BIGNUM *S         = BN_new();
 
     BN_hex2bn( &B, B_str );
 
@@ -966,7 +966,7 @@ void meteor_user_generate_M_string( struct SRPUser *usr,
     strcat(ABS, B_str);
     strcat(ABS, S_str);
 
-    hash( usr->hash_alg, ABS, strlen(ABS), buff );
+    hash( usr->hash_alg, (const unsigned char *)ABS, strlen(ABS), buff );
 
     M = BN_bin2bn( buff, hash_length(usr->hash_alg), NULL );
 
@@ -990,7 +990,7 @@ void meteor_user_generate_HAMK( struct SRPUser *usr,
     strcat( AMS, M_str );
     strcat( AMS, S_str );
 
-    hash( usr->hash_alg, AMS, strlen(AMS), buff );
+    hash( usr->hash_alg, (const unsigned char *)AMS, strlen(AMS), buff );
     usr->HAMK = convert_to_lower( BN_bn2hex(BN_bin2bn(buff, hash_length(usr->hash_alg), NULL)) );
 }
 
@@ -1044,7 +1044,7 @@ void srp_user_process_meteor_challenge( struct SRPUser * usr,
     if ( !S_str )
         goto cleanup_and_exit;
 
-    const char * M_str;
+    char * M_str;
     meteor_user_generate_M_string( usr, S_str, buff, Bstr, &M_str );
     *Mstr = M_str;
 
