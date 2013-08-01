@@ -1,5 +1,4 @@
 platform :ios, '6.0'
 
-#pod 'ObjectiveDDP', :git => 'git@github.com:boundsj/ObjectiveDDP.git', :branch => 'master'
-pod 'ObjectiveDDP', :path => '/Users/boundsj/workspace/ios/ObjectiveDDP'
+pod 'ObjectiveDDP', :git => 'git@github.com:boundsj/ObjectiveDDP.git', :branch => 'master'
 pod 'SocketRocket', :git => 'git@github.com:square/SocketRocket.git'
