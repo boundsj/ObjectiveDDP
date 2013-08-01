@@ -1,5 +1,5 @@
 PODS:
-  - ObjectiveDDP (0.0.19)
+  - ObjectiveDDP (0.0.21)
   - SocketRocket (0.3.1-beta2)
 
 DEPENDENCIES:
@@ -13,7 +13,7 @@ EXTERNAL SOURCES:
     :git: git@github.com:square/SocketRocket.git
 
 SPEC CHECKSUMS:
-  ObjectiveDDP: 79c9f4a96553d21d2756738b7f3ef5916541e039
+  ObjectiveDDP: 923cf6a62aed54febb2d9c18e37a32087682bd37
   SocketRocket: 9cbe08469513356cddc0afcab1ff160bd190296a
 
 COCOAPODS: 0.19.1

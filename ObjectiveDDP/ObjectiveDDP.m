@@ -106,13 +106,11 @@
     [self.delegate didOpen];
 }
 
-- (void)webSocket:(SRWebSocket *)webSocket
- didFailWithError:(NSError *)error {
+- (void)webSocket:(SRWebSocket *)webSocket didFailWithError:(NSError *)error {
     [self.delegate didReceiveConnectionError:error];
 }
 
-- (void)webSocket:(SRWebSocket *)webSocket
-didReceiveMessage:(id)message {
+- (void)webSocket:(SRWebSocket *)webSocket didReceiveMessage:(id)message {
     // TODO: write test case for parse error (handle)
     NSData *data = [(NSString *)message dataUsingEncoding:NSUTF8StringEncoding];
     NSDictionary *dictionary = [NSJSONSerialization JSONObjectWithData:data

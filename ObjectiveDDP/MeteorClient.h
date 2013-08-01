@@ -9,22 +9,20 @@
 @property (strong, nonatomic) NSMutableDictionary *subscriptions;
 @property (strong, nonatomic) NSMutableDictionary *collections;
 @property (copy, nonatomic) NSString *sessionToken;
+@property (copy, nonatomic) NSString *userId;
+@property (assign, nonatomic) BOOL websocketReady;
 
 - (void)sendWithMethodName:(NSString *)methodName parameters:(NSArray *)parameters;
 - (void)addSubscription:(NSString *)subscriptionName;
 - (void)resetCollections;
-
-// TODO: These methods are only temporarily public, should be impl detail of MeteorClient
-- (NSString *)generateAuthVerificationKeyWithUsername:(NSString *)username password:(NSString *)password;
-//- (void)processMeteorChallenge
+- (void)logonWithUsername:(NSString *)username password:(NSString *)password;
 
 @end
 
 @protocol DDPAuthDelegate <NSObject>
 
-- (void)didConnectToMeteorServer;
-- (void)didReceiveLoginChallengeWithResponse:(NSDictionary *)response;
-- (void)didReceiveHAMKVerificationWithResponse:(NSDictionary *)response;
+- (void)authenticationWasSuccessful;
+- (void)authenticationFailed;
 
 @end
 

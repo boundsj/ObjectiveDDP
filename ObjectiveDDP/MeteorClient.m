@@ -4,7 +4,7 @@
 
 @interface MeteorClient ()
 
-@property (assign, nonatomic) struct SRPUser *usr;
+@property (nonatomic, copy) NSString *password;
 
 @end
 
@@ -20,11 +20,11 @@
     return self;
 }
 
+#pragma mark MeteorClient public API
+
 - (void)resetCollections {
     [self.collections removeAllObjects];
 }
-
-#pragma mark MeteorClient public API
 
 - (void)sendWithMethodName:(NSString *)methodName parameters:(NSArray *)parameters {
     [self.ddp methodWith:[[BSONIdGenerator generate] substringToIndex:15]
@@ -39,10 +39,18 @@
     [self.ddp subscribeWith:uid name:subscriptionName parameters:nil];
 }
 
+- (void)logonWithUsername:(NSString *)username password:(NSString *)password {
+    NSArray *params = @[@{@"A": [self generateAuthVerificationKeyWithUsername:username password:password],
+                          @"user": @{@"email":username}}];
+
+    [self sendWithMethodName:@"beginPasswordExchange"
+                  parameters:params];
+}
+
 #pragma mark <ObjectiveDDPDelegate>
 
 - (void)didOpen {
-    [self.authDelegate didConnectToMeteorServer];
+    self.websocketReady = YES;
     // TODO: pre1 should be a setting
     [self.ddp connectWithSession:nil version:@"pre1" support:nil];
 }
@@ -57,14 +65,14 @@
             && message[@"result"][@"identity"]
             && message[@"result"][@"salt"]) {
         NSDictionary *response = message[@"result"];
-        [self.authDelegate didReceiveLoginChallengeWithResponse:response];
+        [self didReceiveLoginChallengeWithResponse:response];
     } else if (msg && [msg isEqualToString:@"result"]
             && message[@"result"]
             && message[@"result"][@"id"]
             && message[@"result"][@"HAMK"]
             && message[@"result"][@"token"]) {
         NSDictionary *response = message[@"result"];
-        [self.authDelegate didReceiveHAMKVerificationWithResponse:response];
+        [self didReceiveHAMKVerificationWithResponse:response];
     } else if (msg && [msg isEqualToString:@"added"]
             && message[@"collection"]) {
         NSDictionary *object = [self _parseObjectAndAddToCollection:message];
@@ -149,14 +157,14 @@
     [collection removeObjectAtIndex:indexOfRemovedObject];
 }
 
-# pragma mark Meteor DDP Wrapper
+# pragma mark Meteor SRP Wrapper
 
 SRP_HashAlgorithm alg     = SRP_SHA256;
 SRP_NGType        ng_type = SRP_NG_1024;
+struct SRPUser     * usr;
 
 - (NSString *)generateAuthVerificationKeyWithUsername:(NSString *)username password:(NSString *)password {
-    //TODO: don't really need to keep bytes_A and len_A here, could remove them
-    // and push into srp lib
+    //TODO: don't really need to keep bytes_A and len_A here, could remove them and push into srp lib
     const unsigned char * bytes_A = 0;
     int len_A   = 0;
     const char * Astr = 0;
@@ -164,22 +172,53 @@ SRP_NGType        ng_type = SRP_NG_1024;
     const char * username_str = [username cStringUsingEncoding:NSASCIIStringEncoding];
     const char * password_str = [password cStringUsingEncoding:NSASCIIStringEncoding];
 
-    /* Begin authentication process */
-    self.usr = srp_user_new(alg,
-                            ng_type,
-                            username_str,
-                            password_str,
-                            strlen(password_str),
-                            NULL,
-                            NULL);
+    self.password = password;
 
-    srp_user_start_authentication(self.usr,
-                                  &auth_username,
-                                  &bytes_A,
-                                  &len_A,
-                                  &Astr);
+    /* Begin authentication process */
+    usr = srp_user_new(alg,
+            ng_type,
+            username_str,
+            password_str,
+            strlen(password_str),
+            NULL,
+            NULL);
+
+    srp_user_start_authentication(usr,
+            &auth_username,
+            &bytes_A,
+            &len_A,
+            &Astr);
 
     return [NSString stringWithCString:Astr encoding:NSASCIIStringEncoding];
+}
+
+- (void)didReceiveLoginChallengeWithResponse:(NSDictionary *)response {
+    NSString *B_string = response[@"B"];
+    const char *B = [B_string cStringUsingEncoding:NSASCIIStringEncoding];
+    NSString *salt_string = response[@"salt"];
+    const char *salt = [salt_string cStringUsingEncoding:NSASCIIStringEncoding];
+    NSString *identity_string = response[@"identity"];
+    const char *identity = [identity_string cStringUsingEncoding:NSASCIIStringEncoding];
+    const char * password_str = [self.password cStringUsingEncoding:NSASCIIStringEncoding];
+    const char * Mstr;
+
+    srp_user_process_meteor_challenge(usr, password_str, salt, identity, B, &Mstr);
+    NSString *M_final = [NSString stringWithCString:Mstr encoding:NSASCIIStringEncoding];
+    NSArray *params = @[@{@"srp":@{@"M":M_final}}];
+
+    [self sendWithMethodName:@"login"
+                  parameters:params];
+}
+- (void)didReceiveHAMKVerificationWithResponse:(NSDictionary *)response {
+    srp_user_verify_meteor_session(usr, [response[@"HAMK"] cStringUsingEncoding:NSASCIIStringEncoding]);
+
+    if (srp_user_is_authenticated) {
+        self.sessionToken = response[@"token"];
+        self.userId = response[@"id"];
+        [self.authDelegate authenticationWasSuccessful];
+    } else {
+        [self.authDelegate authenticationFailed];
+    }
 }
 
 @end
