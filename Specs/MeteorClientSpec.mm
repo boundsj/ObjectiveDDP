@@ -12,11 +12,28 @@ describe(@"MeteorClient", ^{
     __block ObjectiveDDP *ddp;
 
     beforeEach(^{
-        ddp = [[ObjectiveDDP alloc] init];
-        meteorClient = [[MeteorClient alloc] init];
+        ddp = [[[ObjectiveDDP alloc] init] autorelease];
+        meteorClient = [[[MeteorClient alloc] init] autorelease];
+        ddp.delegate = meteorClient;
         meteorClient.ddp = ddp;
 
         spy_on(ddp);
+    });
+
+    it(@"is correctly initialized", ^{
+        meteorClient.collections should_not be_nil;
+        meteorClient.subscriptions should_not be_nil;
+        meteorClient.websocketReady should_not be_truthy;
+    });
+
+    describe(@"when the web socket opens", ^{
+        beforeEach(^{
+            [ddp webSocketDidOpen:nil];
+        });
+
+        it(@"sets the web socket state to ready", ^{
+            meteorClient.websocketReady should be_truthy;
+        });
     });
 
     describe(@"when addSubsciption is called", ^{

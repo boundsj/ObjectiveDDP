@@ -209,6 +209,7 @@ struct SRPUser     * usr;
     [self sendWithMethodName:@"login"
                   parameters:params];
 }
+
 - (void)didReceiveHAMKVerificationWithResponse:(NSDictionary *)response {
     srp_user_verify_meteor_session(usr, [response[@"HAMK"] cStringUsingEncoding:NSASCIIStringEncoding]);
 
