@@ -374,13 +374,12 @@
 			buildSettings = {
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Example/Example-Prefix.pch";
-				HEADER_SEARCH_PATHS = "${PODS_HEADERS_SEARCH_PATHS}";
+				HEADER_SEARCH_PATHS = "${PODS_ROOT}/**";
 				INFOPLIST_FILE = "Example/Example-Info.plist";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SDKROOT)/usr/lib/system\"",
 					"\"$(SRCROOT)/Example\"",
-					"\"$(SRCROOT)/../../ios-openssl/lib\"",
 				);
 				OTHER_LDFLAGS = (
 					"-ObjC",
@@ -399,13 +398,12 @@
 			buildSettings = {
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Example/Example-Prefix.pch";
-				HEADER_SEARCH_PATHS = "${PODS_HEADERS_SEARCH_PATHS}";
+				HEADER_SEARCH_PATHS = "${PODS_ROOT}/**";
 				INFOPLIST_FILE = "Example/Example-Info.plist";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SDKROOT)/usr/lib/system\"",
 					"\"$(SRCROOT)/Example\"",
-					"\"$(SRCROOT)/../../ios-openssl/lib\"",
 				);
 				OTHER_LDFLAGS = (
 					"-ObjC",
