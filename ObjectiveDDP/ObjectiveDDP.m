@@ -62,9 +62,9 @@
 //  method: string (method name)
 //  params: optional array of EJSON items (parameters to the method)
 //  id: string (an arbitrary client-determined identifier for this method call)
-- (void)methodWith:(NSString *)id
+- (void)methodWithId:(NSString *)id
               method:(NSString *)method
-        parameters:(NSArray *)parameters {
+          parameters:(NSArray *)parameters {
     NSDictionary *fields = @{@"msg": @"method", @"method": method, @"id": id};
     NSString *json = [self _buildJSONWithFields:fields parameters:parameters];
 

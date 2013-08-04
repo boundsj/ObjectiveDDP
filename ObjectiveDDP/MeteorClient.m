@@ -28,9 +28,9 @@
 }
 
 - (void)sendWithMethodName:(NSString *)methodName parameters:(NSArray *)parameters {
-    [self.ddp methodWith:[[BSONIdGenerator generate] substringToIndex:15]
-                  method:methodName
-              parameters:parameters];
+    [self.ddp methodWithId:[[BSONIdGenerator generate] substringToIndex:15]
+                    method:methodName
+                parameters:parameters];
 }
 
 - (void)addSubscription:(NSString *)subscriptionName {

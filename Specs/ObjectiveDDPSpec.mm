@@ -128,7 +128,7 @@ describe(@"ObjectiveDDP", ^{
                 [ddp connectWebSocket];
                 [fakeSRWebSocket connectionSuccess];
                 NSArray *params = @[@{@"_id": @"abc", @"msg": @"ohai"}];
-                [ddp methodWith:@"id" method:@"/do/something" parameters:params];
+                [ddp methodWithId:@"id" method:@"/do/something" parameters:params];
             });
 
             it(@"should call the websocket correctly", ^{

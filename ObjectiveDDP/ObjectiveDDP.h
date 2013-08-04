@@ -24,9 +24,9 @@
 
 - (void)unsubscribeWith:(NSString *)id;
 
-- (void)methodWith:(NSString *)id
-            method:(NSString *)method
-        parameters:(NSArray *)parameters;
+- (void)methodWithId:(NSString *)id
+              method:(NSString *)method
+          parameters:(NSArray *)parameters;
 
 @end
 
