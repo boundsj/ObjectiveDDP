@@ -116,19 +116,20 @@ end
 
 desc "Clean all targets"
 task :clean do
-  system_or_exit "xcodebuild -workspace ObjectiveDDP.xcworkspace -scheme ObjectiveDDP -configuration #{@configuration} clean SYMROOT=#{BUILD_DIR}", output_file("clean")
+  #system_or_exit "xcodebuild -workspace ObjectiveDDP.xcworkspace -scheme ObjectiveDDP -configuration #{@configuration} clean SYMROOT=#{BUILD_DIR}", output_file("clean")
+  system_or_exit "xcodebuild -workspace ObjectiveDDP.xcworkspace -scheme ObjectiveDDP -configuration #{@configuration} clean", output_file("clean")
   FileUtils.rm_rf BUILD_DIR
 end
 
 desc "Build application"
 task :build_app do
-  system_or_exit(%Q[xcodebuild -configuration Debug -workspace ObjectiveDDP.xcworkspace -scheme ObjectiveDDP -sdk iphonesimulator ONLY_ACTIVE_ARCH=NO ARCHS=i386 build SYMROOT=#{BUILD_DIR}], output_file("app"))
+  system_or_exit(%Q[xcodebuild -configuration Debug -workspace ObjectiveDDP.xcworkspace -scheme ObjectiveDDP -sdk iphonesimulator ONLY_ACTIVE_ARCH=NO ARCHS=i386 build], output_file("app"))
 end
 
 desc "Build specs"
 task :build_specs do
   puts "SYMROOT: #{ENV['SYMROOT']}"
-  system_or_exit(%Q[xcodebuild -configuration Debug -workspace ObjectiveDDP.xcworkspace -scheme Specs -sdk iphonesimulator ONLY_ACTIVE_ARCH=NO ARCHS=i386 build SYMROOT=#{BUILD_DIR}], output_file("specs"))
+  system_or_exit(%Q[xcodebuild -configuration Debug -workspace ObjectiveDDP.xcworkspace -scheme Specs -sdk iphonesimulator ONLY_ACTIVE_ARCH=NO ARCHS=i386 build], output_file("specs"))
 end
 
 desc "Build all targets"
