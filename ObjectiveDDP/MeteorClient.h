@@ -14,6 +14,7 @@
 
 - (void)sendWithMethodName:(NSString *)methodName parameters:(NSArray *)parameters;
 - (void)addSubscription:(NSString *)subscriptionName;
+- (void)addSubscription:(NSString *)subscriptionName withParameters:(NSArray *)parameters;
 - (void)resetCollections;
 - (void)logonWithUsername:(NSString *)username password:(NSString *)password;
 
