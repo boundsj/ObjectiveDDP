@@ -87,7 +87,8 @@
     } else if (msg && [msg isEqualToString:@"added"]
             && message[@"collection"]) {
         NSDictionary *object = [self _parseObjectAndAddToCollection:message];
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"added" object:self userInfo:object];
+        NSString *notificationName = [NSString stringWithFormat:@"%@_added", message[@"collection"]];
+        [[NSNotificationCenter defaultCenter] postNotificationName:notificationName object:self userInfo:object];
     } else if (msg && [msg isEqualToString:@"removed"]
                && message[@"collection"]) {
         [self _parseRemoved:message];
