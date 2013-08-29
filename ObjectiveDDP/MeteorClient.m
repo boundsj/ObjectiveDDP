@@ -66,6 +66,10 @@
             && message[@"result"][@"salt"]) {
         NSDictionary *response = message[@"result"];
         [self didReceiveLoginChallengeWithResponse:response];
+    } else if(msg && [msg isEqualToString:@"result"]
+              && message[@"error"]
+              && [message[@"error"][@"reason"]isEqualToString:@"Incorrect password"]) {
+        [self.authDelegate authenticationFailed];
     } else if (msg && [msg isEqualToString:@"result"]
             && message[@"result"]
             && message[@"result"][@"id"]
