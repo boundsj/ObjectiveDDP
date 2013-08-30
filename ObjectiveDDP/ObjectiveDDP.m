@@ -1,4 +1,5 @@
 #import "ObjectiveDDP.h"
+#import "DependencyProvider.h"
 
 @implementation ObjectiveDDP
 
@@ -9,16 +10,6 @@
     if (self) {
         self.urlString = urlString;
         self.delegate = delegate;
-        
-        ////
-        // until something like blindside is used, for now just
-        // utilizing blocks to allow for poor man's dependancy
-        // injection (i.e. this can be overriden by a test framework
-        // to return a mock SRWebSocket object.
-        ////
-        self.getSocket = ^SRWebSocket *(NSURLRequest *request) {
-            return [[SRWebSocket alloc] initWithURLRequest:request];
-        };
     }
     
     return self;
@@ -90,7 +81,7 @@
 - (void)_setupWebSocket {
     NSURL *url = [NSURL URLWithString:self.urlString];
     NSURLRequest *request = [NSURLRequest requestWithURL:url];
-    self.webSocket = self.getSocket(request);
+    self.webSocket = [[DependencyProvider sharedProvider] provideSRWebSocketWithRequest:request];
     self.webSocket.delegate = self;
 }
 

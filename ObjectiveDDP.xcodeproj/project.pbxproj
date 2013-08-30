@@ -10,6 +10,11 @@
 		4000D63A170E880400296229 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4000D639170E880400296229 /* Foundation.framework */; };
 		4000D63F170E880400296229 /* ObjectiveDDP.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4000D63E170E880400296229 /* ObjectiveDDP.h */; };
 		4000D641170E880400296229 /* ObjectiveDDP.m in Sources */ = {isa = PBXBuildFile; fileRef = 4000D640170E880400296229 /* ObjectiveDDP.m */; };
+		4011C80417BD2AA6002AA28E /* DependencyProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = 4011C80317BD2AA6002AA28E /* DependencyProvider.m */; };
+		4011C80517BD2AA6002AA28E /* DependencyProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = 4011C80317BD2AA6002AA28E /* DependencyProvider.m */; };
+		4011C80817BD2C06002AA28E /* FakeDependencyProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = 4011C80717BD2C06002AA28E /* FakeDependencyProvider.m */; };
+		4011C80B17BD2CA1002AA28E /* DDPSpecHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4011C80A17BD2CA1002AA28E /* DDPSpecHelper.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		4011C80E17BD2E14002AA28E /* DependencyProvider+Spec.m in Sources */ = {isa = PBXBuildFile; fileRef = 4011C80D17BD2E14002AA28E /* DependencyProvider+Spec.m */; };
 		401AEB7E170E9EC7008B38EA /* libicucore.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 401AEB7D170E9EC7008B38EA /* libicucore.dylib */; };
 		401AEB80170E9ECC008B38EA /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 401AEB7F170E9ECC008B38EA /* SystemConfiguration.framework */; };
 		401AEB82170E9ED2008B38EA /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 401AEB81170E9ED2008B38EA /* CFNetwork.framework */; };
@@ -61,6 +66,13 @@
 		4000D63D170E880400296229 /* ObjectiveDDP-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ObjectiveDDP-Prefix.pch"; sourceTree = "<group>"; };
 		4000D63E170E880400296229 /* ObjectiveDDP.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ObjectiveDDP.h; sourceTree = "<group>"; };
 		4000D640170E880400296229 /* ObjectiveDDP.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ObjectiveDDP.m; sourceTree = "<group>"; };
+		4011C80217BD2AA6002AA28E /* DependencyProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DependencyProvider.h; sourceTree = "<group>"; };
+		4011C80317BD2AA6002AA28E /* DependencyProvider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DependencyProvider.m; sourceTree = "<group>"; };
+		4011C80617BD2C06002AA28E /* FakeDependencyProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FakeDependencyProvider.h; sourceTree = "<group>"; };
+		4011C80717BD2C06002AA28E /* FakeDependencyProvider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FakeDependencyProvider.m; sourceTree = "<group>"; };
+		4011C80A17BD2CA1002AA28E /* DDPSpecHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDPSpecHelper.m; sourceTree = "<group>"; };
+		4011C80D17BD2E14002AA28E /* DependencyProvider+Spec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "DependencyProvider+Spec.m"; sourceTree = "<group>"; };
+		4011C80F17BD310D002AA28E /* DDPSpecHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDPSpecHelper.h; sourceTree = "<group>"; };
 		401AEB7D170E9EC7008B38EA /* libicucore.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libicucore.dylib; path = usr/lib/libicucore.dylib; sourceTree = SDKROOT; };
 		401AEB7F170E9ECC008B38EA /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		401AEB81170E9ED2008B38EA /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
@@ -239,6 +251,8 @@
 		4000D63B170E880400296229 /* ObjectiveDDP */ = {
 			isa = PBXGroup;
 			children = (
+				4011C80217BD2AA6002AA28E /* DependencyProvider.h */,
+				4011C80317BD2AA6002AA28E /* DependencyProvider.m */,
 				888B6DFD173B66EA001EED80 /* BSONIdGenerator.h */,
 				888B6DFE173B66EA001EED80 /* BSONIdGenerator.m */,
 				888B6DFA173B6508001EED80 /* MeteorClient.h */,
@@ -355,6 +369,9 @@
 		4079F9DF170EB31D00194B4A /* Specs */ = {
 			isa = PBXGroup;
 			children = (
+				4011C80D17BD2E14002AA28E /* DependencyProvider+Spec.m */,
+				4011C80F17BD310D002AA28E /* DDPSpecHelper.h */,
+				4011C80A17BD2CA1002AA28E /* DDPSpecHelper.m */,
 				40F8370E1741C62800AF2340 /* MeteorClientSpec.mm */,
 				4079F9F6170EB3B000194B4A /* ObjectiveDDPSpec.mm */,
 				430E092A40EC4FAED3B6C76B /* Mocks */,
@@ -382,6 +399,8 @@
 				430E092B95390D2D558E5F3B /* MockObjectiveDDPDelegate.m */,
 				430E02ACD0BC78CC53F31D72 /* MockSRWebSocket.m */,
 				430E0F1E6C3E7422A8791E24 /* MockObjectiveDDPDelegate.h */,
+				4011C80617BD2C06002AA28E /* FakeDependencyProvider.h */,
+				4011C80717BD2C06002AA28E /* FakeDependencyProvider.m */,
 			);
 			path = Mocks;
 			sourceTree = "<group>";
@@ -503,6 +522,7 @@
 				4000D641170E880400296229 /* ObjectiveDDP.m in Sources */,
 				888B6DFC173B6508001EED80 /* MeteorClient.m in Sources */,
 				888B6DFF173B66EA001EED80 /* BSONIdGenerator.m in Sources */,
+				4011C80417BD2AA6002AA28E /* DependencyProvider.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -519,6 +539,10 @@
 				430E014E41C9666E08613FCE /* MockSRWebSocket.m in Sources */,
 				40F8370F1741C62800AF2340 /* MeteorClientSpec.mm in Sources */,
 				4027EDE21783E1F400CAEC1C /* srp.c in Sources */,
+				4011C80517BD2AA6002AA28E /* DependencyProvider.m in Sources */,
+				4011C80817BD2C06002AA28E /* FakeDependencyProvider.m in Sources */,
+				4011C80B17BD2CA1002AA28E /* DDPSpecHelper.m in Sources */,
+				4011C80E17BD2E14002AA28E /* DependencyProvider+Spec.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

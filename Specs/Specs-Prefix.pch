@@ -6,4 +6,5 @@
     #import <UIKit/UIKit.h>
     #import <Foundation/Foundation.h>
     #import <Cedar-iOS/SpecHelper.h>
+    #import "DDPSpecHelper.h"
 #endif
