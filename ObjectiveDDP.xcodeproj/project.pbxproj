@@ -13,7 +13,7 @@
 		4011C80417BD2AA6002AA28E /* DependencyProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = 4011C80317BD2AA6002AA28E /* DependencyProvider.m */; };
 		4011C80517BD2AA6002AA28E /* DependencyProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = 4011C80317BD2AA6002AA28E /* DependencyProvider.m */; };
 		4011C80817BD2C06002AA28E /* FakeDependencyProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = 4011C80717BD2C06002AA28E /* FakeDependencyProvider.m */; };
-		4011C80B17BD2CA1002AA28E /* DDPSpecHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4011C80A17BD2CA1002AA28E /* DDPSpecHelper.m */; };
+		4011C80B17BD2CA1002AA28E /* DDPSpecHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4011C80A17BD2CA1002AA28E /* DDPSpecHelper.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		4011C80E17BD2E14002AA28E /* DependencyProvider+Spec.m in Sources */ = {isa = PBXBuildFile; fileRef = 4011C80D17BD2E14002AA28E /* DependencyProvider+Spec.m */; };
 		401AEB7E170E9EC7008B38EA /* libicucore.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 401AEB7D170E9EC7008B38EA /* libicucore.dylib */; };
 		401AEB80170E9ECC008B38EA /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 401AEB7F170E9ECC008B38EA /* SystemConfiguration.framework */; };

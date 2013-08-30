@@ -6,7 +6,7 @@ FakeDependencyProvider *fakeProvider = nil;
 @implementation DDPSpecHelper
 
 + (void)beforeEach {
-    fakeProvider = [[FakeDependencyProvider alloc] init];
+    fakeProvider = [[[FakeDependencyProvider alloc] init] autorelease];
 }
 
 @end

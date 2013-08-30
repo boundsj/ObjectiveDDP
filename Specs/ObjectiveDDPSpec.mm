@@ -15,6 +15,8 @@ describe(@"ObjectiveDDP", ^{
     describe(@"when the framework is initialized", ^{
         beforeEach(^{
             fakeSRWebSocket = [[MockSRWebSocket alloc] init];
+            fakeProvider.fakeSRWebSocket = fakeSRWebSocket;
+            
             fakeDDPDelegate = nice_fake_for(@protocol(ObjectiveDDPDelegate));
 
             spy_on(fakeSRWebSocket);
@@ -23,10 +25,6 @@ describe(@"ObjectiveDDP", ^{
             ddp = [[ObjectiveDDP alloc] initWithURLString:@"websocket"
                                                  delegate:fakeDDPDelegate];
             fakeSRWebSocket.delegate = ddp;
-
-            ddp.getSocket = ^SRWebSocket *(NSURLRequest *request) {
-                return fakeSRWebSocket;
-            };
         });
         
         it(@"should have the correct url string", ^{
