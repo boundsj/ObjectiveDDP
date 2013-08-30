@@ -15,6 +15,7 @@
     if (self) {
         self.collections = [NSMutableDictionary dictionary];
         self.subscriptions = [NSMutableDictionary dictionary];
+        self.subscriptionsParameters = [NSMutableDictionary dictionary];
         // TODO: subscription version should be set here
     }
     return self;
@@ -42,6 +43,8 @@
 - (void)addSubscription:(NSString *)subscriptionName withParameters:(NSArray *)parameters {
     [self.subscriptions setObject:[NSArray array]
                            forKey:subscriptionName];
+    [self.subscriptionsParameters setObject:parameters forKey:subscriptionName];
+    
     NSString *uid = [[BSONIdGenerator generate] substringToIndex:15];
     [self.ddp subscribeWith:uid name:subscriptionName parameters:parameters];
 }
@@ -122,7 +125,10 @@
 - (void)makeMeteorDataSubscriptions {
     for (NSString *key in [self.subscriptions allKeys]) {
         NSString *uid = [[BSONIdGenerator generate] substringToIndex:15];
-        [self.ddp subscribeWith:uid name:key parameters:nil];
+        
+        NSArray *params = self.subscriptionsParameters[key];
+
+        [self.ddp subscribeWith:uid name:key parameters:params];
     }
 }
 

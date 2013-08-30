@@ -7,6 +7,7 @@
 @property (strong, nonatomic) ObjectiveDDP *ddp;
 @property (weak, nonatomic) id<DDPAuthDelegate> authDelegate;
 @property (strong, nonatomic) NSMutableDictionary *subscriptions;
+@property (strong, nonatomic) NSMutableDictionary *subscriptionsParameters;
 @property (strong, nonatomic) NSMutableDictionary *collections;
 @property (copy, nonatomic) NSString *sessionToken;
 @property (copy, nonatomic) NSString *userId;
