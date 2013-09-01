@@ -78,8 +78,8 @@
         [self didReceiveLoginChallengeWithResponse:response];
     } else if(msg && [msg isEqualToString:@"result"]
               && message[@"error"]
-              && [message[@"error"][@"reason"]isEqualToString:@"Incorrect password"]) {
-        [self.authDelegate authenticationFailed];
+              && [message[@"error"][@"error"]integerValue] == 403) {
+        [self.authDelegate authenticationFailed:message[@"error"][@"reason"]];
     } else if (msg && [msg isEqualToString:@"result"]
             && message[@"result"]
             && message[@"result"][@"id"]
@@ -241,7 +241,7 @@ struct SRPUser     * usr;
         self.userId = response[@"id"];
         [self.authDelegate authenticationWasSuccessful];
     } else {
-        [self.authDelegate authenticationFailed];
+        [self.authDelegate authenticationFailed:nil];
     }
 }
 

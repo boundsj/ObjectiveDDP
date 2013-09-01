@@ -28,7 +28,7 @@
 @protocol DDPAuthDelegate <NSObject>
 
 - (void)authenticationWasSuccessful;
-- (void)authenticationFailed;
+- (void)authenticationFailed:(NSString *)reason;
 
 @end
 
