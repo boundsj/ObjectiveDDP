@@ -34,19 +34,30 @@
 }
 
 - (void)addSubscription:(NSString *)subscriptionName {
-    [self.subscriptions setObject:[NSArray array]
-                           forKey:subscriptionName];
     NSString *uid = [[BSONIdGenerator generate] substringToIndex:15];
+
+    [self.subscriptions setObject:uid
+                           forKey:subscriptionName];
     [self.ddp subscribeWith:uid name:subscriptionName parameters:nil];
 }
 
 - (void)addSubscription:(NSString *)subscriptionName withParameters:(NSArray *)parameters {
-    [self.subscriptions setObject:[NSArray array]
+    NSString *uid = [[BSONIdGenerator generate] substringToIndex:15];
+    
+    [self.subscriptions setObject:uid
                            forKey:subscriptionName];
     [self.subscriptionsParameters setObject:parameters forKey:subscriptionName];
     
-    NSString *uid = [[BSONIdGenerator generate] substringToIndex:15];
     [self.ddp subscribeWith:uid name:subscriptionName parameters:parameters];
+}
+
+-(void)removeSubscription:(NSString *)subscriptionName {
+    NSString *uid = [self.subscriptions objectForKey:subscriptionName];
+    
+    if(uid) {
+        [self.ddp unsubscribeWith:uid];
+        [self.subscriptions removeObjectForKey:subscriptionName];
+    }
 }
 
 - (void)logonWithUsername:(NSString *)username password:(NSString *)password {
@@ -125,6 +136,7 @@
 - (void)makeMeteorDataSubscriptions {
     for (NSString *key in [self.subscriptions allKeys]) {
         NSString *uid = [[BSONIdGenerator generate] substringToIndex:15];
+        [self.subscriptions setObject:uid forKey:key];  
         
         NSArray *params = self.subscriptionsParameters[key];
 

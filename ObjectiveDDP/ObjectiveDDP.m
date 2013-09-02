@@ -49,6 +49,15 @@
     [self.webSocket send:json];
 }
 
+//unsub (client -> server):
+//  id: string (an arbitrary client-determined identifier for this subscription)
+- (void)unsubscribeWith:(NSString *)id {
+    NSDictionary *fields = @{@"msg": @"unsub", @"id": id};
+    NSString *json = [self _buildJSONWithFields:fields parameters:nil];
+    
+    [self.webSocket send:json];
+}
+
 //method (client -> server):
 //  method: string (method name)
 //  params: optional array of EJSON items (parameters to the method)

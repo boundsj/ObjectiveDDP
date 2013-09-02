@@ -22,6 +22,8 @@
                  name:(NSString *)name
            parameters:(NSArray *)parameters;
 
+- (void)unsubscribeWith:(NSString *)id;
+
 - (void)methodWith:(NSString *)id
             method:(NSString *)method
         parameters:(NSArray *)parameters;
