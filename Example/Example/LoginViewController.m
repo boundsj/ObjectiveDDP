@@ -50,8 +50,13 @@
     [self.navigationController pushViewController:controller animated:YES];
 }
 
-- (void)authenticationFailed {
-  // TODO: handle not authenticated case here
+- (void)authenticationFailed:(NSString *)reason {
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Meteor Todos"
+                                                    message:reason
+                                                   delegate:nil
+                                          cancelButtonTitle:@"Try Again"
+                                          otherButtonTitles:nil];
+    [alert show];
 }
 
 @end
