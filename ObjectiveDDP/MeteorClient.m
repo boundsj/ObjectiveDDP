@@ -92,19 +92,19 @@
         NSDictionary *object = [self _parseObjectAndAddToCollection:message];
         NSString *notificationName = [NSString stringWithFormat:@"%@_added", message[@"collection"]];
         [[NSNotificationCenter defaultCenter] postNotificationName:notificationName object:self userInfo:object];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"added" object:self userInfo:object];
     } else if (msg && [msg isEqualToString:@"removed"]
                && message[@"collection"]) {
         [self _parseRemoved:message];
-        
-        //        [[NSNotificationCenter defaultCenter] postNotificationName:@"removed" object:self userInfo:nil];
         NSString *notificationName = [NSString stringWithFormat:@"%@_removed", message[@"collection"]];
-        [[NSNotificationCenter defaultCenter] postNotificationName:notificationName object:self userInfo:nil];
+        [[NSNotificationCenter defaultCenter] postNotificationName:notificationName object:self];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"removed" object:self];
     } else if (msg && [msg isEqualToString:@"changed"]
                && message[@"collection"]) {
         NSDictionary *object = [self _parseObjectAndUpdateCollection:message];
-        //        [[NSNotificationCenter defaultCenter] postNotificationName:@"changed" object:self userInfo:object];
         NSString *notificationName = [NSString stringWithFormat:@"%@_changed", message[@"collection"]];
         [[NSNotificationCenter defaultCenter] postNotificationName:notificationName object:self userInfo:object];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"changed" object:self userInfo:object];
     } else if (msg && [msg isEqualToString:@"connected"]) {
         [[NSNotificationCenter defaultCenter] postNotificationName:@"connected" object:nil];
         if (self.sessionToken) {
@@ -240,8 +240,6 @@ struct SRPUser     * usr;
         self.sessionToken = response[@"token"];
         self.userId = response[@"id"];
         [self.authDelegate authenticationWasSuccessful];
-    } else {
-        [self.authDelegate authenticationFailed:nil];
     }
 }
 
