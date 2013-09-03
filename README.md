@@ -66,6 +66,12 @@ This project is independent, open source, and is not affiliated with Meteor. If 
 ####ObjectiveDDP is supported by [ReachSocket]####
 ![alt text](https://s3.amazonaws.com/rebounds-dev/github/reachsocket-github.png "Screenshots")
 
+####Contributors####
+
+@stevemanuel
+@ewindso
+@boundsj (author)
+
 License
 --------------
 **MIT**
@@ -77,5 +83,3 @@ License
 [ReachSocket]: http://reachsocket.com/
 
 
-  
-  
