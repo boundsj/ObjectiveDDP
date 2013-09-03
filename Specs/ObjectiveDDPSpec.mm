@@ -62,7 +62,6 @@ describe(@"ObjectiveDDP", ^{
         });
 
         describe(@"when connect is called with no session or support", ^{
-
             beforeEach(^{
                 [ddp connectWebSocket];
                 [fakeSRWebSocket connectionSuccess];
@@ -134,6 +133,19 @@ describe(@"ObjectiveDDP", ^{
 
             it(@"should call the websocket correctly", ^{
                 NSString *expected = @"{\"method\":\"\\/do\\/something\",\"id\":\"id\",\"params\":[{\"_id\":\"abc\",\"msg\":\"ohai\"}],\"msg\":\"method\"}";
+                fakeSRWebSocket should have_received("send:").with(expected);
+            });
+        });
+
+        describe(@"when unsubscribeWith is called", ^{
+            beforeEach(^{
+                [ddp connectWebSocket];
+                [fakeSRWebSocket connectionSuccess];
+                [ddp unsubscribeWith:@"id1"];
+            });
+
+            it(@"calls the websocket correctly", ^{
+                NSString *expected = @"{\"msg\":\"unsub\",\"id\":\"id1\"}";
                 fakeSRWebSocket should have_received("send:").with(expected);
             });
         });

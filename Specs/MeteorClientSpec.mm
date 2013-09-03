@@ -26,7 +26,7 @@ describe(@"MeteorClient", ^{
         meteorClient.websocketReady should_not be_truthy;
     });
 
-    describe(@"when the web socket opens", ^{
+    context(@"webSocketDidOpen", ^{
         beforeEach(^{
             [ddp webSocketDidOpen:nil];
         });
@@ -36,7 +36,7 @@ describe(@"MeteorClient", ^{
         });
     });
 
-    describe(@"when addSubsciption is called", ^{
+    context(@"addSubscription", ^{
         beforeEach(^{
             [meteorClient addSubscription:@"a fancy subscription"];
         });
@@ -48,7 +48,21 @@ describe(@"MeteorClient", ^{
         });
     });
 
-    describe(@".didReceiveMessage", ^{
+    context(@"unsubscribeWith", ^{
+        beforeEach(^{
+            [meteorClient.subscriptions setObject:@"id1"
+                                           forKey:@"fancySubscriptionName"];
+            [meteorClient.subscriptions count] should equal(1);
+            [meteorClient removeSubscription:@"fancySubscriptionName"];
+        });
+
+        it(@"removes subscription correctly", ^{
+            ddp should have_received(@selector(unsubscribeWith:));
+            [meteorClient.subscriptions count] should equal(0);
+        });
+    });
+
+    describe(@"didReceiveMessage", ^{
         context(@"when called with an authentication error message", ^{
             beforeEach(^{
                 NSDictionary *authErrorMessage = @{
@@ -142,18 +156,18 @@ describe(@"MeteorClient", ^{
 
 describe(@"MeteorClient SRP Auth", ^{
     __block MeteorClient *meteorClient;
-    
+
     beforeEach(^{
         meteorClient = [[MeteorClient alloc] init];
     });
-    
+
     describe(@"-generateAuthVerificationKeyWithUsername:password", ^{
         __block NSString *authKey;
-        
+
         beforeEach(^{
             authKey = [meteorClient generateAuthVerificationKeyWithUsername:@"joeuser" password:@"secretsauce"];
         });
-        
+
         it(@"computes the key correctly", ^{
             authKey should_not be_nil;
         });

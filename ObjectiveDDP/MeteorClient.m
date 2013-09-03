@@ -54,7 +54,7 @@
 -(void)removeSubscription:(NSString *)subscriptionName {
     NSString *uid = [self.subscriptions objectForKey:subscriptionName];
     
-    if(uid) {
+    if (uid) {
         [self.ddp unsubscribeWith:uid];
         [self.subscriptions removeObjectForKey:subscriptionName];
     }
