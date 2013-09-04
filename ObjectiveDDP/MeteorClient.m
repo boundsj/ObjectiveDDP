@@ -124,6 +124,24 @@
                           parameters:params];
         }
         [self makeMeteorDataSubscriptions];
+    } else if(msg && [msg isEqualToString:@"ready"]) {
+        NSArray *subs = message[@"subs"];
+        
+        for(NSInteger i = 0; i < [subs count]; i++) {
+            NSString *curReadySubId = subs[i];
+            
+            for(NSString *subscriptionName in self.subscriptions) {
+                NSString *curSubId = self.subscriptions[subscriptionName];
+                
+                if([curSubId isEqualToString:curReadySubId]) {
+                    
+                    NSString *notificationName = [NSString stringWithFormat:@"%@_ready", subscriptionName];
+                    
+                    [[NSNotificationCenter defaultCenter] postNotificationName:notificationName object:nil];
+                    break;
+                }
+            }
+        }
     }
 }
 
