@@ -77,7 +77,7 @@ describe(@"MeteorClient", ^{
             });
         });
         
-        context(@"when collection is ready", ^{
+        context(@"when subscription is ready", ^{
             beforeEach(^{
                 spy_on([NSNotificationCenter defaultCenter]);
 
