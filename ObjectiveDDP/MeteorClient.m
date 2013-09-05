@@ -78,7 +78,7 @@
 
 - (void)didReceiveMessage:(NSDictionary *)message {
     NSString *msg = [message objectForKey:@"msg"];
-
+    
     // TODO: handle auth login failure with auth delegate call (with meteor server error message)
     if (msg && [msg isEqualToString:@"result"]
             && message[@"result"]
@@ -137,7 +137,7 @@
                     
                     NSString *notificationName = [NSString stringWithFormat:@"%@_ready", subscriptionName];
                     
-                    [[NSNotificationCenter defaultCenter] postNotificationName:notificationName object:nil];
+                    [[NSNotificationCenter defaultCenter] postNotificationName:notificationName object:self];
                     break;
                 }
             }

@@ -76,6 +76,27 @@ describe(@"MeteorClient", ^{
                 meteorClient.authDelegate should have_received(@selector(authenticationFailed:)).with(@"are you kidding me?");
             });
         });
+        
+        context(@"when collection is ready", ^{
+            beforeEach(^{
+                spy_on([NSNotificationCenter defaultCenter]);
+
+                [meteorClient.subscriptions setObject:@"subid" forKey:@"subscriptionName"];
+                
+                NSDictionary *readyMessage = @{
+                                               @"msg":@"ready",
+                                               @"subs":@[@"subid"]
+                                               };
+                
+                [meteorClient didReceiveMessage:readyMessage];
+            });
+            
+            it(@"processes the message correctly", ^{
+                SEL postSel = @selector(postNotificationName:object:);
+                [NSNotificationCenter defaultCenter] should have_received(postSel).with(@"subscriptionName_ready")
+                .and_with(meteorClient);
+            });
+        });
 
         context(@"when called with an 'added' message", ^{
             beforeEach(^{
