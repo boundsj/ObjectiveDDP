@@ -110,6 +110,14 @@
     [self.delegate didReceiveConnectionError:error];
 }
 
+- (void)webSocket:(SRWebSocket *)webSocket
+ didCloseWithCode:(NSInteger)code
+           reason:(NSString *)reason
+         wasClean:(BOOL)wasClean {
+    NSLog(@"Websocket Closed: %i, %@, %i", code, reason, wasClean);
+    [self.delegate didReceiveConnectionClose];
+}
+
 - (void)webSocket:(SRWebSocket *)webSocket didReceiveMessage:(id)message {
     // TODO: write test case for parse error (handle)
     NSData *data = [(NSString *)message dataUsingEncoding:NSUTF8StringEncoding];

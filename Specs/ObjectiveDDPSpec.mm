@@ -31,6 +31,16 @@ describe(@"ObjectiveDDP", ^{
             ddp.urlString should equal(@"websocket");
         });
 
+        describe(@"when the web socket closes", ^{
+            beforeEach(^{
+                [ddp webSocket:nil didCloseWithCode:0 reason:@"reason" wasClean:YES];
+            });
+
+            it(@"tells its delegate", ^{
+                fakeDDPDelegate should have_received("didReceiveConnectionClose");
+            });
+        });
+
         describe(@"when connectWebSocket is called ", ^{
             beforeEach(^{
                 [ddp connectWebSocket];

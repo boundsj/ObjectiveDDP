@@ -36,5 +36,6 @@
 - (void)didOpen;
 - (void)didReceiveMessage:(NSDictionary *)message;
 - (void)didReceiveConnectionError:(NSError *)error;
+- (void)didReceiveConnectionClose;
 
 @end

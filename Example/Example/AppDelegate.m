@@ -25,6 +25,7 @@
 
     self.meteorClient.ddp = ddp;
     self.meteorClient.authDelegate = loginController;
+    [self.meteorClient.ddp connectWebSocket];
 
     self.navController = [[UINavigationController alloc] initWithRootViewController:loginController];
     self.navController.navigationBarHidden = YES;
@@ -50,8 +51,7 @@
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
-    [self.meteorClient resetCollections];
-    [self.meteorClient.ddp connectWebSocket];
+
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application {

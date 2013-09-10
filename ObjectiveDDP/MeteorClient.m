@@ -5,6 +5,7 @@
 @interface MeteorClient ()
 
 @property (nonatomic, copy) NSString *password;
+@property (nonatomic, retain) NSTimer *timer;
 
 @end
 
@@ -71,7 +72,10 @@
 #pragma mark <ObjectiveDDPDelegate>
 
 - (void)didOpen {
+    [self.timer invalidate];
+    self.timer = nil;
     self.websocketReady = YES;
+    [self resetCollections];
     // TODO: pre1 should be a setting
     [self.ddp connectWithSession:nil version:@"pre1" support:nil];
 }
@@ -143,15 +147,23 @@
     NSLog(@"================> didReceiveConnectionError: %@", error);
 }
 
+- (void)didReceiveConnectionClose {
+    self.websocketReady = NO;
+    [self.ddp connectWebSocket];
+    self.timer = [NSTimer scheduledTimerWithTimeInterval:5
+                                                  target:self.ddp
+                                                selector:@selector(connectWebSocket)
+                                                userInfo:nil
+                                                 repeats:YES];
+}
+
 #pragma mark Meteor Data Managment
 
 - (void)makeMeteorDataSubscriptions {
     for (NSString *key in [self.subscriptions allKeys]) {
         NSString *uid = [[BSONIdGenerator generate] substringToIndex:15];
         [self.subscriptions setObject:uid forKey:key];  
-        
         NSArray *params = self.subscriptionsParameters[key];
-
         [self.ddp subscribeWith:uid name:key parameters:params];
     }
 }
@@ -160,13 +172,10 @@
     NSPredicate *pred = [NSPredicate predicateWithFormat:@"(_id like %@)", message[@"id"]];
     NSMutableArray *collection = self.collections[message[@"collection"]];
     NSArray *filteredArray = [collection filteredArrayUsingPredicate:pred];
-
     NSMutableDictionary *object = filteredArray[0];
-
     for (id key in message[@"fields"]) {
         object[key] = message[@"fields"][key];
     }
-
     return object;
 }
 

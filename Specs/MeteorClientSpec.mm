@@ -12,7 +12,7 @@ describe(@"MeteorClient", ^{
     __block ObjectiveDDP *ddp;
 
     beforeEach(^{
-        ddp = [[[ObjectiveDDP alloc] init] autorelease];
+        ddp = nice_fake_for([ObjectiveDDP class]);
         meteorClient = [[[MeteorClient alloc] init] autorelease];
         ddp.delegate = meteorClient;
         meteorClient.ddp = ddp;
@@ -26,13 +26,17 @@ describe(@"MeteorClient", ^{
         meteorClient.websocketReady should_not be_truthy;
     });
 
-    context(@"webSocketDidOpen", ^{
+    context(@"didOpen", ^{
         beforeEach(^{
-            [ddp webSocketDidOpen:nil];
+            meteorClient.collections = [NSMutableDictionary dictionaryWithDictionary:@{@"col1": [NSArray new]}];
+            [meteorClient.collections count] should equal(1);
+            [meteorClient didOpen];
         });
 
         it(@"sets the web socket state to ready", ^{
             meteorClient.websocketReady should be_truthy;
+            [meteorClient.collections count] should equal(0);
+            ddp should have_received(@selector(connectWithSession:version:support:));
         });
     });
 
@@ -59,6 +63,17 @@ describe(@"MeteorClient", ^{
         it(@"removes subscription correctly", ^{
             ddp should have_received(@selector(unsubscribeWith:));
             [meteorClient.subscriptions count] should equal(0);
+        });
+    });
+
+    context(@"didReceiveConnectionClose", ^{
+        beforeEach(^{
+            [meteorClient didReceiveConnectionClose];
+        });
+
+        it(@"resets collections and reconnects web socket", ^{
+            meteorClient.websocketReady should_not be_truthy;
+            ddp should have_received(@selector(connectWebSocket));
         });
     });
 
