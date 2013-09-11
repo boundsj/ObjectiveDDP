@@ -88,6 +88,7 @@
 }
 
 - (void)_setupWebSocket {
+    self.webSocket = nil;
     NSURL *url = [NSURL URLWithString:self.urlString];
     NSURLRequest *request = [NSURLRequest requestWithURL:url];
     self.webSocket = [[DependencyProvider sharedProvider] provideSRWebSocketWithRequest:request];
@@ -96,7 +97,6 @@
 
 - (void)_closeConnection {
     [self.webSocket close];
-    self.webSocket = nil;
     [self _setupWebSocket];
 }
 

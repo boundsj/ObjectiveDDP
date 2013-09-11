@@ -147,12 +147,22 @@
     NSLog(@"================> didReceiveConnectionError: %@", error);
 }
 
+- (void)reconnect {
+    if (self.ddp.webSocket.readyState == SR_OPEN) {
+        [self.timer invalidate];
+        self.timer = nil;
+        return;
+    }
+
+    [self.ddp connectWebSocket];
+}
+
 - (void)didReceiveConnectionClose {
     self.websocketReady = NO;
-    [self.ddp connectWebSocket];
+    [self.timer invalidate];
     self.timer = [NSTimer scheduledTimerWithTimeInterval:5
-                                                  target:self.ddp
-                                                selector:@selector(connectWebSocket)
+                                                  target:self
+                                                selector:@selector(reconnect)
                                                 userInfo:nil
                                                  repeats:YES];
 }
