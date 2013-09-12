@@ -28,7 +28,7 @@
     [self.collections removeAllObjects];
 }
 
--(void)sendWithMethodName:(NSString *)methodName parameters:(NSArray *)parameters notifyOnResponse:(BOOL)notify {
+-(NSString *)sendWithMethodName:(NSString *)methodName parameters:(NSArray *)parameters notifyOnResponse:(BOOL)notify {
     NSString *methodId = [[BSONIdGenerator generate] substringToIndex:15];
     
     if(notify == YES) {
@@ -38,6 +38,8 @@
     [self.ddp methodWithId:methodId
                     method:methodName
                 parameters:parameters];
+    
+    return methodId;
 }
 
 - (void)sendWithMethodName:(NSString *)methodName parameters:(NSArray *)parameters {

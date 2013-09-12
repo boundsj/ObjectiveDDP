@@ -14,7 +14,7 @@
 @property (copy, nonatomic) NSString *userId;
 @property (assign, nonatomic) BOOL websocketReady;
 
-- (void)sendWithMethodName:(NSString *)methodName parameters:(NSArray *)parameters notifyOnResponse:(BOOL)notify;
+- (NSString *)sendWithMethodName:(NSString *)methodName parameters:(NSArray *)parameters notifyOnResponse:(BOOL)notify;
 - (void)sendWithMethodName:(NSString *)methodName parameters:(NSArray *)parameters;
 - (void)addSubscription:(NSString *)subscriptionName;
 - (void)addSubscription:(NSString *)subscriptionName withParameters:(NSArray *)parameters;
