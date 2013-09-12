@@ -17,6 +17,7 @@
         self.collections = [NSMutableDictionary dictionary];
         self.subscriptions = [NSMutableDictionary dictionary];
         self.subscriptionsParameters = [NSMutableDictionary dictionary];
+        self.methodIds = [NSMutableDictionary dictionary];
         // TODO: subscription version should be set here
     }
     return self;
@@ -97,12 +98,14 @@
     
     // TODO: handle auth login failure with auth delegate call (with meteor server error message)
     // first, check methodIds incase it was a custom method with custom response.
-    if(msg && [msg isEqualToString:@"result"] && self.methodIds[message[@"id"]]) {
-        NSDictionary *response = message[@"result"];
-        NSString *notificationName = [NSString stringWithFormat:@"response_%@", message[@"id"]];
-        [[NSNotificationCenter defaultCenter] postNotificationName:notificationName object:self userInfo:response];
-        
-        [self.methodIds removeObjectForKey:message[@"id"]];
+    if(self.methodIds[message[@"id"]]) {
+        if(msg && [msg isEqualToString:@"result"]) {
+            NSDictionary *response = message[@"result"];
+            NSString *notificationName = [NSString stringWithFormat:@"response_%@", message[@"id"]];
+            [[NSNotificationCenter defaultCenter] postNotificationName:notificationName object:self userInfo:response];
+            
+            [self.methodIds removeObjectForKey:message[@"id"]];
+        }
     } else if (msg && [msg isEqualToString:@"result"]
             && message[@"result"]
             && message[@"result"][@"B"]
