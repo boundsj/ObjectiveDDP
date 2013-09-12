@@ -28,6 +28,12 @@
     [self.collections removeAllObjects];
 }
 
+-(void)sendWithMethodId:(NSString *)methodId methodName:(NSString *)methodName parameters:(NSArray *)parameters {
+    [self.methodIds setObject:[NSArray array] forKey:methodId];
+    
+    [self.ddp methodWithId:methodId method:methodName parameters:parameters];
+}
+
 - (void)sendWithMethodName:(NSString *)methodName parameters:(NSArray *)parameters {
     [self.ddp methodWithId:[[BSONIdGenerator generate] substringToIndex:15]
                     method:methodName
@@ -84,7 +90,12 @@
     NSString *msg = [message objectForKey:@"msg"];
     
     // TODO: handle auth login failure with auth delegate call (with meteor server error message)
-    if (msg && [msg isEqualToString:@"result"]
+    // first, check methodIds incase it was a custom method with custom response.
+    if(msg && [msg isEqualToString:@"result"] && self.methodIds[message[@"id"]]) {
+        NSDictionary *response = message[@"result"];
+        NSString *notificationName = [NSString stringWithFormat:@"response_%@", message[@"id"]];
+        [[NSNotificationCenter defaultCenter] postNotificationName:notificationName object:self userInfo:response];
+    } else if (msg && [msg isEqualToString:@"result"]
             && message[@"result"]
             && message[@"result"][@"B"]
             && message[@"result"][@"identity"]
