@@ -101,6 +101,8 @@
         NSDictionary *response = message[@"result"];
         NSString *notificationName = [NSString stringWithFormat:@"response_%@", message[@"id"]];
         [[NSNotificationCenter defaultCenter] postNotificationName:notificationName object:self userInfo:response];
+        
+        [self.methodIds removeObjectForKey:message[@"id"]];
     } else if (msg && [msg isEqualToString:@"result"]
             && message[@"result"]
             && message[@"result"][@"B"]
