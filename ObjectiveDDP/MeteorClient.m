@@ -28,16 +28,20 @@
     [self.collections removeAllObjects];
 }
 
--(void)sendWithMethodId:(NSString *)methodId methodName:(NSString *)methodName parameters:(NSArray *)parameters {
-    [self.methodIds setObject:[NSArray array] forKey:methodId];
+-(void)sendWithMethodName:(NSString *)methodName parameters:(NSArray *)parameters notifyOnResponse:(BOOL)notify {
+    NSString *methodId = [[BSONIdGenerator generate] substringToIndex:15];
     
-    [self.ddp methodWithId:methodId method:methodName parameters:parameters];
+    if(notify == YES) {
+        [self.methodIds setObject:[NSArray array] forKey:methodId];
+    }
+
+    [self.ddp methodWithId:methodId
+                    method:methodName
+                parameters:parameters];
 }
 
 - (void)sendWithMethodName:(NSString *)methodName parameters:(NSArray *)parameters {
-    [self.ddp methodWithId:[[BSONIdGenerator generate] substringToIndex:15]
-                    method:methodName
-                parameters:parameters];
+    [self sendWithMethodName:methodName parameters:parameters notifyOnResponse:NO];
 }
 
 - (void)addSubscription:(NSString *)subscriptionName {
