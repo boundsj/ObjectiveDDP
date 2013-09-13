@@ -17,7 +17,7 @@
         self.collections = [NSMutableDictionary dictionary];
         self.subscriptions = [NSMutableDictionary dictionary];
         self.subscriptionsParameters = [NSMutableDictionary dictionary];
-        self.methodIds = [NSMutableDictionary dictionary];
+        self.methodIds = [NSMutableSet set];
         // TODO: subscription version should be set here
     }
     return self;
@@ -33,7 +33,7 @@
     NSString *methodId = [[BSONIdGenerator generate] substringToIndex:15];
     
     if(notify == YES) {
-        [self.methodIds setObject:[NSArray array] forKey:methodId];
+        [self.methodIds addObject:methodId];
     }
 
     [self.ddp methodWithId:methodId
@@ -95,15 +95,14 @@
 
 - (void)didReceiveMessage:(NSDictionary *)message {
     NSString *msg = [message objectForKey:@"msg"];
-    
-    // TODO: handle auth login failure with auth delegate call (with meteor server error message)
-    // first, check methodIds incase it was a custom method with custom response.
-    if(self.methodIds[message[@"id"]]) {
+    NSString *messageId = message[@"id"];
+
+    if ([self.methodIds containsObject:messageId]) {
         if(msg && [msg isEqualToString:@"result"]) {
             NSDictionary *response = message[@"result"];
             NSString *notificationName = [NSString stringWithFormat:@"response_%@", message[@"id"]];
             [[NSNotificationCenter defaultCenter] postNotificationName:notificationName object:self userInfo:response];
-            [self.methodIds removeObjectForKey:message[@"id"]];
+            [self.methodIds removeObject:messageId];
         }
     } else if (msg && [msg isEqualToString:@"result"]
             && message[@"result"]

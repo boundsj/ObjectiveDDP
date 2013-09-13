@@ -88,7 +88,7 @@ describe(@"MeteorClient", ^{
 
         it(@"stores a method id", ^{
             [meteorClient.methodIds count] should equal(1);
-            [meteorClient.methodIds allKeys][0] should equal(methodId);
+            [meteorClient.methodIds allObjects][0] should equal(methodId);
         });
 
         it(@"sends method command correctly", ^{
@@ -115,12 +115,12 @@ describe(@"MeteorClient", ^{
                     @"result": @"awesomesauce",
                     @"id": key
                 };
-                [meteorClient.methodIds setObject:[NSArray new] forKey:key];
+                [meteorClient.methodIds addObject:key];
                 [meteorClient didReceiveMessage:methodResponseMessage];
             });
 
             it(@"removes the message id", ^{
-                meteorClient.methodIds[key] should be_nil;
+                [meteorClient.methodIds containsObject:key] should_not be_truthy;
             });
 
             it(@"sends a notification", ^{
