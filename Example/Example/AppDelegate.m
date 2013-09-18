@@ -19,9 +19,14 @@
                                                                                  bundle:nil];
     loginController.meteor = self.meteorClient;
 
-    ObjectiveDDP *ddp = [[ObjectiveDDP alloc] initWithURLString:@"wss://ddptester.meteor.com/websocket" delegate:self.meteorClient];
-    // useful for local testing
-    //ObjectiveDDP *ddp = [[ObjectiveDDP alloc] initWithURLString:@"ws://localhost:3000/websocket" delegate:self.meteorClient];
+    ObjectiveDDP *ddp = [[ObjectiveDDP alloc] initWithURLString:@"wss://ddptester.meteor.com/websocket"
+                                                       delegate:self.meteorClient];
+    // test against ec2 instance
+    //ObjectiveDDP *ddp = [[ObjectiveDDP alloc] initWithURLString:@"ws://ec2-184-169-238-118.us-west-1.compute.amazonaws.com/websocket"
+    //                                                   delegate:self.meteorClient];
+    // local testing
+    //ObjectiveDDP *ddp = [[ObjectiveDDP alloc] initWithURLString:@"ws://localhost:3000/websocket"
+    //                                                   delegate:self.meteorClient];
 
     self.meteorClient.ddp = ddp;
     self.meteorClient.authDelegate = loginController;
