@@ -5,7 +5,6 @@
 @interface MeteorClient ()
 
 @property (nonatomic, copy) NSString *password;
-@property (nonatomic, retain) NSTimer *timer;
 
 @end
 
@@ -84,15 +83,6 @@
 
 #pragma mark <ObjectiveDDPDelegate>
 
-- (void)didOpen {
-    [self.timer invalidate];
-    self.timer = nil;
-    self.websocketReady = YES;
-    [self resetCollections];
-    // TODO: pre1 should be a setting
-    [self.ddp connectWithSession:nil version:@"pre1" support:nil];
-}
-
 - (void)didReceiveMessage:(NSDictionary *)message {
     NSString *msg = [message objectForKey:@"msg"];
     NSString *messageId = message[@"id"];
@@ -163,28 +153,34 @@
     }
 }
 
-- (void)didReceiveConnectionError:(NSError *)error {
-    NSLog(@"================> didReceiveConnectionError: %@", error);
+- (void)didOpen {
+    self.websocketReady = YES;
+    [self resetCollections];
+    // TODO: pre1 should be a setting
+    [self.ddp connectWithSession:nil version:@"pre1" support:nil];
 }
 
 - (void)reconnect {
+    NSLog(@"================> attempting reconnect");
     if (self.ddp.webSocket.readyState == SR_OPEN) {
-        [self.timer invalidate];
-        self.timer = nil;
+        NSLog(@"================> socket already open, reconnect not required");
         return;
     }
-
     [self.ddp connectWebSocket];
+}
+
+- (void)didReceiveConnectionError:(NSError *)error {
+    self.websocketReady = NO;
+    [self performSelector:@selector(reconnect)
+               withObject:self
+               afterDelay:5.0];
 }
 
 - (void)didReceiveConnectionClose {
     self.websocketReady = NO;
-    [self.timer invalidate];
-    self.timer = [NSTimer scheduledTimerWithTimeInterval:5
-                                                  target:self
-                                                selector:@selector(reconnect)
-                                                userInfo:nil
-                                                 repeats:YES];
+    [self performSelector:@selector(reconnect)
+               withObject:self
+               afterDelay:5.0];
 }
 
 #pragma mark Meteor Data Managment
