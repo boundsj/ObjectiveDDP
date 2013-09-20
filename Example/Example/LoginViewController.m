@@ -17,7 +17,7 @@
                       ofObject:(id)object
                         change:(NSDictionary *)change
                        context:(void *)context {
-    if ([keyPath isEqualToString:@"websocketReady"]) {
+    if ([keyPath isEqualToString:@"websocketReady"] && self.meteor.websocketReady) {
         self.connectionStatusText.text = @"Connected to Todo Server";
         UIImage *image = [UIImage imageNamed: @"green_light.png"];
         [self.connectionStatusLight setImage:image];
