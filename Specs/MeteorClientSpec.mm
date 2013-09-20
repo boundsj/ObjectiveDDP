@@ -21,12 +21,142 @@ describe(@"MeteorClient", ^{
     });
 
     it(@"is correctly initialized", ^{
+        meteorClient.websocketReady should_not be_truthy;
         meteorClient.collections should_not be_nil;
         meteorClient.subscriptions should_not be_nil;
         meteorClient.websocketReady should_not be_truthy;
     });
 
-    context(@"didOpen", ^{
+    describe(@"#addSubscription:", ^{
+        context(@"when websocket is ready", ^{
+            beforeEach(^{
+                meteorClient.websocketReady = YES;
+                [meteorClient addSubscription:@"a fancy subscription"];
+            });
+
+            it(@"should call ddp subscribe method", ^{
+                ddp should have_received("subscribeWith:name:parameters:").with(anything)
+                .and_with(@"a fancy subscription")
+                .and_with(nil);
+            });
+        });
+
+        context(@"when websocket is not ready", ^{
+            beforeEach(^{
+                meteorClient.websocketReady = NO;
+                [meteorClient addSubscription:@"a fancy subscription"];
+            });
+
+            it(@"should not call ddp subscribe method", ^{
+                ddp should_not have_received("subscribeWith:name:parameters:");
+            });
+        });
+    });
+
+    describe(@"#removeSubscription:", ^{
+        context(@"when the websocket is ready", ^{
+            beforeEach(^{
+                meteorClient.websocketReady = YES;
+                [meteorClient.subscriptions setObject:@"id1"
+                                               forKey:@"fancySubscriptionName"];
+                [meteorClient.subscriptions count] should equal(1);
+                [meteorClient removeSubscription:@"fancySubscriptionName"];
+            });
+
+            it(@"removes subscription correctly", ^{
+                ddp should have_received(@selector(unsubscribeWith:));
+                [meteorClient.subscriptions count] should equal(0);
+            });
+        });
+
+        context(@"when the websocket is not ready", ^{
+            beforeEach(^{
+                meteorClient.websocketReady = NO;
+                [meteorClient.subscriptions setObject:@"id1"
+                                               forKey:@"fancySubscriptionName"];
+                [meteorClient.subscriptions count] should equal(1);
+                [meteorClient removeSubscription:@"fancySubscriptionName"];
+            });
+
+            it(@"does not remove subscription", ^{
+                ddp should_not have_received(@selector(unsubscribeWith:));
+                [meteorClient.subscriptions count] should equal(1);
+            });
+        });
+    });
+
+    describe(@"#sendMethodWithName:parameters:notifyOnResponse", ^{
+        __block NSString *methodId;
+
+        context(@"when websocket is ready", ^{
+            beforeEach(^{
+                meteorClient.websocketReady = YES;
+                [meteorClient.methodIds count] should equal(0);
+                methodId = [meteorClient sendWithMethodName:@"awesomeMethod" parameters:@[] notifyOnResponse:YES];
+            });
+
+            it(@"stores a method id", ^{
+                [meteorClient.methodIds count] should equal(1);
+                [meteorClient.methodIds allObjects][0] should equal(methodId);
+            });
+
+            it(@"sends method command correctly", ^{
+                ddp should have_received(@selector(methodWithId:method:parameters:))
+                .with(methodId)
+                .and_with(@"awesomeMethod")
+                .and_with(@[]);
+            });
+        });
+
+        context(@"when websocket is not ready", ^{
+            beforeEach(^{
+                meteorClient.websocketReady = NO;
+                [meteorClient.methodIds count] should equal(0);
+                methodId = [meteorClient sendWithMethodName:@"awesomeMethod" parameters:@[] notifyOnResponse:YES];
+            });
+
+            it(@"does not store a method id", ^{
+                [meteorClient.methodIds count] should equal(0);
+            });
+
+            it(@"does not send method command", ^{
+                ddp should_not have_received(@selector(methodWithId:method:parameters:));
+            });
+        });
+    });
+
+    describe(@"#logonWithUserName:password:", ^{
+        context(@"when websocket is ready", ^{
+            beforeEach(^{
+                meteorClient.websocketReady = YES;
+                [meteorClient logonWithUsername:@"JesseJames"
+                                       password:@"shot3mUp!"];
+            });
+
+            it(@"sends logon message correctly", ^{
+                // XXX: add custom matcher that can query the params
+                //      to see what user/pass was sent
+                ddp should have_received(@selector(methodWithId:method:parameters:))
+                    .with(anything)
+                    .and_with(@"beginPasswordExchange")
+                    .and_with(anything);
+            });
+        });
+
+        context(@"when websocket is ready", ^{
+            beforeEach(^{
+                meteorClient.websocketReady = NO;
+                [meteorClient logonWithUsername:@"JesseJames"
+                                       password:@"shot3mUp!"];
+            });
+
+            it(@"sends logon message correctly", ^{
+                ddp should_not have_received(@selector(methodWithId:method:parameters:));
+            });
+        });
+    });
+
+    describe(@"#didOpen", ^{
         beforeEach(^{
             meteorClient.collections = [NSMutableDictionary dictionaryWithDictionary:@{@"col1": [NSArray new]}];
             [meteorClient.collections count] should equal(1);
@@ -40,33 +170,7 @@ describe(@"MeteorClient", ^{
         });
     });
 
-    describe(@"addSubscription", ^{
-        beforeEach(^{
-            [meteorClient addSubscription:@"a fancy subscription"];
-        });
-
-        it(@"should call ddp subscribe method", ^{
-            ddp should have_received("subscribeWith:name:parameters:").with(anything)
-                                                                      .and_with(@"a fancy subscription")
-                                                                      .and_with(nil);
-        });
-    });
-
-    describe(@"unsubscribeWith", ^{
-        beforeEach(^{
-            [meteorClient.subscriptions setObject:@"id1"
-                                           forKey:@"fancySubscriptionName"];
-            [meteorClient.subscriptions count] should equal(1);
-            [meteorClient removeSubscription:@"fancySubscriptionName"];
-        });
-
-        it(@"removes subscription correctly", ^{
-            ddp should have_received(@selector(unsubscribeWith:));
-            [meteorClient.subscriptions count] should equal(0);
-        });
-    });
-
-    describe(@"didReceiveConnectionClose", ^{
+    describe(@"#didReceiveConnectionClose", ^{
         beforeEach(^{
             [meteorClient didReceiveConnectionClose];
         });
@@ -78,28 +182,7 @@ describe(@"MeteorClient", ^{
         });
     });
 
-    describe(@"sendMethodWithName:parameters:notifyOnResponse", ^{
-        __block NSString *methodId;
-
-        beforeEach(^{
-            [meteorClient.methodIds count] should equal(0);
-            methodId = [meteorClient sendWithMethodName:@"awesomeMethod" parameters:@[] notifyOnResponse:YES];
-        });
-
-        it(@"stores a method id", ^{
-            [meteorClient.methodIds count] should equal(1);
-            [meteorClient.methodIds allObjects][0] should equal(methodId);
-        });
-
-        it(@"sends method command correctly", ^{
-            ddp should have_received(@selector(methodWithId:method:parameters:))
-                .with(methodId)
-                .and_with(@"awesomeMethod")
-                .and_with(@[]);
-        });
-    });
-
-    describe(@"didReceiveMessage", ^{
+    describe(@"#didReceiveMessage", ^{
         beforeEach(^{
             spy_on([NSNotificationCenter defaultCenter]);
         });

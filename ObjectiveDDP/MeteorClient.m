@@ -28,9 +28,17 @@
     [self.collections removeAllObjects];
 }
 
+- (void)sendWithMethodName:(NSString *)methodName parameters:(NSArray *)parameters {
+    [self sendWithMethodName:methodName parameters:parameters notifyOnResponse:NO];
+}
+
 -(NSString *)sendWithMethodName:(NSString *)methodName parameters:(NSArray *)parameters notifyOnResponse:(BOOL)notify {
+    if (!self.websocketReady) {
+        return NULL;
+    }
+
     NSString *methodId = [[BSONIdGenerator generate] substringToIndex:15];
-    
+
     if(notify == YES) {
         [self.methodIds addObject:methodId];
     }
@@ -38,37 +46,34 @@
     [self.ddp methodWithId:methodId
                     method:methodName
                 parameters:parameters];
-    
+
     return methodId;
 }
 
-- (void)sendWithMethodName:(NSString *)methodName parameters:(NSArray *)parameters {
-    [self sendWithMethodName:methodName parameters:parameters notifyOnResponse:NO];
-}
-
 - (void)addSubscription:(NSString *)subscriptionName {
-    NSString *uid = [[BSONIdGenerator generate] substringToIndex:15];
-
-    [self.subscriptions setObject:uid
-                           forKey:subscriptionName];
-    [self.ddp subscribeWith:uid name:subscriptionName parameters:nil];
+    [self addSubscription:subscriptionName withParameters:nil];
 }
 
 - (void)addSubscription:(NSString *)subscriptionName withParameters:(NSArray *)parameters {
     NSString *uid = [[BSONIdGenerator generate] substringToIndex:15];
-    
-    [self.subscriptions setObject:uid
-                           forKey:subscriptionName];
-    [self.subscriptionsParameters setObject:parameters forKey:subscriptionName];
-    
+    [self.subscriptions setObject:uid forKey:subscriptionName];
+    if (parameters) {
+        [self.subscriptionsParameters setObject:parameters forKey:subscriptionName];
+    }
+    if (!self.websocketReady) {
+        return;
+    }
     [self.ddp subscribeWith:uid name:subscriptionName parameters:parameters];
 }
 
 -(void)removeSubscription:(NSString *)subscriptionName {
+    if (!self.websocketReady) {
+        return;
+    }
     NSString *uid = [self.subscriptions objectForKey:subscriptionName];
-    
     if (uid) {
         [self.ddp unsubscribeWith:uid];
+        // XXX: Should we really remove sub until we hear back from sever?
         [self.subscriptions removeObjectForKey:subscriptionName];
     }
 }
