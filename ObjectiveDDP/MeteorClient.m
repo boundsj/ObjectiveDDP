@@ -182,7 +182,7 @@
 }
 
 - (void)didReceiveConnectionClose {
-    self.websocketReady = NO;
+    self.websocketReady = NO; 
     [self performSelector:@selector(reconnect)
                withObject:self
                afterDelay:5.0];

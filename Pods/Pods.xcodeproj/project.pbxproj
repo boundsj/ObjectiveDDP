@@ -7,35 +7,35 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		1877A6955A844EB5ACDE5B1A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 31F6F075D47841D58ED717F7 /* Foundation.framework */; settings = {}; };
-		1C67C9696F3140498C0F9DF0 /* base64.h in Headers */ = {isa = PBXBuildFile; fileRef = 05328BAF3D974A32A9ADDD61 /* base64.h */; settings = {}; };
+		1877A6955A844EB5ACDE5B1A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 31F6F075D47841D58ED717F7 /* Foundation.framework */; };
+		1C67C9696F3140498C0F9DF0 /* base64.h in Headers */ = {isa = PBXBuildFile; fileRef = 05328BAF3D974A32A9ADDD61 /* base64.h */; };
 		5022EA592DD948A292761838 /* NSData+SRB64Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = CACC62ADCBDD48A09A826A7F /* NSData+SRB64Additions.m */; settings = {COMPILER_FLAGS = "-fobjc-arc -DOS_OBJECT_USE_OBJC=0"; }; };
-		787F118149DE4780A61E4DA7 /* NSData+SRB64Additions.h in Headers */ = {isa = PBXBuildFile; fileRef = 2EA423A235544FC5A256FDD0 /* NSData+SRB64Additions.h */; settings = {}; };
-		8397D66C81E944558A43C6F1 /* Pods-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 32A5A43731C4449399A8A746 /* Pods-dummy.m */; settings = {}; };
+		787F118149DE4780A61E4DA7 /* NSData+SRB64Additions.h in Headers */ = {isa = PBXBuildFile; fileRef = 2EA423A235544FC5A256FDD0 /* NSData+SRB64Additions.h */; };
+		8397D66C81E944558A43C6F1 /* Pods-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 32A5A43731C4449399A8A746 /* Pods-dummy.m */; };
 		A1C913D4F4DF4EAB9931C073 /* SRWebSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = 50B9AC1C3947449CA14660EA /* SRWebSocket.m */; settings = {COMPILER_FLAGS = "-fobjc-arc -DOS_OBJECT_USE_OBJC=0"; }; };
-		DAE38CF229DA4E3FAB154202 /* SRWebSocket.h in Headers */ = {isa = PBXBuildFile; fileRef = B0E1657C587949EF8D3394CA /* SRWebSocket.h */; settings = {}; };
+		DAE38CF229DA4E3FAB154202 /* SRWebSocket.h in Headers */ = {isa = PBXBuildFile; fileRef = B0E1657C587949EF8D3394CA /* SRWebSocket.h */; };
 		E73D6E83E30A497F918C92C2 /* base64.c in Sources */ = {isa = PBXBuildFile; fileRef = 0F2DF1D191B84D0E99B07D0E /* base64.c */; settings = {COMPILER_FLAGS = "-fobjc-arc -DOS_OBJECT_USE_OBJC=0"; }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		05328BAF3D974A32A9ADDD61 /* base64.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = base64.h; path = SocketRocket/SocketRocket/base64.h; sourceTree = SOURCE_ROOT; };
-		0F2DF1D191B84D0E99B07D0E /* base64.c */ = {isa = PBXFileReference; includeInIndex = 1; name = base64.c; path = SocketRocket/SocketRocket/base64.c; sourceTree = SOURCE_ROOT; };
+		0F2DF1D191B84D0E99B07D0E /* base64.c */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.c; name = base64.c; path = SocketRocket/SocketRocket/base64.c; sourceTree = SOURCE_ROOT; };
 		2EA423A235544FC5A256FDD0 /* NSData+SRB64Additions.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "NSData+SRB64Additions.h"; path = "SocketRocket/SocketRocket/NSData+SRB64Additions.h"; sourceTree = SOURCE_ROOT; };
-		301BE98E467F48FE80BDE7E2 /* Pods-environment.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "Pods-environment.h"; path = "Pods-environment.h"; sourceTree = SOURCE_ROOT; };
+		301BE98E467F48FE80BDE7E2 /* Pods-environment.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-environment.h"; sourceTree = SOURCE_ROOT; };
 		31F6F075D47841D58ED717F7 /* Foundation.framework */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS6.1.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
-		32A5A43731C4449399A8A746 /* Pods-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "Pods-dummy.m"; path = "Pods-dummy.m"; sourceTree = SOURCE_ROOT; };
+		32A5A43731C4449399A8A746 /* Pods-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-dummy.m"; sourceTree = SOURCE_ROOT; };
 		3DF0CD7B869F4E37A6F7B837 /* Security.framework */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = wrapper.framework; name = Security.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS6.1.sdk/System/Library/Frameworks/Security.framework; sourceTree = DEVELOPER_DIR; };
-		4DFE25FCF6A24CB7BDFCADDB /* Pods-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; name = "Pods-acknowledgements.markdown"; path = "Pods-acknowledgements.markdown"; sourceTree = SOURCE_ROOT; };
+		4DFE25FCF6A24CB7BDFCADDB /* Pods-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-acknowledgements.markdown"; sourceTree = SOURCE_ROOT; };
 		50B9AC1C3947449CA14660EA /* SRWebSocket.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = SRWebSocket.m; path = SocketRocket/SocketRocket/SRWebSocket.m; sourceTree = SOURCE_ROOT; };
-		53B0A669FFC94377A9EED963 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods.xcconfig; sourceTree = SOURCE_ROOT; };
-		6B031A8A3CB14E2BA699C79D /* Pods-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; name = "Pods-acknowledgements.plist"; path = "Pods-acknowledgements.plist"; sourceTree = SOURCE_ROOT; };
-		A7BC7EE27AA541D9A0291800 /* Pods-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; name = "Pods-prefix.pch"; path = "Pods-prefix.pch"; sourceTree = SOURCE_ROOT; };
+		53B0A669FFC94377A9EED963 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = Pods.xcconfig; sourceTree = SOURCE_ROOT; };
+		6B031A8A3CB14E2BA699C79D /* Pods-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-acknowledgements.plist"; sourceTree = SOURCE_ROOT; };
+		A7BC7EE27AA541D9A0291800 /* Pods-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-prefix.pch"; sourceTree = SOURCE_ROOT; };
 		B0E1657C587949EF8D3394CA /* SRWebSocket.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SRWebSocket.h; path = SocketRocket/SocketRocket/SRWebSocket.h; sourceTree = SOURCE_ROOT; };
 		CACC62ADCBDD48A09A826A7F /* NSData+SRB64Additions.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "NSData+SRB64Additions.m"; path = "SocketRocket/SocketRocket/NSData+SRB64Additions.m"; sourceTree = SOURCE_ROOT; };
-		CCC2CA856FD8453F8C99C162 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; name = libPods.a; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		D736724DE610461A8619AD99 /* Podfile */ = {isa = PBXFileReference; includeInIndex = 1; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		CCC2CA856FD8453F8C99C162 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		D736724DE610461A8619AD99 /* Podfile */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		F321E7EBA55940EAAB39BAF4 /* CFNetwork.framework */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS6.1.sdk/System/Library/Frameworks/CFNetwork.framework; sourceTree = DEVELOPER_DIR; };
-		FB5510A3E1EA4A5088293C0F /* Pods-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; name = "Pods-resources.sh"; path = "Pods-resources.sh"; sourceTree = SOURCE_ROOT; };
+		FB5510A3E1EA4A5088293C0F /* Pods-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-resources.sh"; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -161,7 +161,7 @@
 		6FABCC0AF5E8441FB8D88A07 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0450;
+				LastUpgradeCheck = 0500;
 			};
 			buildConfigurationList = B06DCD8F573E482398A981BB /* Build configuration list for PBXProject "Pods" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -172,8 +172,8 @@
 			);
 			mainGroup = B456BE7EB781420682B6484C;
 			productRefGroup = A0D827B8F71545A09EE349D8 /* Products */;
-			projectReferences = (
-			);
+			projectDirPath = "";
+			projectRoot = "";
 			targets = (
 				9872F0A3629249D39A9454CC /* Pods */,
 			);
@@ -207,7 +207,6 @@
 			baseConfigurationReference = 53B0A669FFC94377A9EED963 /* Pods.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				COPY_PHASE_STRIP = NO;
 				DSTROOT = /tmp/xcodeproj.dst;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -237,6 +236,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				ONLY_ACTIVE_ARCH = YES;
 			};
 			name = Debug;
 		};
@@ -245,7 +245,6 @@
 			baseConfigurationReference = 53B0A669FFC94377A9EED963 /* Pods.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				COPY_PHASE_STRIP = YES;
 				DSTROOT = /tmp/xcodeproj.dst;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
