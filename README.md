@@ -4,7 +4,7 @@ Easily connect your applications written in Objective-C to server applications t
 
 ## :heavy_exclamation_mark: :sparkles:
 
-September 2013: We are marking our first release, `version 0.1.0`! This includes (with lots of help from @ewindso):
+September 2013: We are marking our first release, [version 0.1.0](https://github.com/boundsj/ObjectiveDDP/releases/tag/v0.1.0)! This includes (with lots of help from @ewindso):
 
 * several changes that help stabilize the application in real world scenarios (i.e. reconnect). 
 * We added the ability to send DDP messages that invoke methods on your server (i.e. [Meteor.call](http://docs.meteor.com/#meteor_call)).
