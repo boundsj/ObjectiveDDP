@@ -1,12 +1,20 @@
 ObjectiveDDP
 ============
-You've made yourself a boss meteor server and a web client to match. Then one day you decide to write a native iOS client and the only easy way to display your content is with a WebView, Cordova, and/or some other non-optimal hackery. 
+Easily connect your applications written in Objective-C to server applications that communicate with the [DDP protocol created by Meteor] and, if required by your server, authenticate with [SRP]. Out of the box, this library allows your iOS applications to communicate and authenticate with Meteor servers or any server using the DDP/SRP protocols.  
 
-What you really want is for your iOS app to communicate directly with the Meteor server, to support Meteor auth, and to perform live updates. No problem.
+## :heavy_exclamation_mark: :sparkles:
+
+September 2013: We are marking our first release, `version 0.1.0`! This includes (with lots of help from @ewindso):
+
+* several changes that help stabilize the application in real world scenarios (i.e. reconnect). 
+* We added the ability to send DDP messages that invoke methods on your server (i.e. [Meteor.call](http://docs.meteor.com/#meteor_call)).
+* You can listen for a notification that confirms a subscription request you've made is ready, there are notifications for auth failure, and you can now get notifications on a per collection basis if you want. 
+* You can now unsubscribe from updates for specific collections on the server. 
+* Finally, the ObjectiveDDP library and Example projects have been configured to play nicely with the latest Xcode version 5.
 
 Requirements
 --------------
-ObjectiveDDP should run well in iOS projects using ARC and iOS 5 or above (ok well maybe not iOS 7, yet) and with the more recent versions of xcode. If you don't know what ARC is and a cocoapod sounds like something that goes in the fancy office coffee machine then you should probably ask one of your iOS nerd friends to help you out.
+ObjectiveDDP should run well in iOS projects using ARC and iOS 5.0 or above. If you don't know what ARC is and a cocoapod sounds like something that goes in the fancy office coffee machine then you should probably ask one of your iOS nerd friends to help you out.
 
 Quick Start: The Sample App
 --------------
@@ -14,45 +22,35 @@ ObjectiveDDP ships with a todo application (of course) that illustrates much abo
 
 * Clone this repo and navigate to the Example app:
 
-    → git clone git@github.com:boundsj/ObjectiveDDP.git
-
-    → cd Example/
+    * git clone git@github.com:boundsj/ObjectiveDDP.git
+    * cd Example/
     
-* Get the ObjectiveDDP cocoapod:    
+* Get the ObjectiveDDP cocoapod: (if you don't already have cocoapods, [get it])
 
- (if you don't have cocoapods, [get it])
-
-    → git clone git@github.com:boundsj/ObjectiveDDP.git
-    
-    → pod install
+    * git clone git@github.com:boundsj/ObjectiveDDP.git    
+    * pod install
     
 * Open the Example app in xcode:
 
-    → open Example.xcworkspace
-    
-* Start the todo meteor server:
+    * open Example.xcworkspace
 
-    → cd todos
-    
-    → meteor
-
-* Back in xcode, build and run the app in the simluator with the run command: ⌘R
+* Build and run the app in the simluator with the run command: ⌘R
 
 Todo App Screenshots:
 ![alt text](https://raw.github.com/boundsj/ObjectiveDDP/master/screenshots.png "Screenshots")
 
-**NOTE: The app currently points to a hosted version of the meteor server and has a hardcoded user name. This will change soon.**
+**NOTE: The app connects to a meteor server [http://ddptester.meteor.com](http://ddptester.meteor.com) and has a hardcoded user name.**
     
 Development: Writing Your Own App
 --------------
 
-_Note: ObjectiveDDP is a brand new project and is very much subject to change. Please check this readme and the project wiki frequently for updates._
+_Note: ObjectiveDDP is a work in progress and subject to change. Although we do make an effort to remain backwards compatible with the original API, please check this readme and the project wiki frequently for updates to stay up to date._
 
 #### ObjectiveDDP Boilerplate ####
 The example application illustrates everything you need to know about integrating ObjectiveDDP into your iOS application. You can also reference the technical walkthrough in the wiki [ios boilerplate] section for the step by step details of creating a simple iOS app that can connect to a meteor server.
 
 #### Development Branch: The Bleeding Edge ####
-The master branch of this repo is "stable" and should generally be the one used for linking to projects via cocoapods. Active development happens on the development branch - feel free to use it to experiment with the latest features.
+Please use this branch if you have forked the project and plan to send pull requests. It is also useful for testing new features that you read about in issues but are not in the master branch yet.
 
 #### Tests ####
 All tests are in the Specs directory and tests (which are actually the best documenatation) for the DDP protocol implementation are in the [ddp tests] file.
@@ -68,18 +66,20 @@ This project is independent, open source, and is not affiliated with Meteor. If 
 
 ####Contributors####
 
-@stevemanuel
-@ewindso
-@boundsj (author)
+ * @stevemanuel
+ * @ewindso
+ * @boundsj (author)
 
 License
 --------------
-**MIT**
-
+**[MIT]**
+[DDP protocol created by Meteor]: https://github.com/meteor/meteor/blob/devel/packages/livedata/DDP.md
+[SRP]: http://srp.stanford.edu/
 [git-repo-url]: git@github.com:boundsj/objectiveddp.git
 [ios boilerplate]: https://github.com/boundsj/ObjectiveDDP/wiki/ObjectiveDDP-iOS-Boilerplate
 [ddp tests]: https://github.com/boundsj/ObjectiveDDP/blob/master/Specs/ObjectiveDDPSpec.mm
 [get it]: http://docs.cocoapods.org/guides/installing_cocoapods.html
 [ReachSocket]: http://reachsocket.com/
+[MIT]: http://opensource.org/licenses/MIT
 
 
