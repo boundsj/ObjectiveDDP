@@ -52,11 +52,7 @@
 
 static int g_initialized = 0;
 
-typedef struct
-{
-    BIGNUM     * N;
-    BIGNUM     * g;
-} NGConstant;
+
 
 struct NGHex 
 {
@@ -197,29 +193,6 @@ struct SRPVerifier
     const unsigned char * bytes_B;
     int                   authenticated;
 
-    unsigned char M           [SHA512_DIGEST_LENGTH];
-    unsigned char H_AMK       [SHA512_DIGEST_LENGTH];
-    unsigned char session_key [SHA512_DIGEST_LENGTH];
-};
-
-struct SRPUser
-{
-    SRP_HashAlgorithm  hash_alg;
-    NGConstant        *ng;
-    
-    BIGNUM *a;
-    BIGNUM *A;
-    BIGNUM *S;
-
-    const char          * HAMK;
-    const unsigned char * bytes_A;
-    const char          * Astr;
-    int                   authenticated;
-
-    const char *          username;
-    const unsigned char * password;
-    int                   password_len;
-    
     unsigned char M           [SHA512_DIGEST_LENGTH];
     unsigned char H_AMK       [SHA512_DIGEST_LENGTH];
     unsigned char session_key [SHA512_DIGEST_LENGTH];
@@ -674,64 +647,80 @@ void srp_verifier_verify_session( struct SRPVerifier * ver, const unsigned char 
         *bytes_HAMK = NULL;
 }
 
-struct SRPUser * srp_user_new( SRP_HashAlgorithm alg, SRP_NGType ng_type, const char * username, 
-                              const char * bytes_password, int len_password,
-                               const char * n_hex, const char * g_hex )
-{
-    struct SRPUser  *usr  = (struct SRPUser *) malloc( sizeof(struct SRPUser) );
+SRPUser * srp_user_new_with_a(SRP_HashAlgorithm alg,
+                                     SRP_NGType ng_type,
+                                     const char * username,
+                                     const char * bytes_password,
+                                     int len_password,
+                                     const char * n_hex,
+                                     const char * g_hex,
+                                     BIGNUM *a) {
+    SRPUser  *usr  = (SRPUser *) malloc( sizeof(SRPUser) );
     int              ulen = strlen(username) + 1;
-
+    
     if (!usr)
-       goto err_exit;
-
+        goto err_exit;
+    
     init_random(); /* Only happens once */
     
     usr->hash_alg = alg;
     usr->ng       = new_ng( ng_type, n_hex, g_hex );
     
-    usr->a = BN_new();
+    usr->a = a;
     usr->A = BN_new();
     usr->S = BN_new();
-
+    
     if (!usr->ng || !usr->a || !usr->A || !usr->S)
-       goto err_exit;
+        goto err_exit;
     
     usr->username     = (const char *) malloc(ulen);
     usr->password     = (const unsigned char *) malloc(len_password);
     usr->password_len = len_password;
-
+    
     if (!usr->username || !usr->password)
-       goto err_exit;
+        goto err_exit;
     
     memcpy((char *)usr->username, username,       ulen);
     memcpy((char *)usr->password, bytes_password, len_password);
-
+    
     usr->authenticated = 0;
     
     usr->bytes_A = 0;
     
     return usr;
-
- err_exit:
+    
+err_exit:
     if (usr)
     {
-       BN_free(usr->a);
-       BN_free(usr->A);
-       BN_free(usr->S);
-       if (usr->username)
-          free((void*)usr->username);
-       if (usr->password)
-       {
-          memset((void*)usr->password, 0, usr->password_len);
-          free((void*)usr->password);
-       }
-       free(usr);
+        BN_free(usr->a);
+        BN_free(usr->A);
+        BN_free(usr->S);
+        if (usr->username)
+            free((void*)usr->username);
+        if (usr->password)
+        {
+            memset((void*)usr->password, 0, usr->password_len);
+            free((void*)usr->password);
+        }
+        free(usr);
     }
     
     return 0;
 }
 
-void srp_user_delete( struct SRPUser * usr )
+SRPUser * srp_user_new(SRP_HashAlgorithm alg,
+                              SRP_NGType ng_type,
+                              const char *username,
+                              const char *bytes_password,
+                              int len_password,
+                              const char *n_hex,
+                              const char *g_hex ) {
+    BIGNUM *a = BN_new();
+    BN_rand(a, 256, -1, 0);
+    return srp_user_new_with_a(alg, ng_type, username, bytes_password, len_password, n_hex, g_hex, a);
+}
+
+void srp_user_delete( SRPUser * usr )
 {
    if( usr )
    {
@@ -754,61 +743,61 @@ void srp_user_delete( struct SRPUser * usr )
    }
 }
 
-int srp_user_is_authenticated( struct SRPUser * usr)
+int srp_user_is_authenticated( SRPUser * usr)
 {
     return usr->authenticated;
 }
 
-const char * srp_user_get_username( struct SRPUser * usr )
+const char * srp_user_get_username( SRPUser * usr )
 {
     return usr->username;
 }
 
-const unsigned char * srp_user_get_session_key( struct SRPUser * usr, int * key_length )
+const unsigned char * srp_user_get_session_key( SRPUser * usr, int * key_length )
 {
     if (key_length)
         *key_length = hash_length( usr->hash_alg );
     return usr->session_key;
 }
 
-int srp_user_get_session_key_length( struct SRPUser * usr )
+int srp_user_get_session_key_length( SRPUser * usr )
 {
     return hash_length( usr->hash_alg );
 }
 
 /* Output: username, bytes_A, len_A, Astr */
-void  srp_user_start_authentication( struct SRPUser * usr, const char ** username,
-                                     const unsigned char ** bytes_A, int * len_A, const char ** Astr )
-{
+void  srp_user_start_authentication(SRPUser *usr,
+                                    const char ** username,
+                                    const unsigned char **bytes_A,
+                                    int * len_A,
+                                    const char ** Astr) {
     BN_CTX  *ctx  = BN_CTX_new();
     
-    BN_rand(usr->a, 256, -1, 0);
-
+    // once user is reproducible without randomness, run test to call this method
+    // many 1000s of times with the same user and check that always returns same Astr
+    // note also that the convert_to_lower function is suspect!
+    
     BN_mod_exp(usr->A, usr->ng->g, usr->a, usr->ng->N, ctx);
-
     BN_CTX_free(ctx);
     
     *len_A   = BN_num_bytes(usr->A);
-    *bytes_A = malloc( *len_A );
+    *bytes_A = malloc(*len_A);
 
-    if (!*bytes_A)
-    {
+    if (!*bytes_A) {
        *len_A = 0;
        *bytes_A = 0;
        *username = 0;
        return;
     }
         
-    BN_bn2bin( usr->A, (unsigned char *) *bytes_A );
+    BN_bn2bin(usr->A, (unsigned char *) *bytes_A);
     usr->bytes_A = *bytes_A;
-
-    usr->Astr = convert_to_lower( BN_bn2hex(usr->A) );
+    usr->Astr = convert_to_lower(BN_bn2hex(usr->A));
     *Astr = usr->Astr;
-
     *username = usr->username;
 }
 
-void meteor_user_generate_u( struct SRPUser *usr,
+void meteor_user_generate_u( SRPUser *usr,
                              char const *Bstr,
                              unsigned char *buff,
                              BIGNUM **u )
@@ -821,7 +810,7 @@ void meteor_user_generate_u( struct SRPUser *usr,
     *u = BN_bin2bn(buff, hash_length(usr->hash_alg), NULL);
 }
 
-void meteor_user_generate_x( struct SRPUser *usr,
+void meteor_user_generate_x( SRPUser *usr,
                              char const *identity,
                              char const *salt,
                              char const *password,
@@ -858,7 +847,7 @@ void meteor_user_generate_x( struct SRPUser *usr,
     BN_free( x_inner );
 }
 
-void meteor_user_generate_k( struct SRPUser *usr,
+void meteor_user_generate_k( SRPUser *usr,
                              unsigned char *buff,
                              BIGNUM **k )
 {
@@ -878,7 +867,7 @@ void meteor_user_generate_k( struct SRPUser *usr,
     *k = BN_bin2bn( buff, hash_length(usr->hash_alg), NULL );
 }
 
-void meteor_user_generate_kgx( struct SRPUser *usr,
+void meteor_user_generate_kgx( SRPUser *usr,
                                BN_CTX *ctx,
                                BIGNUM *x,
                                BIGNUM *k,
@@ -898,7 +887,7 @@ void meteor_user_generate_kgx( struct SRPUser *usr,
     BN_free(inner_kgx);
 }
 
-void meteor_user_generate_aux( struct SRPUser *usr,
+void meteor_user_generate_aux( SRPUser *usr,
                                BN_CTX *ctx,
                                BIGNUM *u,
                                BIGNUM *x,
@@ -918,7 +907,7 @@ void meteor_user_generate_aux( struct SRPUser *usr,
     BN_free(ux);
 }
 
-void meteor_user_generate_S_string( struct SRPUser *usr,
+void meteor_user_generate_S_string( SRPUser *usr,
                                     BN_CTX * ctx,
                                     BIGNUM * kgx,
                                     BIGNUM * aux,
@@ -953,7 +942,7 @@ void meteor_user_generate_S_string( struct SRPUser *usr,
     BN_free(S);
 }
 
-void meteor_user_generate_M_string( struct SRPUser *usr,
+void meteor_user_generate_M_string( SRPUser *usr,
                                     const char * S_str,
                                     unsigned char *buff,
                                     const char * B_str,
@@ -980,7 +969,7 @@ void meteor_user_generate_M_string( struct SRPUser *usr,
     BN_free(M);
 }
 
-void meteor_user_generate_HAMK( struct SRPUser *usr,
+void meteor_user_generate_HAMK( SRPUser *usr,
                                 unsigned char *buff,
                                 const char * M_str,
                                 const char * S_str )
@@ -994,7 +983,7 @@ void meteor_user_generate_HAMK( struct SRPUser *usr,
     usr->HAMK = convert_to_lower( BN_bn2hex(BN_bin2bn(buff, hash_length(usr->hash_alg), NULL)) );
 }
 
-void srp_user_process_meteor_challenge( struct SRPUser * usr,
+void srp_user_process_meteor_challenge( SRPUser * usr,
                                         const char * password,
                                         const char * salt,
                                         const char * identity,
@@ -1061,7 +1050,7 @@ void srp_user_process_meteor_challenge( struct SRPUser * usr,
 }
 
 /* Output: bytes_M. Buffer length is SHA512_DIGEST_LENGTH */
-void  srp_user_process_challenge( struct SRPUser * usr,
+void  srp_user_process_challenge( SRPUser * usr,
                                   const unsigned char * bytes_s, int len_s, 
                                   const unsigned char * bytes_B, int len_B,
                                   const unsigned char ** bytes_M, int * len_M )
@@ -1141,12 +1130,12 @@ void  srp_user_process_challenge( struct SRPUser * usr,
     BN_CTX_free(ctx);
 }
 
-void srp_user_verify_meteor_session( struct SRPUser * usr, const char * HAMK_meteor )
+void srp_user_verify_meteor_session( SRPUser * usr, const char * HAMK_meteor )
 {
     usr->authenticated = strcmp(usr->HAMK, HAMK_meteor) ? 0 : 1;
 }
 
-void srp_user_verify_session( struct SRPUser * usr, const unsigned char * bytes_HAMK )
+void srp_user_verify_session( SRPUser * usr, const unsigned char * bytes_HAMK )
 {
     if ( memcmp( usr->H_AMK, bytes_HAMK, hash_length(usr->hash_alg) ) == 0 )
         usr->authenticated = 1;

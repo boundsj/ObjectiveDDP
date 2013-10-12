@@ -248,34 +248,20 @@
 
 SRP_HashAlgorithm alg     = SRP_SHA256;
 SRP_NGType        ng_type = SRP_NG_1024;
-struct SRPUser     * usr;
+SRPUser    *usr;
 
 - (NSString *)generateAuthVerificationKeyWithUsername:(NSString *)username password:(NSString *)password {
     //TODO: don't really need to keep bytes_A and len_A here, could remove them and push into srp lib
-    const unsigned char * bytes_A = 0;
+    const unsigned char *bytes_A = 0;
     int len_A   = 0;
-    const char * Astr = 0;
-    const char * auth_username = 0;
-    const char * username_str = [username cStringUsingEncoding:NSASCIIStringEncoding];
-    const char * password_str = [password cStringUsingEncoding:NSASCIIStringEncoding];
+    const char *Astr = 0;
+    const char *auth_username = 0;
+    const char *username_str = [username cStringUsingEncoding:NSASCIIStringEncoding];
+    const char *password_str = [password cStringUsingEncoding:NSASCIIStringEncoding];
 
     self.password = password;
-
-    /* Begin authentication process */
-    usr = srp_user_new(alg,
-            ng_type,
-            username_str,
-            password_str,
-            strlen(password_str),
-            NULL,
-            NULL);
-
-    srp_user_start_authentication(usr,
-            &auth_username,
-            &bytes_A,
-            &len_A,
-            &Astr);
-
+    usr = srp_user_new(alg, ng_type, username_str, password_str, strlen(password_str), NULL, NULL);
+    srp_user_start_authentication(usr, &auth_username, &bytes_A, &len_A, &Astr);
     return [NSString stringWithCString:Astr encoding:NSASCIIStringEncoding];
 }
 
