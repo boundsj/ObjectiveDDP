@@ -1,3 +1,4 @@
+#import "DependencyProvider.h"
 #import "MeteorClient.h"
 #import "BSONIdGenerator.h"
 #import "srp/srp.h"
@@ -5,6 +6,7 @@
 @interface MeteorClient ()
 
 @property (nonatomic, copy) NSString *password;
+@property (nonatomic, assign) SRPUser *user;
 
 @end
 
@@ -246,22 +248,17 @@
 
 # pragma mark Meteor SRP Wrapper
 
-SRP_HashAlgorithm alg     = SRP_SHA256;
-SRP_NGType        ng_type = SRP_NG_1024;
-SRPUser    *usr;
-
 - (NSString *)generateAuthVerificationKeyWithUsername:(NSString *)username password:(NSString *)password {
+    self.user = [[DependencyProvider sharedProvider] provideSRPUserWithUserName:username password:password];
+    self.password = password;
+    
     //TODO: don't really need to keep bytes_A and len_A here, could remove them and push into srp lib
     const unsigned char *bytes_A = 0;
     int len_A   = 0;
     const char *Astr = 0;
     const char *auth_username = 0;
-    const char *username_str = [username cStringUsingEncoding:NSASCIIStringEncoding];
-    const char *password_str = [password cStringUsingEncoding:NSASCIIStringEncoding];
-
-    self.password = password;
-    usr = srp_user_new(alg, ng_type, username_str, password_str, strlen(password_str), NULL, NULL);
-    srp_user_start_authentication(usr, &auth_username, &bytes_A, &len_A, &Astr);
+    
+    srp_user_start_authentication(self.user, &auth_username, &bytes_A, &len_A, &Astr);
     return [NSString stringWithCString:Astr encoding:NSASCIIStringEncoding];
 }
 
@@ -275,7 +272,7 @@ SRPUser    *usr;
     const char * password_str = [self.password cStringUsingEncoding:NSASCIIStringEncoding];
     const char * Mstr;
 
-    srp_user_process_meteor_challenge(usr, password_str, salt, identity, B, &Mstr);
+    srp_user_process_meteor_challenge(self.user, password_str, salt, identity, B, &Mstr);
     NSString *M_final = [NSString stringWithCString:Mstr encoding:NSASCIIStringEncoding];
     NSArray *params = @[@{@"srp":@{@"M":M_final}}];
 
@@ -284,7 +281,7 @@ SRPUser    *usr;
 }
 
 - (void)didReceiveHAMKVerificationWithResponse:(NSDictionary *)response {
-    srp_user_verify_meteor_session(usr, [response[@"HAMK"] cStringUsingEncoding:NSASCIIStringEncoding]);
+    srp_user_verify_meteor_session(self.user, [response[@"HAMK"] cStringUsingEncoding:NSASCIIStringEncoding]);
 
     if (srp_user_is_authenticated) {
         self.sessionToken = response[@"token"];

@@ -64,7 +64,6 @@
 #include <sha.h>
 
 struct SRPVerifier;
-struct SRPUser;
 
 typedef enum
 {

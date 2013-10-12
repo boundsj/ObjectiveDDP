@@ -1,4 +1,5 @@
 #import <Foundation/Foundation.h>
+#import "srp/srp.h"
 
 @class SRWebSocket;
 
@@ -6,5 +7,6 @@
 
 + (DependencyProvider *)sharedProvider;
 - (SRWebSocket *)provideSRWebSocketWithRequest:(NSURLRequest *)request;
+- (SRPUser *)provideSRPUserWithUserName:(NSString *)userName password:(NSString *)password;
 
 @end
