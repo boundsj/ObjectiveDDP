@@ -9,7 +9,11 @@ static int _incr = 0;
  *   https://github.com/mongodb/mongo-c-driver/blob/master/src/bson.c and the BSON Object Id specification
  *   http://www.mongodb.org/display/DOCS/Object+IDs
  */
+
+static NSInteger methodCallCount = 1;
 + (NSString *) generate {
+  return [NSString stringWithFormat:@"%d", methodCallCount++];
+    
   int i = _incr++;
   bson_oid_t *oid = malloc(sizeof(bson_oid_t));
   time_t t = time(NULL);

@@ -39,7 +39,7 @@
         return NULL;
     }
 
-    NSString *methodId = [[BSONIdGenerator generate] substringToIndex:15];
+    NSString *methodId = [BSONIdGenerator generate];
 
     if(notify == YES) {
         [self.methodIds addObject:methodId];
@@ -57,7 +57,7 @@
 }
 
 - (void)addSubscription:(NSString *)subscriptionName withParameters:(NSArray *)parameters {
-    NSString *uid = [[BSONIdGenerator generate] substringToIndex:15];
+    NSString *uid = [BSONIdGenerator generate];
     [self.subscriptions setObject:uid forKey:subscriptionName];
     if (parameters) {
         [self.subscriptionsParameters setObject:parameters forKey:subscriptionName];
@@ -83,9 +83,8 @@
 - (void)logonWithUsername:(NSString *)username password:(NSString *)password {
     NSArray *params = @[@{@"A": [self generateAuthVerificationKeyWithUsername:username password:password],
                           @"user": @{@"email":username}}];
-
-    [self sendWithMethodName:@"beginPasswordExchange"
-                  parameters:params];
+    NSLog(@"================> beginPasswordExchange with params %@", params);
+    [self sendWithMethodName:@"beginPasswordExchange" parameters:params];
 }
 
 #pragma mark <ObjectiveDDPDelegate>
@@ -93,7 +92,7 @@
 - (void)didReceiveMessage:(NSDictionary *)message {
     NSString *msg = [message objectForKey:@"msg"];
     NSString *messageId = message[@"id"];
-
+    
     if ([self.methodIds containsObject:messageId]) {
         if(msg && [msg isEqualToString:@"result"]) {
             NSDictionary *response = message[@"result"];
@@ -101,15 +100,13 @@
             [[NSNotificationCenter defaultCenter] postNotificationName:notificationName
                                                                 object:self
                                                               userInfo:response];
-            dispatch_async(dispatch_get_main_queue(), ^{
-                [self.methodIds removeObject:messageId];
-            });
+            [self.methodIds removeObject:messageId];
         }
     } else if (msg && [msg isEqualToString:@"result"]
-            && message[@"result"]
-            && message[@"result"][@"B"]
-            && message[@"result"][@"identity"]
-            && message[@"result"][@"salt"]) {
+               && message[@"result"]
+               && message[@"result"][@"B"]
+               && message[@"result"][@"identity"]
+               && message[@"result"][@"salt"]) {
         NSDictionary *response = message[@"result"];
         [self didReceiveLoginChallengeWithResponse:response];
     } else if(msg && [msg isEqualToString:@"result"]
@@ -117,14 +114,14 @@
               && [message[@"error"][@"error"]integerValue] == 403) {
         [self.authDelegate authenticationFailed:message[@"error"][@"reason"]];
     } else if (msg && [msg isEqualToString:@"result"]
-            && message[@"result"]
-            && message[@"result"][@"id"]
-            && message[@"result"][@"HAMK"]
-            && message[@"result"][@"token"]) {
+               && message[@"result"]
+               && message[@"result"][@"id"]
+               && message[@"result"][@"HAMK"]
+               && message[@"result"][@"token"]) {
         NSDictionary *response = message[@"result"];
         [self didReceiveHAMKVerificationWithResponse:response];
     } else if (msg && [msg isEqualToString:@"added"]
-            && message[@"collection"]) {
+               && message[@"collection"]) {
         NSDictionary *object = [self _parseObjectAndAddToCollection:message];
         NSString *notificationName = [NSString stringWithFormat:@"%@_added", message[@"collection"]];
         [[NSNotificationCenter defaultCenter] postNotificationName:notificationName object:self userInfo:object];
@@ -198,7 +195,7 @@
 
 - (void)makeMeteorDataSubscriptions {
     for (NSString *key in [self.subscriptions allKeys]) {
-        NSString *uid = [[BSONIdGenerator generate] substringToIndex:15];
+        NSString *uid = [BSONIdGenerator generate];
         [self.subscriptions setObject:uid forKey:key];  
         NSArray *params = self.subscriptionsParameters[key];
         [self.ddp subscribeWith:uid name:key parameters:params];
