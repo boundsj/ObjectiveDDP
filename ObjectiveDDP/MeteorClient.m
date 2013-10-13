@@ -97,9 +97,13 @@
     if ([self.methodIds containsObject:messageId]) {
         if(msg && [msg isEqualToString:@"result"]) {
             NSDictionary *response = message[@"result"];
-            NSString *notificationName = [NSString stringWithFormat:@"response_%@", message[@"id"]];
-            [[NSNotificationCenter defaultCenter] postNotificationName:notificationName object:self userInfo:response];
-            [self.methodIds removeObject:messageId];
+            NSString *notificationName = [NSString stringWithFormat:@"response_%@", messageId];
+            [[NSNotificationCenter defaultCenter] postNotificationName:notificationName
+                                                                object:self
+                                                              userInfo:response];
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self.methodIds removeObject:messageId];
+            });
         }
     } else if (msg && [msg isEqualToString:@"result"]
             && message[@"result"]
