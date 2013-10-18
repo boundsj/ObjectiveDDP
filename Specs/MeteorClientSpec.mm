@@ -141,9 +141,22 @@ describe(@"MeteorClient", ^{
                     .and_with(@"beginPasswordExchange")
                     .and_with(anything);
             });
+            
+            describe(@"#logout", ^{
+                beforeEach(^{
+                    [meteorClient logout];
+                });
+                
+                it(@"sends the logout message correclty", ^{
+                    ddp should have_received(@selector(methodWithId:method:parameters:))
+                        .with(anything)
+                        .and_with(@"logout")
+                        .and_with(anything);
+                });
+            });
         });
 
-        context(@"when websocket is ready", ^{
+        context(@"when websocket is NOT ready", ^{
             beforeEach(^{
                 meteorClient.websocketReady = NO;
                 [meteorClient logonWithUsername:@"JesseJames"

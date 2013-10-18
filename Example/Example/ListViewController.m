@@ -25,6 +25,10 @@
     self.navigationItem.title = @"My Lists";
     self.navigationController.navigationBarHidden = NO;
     self.navigationItem.hidesBackButton = YES;
+    
+    UIBarButtonItem *logoutButton = [[UIBarButtonItem alloc] initWithTitle:@"Logout" style:UIBarButtonItemStylePlain target:self action:@selector(logout)];
+    self.navigationItem.rightBarButtonItem = logoutButton;
+
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(didReceiveUpdate:)
                                                  name:@"added"
@@ -37,6 +41,11 @@
 
 - (void)didReceiveUpdate:(NSNotification *)notification {
     [self.tableview reloadData];
+}
+
+- (void)logout {
+    [self.meteor logout];
+    [self.navigationController popToRootViewControllerAnimated:YES];
 }
 
 #pragma mark <UITableViewDataSource>

@@ -87,6 +87,10 @@
     [self sendWithMethodName:@"beginPasswordExchange" parameters:params];
 }
 
+- (void)logout {
+    [self sendWithMethodName:@"logout" parameters:nil];
+}
+
 #pragma mark <ObjectiveDDPDelegate>
 
 - (void)didReceiveMessage:(NSDictionary *)message {
