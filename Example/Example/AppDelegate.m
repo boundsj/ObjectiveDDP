@@ -56,7 +56,7 @@
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
-
+    [self.meteorClient.ddp connectWebSocket];
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application {

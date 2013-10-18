@@ -109,7 +109,7 @@
 
 - (void)didAddThing:(NSString *)message {
     [self dismissViewControllerAnimated:YES completion:nil];
-    NSString *uid = [[BSONIdGenerator generate] substringToIndex:15];
+    NSString *uid = [BSONIdGenerator generate];
     [self.meteor sendWithMethodName:@"/things/insert"
                          parameters:@[@{@"_id": uid,
                                       @"msg": message,
