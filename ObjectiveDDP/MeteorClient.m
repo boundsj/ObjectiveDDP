@@ -6,6 +6,8 @@
 @interface MeteorClient ()
 
 @property (nonatomic, copy) NSString *password;
+@property (nonatomic, copy) NSString *userName;
+@property (nonatomic, assign) int retryAttempts;
 
 @end
 
@@ -18,7 +20,7 @@
         self.subscriptions = [NSMutableDictionary dictionary];
         self.subscriptionsParameters = [NSMutableDictionary dictionary];
         self.methodIds = [NSMutableSet set];
-        // TODO: subscription version should be set here
+        self.retryAttempts = 0;
     }
     return self;
 }
@@ -94,6 +96,8 @@ static BOOL userIsLoggingIn = NO;
 
 #pragma mark <ObjectiveDDPDelegate>
 
+static int LOGON_RETRY_MAX = 5;
+
 - (void)didReceiveMessage:(NSDictionary *)message {
     NSString *msg = [message objectForKey:@"msg"];
     NSString *messageId = message[@"id"];
@@ -118,7 +122,12 @@ static BOOL userIsLoggingIn = NO;
               && message[@"error"]
               && [message[@"error"][@"error"]integerValue] == 403) {
         userIsLoggingIn = NO;
-        [self.authDelegate authenticationFailed:message[@"error"][@"reason"]];
+        if (++self.retryAttempts < LOGON_RETRY_MAX) {
+            [self logonWithUsername:self.userName password:self.password];
+        } else {
+            self.retryAttempts = 0;
+            [self.authDelegate authenticationFailed:message[@"error"][@"reason"]];
+        }
     } else if (msg && [msg isEqualToString:@"result"]
                && message[@"result"]
                && message[@"result"][@"id"]
@@ -256,6 +265,7 @@ static BOOL userIsLoggingIn = NO;
 static SRPUser *srpUser;
 
 - (NSString *)generateAuthVerificationKeyWithUsername:(NSString *)username password:(NSString *)password {
+    self.userName = username;
     self.password = password;
     const char *username_str = [username cStringUsingEncoding:NSASCIIStringEncoding];
     const char *password_str = [password cStringUsingEncoding:NSASCIIStringEncoding];
