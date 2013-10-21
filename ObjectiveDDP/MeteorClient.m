@@ -6,7 +6,6 @@
 @interface MeteorClient ()
 
 @property (nonatomic, copy) NSString *password;
-@property (nonatomic, assign) SRPUser *user;
 
 @end
 
@@ -38,13 +37,10 @@
     if (!self.websocketReady) {
         return NULL;
     }
-
     NSString *methodId = [BSONIdGenerator generate];
-
     if(notify == YES) {
         [self.methodIds addObject:methodId];
     }
-
     [self.ddp methodWithId:methodId
                     method:methodName
                 parameters:parameters];
@@ -80,10 +76,15 @@
     }
 }
 
+static BOOL userIsLoggingIn = NO;
+
 - (void)logonWithUsername:(NSString *)username password:(NSString *)password {
+    if (userIsLoggingIn) {
+        return;
+    }
     NSArray *params = @[@{@"A": [self generateAuthVerificationKeyWithUsername:username password:password],
                           @"user": @{@"email":username}}];
-    NSLog(@"================> beginPasswordExchange with params %@", params);
+    userIsLoggingIn = YES;
     [self sendWithMethodName:@"beginPasswordExchange" parameters:params];
 }
 
@@ -116,6 +117,7 @@
     } else if(msg && [msg isEqualToString:@"result"]
               && message[@"error"]
               && [message[@"error"][@"error"]integerValue] == 403) {
+        userIsLoggingIn = NO;
         [self.authDelegate authenticationFailed:message[@"error"][@"reason"]];
     } else if (msg && [msg isEqualToString:@"result"]
                && message[@"result"]
@@ -173,9 +175,7 @@
 }
 
 - (void)reconnect {
-    NSLog(@"================> attempting reconnect");
     if (self.ddp.webSocket.readyState == SR_OPEN) {
-        NSLog(@"================> socket already open, reconnect not required");
         return;
     }
     [self.ddp connectWebSocket];
@@ -253,18 +253,15 @@
 
 # pragma mark Meteor SRP Wrapper
 
+static SRPUser *srpUser;
+
 - (NSString *)generateAuthVerificationKeyWithUsername:(NSString *)username password:(NSString *)password {
-    self.user = [[DependencyProvider sharedProvider] provideSRPUserWithUserName:username password:password];
     self.password = password;
-    
-    //TODO: don't really need to keep bytes_A and len_A here, could remove them and push into srp lib
-    const unsigned char *bytes_A = 0;
-    int len_A   = 0;
-    const char *Astr = 0;
-    const char *auth_username = 0;
-    
-    srp_user_start_authentication(self.user, &auth_username, &bytes_A, &len_A, &Astr);
-    return [NSString stringWithCString:Astr encoding:NSASCIIStringEncoding];
+    const char *username_str = [username cStringUsingEncoding:NSASCIIStringEncoding];
+    const char *password_str = [password cStringUsingEncoding:NSASCIIStringEncoding];
+    srpUser = srp_user_new(SRP_SHA256, SRP_NG_1024, username_str, password_str, NULL, NULL);
+    srp_user_start_authentication(srpUser);
+    return [NSString stringWithCString:srpUser->Astr encoding:NSASCIIStringEncoding];
 }
 
 - (void)didReceiveLoginChallengeWithResponse:(NSDictionary *)response {
@@ -274,24 +271,22 @@
     const char *salt = [salt_string cStringUsingEncoding:NSASCIIStringEncoding];
     NSString *identity_string = response[@"identity"];
     const char *identity = [identity_string cStringUsingEncoding:NSASCIIStringEncoding];
-    const char * password_str = [self.password cStringUsingEncoding:NSASCIIStringEncoding];
-    const char * Mstr;
-
-    srp_user_process_meteor_challenge(self.user, password_str, salt, identity, B, &Mstr);
+    const char *password_str = [self.password cStringUsingEncoding:NSASCIIStringEncoding];
+    const char *Mstr;
+    srp_user_process_meteor_challenge(srpUser, password_str, salt, identity, B, &Mstr);
     NSString *M_final = [NSString stringWithCString:Mstr encoding:NSASCIIStringEncoding];
     NSArray *params = @[@{@"srp":@{@"M":M_final}}];
-
-    [self sendWithMethodName:@"login"
-                  parameters:params];
+    [self sendWithMethodName:@"login" parameters:params];
 }
 
 - (void)didReceiveHAMKVerificationWithResponse:(NSDictionary *)response {
-    srp_user_verify_meteor_session(self.user, [response[@"HAMK"] cStringUsingEncoding:NSASCIIStringEncoding]);
-
+    userIsLoggingIn = NO;
+    srp_user_verify_meteor_session(srpUser, [response[@"HAMK"] cStringUsingEncoding:NSASCIIStringEncoding]);
     if (srp_user_is_authenticated) {
         self.sessionToken = response[@"token"];
         self.userId = response[@"id"];
         [self.authDelegate authenticationWasSuccessful];
+        srp_user_delete(srpUser);
     }
 }
 

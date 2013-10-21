@@ -20,6 +20,7 @@
 		401AEB82170E9ED2008B38EA /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 401AEB81170E9ED2008B38EA /* CFNetwork.framework */; };
 		401AEB84170E9EEB008B38EA /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 401AEB83170E9EEB008B38EA /* Security.framework */; };
 		4027EDE21783E1F400CAEC1C /* srp.c in Sources */ = {isa = PBXBuildFile; fileRef = 405FD5F61746BCD5001F8AE7 /* srp.c */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		406F73DD1809D4B5002FD431 /* libcrypto.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 405FD5A71745DABE001F8AE7 /* libcrypto.a */; };
 		4079F9DB170EB31D00194B4A /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4079F9DA170EB31D00194B4A /* UIKit.framework */; };
 		4079F9DC170EB31D00194B4A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4000D639170E880400296229 /* Foundation.framework */; };
 		4079F9DE170EB31D00194B4A /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4079F9DD170EB31D00194B4A /* CoreGraphics.framework */; };
@@ -182,6 +183,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				406F73DD1809D4B5002FD431 /* libcrypto.a in Frameworks */,
 				401AEB84170E9EEB008B38EA /* Security.framework in Frameworks */,
 				401AEB82170E9ED2008B38EA /* CFNetwork.framework in Frameworks */,
 				401AEB80170E9ECC008B38EA /* SystemConfiguration.framework in Frameworks */,
@@ -623,8 +625,9 @@
 				HEADER_SEARCH_PATHS = "${PODS_HEADERS_SEARCH_PATHS}";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SDKROOT)/usr/lib/system\"",
-					"\"$(SRCROOT)/ObjectiveDDP\"",
+					"\\\"$(SDKROOT)/usr/lib/system\\\"",
+					"\\\"$(SRCROOT)/ObjectiveDDP\\\"",
+					/Users/boundsj/workspace/ios/ObjectiveDDP/ObjectiveDDP,
 				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -642,8 +645,9 @@
 				HEADER_SEARCH_PATHS = "${PODS_HEADERS_SEARCH_PATHS}";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SDKROOT)/usr/lib/system\"",
-					"\"$(SRCROOT)/ObjectiveDDP\"",
+					"\\\"$(SDKROOT)/usr/lib/system\\\"",
+					"\\\"$(SRCROOT)/ObjectiveDDP\\\"",
+					/Users/boundsj/workspace/ios/ObjectiveDDP/ObjectiveDDP,
 				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -655,7 +659,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 2459525257B94E909C3CA1DF /* Pods.xcconfig */;
 			buildSettings = {
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/Specs/Frameworks\"",
@@ -666,15 +670,17 @@
 				INFOPLIST_FILE = "Specs/Specs-Info.plist";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SDKROOT)/usr/lib/system\"",
 					"\"$(SRCROOT)/ObjectiveDDP\"",
 				);
 				OTHER_LDFLAGS = (
 					"-ObjC",
+					"-lcrypto",
 					"-all_load",
 					"-lstdc++",
-					"-lcrypto",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				VALID_ARCHS = "arm64 armv7 arm7s";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -683,7 +689,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 2459525257B94E909C3CA1DF /* Pods.xcconfig */;
 			buildSettings = {
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/Specs/Frameworks\"",
@@ -694,16 +700,18 @@
 				INFOPLIST_FILE = "Specs/Specs-Info.plist";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SDKROOT)/usr/lib/system\"",
 					"\"$(SRCROOT)/ObjectiveDDP\"",
 				);
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
 				OTHER_LDFLAGS = (
 					"-ObjC",
+					"-lcrypto",
 					"-all_load",
 					"-lstdc++",
-					"-lcrypto",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				VALID_ARCHS = "arm64 armv7 arm7s";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

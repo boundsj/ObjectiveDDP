@@ -299,7 +299,7 @@ static BIGNUM * H_ns( SRP_HashAlgorithm alg, const BIGNUM * n, const unsigned ch
     return BN_bin2bn(buff, hash_length(alg), NULL);
 }
     
-static BIGNUM * calculate_x( SRP_HashAlgorithm alg, const BIGNUM * salt, const char * username, const unsigned char * password, int password_len )
+static BIGNUM * calculate_x( SRP_HashAlgorithm alg, const BIGNUM * salt, const char * username, const char * password, int password_len )
 {
     unsigned char ucp_hash[SHA256_DIGEST_LENGTH];
     HashCTX       ctx;
@@ -415,18 +415,16 @@ static void init_random()
        RAND_seed( buff, sizeof(buff) );
 }
 
-char * convert_to_lower( const char *val )
+char * convert_to_lower(char *input)
 {
-    char *lower_val = malloc(strlen(val) + 1);
-
-    for (int i = 0; i < strlen(val) + 1; i++) {
-        if(val[i]>='A' && val[i]<='Z')
-            lower_val[i] = tolower(val[i]);
-        else
-            lower_val[i] = val[i];
-    }
-
-    return lower_val;
+	char *ptr = input;
+	while (*ptr) {
+		if (*ptr >= 'A' && *ptr <= 'F')
+			*ptr -= 'A' - 'a';
+		(void)*ptr++;
+	}
+    
+	return input;
 }
 
 ///
@@ -440,54 +438,6 @@ void srp_random_seed( const unsigned char * random_data, int data_length )
     if (random_data)
         RAND_seed( random_data, data_length );
 }
-
-void srp_create_salted_verification_key( SRP_HashAlgorithm alg, 
-                                         SRP_NGType ng_type, const char * username,
-                                         const unsigned char * password, int len_password,
-                                         const unsigned char ** bytes_s, int * len_s, 
-                                         const unsigned char ** bytes_v, int * len_v,
-                                         const char * n_hex, const char * g_hex )
-{
-    BIGNUM     * s   = BN_new();
-    BIGNUM     * v   = BN_new();
-    BIGNUM     * x   = 0;
-    BN_CTX     * ctx = BN_CTX_new();
-    NGConstant * ng  = new_ng( ng_type, n_hex, g_hex );
-
-    if( !s || !v || !ctx || !ng )
-       goto cleanup_and_exit;
-
-    init_random(); /* Only happens once */
-    
-    BN_rand(s, 32, -1, 0);
-    
-    x = calculate_x( alg, s, username, password, len_password );
-
-    if( !x )
-       goto cleanup_and_exit;
-
-    BN_mod_exp(v, ng->g, x, ng->N, ctx);
-        
-    *len_s   = BN_num_bytes(s);
-    *len_v   = BN_num_bytes(v);
-    
-    *bytes_s = (const unsigned char *) malloc( *len_s );
-    *bytes_v = (const unsigned char *) malloc( *len_v );
-
-    if (!bytes_s || !bytes_v)
-       goto cleanup_and_exit;
-    
-    BN_bn2bin(s, (unsigned char *) *bytes_s);
-    BN_bn2bin(v, (unsigned char *) *bytes_v);
-    
- cleanup_and_exit:
-    delete_ng( ng );
-    BN_free(s);
-    BN_free(v);
-    BN_free(x);
-    BN_CTX_free(ctx);
-}
-
 
 /* Out: bytes_B, len_B.
  * 
@@ -648,99 +598,90 @@ void srp_verifier_verify_session( struct SRPVerifier * ver, const unsigned char 
 }
 
 SRPUser * srp_user_new_with_a(SRP_HashAlgorithm alg,
-                                     SRP_NGType ng_type,
-                                     const char * username,
-                                     const char * bytes_password,
-                                     int len_password,
-                                     const char * n_hex,
-                                     const char * g_hex,
-                                     BIGNUM *a) {
-    SRPUser  *usr  = (SRPUser *) malloc( sizeof(SRPUser) );
-    int              ulen = strlen(username) + 1;
+                              SRP_NGType ng_type,
+                              const char *username,
+                              const char *password,
+                              const char *n_hex,
+                              const char *g_hex,
+                              BIGNUM *a) {
+    SRPUser *usr = (SRPUser *)malloc(sizeof(SRPUser));
+    int username_length = strlen(username) + 1;
+    int password_length = strlen(password) + 1;
     
-    if (!usr)
-        goto err_exit;
-    
-    init_random(); /* Only happens once */
+    if (!usr) goto err_exit;
+
+    init_random();
     
     usr->hash_alg = alg;
-    usr->ng       = new_ng( ng_type, n_hex, g_hex );
-    
+    usr->ng = new_ng(ng_type, n_hex, g_hex);
     usr->a = a;
     usr->A = BN_new();
     usr->S = BN_new();
+    usr->Astr = 0;
+    usr->HAMK = 0;
     
-    if (!usr->ng || !usr->a || !usr->A || !usr->S)
-        goto err_exit;
+    if (!usr->ng || !usr->a || !usr->A || !usr->S) goto err_exit;
     
-    usr->username     = (const char *) malloc(ulen);
-    usr->password     = (const unsigned char *) malloc(len_password);
-    usr->password_len = len_password;
+    usr->username = (const char *) malloc(username_length);
+    usr->password = (const char *) malloc(password_length);
+    usr->password_len = password_length;
     
-    if (!usr->username || !usr->password)
-        goto err_exit;
+    if (!usr->username || !usr->password) goto err_exit;
     
-    memcpy((char *)usr->username, username,       ulen);
-    memcpy((char *)usr->password, bytes_password, len_password);
+    memcpy((char *)usr->username, username, username_length);
+    memcpy((char *)usr->password, password, password_length);
     
     usr->authenticated = 0;
-    
     usr->bytes_A = 0;
     
     return usr;
     
 err_exit:
-    if (usr)
-    {
+    if (usr) {
         BN_free(usr->a);
         BN_free(usr->A);
         BN_free(usr->S);
-        if (usr->username)
-            free((void*)usr->username);
-        if (usr->password)
-        {
+        if (usr->username) free((void*)usr->username);
+        if (usr->password) {
             memset((void*)usr->password, 0, usr->password_len);
             free((void*)usr->password);
         }
         free(usr);
     }
-    
     return 0;
 }
 
 SRPUser * srp_user_new(SRP_HashAlgorithm alg,
-                              SRP_NGType ng_type,
-                              const char *username,
-                              const char *bytes_password,
-                              int len_password,
-                              const char *n_hex,
-                              const char *g_hex ) {
+                       SRP_NGType ng_type,
+                       const char *username,
+                       const char *password,
+                       const char *n_hex,
+                       const char *g_hex) {
     BIGNUM *a = BN_new();
     BN_rand(a, 256, -1, 0);
-    return srp_user_new_with_a(alg, ng_type, username, bytes_password, len_password, n_hex, g_hex, a);
+    return srp_user_new_with_a(alg, ng_type, username, password, n_hex, g_hex, a);
 }
 
-void srp_user_delete( SRPUser * usr )
-{
-   if( usr )
-   {
-      BN_free( usr->a );
-      BN_free( usr->A );
-      BN_free( usr->S );
-      
-      delete_ng( usr->ng );
-
-      memset((void*)usr->password, 0, usr->password_len);
-      
-      free((char *)usr->username);
-      free((char *)usr->password);
-      
-      if (usr->bytes_A) 
-         free( (char *)usr->bytes_A );
-
-      memset(usr, 0, sizeof(*usr));
-      free( usr );
-   }
+void srp_user_delete( SRPUser * usr ) {
+    if(usr) {
+        delete_ng(usr->ng);
+        BN_free(usr->a);
+        BN_free(usr->A);
+        BN_free(usr->S);
+        memset((void*)usr->password, 0, usr->password_len);
+        free((char *)usr->password);
+        usr->password = NULL;
+        free((char *)usr->username);
+        usr->username = NULL;
+        free((char *)usr->HAMK);
+        usr->HAMK = NULL;
+        free((char *)usr->Astr);
+        usr->Astr = NULL;
+        free((char *)usr->Sstr);
+        usr->Sstr = NULL;
+        free(usr);
+        usr = NULL;
+    }
 }
 
 int srp_user_is_authenticated( SRPUser * usr)
@@ -748,386 +689,220 @@ int srp_user_is_authenticated( SRPUser * usr)
     return usr->authenticated;
 }
 
-const char * srp_user_get_username( SRPUser * usr )
-{
-    return usr->username;
-}
-
-const unsigned char * srp_user_get_session_key( SRPUser * usr, int * key_length )
-{
-    if (key_length)
-        *key_length = hash_length( usr->hash_alg );
-    return usr->session_key;
-}
-
-int srp_user_get_session_key_length( SRPUser * usr )
-{
-    return hash_length( usr->hash_alg );
-}
-
 /* Output: username, bytes_A, len_A, Astr */
-void  srp_user_start_authentication(SRPUser *usr,
-                                    const char ** username,
-                                    const unsigned char **bytes_A,
-                                    int * len_A,
-                                    const char ** Astr) {
-    BN_CTX  *ctx  = BN_CTX_new();
-    
-    // once user is reproducible without randomness, run test to call this method
-    // many 1000s of times with the same user and check that always returns same Astr
-    // note also that the convert_to_lower function is suspect!
-    
+const char * srp_user_start_authentication(SRPUser *usr) {
+    BN_CTX *ctx = BN_CTX_new();
     BN_mod_exp(usr->A, usr->ng->g, usr->a, usr->ng->N, ctx);
+    BIGNUM *modCheck = BN_new();
+    BN_mod(modCheck, usr->A, usr->ng->N, ctx);
+    BN_free(modCheck);
     BN_CTX_free(ctx);
     
-    *len_A   = BN_num_bytes(usr->A);
-    *bytes_A = malloc(*len_A);
-
-    if (!*bytes_A) {
-       *len_A = 0;
-       *bytes_A = 0;
-       *username = 0;
-       return;
-    }
-        
-    BN_bn2bin(usr->A, (unsigned char *) *bytes_A);
-    usr->bytes_A = *bytes_A;
+    int len_A = BN_num_bytes(usr->A);
+    unsigned char *bytes_A = malloc(len_A);
+    
+    BN_bn2bin(usr->A, bytes_A);
+    usr->bytes_A = bytes_A;
     usr->Astr = convert_to_lower(BN_bn2hex(usr->A));
-    *Astr = usr->Astr;
-    *username = usr->username;
+    
+    free(bytes_A);
+    
+    return usr->Astr;
 }
 
-void meteor_user_generate_u( SRPUser *usr,
-                             char const *Bstr,
-                             unsigned char *buff,
-                             BIGNUM **u )
-{
-    unsigned char *catString_u = malloc( strlen(usr->Astr)+strlen(Bstr)+1 );
-    strcpy((char *)catString_u, usr->Astr);
-    strcat( (char *)catString_u, Bstr);
-
-    hash( usr->hash_alg, catString_u, strlen((char *)catString_u), buff );
-    *u = BN_bin2bn(buff, hash_length(usr->hash_alg), NULL);
+void meteor_user_generate_u(SRPUser *usr,
+                            char const *Bstr,
+                            unsigned char *buff,
+                            BIGNUM **u) {
+    char *catString_u = malloc(strlen(usr->Astr)+1 + strlen(Bstr)+1);
+    strcpy(catString_u, usr->Astr);
+    strcat(catString_u, Bstr);
+    
+    unsigned char lbuff[SHA256_DIGEST_LENGTH] = "";
+    hash(usr->hash_alg, (const unsigned char *)catString_u, strlen(catString_u), lbuff);
+    *u = BN_bin2bn(lbuff, hash_length(usr->hash_alg), NULL);
+    
+    free(catString_u);
 }
 
-void meteor_user_generate_x( SRPUser *usr,
-                             char const *identity,
-                             char const *salt,
-                             char const *password,
-                             unsigned char *buff,
-                             BIGNUM **x )
-{
-    const char * static_delim   = ":";
-    BIGNUM     * x_inner        = 0;
+void meteor_user_generate_x(SRPUser *usr,
+                            char const *identity,
+                            char const *salt,
+                            char const *password,
+                            unsigned char *buff,
+                            BIGNUM **x) {
+    const static char *static_delim = ":";
+    BIGNUM *x_inner;
 
-    const unsigned char * catString_i_p  = malloc(strlen(identity) + strlen(password) + 1);
-    strcpy((char *)catString_i_p, identity);
-    strcat((char *)catString_i_p, static_delim);
-    strcat((char *)catString_i_p, password);
+    char *catString_i_p = malloc(strlen(identity)+1 + strlen(static_delim)+ 1 + strlen(password)+1 + 1);
+    strcpy(catString_i_p, identity);
+    strcat(catString_i_p, static_delim);
+    strcat(catString_i_p, password);
+    catString_i_p[strlen(catString_i_p)] = '\0';
+    
+    unsigned char lbuff[SHA256_DIGEST_LENGTH] = "";
+    hash(usr->hash_alg, (const unsigned char *)catString_i_p, strlen(catString_i_p), lbuff);
+    x_inner = BN_bin2bn(lbuff, hash_length(usr->hash_alg), NULL);
 
-    hash( usr->hash_alg, catString_i_p, strlen((char *)catString_i_p), buff );
-    x_inner = BN_bin2bn(buff, hash_length(usr->hash_alg), NULL);
+    char *x_inner_str_lower = convert_to_lower(BN_bn2hex(x_inner));
 
-    if ( !x_inner )
-        goto cleanup_and_exit;
+    char *catString_s_i_p = malloc(strlen(salt)+1 + strlen(x_inner_str_lower)+1 + 1);
+    strcpy(catString_s_i_p, salt);
+    strcat(catString_s_i_p, x_inner_str_lower);
+    catString_s_i_p[strlen(catString_s_i_p)] = '\0';
 
-    // x_innerStr should now equal salt value
-    const char * x_inner_str = BN_bn2hex(x_inner);
-    char * x_inner_str_lower = convert_to_lower(x_inner_str);
-
-    const unsigned char * catString_s_i_p = malloc(strlen(salt) + strlen(x_inner_str_lower) + 1);
-    strcpy((char *)catString_s_i_p, salt);
-    strcat((char *)catString_s_i_p, x_inner_str_lower);
-
-    hash( usr->hash_alg, catString_s_i_p, strlen((char *)catString_s_i_p), buff );
-    *x = BN_bin2bn(buff, hash_length(usr->hash_alg), NULL);
-
-  cleanup_and_exit:
-
-    BN_free( x_inner );
+    unsigned char xbuff[SHA256_DIGEST_LENGTH] = "";
+    hash(usr->hash_alg, (const unsigned char *)catString_s_i_p, strlen((char *)catString_s_i_p), xbuff);
+    *x = BN_bin2bn(xbuff, hash_length(usr->hash_alg), NULL);
+    
+    BN_free(x_inner);
+    free(catString_i_p);
+    free(catString_s_i_p);
 }
 
 void meteor_user_generate_k( SRPUser *usr,
                              unsigned char *buff,
-                             BIGNUM **k )
-{
-    char * N_str = BN_bn2hex( usr->ng->N );
+                             BIGNUM **k ) {
+    char *N_str = BN_bn2hex(usr->ng->N);
 
-    // generator (g) is always 0x02 but bn2hex represents string as 02 and meteor (javascript) lib represents as 2
-    // so hard coding this value to 2 to be able to generate what meteor expects us to
-    const char * g_str = "2";
+    // generator (g) is always 0x02 but bn2hex represents
+    // string as 02 and meteor (javascript) lib represents as 2
+    // so hard coding this value to 2 to be able to generate
+    // what meteor expects
+    static const char *g_str = "2";
 
-    char * cat_string_n_g = malloc( strlen(N_str) + strlen(g_str) + 1 );
-    strcpy( cat_string_n_g, N_str );
-    strcat( cat_string_n_g, g_str );
+    char *cat_string_n_g = malloc(strlen(N_str)+1 + strlen(g_str)+1 + 1);
+    strcpy(cat_string_n_g, N_str);
+    strcat(cat_string_n_g, g_str);
+    cat_string_n_g[strlen(cat_string_n_g)] = '\0';
+    
+    char *ng = convert_to_lower(cat_string_n_g);
+    unsigned char lbuff[SHA256_DIGEST_LENGTH] = "";
+    hash(usr->hash_alg, (const unsigned char *)ng, strlen(ng), lbuff);
 
-    const char * ng = convert_to_lower( cat_string_n_g );
-    hash( usr->hash_alg, (const unsigned char *)ng, strlen(ng), buff );
-
-    *k = BN_bin2bn( buff, hash_length(usr->hash_alg), NULL );
+    *k = BN_bin2bn(lbuff, hash_length(usr->hash_alg), NULL);
+    free(cat_string_n_g);
 }
 
-void meteor_user_generate_kgx( SRPUser *usr,
-                               BN_CTX *ctx,
-                               BIGNUM *x,
-                               BIGNUM *k,
-                               BIGNUM **kgx )
-{
+void meteor_user_generate_kgx(SRPUser *usr,
+                              BN_CTX *ctx,
+                              BIGNUM *x,
+                              BIGNUM *k,
+                              BIGNUM **kgx) {
+    BN_CTX *lctx = BN_CTX_new();
     BIGNUM *inner_kgx = BN_new();
-
-    BN_mod_exp( inner_kgx, usr->ng->g, x, usr->ng->N, ctx );
-
-    if ( !inner_kgx )
-        goto cleanup_and_exit;
-
-    BN_mul( *kgx, inner_kgx, k, ctx );
-
-  cleanup_and_exit:
-
+    BN_mod_exp(inner_kgx, usr->ng->g, x, usr->ng->N, lctx);
+    BN_mul(*kgx, inner_kgx, k, lctx);
+    
     BN_free(inner_kgx);
+    BN_CTX_free(lctx);
 }
 
-void meteor_user_generate_aux( SRPUser *usr,
-                               BN_CTX *ctx,
-                               BIGNUM *u,
-                               BIGNUM *x,
-                               BIGNUM **aux )
-{
+void meteor_user_generate_aux(SRPUser *usr,
+                              BN_CTX *ctx,
+                              BIGNUM *u,
+                              BIGNUM *x,
+                              BIGNUM **aux) {
+    BN_CTX *lctx = BN_CTX_new();
     BIGNUM *ux = BN_new();
-
-    BN_mul(ux, u, x, ctx);
-
-    if ( !ux )
-        goto cleanup_and_exit;
-
+    BN_mul(ux, u, x, lctx);
     BN_add(*aux, usr->a, ux);
-
-  cleanup_and_exit:
-
+    
     BN_free(ux);
+    BN_CTX_free(lctx);
 }
 
-void meteor_user_generate_S_string( SRPUser *usr,
-                                    BN_CTX * ctx,
-                                    BIGNUM * kgx,
-                                    BIGNUM * aux,
-                                    const char * B_str,
-                                    char ** S_str)
-{
-    BIGNUM *B         = BN_new();
-    BIGNUM *bkgx      = BN_new();
-    BIGNUM *S         = BN_new();
+void meteor_user_generate_S_string(SRPUser *usr,
+                                   BN_CTX *ctx,
+                                   BIGNUM *kgx,
+                                   BIGNUM *aux,
+                                   const char *B_str,
+                                   char **S_str) {
+    BN_CTX *lctx = BN_CTX_new();
+    BIGNUM *B = BN_new();
+    BIGNUM *bkgx = BN_new();
+    BIGNUM *S = BN_new();
 
-    BN_hex2bn( &B, B_str );
-
-    if ( !B )
-        goto cleanup_and_exit;
-
-    BN_sub( bkgx, B, kgx );
-
-    if ( !bkgx )
-        goto cleanup_and_exit;
-
-    BN_mod_exp(S, bkgx, aux, usr->ng->N, ctx);
-
-    if ( !S )
-        goto cleanup_and_exit;
-
-    *S_str = convert_to_lower( BN_bn2hex(S) );
-
-  cleanup_and_exit:
-
+    BN_hex2bn(&B, B_str);
+    BN_sub(bkgx, B, kgx);
+    BN_mod_exp(S, bkgx, aux, usr->ng->N, lctx);
+    *S_str = convert_to_lower(BN_bn2hex(S));
+    usr->Sstr = convert_to_lower(BN_bn2hex(S));
+    
     BN_free(B);
     BN_free(bkgx);
     BN_free(S);
+    BN_CTX_free(lctx);
 }
 
-void meteor_user_generate_M_string( SRPUser *usr,
-                                    const char * S_str,
-                                    unsigned char *buff,
-                                    const char * B_str,
-                                    char ** M_str )
-{
+const char * meteor_user_generate_M_string(SRPUser *usr,
+                                   const char *S_str,
+                                   unsigned char *buff,
+                                   const char *B_str) {
     BIGNUM *M = BN_new();
 
-    char *ABS = malloc( strlen(usr->Astr) + strlen(B_str) + strlen(S_str) + 1 );
+    char *ABS = malloc(strlen(usr->Astr)+1 + strlen(B_str)+1 + strlen(S_str)+1 + 1);
     strcpy(ABS, usr->Astr);
     strcat(ABS, B_str);
-    strcat(ABS, S_str);
+    strcat(ABS, usr->Sstr);
+    ABS[strlen(ABS)] = '\0';
 
-    hash( usr->hash_alg, (const unsigned char *)ABS, strlen(ABS), buff );
-
-    M = BN_bin2bn( buff, hash_length(usr->hash_alg), NULL );
-
-    if ( !M )
-        goto cleanup_and_exit;
-
-    *M_str = convert_to_lower( BN_bn2hex(M) );
-
-  cleanup_and_exit:
-
-    BN_free(M);
+    unsigned char lbuff[SHA256_DIGEST_LENGTH] = "";
+    hash(usr->hash_alg, (const unsigned char *)ABS, strlen(ABS), lbuff);
+    M = BN_bin2bn(lbuff, hash_length(usr->hash_alg), NULL);
+    
+    free(ABS);
+    
+    return convert_to_lower(BN_bn2hex(M));
 }
 
-void meteor_user_generate_HAMK( SRPUser *usr,
-                                unsigned char *buff,
-                                const char * M_str,
-                                const char * S_str )
-{
-    char * AMS = malloc( strlen(usr->Astr) + strlen(M_str) + strlen(S_str) + 1 );
-    strcpy( AMS, usr->Astr );
-    strcat( AMS, M_str );
-    strcat( AMS, S_str );
-
-    hash( usr->hash_alg, (const unsigned char *)AMS, strlen(AMS), buff );
-    usr->HAMK = convert_to_lower( BN_bn2hex(BN_bin2bn(buff, hash_length(usr->hash_alg), NULL)) );
+void meteor_user_generate_HAMK(SRPUser *usr,
+                               unsigned char *buff,
+                               const char *M_str,
+                               const char *S_str) {
+    char *AMS = malloc(strlen(usr->Astr)+1 + strlen(M_str)+1 + strlen(S_str)+1 + 1);
+    strcpy(AMS, usr->Astr);
+    strcat(AMS, M_str);
+    strcat(AMS, S_str);
+    AMS[strlen(AMS)] = '\0';
+    
+    unsigned char lbuff[SHA256_DIGEST_LENGTH] = "";
+    hash(usr->hash_alg, (const unsigned char *)AMS, strlen(AMS), lbuff);
+    usr->HAMK = BN_bn2hex(BN_bin2bn(lbuff, hash_length(usr->hash_alg), NULL));
+    
+    free(AMS);
 }
 
-void srp_user_process_meteor_challenge( SRPUser * usr,
-                                        const char * password,
-                                        const char * salt,
-                                        const char * identity,
-                                        const char * Bstr,
-                                        const char ** Mstr )
-{
-    unsigned char buff[ SHA256_DIGEST_LENGTH ];
-
-    BN_CTX *ctx         = BN_CTX_new();
-    BIGNUM *u           = BN_new();
-    BIGNUM *x           = BN_new();
-    BIGNUM *k           = BN_new();
-    BIGNUM *kgx         = BN_new();
-    BIGNUM *aux         = BN_new();
-
-    if( !salt || !identity || !Bstr || !Mstr || !ctx )
-        goto cleanup_and_exit;
-
+void srp_user_process_meteor_challenge(SRPUser *usr,
+                                       const char *password,
+                                       const char *salt,
+                                       const char *identity,
+                                       const char *Bstr,
+                                       const char **Mstr) {
+    unsigned char buff[SHA256_DIGEST_LENGTH];
+    BN_CTX *ctx = BN_CTX_new();
+    
+    BIGNUM *u = BN_new();
+    BIGNUM *x = BN_new();
+    BIGNUM *k = BN_new();
+    BIGNUM *kgx = BN_new();
+    BIGNUM *aux = BN_new();
+    
     meteor_user_generate_u(usr, Bstr, buff, &u);
-
-    if( !u )
-        goto cleanup_and_exit;
-
     meteor_user_generate_x( usr, identity, salt, password, buff, &x );
-
-    if( !x )
-        goto cleanup_and_exit;
-
     meteor_user_generate_k( usr, buff, &k );
-
-    if( !k )
-        goto cleanup_and_exit;
-
     meteor_user_generate_kgx( usr, ctx, x, k, &kgx );
-
-    if ( !kgx )
-        goto cleanup_and_exit;
-
     meteor_user_generate_aux( usr, ctx, u, x, &aux );
-
-    if ( !aux )
-        goto cleanup_and_exit;
-
     char * S_str;
-    meteor_user_generate_S_string( usr, ctx, kgx, aux, Bstr, &S_str );
-
-    if ( !S_str )
-        goto cleanup_and_exit;
-
-    char * M_str;
-    meteor_user_generate_M_string( usr, S_str, buff, Bstr, &M_str );
-    *Mstr = M_str;
-
-    // calculate and store HAMK for verfication later
-    meteor_user_generate_HAMK( usr, buff, M_str, S_str );
-
-  cleanup_and_exit:
-
+    meteor_user_generate_S_string(usr, ctx, kgx, aux, Bstr, &S_str);
+    *Mstr = meteor_user_generate_M_string(usr, S_str, buff, Bstr);
+    meteor_user_generate_HAMK( usr, buff, *Mstr, S_str );
+    
     BN_free(u);
     BN_free(x);
     BN_free(k);
     BN_free(kgx);
-    BN_CTX_free(ctx);
-}
-
-/* Output: bytes_M. Buffer length is SHA512_DIGEST_LENGTH */
-void  srp_user_process_challenge( SRPUser * usr,
-                                  const unsigned char * bytes_s, int len_s, 
-                                  const unsigned char * bytes_B, int len_B,
-                                  const unsigned char ** bytes_M, int * len_M )
-{
-    BIGNUM *s    = BN_bin2bn(bytes_s, len_s, NULL);
-    BIGNUM *B    = BN_bin2bn(bytes_B, len_B, NULL);
-    BIGNUM *u    = 0;
-    BIGNUM *x    = 0;
-    BIGNUM *k    = 0;
-    BIGNUM *v    = BN_new();
-    BIGNUM *tmp1 = BN_new();
-    BIGNUM *tmp2 = BN_new();
-    BIGNUM *tmp3 = BN_new();
-    BN_CTX *ctx  = BN_CTX_new();
-
-    *len_M = 0;
-    *bytes_M = 0;
-
-    if( !s || !B || !v || !tmp1 || !tmp2 || !tmp3 || !ctx )
-       goto cleanup_and_exit;
-    
-    u = H_nn(usr->hash_alg, usr->A, B);
-
-    if (!u)
-       goto cleanup_and_exit;
-    
-    x = calculate_x( usr->hash_alg, s, usr->username, usr->password, usr->password_len );
-
-    if (!x)
-       goto cleanup_and_exit;
-    
-    k = H_nn(usr->hash_alg, usr->ng->N, usr->ng->g);
-
-    if (!k)
-       goto cleanup_and_exit;
-    
-    /* SRP-6a safety check */
-    if ( !BN_is_zero(B) && !BN_is_zero(u) )
-    {
-        BN_mod_exp(v, usr->ng->g, x, usr->ng->N, ctx);
-        
-        /* S = (B - k*(g^x)) ^ (a + ux) */
-        BN_mul(tmp1, u, x, ctx);
-        BN_add(tmp2, usr->a, tmp1);             /* tmp2 = (a + ux)      */
-        BN_mod_exp(tmp1, usr->ng->g, x, usr->ng->N, ctx);
-        BN_mul(tmp3, k, tmp1, ctx);             /* tmp3 = k*(g^x)       */
-        BN_sub(tmp1, B, tmp3);                  /* tmp1 = (B - K*(g^x)) */
-        BN_mod_exp(usr->S, tmp1, tmp2, usr->ng->N, ctx);
-
-        hash_num(usr->hash_alg, usr->S, usr->session_key);
-        
-        calculate_M( usr->hash_alg, usr->ng, usr->M, usr->username, s, usr->A, B, usr->session_key );
-        calculate_H_AMK( usr->hash_alg, usr->H_AMK, usr->A, usr->M, usr->session_key );
-        
-        *bytes_M = usr->M;
-        if (len_M)
-            *len_M = hash_length( usr->hash_alg );
-    }
-    else
-    {
-        *bytes_M = NULL;
-        if (len_M) 
-            *len_M   = 0;
-    }
-
- cleanup_and_exit:
-    
-    BN_free(s);
-    BN_free(B);
-    BN_free(u);
-    BN_free(x);
-    BN_free(k);
-    BN_free(v);
-    BN_free(tmp1);
-    BN_free(tmp2);
-    BN_free(tmp3);
-    BN_CTX_free(ctx);
+    BN_free(aux);
 }
 
 void srp_user_verify_meteor_session( SRPUser * usr, const char * HAMK_meteor )

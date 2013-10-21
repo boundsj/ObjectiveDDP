@@ -120,18 +120,18 @@ typedef struct
     BIGNUM *A;
     BIGNUM *S;
     
-    const char          * HAMK;
-    const unsigned char * bytes_A;
-    const char          * Astr;
-    int                   authenticated;
+    const char *HAMK;
+    const unsigned char *bytes_A;
+    const char *Astr;
+    const char *Sstr;
+    int authenticated;
     
-    const char *          username;
-    const unsigned char * password;
-    int                   password_len;
+    const char *username;
+    const char *password;
+    int password_len;
     
-    unsigned char M           [SHA512_DIGEST_LENGTH];
-    unsigned char H_AMK       [SHA512_DIGEST_LENGTH];
-    unsigned char session_key [SHA512_DIGEST_LENGTH];
+    unsigned char H_AMK[SHA512_DIGEST_LENGTH];
+    unsigned char session_key[SHA512_DIGEST_LENGTH];
 } SRPUser;
 
 /* Out: bytes_s, len_s, bytes_v, len_v
@@ -181,9 +181,21 @@ void                  srp_verifier_verify_session( struct SRPVerifier * ver,
 /*******************************************************************************/
 
 /* The n_hex and g_hex parameters should be 0 unless SRP_NG_CUSTOM is used for ng_type */
-SRPUser *      srp_user_new( SRP_HashAlgorithm alg, SRP_NGType ng_type, const char * username,
-                                    const char * bytes_password, int len_password,
-                                    const char * n_hex, const char * g_hex );
+SRPUser * srp_user_new_with_a(SRP_HashAlgorithm alg,
+                              SRP_NGType ng_type,
+                              const char * username,
+                              const char * password,
+                              const char * n_hex,
+                              const char * g_hex,
+                              BIGNUM *a);
+
+/* The n_hex and g_hex parameters should be 0 unless SRP_NG_CUSTOM is used for ng_type */
+SRPUser * srp_user_new(SRP_HashAlgorithm alg,
+                       SRP_NGType ng_type,
+                       const char *username,
+                       const char *password,
+                       const char * n_hex,
+                       const char * g_hex);
                                     
 void                  srp_user_delete( SRPUser * usr );
 
@@ -197,8 +209,7 @@ const unsigned char * srp_user_get_session_key( SRPUser * usr, int * key_length 
 int                   srp_user_get_session_key_length( SRPUser * usr );
 
 /* Output: username, bytes_A, len_A, Astr */
-void                  srp_user_start_authentication( SRPUser * usr, const char ** username,
-                                                     const unsigned char ** bytes_A, int * len_A, const char ** Astr );
+const char * srp_user_start_authentication(SRPUser *usr);
 
 /* Output: bytes_M, len_M  (len_M may be null and will always be
  *                          srp_user_get_session_key_length() bytes in size) */
@@ -210,12 +221,12 @@ void                  srp_user_process_challenge( SRPUser * usr,
 /* bytes_HAMK must be exactly srp_user_get_session_key_length() bytes in size */
 void                  srp_user_verify_session( SRPUser * usr, const unsigned char * bytes_HAMK );
 
-void srp_user_process_meteor_challenge(  SRPUser * usr,
-                                            const char * password,
-                                            const char * salt,
-                                            const char * identity,
-                                            const char * Bstr,
-                                            const char ** Mstr );
+void srp_user_process_meteor_challenge(SRPUser *usr,
+                                       const char *password,
+                                       const char *salt,
+                                       const char *identity,
+                                       const char *Bstr,
+                                       const char **Mstr);
 
 void srp_user_verify_meteor_session( SRPUser * usr, const char * HAMK_meteor );
 
