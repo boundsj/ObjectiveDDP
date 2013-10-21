@@ -14,5 +14,9 @@
 
 }
 
+- (void)didReceiveConnectionClose {
+    
+}
+
 
 @end

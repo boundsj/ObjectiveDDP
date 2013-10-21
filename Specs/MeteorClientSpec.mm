@@ -338,24 +338,4 @@ describe(@"MeteorClient", ^{
     });
 });
 
-describe(@"MeteorClient SRP Auth", ^{
-    __block MeteorClient *meteorClient;
-
-    beforeEach(^{
-        meteorClient = [[MeteorClient alloc] init];
-    });
-
-    describe(@"-generateAuthVerificationKeyWithUsername:password", ^{
-        __block NSString *authKey;
-
-        beforeEach(^{
-            authKey = [meteorClient generateAuthVerificationKeyWithUsername:@"joeuser" password:@"secretsauce"];
-        });
-
-        it(@"computes the key correctly", ^{
-            authKey should_not be_nil;
-        });
-    });
-});
-
 SPEC_END
