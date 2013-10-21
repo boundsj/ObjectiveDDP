@@ -1,16 +1,6 @@
 ObjectiveDDP
 ============
-Easily connect your applications written in Objective-C to server applications that communicate with the [DDP protocol created by Meteor] and, if required by your server, authenticate with [SRP]. Out of the box, this library allows your iOS applications to communicate and authenticate with Meteor servers or any server using the DDP/SRP protocols.  
-
-## :heavy_exclamation_mark: :sparkles:
-
-September 2013: We are marking our first release, [version 0.1.0](https://github.com/boundsj/ObjectiveDDP/releases/tag/v0.1.0)! This includes (with lots of help from @ewindso):
-
-* several changes that help stabilize the application in real world scenarios (i.e. reconnect). 
-* We added the ability to send DDP messages that invoke methods on your server (i.e. [Meteor.call](http://docs.meteor.com/#meteor_call)).
-* You can listen for a notification that confirms a subscription request you've made is ready, there are notifications for auth failure, and you can now get notifications on a per collection basis if you want. 
-* You can now unsubscribe from updates for specific collections on the server. 
-* Finally, the ObjectiveDDP library and Example projects have been configured to play nicely with the latest Xcode version 5.
+Easily connect your applications written in Objective-C to server applications that communicate with the [DDP protocol created by Meteor] and, if required by your server, authenticate with [SRP]. Out of the box, this library allows your iOS applications to communicate and authenticate with Meteor servers or any server using the DDP/SRP protocols.
 
 Requirements
 --------------
