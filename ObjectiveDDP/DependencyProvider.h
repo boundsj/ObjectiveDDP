@@ -7,6 +7,5 @@
 
 + (DependencyProvider *)sharedProvider;
 - (SRWebSocket *)provideSRWebSocketWithRequest:(NSURLRequest *)request;
-- (SRPUser *)provideSRPUserWithUserName:(NSString *)userName password:(NSString *)password;
 
 @end
