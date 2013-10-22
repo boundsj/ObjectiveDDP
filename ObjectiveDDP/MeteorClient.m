@@ -113,6 +113,7 @@ static int LOGON_RETRY_MAX = 5;
         }
     } else if (msg && [msg isEqualToString:@"result"]
                && message[@"result"]
+               && [message[@"result"] isKindOfClass:[NSDictionary class]]               
                && message[@"result"][@"B"]
                && message[@"result"][@"identity"]
                && message[@"result"][@"salt"]) {
@@ -130,6 +131,7 @@ static int LOGON_RETRY_MAX = 5;
         }
     } else if (msg && [msg isEqualToString:@"result"]
                && message[@"result"]
+               && [message[@"result"] isKindOfClass:[NSDictionary class]]
                && message[@"result"][@"id"]
                && message[@"result"][@"HAMK"]
                && message[@"result"][@"token"]) {
