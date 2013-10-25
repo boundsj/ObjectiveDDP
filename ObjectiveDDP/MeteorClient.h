@@ -13,6 +13,8 @@
 @property (copy, nonatomic) NSString *sessionToken;
 @property (copy, nonatomic) NSString *userId;
 @property (assign, nonatomic) BOOL websocketReady;
+@property (assign, nonatomic) BOOL connected;
+@property (nonatomic, assign) int retryAttempts;
 
 - (NSString *)sendWithMethodName:(NSString *)methodName parameters:(NSArray *)parameters notifyOnResponse:(BOOL)notify;
 - (void)sendWithMethodName:(NSString *)methodName parameters:(NSArray *)parameters;

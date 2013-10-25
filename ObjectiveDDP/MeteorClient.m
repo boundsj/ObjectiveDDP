@@ -7,7 +7,6 @@
 
 @property (nonatomic, copy) NSString *password;
 @property (nonatomic, copy) NSString *userName;
-@property (nonatomic, assign) int retryAttempts;
 
 @end
 
@@ -157,10 +156,9 @@ static int LOGON_RETRY_MAX = 5;
         [[NSNotificationCenter defaultCenter] postNotificationName:@"changed" object:self userInfo:object];
     } else if (msg && [msg isEqualToString:@"connected"]) {
         [[NSNotificationCenter defaultCenter] postNotificationName:@"connected" object:nil];
+        self.connected = YES;
         if (self.sessionToken) {
-            NSArray *params = @[@{@"resume": self.sessionToken}];
-            [self sendWithMethodName:@"login"
-                          parameters:params];
+            [self sendWithMethodName:@"login" parameters:@[@{@"resume": self.sessionToken}]];
         }
         [self makeMeteorDataSubscriptions];
     } else if (msg && [msg isEqualToString:@"ready"]) {
@@ -194,13 +192,15 @@ static int LOGON_RETRY_MAX = 5;
 
 - (void)didReceiveConnectionError:(NSError *)error {
     self.websocketReady = NO;
+    self.connected = NO;
     [self performSelector:@selector(reconnect)
                withObject:self
                afterDelay:5.0];
 }
 
 - (void)didReceiveConnectionClose {
-    self.websocketReady = NO; 
+    self.websocketReady = NO;
+    self.connected = NO;
     [self performSelector:@selector(reconnect)
                withObject:self
                afterDelay:5.0];

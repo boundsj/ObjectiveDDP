@@ -22,9 +22,9 @@ describe(@"MeteorClient", ^{
 
     it(@"is correctly initialized", ^{
         meteorClient.websocketReady should_not be_truthy;
+        meteorClient.connected should_not be_truthy;
         meteorClient.collections should_not be_nil;
         meteorClient.subscriptions should_not be_nil;
-        meteorClient.websocketReady should_not be_truthy;
     });
 
     describe(@"#addSubscription:", ^{
@@ -234,6 +234,7 @@ describe(@"MeteorClient", ^{
                     @"msg": @"result",
                     @"error": @{@"error": @403, @"reason": @"are you kidding me?"}
                 };
+                meteorClient.retryAttempts = 5;
                 [meteorClient didReceiveMessage:authErrorMessage];
             });
 
