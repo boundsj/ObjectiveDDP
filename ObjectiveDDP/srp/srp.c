@@ -284,37 +284,6 @@ static BIGNUM * H_nn( SRP_HashAlgorithm alg, const BIGNUM * n1, const BIGNUM * n
     return BN_bin2bn(buff, hash_length(alg), NULL);
 }
 
-static BIGNUM * H_ns( SRP_HashAlgorithm alg, const BIGNUM * n, const unsigned char * bytes, int len_bytes )
-{
-    unsigned char   buff[ SHA256_DIGEST_LENGTH ];
-    int             len_n  = BN_num_bytes(n);
-    int             nbytes = len_n + len_bytes;
-    unsigned char * bin    = (unsigned char *) malloc( nbytes );
-    if (!bin)
-       return 0;
-    BN_bn2bin(n, bin);
-    memcpy( bin + len_n, bytes, len_bytes );
-    hash( alg, bin, nbytes, buff );
-    free(bin);
-    return BN_bin2bn(buff, hash_length(alg), NULL);
-}
-    
-static BIGNUM * calculate_x( SRP_HashAlgorithm alg, const BIGNUM * salt, const char * username, const char * password, int password_len )
-{
-    unsigned char ucp_hash[SHA256_DIGEST_LENGTH];
-    HashCTX       ctx;
-
-    hash_init( alg, &ctx );
-
-    hash_update( alg, &ctx, username, strlen(username) );
-    hash_update( alg, &ctx, ":", 1 );
-    hash_update( alg, &ctx, password, password_len );
-    
-    hash_final( alg, &ctx, ucp_hash );
-        
-    return H_ns( alg, salt, ucp_hash, hash_length(alg) );
-}
-
 static void update_hash_n( SRP_HashAlgorithm alg, HashCTX *ctx, const BIGNUM * n )
 {
     unsigned long len = BN_num_bytes(n);
