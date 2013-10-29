@@ -28,9 +28,9 @@ describe(@"MeteorClient", ^{
     });
 
     describe(@"#addSubscription:", ^{
-        context(@"when websocket is ready", ^{
+        context(@"when connected", ^{
             beforeEach(^{
-                meteorClient.websocketReady = YES;
+                meteorClient.connected = YES;
                 [meteorClient addSubscription:@"a fancy subscription"];
             });
 
@@ -41,9 +41,9 @@ describe(@"MeteorClient", ^{
             });
         });
 
-        context(@"when websocket is not ready", ^{
+        context(@"when not connected", ^{
             beforeEach(^{
-                meteorClient.websocketReady = NO;
+                meteorClient.connected = NO;
                 [meteorClient addSubscription:@"a fancy subscription"];
             });
 
@@ -54,9 +54,9 @@ describe(@"MeteorClient", ^{
     });
 
     describe(@"#removeSubscription:", ^{
-        context(@"when the websocket is ready", ^{
+        context(@"when not connected", ^{
             beforeEach(^{
-                meteorClient.websocketReady = YES;
+                meteorClient.connected = YES;
                 [meteorClient.subscriptions setObject:@"id1"
                                                forKey:@"fancySubscriptionName"];
                 [meteorClient.subscriptions count] should equal(1);
@@ -69,9 +69,9 @@ describe(@"MeteorClient", ^{
             });
         });
 
-        context(@"when the websocket is not ready", ^{
+        context(@"when not connected", ^{
             beforeEach(^{
-                meteorClient.websocketReady = NO;
+                meteorClient.connected = NO;
                 [meteorClient.subscriptions setObject:@"id1"
                                                forKey:@"fancySubscriptionName"];
                 [meteorClient.subscriptions count] should equal(1);
@@ -88,11 +88,13 @@ describe(@"MeteorClient", ^{
     describe(@"#sendMethodWithName:parameters:notifyOnResponse", ^{
         __block NSString *methodId;
 
-        context(@"when websocket is ready", ^{
+        context(@"when connected", ^{
             beforeEach(^{
-                meteorClient.websocketReady = YES;
+                meteorClient.connected = YES;
                 [meteorClient.methodIds count] should equal(0);
-                methodId = [meteorClient sendWithMethodName:@"awesomeMethod" parameters:@[] notifyOnResponse:YES];
+                methodId = [meteorClient sendWithMethodName:@"awesomeMethod"
+                                                 parameters:@[]
+                                           notifyOnResponse:YES];
             });
 
             it(@"stores a method id", ^{
@@ -108,9 +110,9 @@ describe(@"MeteorClient", ^{
             });
         });
 
-        context(@"when websocket is not ready", ^{
+        context(@"when not connected", ^{
             beforeEach(^{
-                meteorClient.websocketReady = NO;
+                meteorClient.connected = NO;
                 [meteorClient.methodIds count] should equal(0);
                 methodId = [meteorClient sendWithMethodName:@"awesomeMethod" parameters:@[] notifyOnResponse:YES];
             });
@@ -126,9 +128,9 @@ describe(@"MeteorClient", ^{
     });
 
     describe(@"#logonWithUserName:password:", ^{
-        context(@"when websocket is ready", ^{
+        context(@"when connected", ^{
             beforeEach(^{
-                meteorClient.websocketReady = YES;
+                meteorClient.connected = YES;
                 [meteorClient logonWithUsername:@"JesseJames"
                                        password:@"shot3mUp!"];
             });
@@ -156,9 +158,9 @@ describe(@"MeteorClient", ^{
             });
         });
 
-        context(@"when websocket is NOT ready", ^{
+        context(@"when not connected", ^{
             beforeEach(^{
-                meteorClient.websocketReady = NO;
+                meteorClient.connected = NO;
                 [meteorClient logonWithUsername:@"JesseJames"
                                        password:@"shot3mUp!"];
             });
@@ -185,12 +187,28 @@ describe(@"MeteorClient", ^{
 
     describe(@"#didReceiveConnectionClose", ^{
         beforeEach(^{
+            meteorClient.websocketReady = YES;
+            meteorClient.connected = YES;
             [meteorClient didReceiveConnectionClose];
         });
 
-        // TODO: fix when reconnect logic is worked out
-        xit(@"resets collections and reconnects web socket", ^{
+        it(@"resets collections and reconnects web socket", ^{
             meteorClient.websocketReady should_not be_truthy;
+            meteorClient.connected should_not be_truthy;
+            ddp should have_received(@selector(connectWebSocket));
+        });
+    });
+    
+    describe(@"#didReceiveConnectionError", ^{
+        beforeEach(^{
+            meteorClient.websocketReady = YES;
+            meteorClient.connected = YES;
+            [meteorClient didReceiveConnectionError:nil];
+        });
+        
+        it(@"resets collections and reconnects web socket", ^{
+            meteorClient.websocketReady should_not be_truthy;
+            meteorClient.connected should_not be_truthy;
             ddp should have_received(@selector(connectWebSocket));
         });
     });

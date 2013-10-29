@@ -35,7 +35,7 @@
 }
 
 -(NSString *)sendWithMethodName:(NSString *)methodName parameters:(NSArray *)parameters notifyOnResponse:(BOOL)notify {
-    if (!self.websocketReady) {
+    if (!self.connected) {
         return NULL;
     }
     NSString *methodId = [BSONIdGenerator generate];
@@ -59,14 +59,14 @@
     if (parameters) {
         [self.subscriptionsParameters setObject:parameters forKey:subscriptionName];
     }
-    if (!self.websocketReady) {
+    if (!self.connected) {
         return;
     }
     [self.ddp subscribeWith:uid name:subscriptionName parameters:parameters];
 }
 
 -(void)removeSubscription:(NSString *)subscriptionName {
-    if (!self.websocketReady) {
+    if (!self.connected) {
         return;
     }
     NSString *uid = [self.subscriptions objectForKey:subscriptionName];
@@ -183,27 +183,27 @@ static int LOGON_RETRY_MAX = 5;
     [self.ddp connectWithSession:nil version:@"pre1" support:nil];
 }
 
-- (void)reconnect {
+- (void)didReceiveConnectionError:(NSError *)error {
+    [self _handleConnectionError];
+}
+
+- (void)didReceiveConnectionClose {
+    [self _handleConnectionError];
+}
+
+- (void)_handleConnectionError {
+    self.websocketReady = NO;
+    self.connected = NO;
+    [self performSelector:@selector(_reconnect)
+               withObject:self
+               afterDelay:5.0];
+}
+
+- (void)_reconnect {
     if (self.ddp.webSocket.readyState == SR_OPEN) {
         return;
     }
     [self.ddp connectWebSocket];
-}
-
-- (void)didReceiveConnectionError:(NSError *)error {
-    self.websocketReady = NO;
-    self.connected = NO;
-    [self performSelector:@selector(reconnect)
-               withObject:self
-               afterDelay:5.0];
-}
-
-- (void)didReceiveConnectionClose {
-    self.websocketReady = NO;
-    self.connected = NO;
-    [self performSelector:@selector(reconnect)
-               withObject:self
-               afterDelay:5.0];
 }
 
 #pragma mark Meteor Data Managment
