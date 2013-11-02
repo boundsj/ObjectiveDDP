@@ -109,9 +109,8 @@
 
 - (void)didAddThing:(NSString *)message {
     [self dismissViewControllerAnimated:YES completion:nil];
-    NSString *uid = [BSONIdGenerator generate];
     [self.meteor sendWithMethodName:@"/things/insert"
-                         parameters:@[@{@"_id": uid,
+                         parameters:@[@{@"_id": [[NSUUID UUID] UUIDString],
                                       @"msg": message,
                                       @"owner": self.userId,
                                       @"listName": self.listName}]];
