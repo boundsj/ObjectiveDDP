@@ -732,6 +732,7 @@ void meteor_user_generate_x(SRPUser *usr,
 void meteor_user_generate_k( SRPUser *usr,
                              unsigned char *buff,
                              BIGNUM **k ) {
+    if (!usr->ng) return;
     char *N_str = BN_bn2hex(usr->ng->N);
 
     // generator (g) is always 0x02 but bn2hex represents
@@ -758,6 +759,7 @@ void meteor_user_generate_kgx(SRPUser *usr,
                               BIGNUM *x,
                               BIGNUM *k,
                               BIGNUM **kgx) {
+    if (!usr->ng) return;
     BN_CTX *lctx = BN_CTX_new();
     BIGNUM *inner_kgx = BN_new();
     BN_mod_exp(inner_kgx, usr->ng->g, x, usr->ng->N, lctx);
@@ -772,6 +774,7 @@ void meteor_user_generate_aux(SRPUser *usr,
                               BIGNUM *u,
                               BIGNUM *x,
                               BIGNUM **aux) {
+    if (!usr->a) return;
     BN_CTX *lctx = BN_CTX_new();
     BIGNUM *ux = BN_new();
     BN_mul(ux, u, x, lctx);
@@ -787,6 +790,8 @@ void meteor_user_generate_S_string(SRPUser *usr,
                                    BIGNUM *aux,
                                    const char *B_str,
                                    char **S_str) {
+    if (!usr->ng) return;
+    
     BN_CTX *lctx = BN_CTX_new();
     BIGNUM *B = BN_new();
     BIGNUM *bkgx = BN_new();
@@ -858,14 +863,16 @@ void srp_user_process_meteor_challenge(SRPUser *usr,
     BIGNUM *aux = BN_new();
     
     meteor_user_generate_u(usr, Bstr, buff, &u);
-    meteor_user_generate_x( usr, identity, salt, password, buff, &x );
-    meteor_user_generate_k( usr, buff, &k );
-    meteor_user_generate_kgx( usr, ctx, x, k, &kgx );
-    meteor_user_generate_aux( usr, ctx, u, x, &aux );
-    char * S_str;
+    meteor_user_generate_x(usr, identity, salt, password, buff, &x);
+    meteor_user_generate_k(usr, buff, &k);
+    meteor_user_generate_kgx(usr, ctx, x, k, &kgx);
+    meteor_user_generate_aux(usr, ctx, u, x, &aux);
+    char *S_str = 0;
     meteor_user_generate_S_string(usr, ctx, kgx, aux, Bstr, &S_str);
-    *Mstr = meteor_user_generate_M_string(usr, S_str, buff, Bstr);
-    meteor_user_generate_HAMK( usr, buff, *Mstr, S_str );
+    if (S_str) {
+        *Mstr = meteor_user_generate_M_string(usr, S_str, buff, Bstr);
+        meteor_user_generate_HAMK(usr, buff, *Mstr, S_str);
+    }
     
     BN_free(u);
     BN_free(x);
