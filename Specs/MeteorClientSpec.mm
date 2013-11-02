@@ -173,7 +173,8 @@ describe(@"MeteorClient", ^{
 
     describe(@"#didOpen", ^{
         beforeEach(^{
-            meteorClient.collections = [NSMutableDictionary dictionaryWithDictionary:@{@"col1": [NSArray new]}];
+            NSArray *array = [[[NSArray alloc] init] autorelease];
+            meteorClient.collections = [NSMutableDictionary dictionaryWithDictionary:@{@"col1": array}];
             [meteorClient.collections count] should equal(1);
             [meteorClient didOpen];
         });
@@ -218,7 +219,7 @@ describe(@"MeteorClient", ^{
             spy_on([NSNotificationCenter defaultCenter]);
         });
 
-        context(@"when called with a custom method response message", ^{
+        context(@"when called with method result message id", ^{
             __block NSString *key;
             __block NSDictionary *methodResponseMessage;
 
@@ -245,32 +246,109 @@ describe(@"MeteorClient", ^{
                     .and_with(methodResponseMessage[@"result"]);
             });
         });
+        
+        context(@"when called with a login challenge response", ^{
+            beforeEach(^{
+                meteorClient.srpUser = (SRPUser *)malloc(sizeof(SRPUser));
+                meteorClient.srpUser->Astr = [@"astringy" cStringUsingEncoding:NSASCIIStringEncoding];
+                
+                meteorClient.connected = YES;
+                meteorClient.password = @"ardv4rkz";
+                NSDictionary *challengeMessage = @{@"msg": @"result",
+                                                   @"result": @{@"B": @"bee",
+                                                                @"identity": @"ident",
+                                                                @"salt": @"pepper"}};
+                [meteorClient didReceiveMessage:challengeMessage];
+            });
+            
+            it(@"processes the message correclty", ^{
+                ddp should have_received(@selector(methodWithId:method:parameters:))
+                    .with(anything)
+                    .and_with(@"login")
+                    .and_with(anything);
+            });
+        });
+        
+        context(@"when called with an HAMK verification response", ^{
+            beforeEach(^{
+                meteorClient.password = @"w0nky";
+                meteorClient.srpUser = (SRPUser *)malloc(sizeof(SRPUser));
+                meteorClient.srpUser->HAMK = [@"hamk4u" cStringUsingEncoding:NSASCIIStringEncoding];
+                NSDictionary *verificationeMessage = @{@"msg": @"result",
+                                                       @"result": @{@"id": @"id123",
+                                                                    @"HAMK": @"hamk4u",
+                                                                    @"token": @"smokin"}};
+                [meteorClient didReceiveMessage:verificationeMessage];
+            });
+            
+            it(@"processes the message correctly", ^{
+                meteorClient.sessionToken should equal(@"smokin");
+            });
+        });
 
         context(@"when called with an authentication error message", ^{
+            __block NSDictionary *authErrorMessage;
+            
             beforeEach(^{
-                NSDictionary *authErrorMessage = @{
-                    @"msg": @"result",
-                    @"error": @{@"error": @403, @"reason": @"are you kidding me?"}
-                };
-                meteorClient.retryAttempts = 5;
-                [meteorClient didReceiveMessage:authErrorMessage];
+                authErrorMessage = @{
+                                     @"msg": @"result",
+                                     @"error": @{@"error": @403,
+                                                 @"reason":
+                                                 @"are you kidding me?"}};
             });
-
-            it(@"processes the message correctly", ^{
-                meteorClient.authDelegate should have_received(@selector(authenticationFailed:)).with(@"are you kidding me?");
+            
+            context(@"before max rejects occurs and connected", ^{
+                beforeEach(^{
+                    meteorClient.retryAttempts = 0;
+                    meteorClient.userName = @"mknightsham";
+                    meteorClient.password = @"iS33de4dp33pz";
+                });
+                
+                context(@"when connected", ^{
+                    beforeEach(^{
+                        meteorClient.connected = YES;
+                        [meteorClient didReceiveMessage:authErrorMessage];
+                    });
+                    
+                    it(@"processes the message correctly", ^{
+                        meteorClient.authDelegate should_not have_received(@selector(authenticationFailed:));
+                        ddp should have_received(@selector(methodWithId:method:parameters:))
+                            .with(anything)
+                            .and_with(@"beginPasswordExchange")
+                            .and_with(anything);
+                    });
+                });
+                
+                context(@"when not connected", ^{
+                    beforeEach(^{
+                        meteorClient.connected = NO;
+                        [meteorClient didReceiveMessage:authErrorMessage];
+                    });
+                    
+                    it(@"processes the message correctly", ^{
+                        meteorClient.retryAttempts should equal(0);
+                        meteorClient.authDelegate should have_received(@selector(authenticationFailed:)).with(@"are you kidding me?");
+                    });
+                });
+            });
+            
+            context(@"after max rejects occurs", ^{
+                beforeEach(^{
+                    meteorClient.retryAttempts = 5;
+                    [meteorClient didReceiveMessage:authErrorMessage];
+                });
+                
+                it(@"processes the message correctly", ^{
+                    meteorClient.retryAttempts should equal(0);
+                    meteorClient.authDelegate should have_received(@selector(authenticationFailed:)).with(@"are you kidding me?");
+                });
             });
         });
         
         context(@"when subscription is ready", ^{
             beforeEach(^{
-
                 [meteorClient.subscriptions setObject:@"subid" forKey:@"subscriptionName"];
-                
-                NSDictionary *readyMessage = @{
-                                               @"msg":@"ready",
-                                               @"subs":@[@"subid"]
-                                               };
-                
+                NSDictionary *readyMessage = @{@"msg": @"ready", @"subs": @[@"subid"]};
                 [meteorClient didReceiveMessage:readyMessage];
             });
             

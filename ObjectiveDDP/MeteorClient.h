@@ -1,4 +1,5 @@
 #import "ObjectiveDDP.h"
+#import "srp/srp.h"
 
 @protocol DDPAuthDelegate;
 
@@ -14,7 +15,14 @@
 @property (copy, nonatomic) NSString *userId;
 @property (assign, nonatomic) BOOL websocketReady;
 @property (assign, nonatomic) BOOL connected;
-@property (nonatomic, assign) int retryAttempts;
+@property (assign, nonatomic) int retryAttempts;
+@property (copy, nonatomic) NSString *password;
+@property (copy, nonatomic) NSString *userName;
+@property (assign, nonatomic) BOOL userIsLoggingIn;
+
+// auth
+// TODO: break out into sep class
+@property (assign, nonatomic) SRPUser *srpUser;
 
 - (NSString *)sendWithMethodName:(NSString *)methodName parameters:(NSArray *)parameters notifyOnResponse:(BOOL)notify;
 - (void)sendWithMethodName:(NSString *)methodName parameters:(NSArray *)parameters;
@@ -25,6 +33,12 @@
 - (void)logonWithUsername:(NSString *)username password:(NSString *)password;
 - (void)logout;
 
+// auth
+// TODO: break out in to sep class
+- (NSString *)generateAuthVerificationKeyWithUsername:(NSString *)username password:(NSString *)password;
+- (void)didReceiveLoginChallengeWithResponse:(NSDictionary *)response;
+- (void)didReceiveHAMKVerificationWithResponse:(NSDictionary *)response;
+
 @end
 
 @protocol DDPAuthDelegate <NSObject>
@@ -33,4 +47,6 @@
 - (void)authenticationFailed:(NSString *)reason;
 
 @end
+
+
 

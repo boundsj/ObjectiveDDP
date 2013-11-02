@@ -3,10 +3,15 @@
 #import "BSONIdGenerator.h"
 #import "srp/srp.h"
 
-@interface MeteorClient ()
+@interface MeteorClient (Parsing)
 
-@property (nonatomic, copy) NSString *password;
-@property (nonatomic, copy) NSString *userName;
+- (void)_handleMethodResultMessageWithMessageId:(NSString *)messageId message:(NSDictionary *)message msg:(NSString *)msg;
+- (void)_handleLoginChallengeResponse:(NSDictionary *)message msg:(NSString *)msg;
+- (void)_handleLoginError:(NSDictionary *)message msg:(NSString *)msg;
+- (void)_handleHAMKVerification:(NSDictionary *)message msg:(NSString *)msg;
+- (void)_handleAddedMessage:(NSDictionary *)message msg:(NSString *)msg;
+- (void)_handleRemovedMessage:(NSDictionary *)message msg:(NSString *)msg;
+- (void)_handleChangedMessage:(NSDictionary *)message msg:(NSString *)msg;
 
 @end
 
@@ -77,15 +82,11 @@
     }
 }
 
-static BOOL userIsLoggingIn = NO;
-
 - (void)logonWithUsername:(NSString *)username password:(NSString *)password {
-    if (userIsLoggingIn) {
-        return;
-    }
+    if (self.userIsLoggingIn) return;
     NSArray *params = @[@{@"A": [self generateAuthVerificationKeyWithUsername:username password:password],
                           @"user": @{@"email":username}}];
-    userIsLoggingIn = YES;
+    self.userIsLoggingIn = YES;
     [self sendWithMethodName:@"beginPasswordExchange" parameters:params];
 }
 
@@ -95,73 +96,29 @@ static BOOL userIsLoggingIn = NO;
 
 #pragma mark <ObjectiveDDPDelegate>
 
-static int LOGON_RETRY_MAX = 5;
-
 - (void)didReceiveMessage:(NSDictionary *)message {
     NSString *msg = [message objectForKey:@"msg"];
+    if (!msg) return;
     NSString *messageId = message[@"id"];
     
-    if ([self.methodIds containsObject:messageId]) {
-        if(msg && [msg isEqualToString:@"result"]) {
-            NSDictionary *response = message[@"result"];
-            NSString *notificationName = [NSString stringWithFormat:@"response_%@", messageId];
-            [[NSNotificationCenter defaultCenter] postNotificationName:notificationName
-                                                                object:self
-                                                              userInfo:response];
-            [self.methodIds removeObject:messageId];
-        }
-    } else if (msg && [msg isEqualToString:@"result"]
-               && message[@"result"]
-               && [message[@"result"] isKindOfClass:[NSDictionary class]]               
-               && message[@"result"][@"B"]
-               && message[@"result"][@"identity"]
-               && message[@"result"][@"salt"]) {
-        NSDictionary *response = message[@"result"];
-        [self didReceiveLoginChallengeWithResponse:response];
-    } else if(msg && [msg isEqualToString:@"result"]
-              && message[@"error"]
-              && [message[@"error"][@"error"]integerValue] == 403) {
-        userIsLoggingIn = NO;
-        if (++self.retryAttempts < LOGON_RETRY_MAX) {
-            [self logonWithUsername:self.userName password:self.password];
-        } else {
-            self.retryAttempts = 0;
-            [self.authDelegate authenticationFailed:message[@"error"][@"reason"]];
-        }
-    } else if (msg && [msg isEqualToString:@"result"]
-               && message[@"result"]
-               && [message[@"result"] isKindOfClass:[NSDictionary class]]
-               && message[@"result"][@"id"]
-               && message[@"result"][@"HAMK"]
-               && message[@"result"][@"token"]) {
-        NSDictionary *response = message[@"result"];
-        [self didReceiveHAMKVerificationWithResponse:response];
-    } else if (msg && [msg isEqualToString:@"added"]
-               && message[@"collection"]) {
-        NSDictionary *object = [self _parseObjectAndAddToCollection:message];
-        NSString *notificationName = [NSString stringWithFormat:@"%@_added", message[@"collection"]];
-        [[NSNotificationCenter defaultCenter] postNotificationName:notificationName object:self userInfo:object];
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"added" object:self userInfo:object];
-    } else if (msg && [msg isEqualToString:@"removed"]
-               && message[@"collection"]) {
-        [self _parseRemoved:message];
-        NSString *notificationName = [NSString stringWithFormat:@"%@_removed", message[@"collection"]];
-        [[NSNotificationCenter defaultCenter] postNotificationName:notificationName object:self];
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"removed" object:self];
-    } else if (msg && [msg isEqualToString:@"changed"]
-               && message[@"collection"]) {
-        NSDictionary *object = [self _parseObjectAndUpdateCollection:message];
-        NSString *notificationName = [NSString stringWithFormat:@"%@_changed", message[@"collection"]];
-        [[NSNotificationCenter defaultCenter] postNotificationName:notificationName object:self userInfo:object];
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"changed" object:self userInfo:object];
-    } else if (msg && [msg isEqualToString:@"connected"]) {
+    [self _handleMethodResultMessageWithMessageId:messageId message:message msg:msg];
+    [self _handleLoginChallengeResponse:message msg:msg];
+    [self _handleLoginError:message msg:msg];    
+    [self _handleHAMKVerification:message msg:msg];
+    [self _handleAddedMessage:message msg:msg];
+    [self _handleRemovedMessage:message msg:msg];
+    [self _handleChangedMessage:message msg:msg];
+    
+    if (msg && [msg isEqualToString:@"connected"]) {
         [[NSNotificationCenter defaultCenter] postNotificationName:@"connected" object:nil];
         self.connected = YES;
         if (self.sessionToken) {
             [self sendWithMethodName:@"login" parameters:@[@{@"resume": self.sessionToken}]];
         }
-        [self makeMeteorDataSubscriptions];
-    } else if (msg && [msg isEqualToString:@"ready"]) {
+        [self _makeMeteorDataSubscriptions];
+    }
+    
+    if (msg && [msg isEqualToString:@"ready"]) {
         NSArray *subs = message[@"subs"];
         for(NSString *readySubscription in subs) {
             for(NSString *subscriptionName in self.subscriptions) {
@@ -208,7 +165,7 @@ static int LOGON_RETRY_MAX = 5;
 
 #pragma mark Meteor Data Managment
 
-- (void)makeMeteorDataSubscriptions {
+- (void)_makeMeteorDataSubscriptions {
     for (NSString *key in [self.subscriptions allKeys]) {
         NSString *uid = [BSONIdGenerator generate];
         [self.subscriptions setObject:uid forKey:key];  
@@ -217,63 +174,16 @@ static int LOGON_RETRY_MAX = 5;
     }
 }
 
-- (NSDictionary *)_parseObjectAndUpdateCollection:(NSDictionary *)message {
-    NSPredicate *pred = [NSPredicate predicateWithFormat:@"(_id like %@)", message[@"id"]];
-    NSMutableArray *collection = self.collections[message[@"collection"]];
-    NSArray *filteredArray = [collection filteredArrayUsingPredicate:pred];
-    NSMutableDictionary *object = filteredArray[0];
-    for (id key in message[@"fields"]) {
-        object[key] = message[@"fields"][key];
-    }
-    return object;
-}
-
-- (NSDictionary *)_parseObjectAndAddToCollection:(NSDictionary *)message {
-    NSMutableDictionary *object = [NSMutableDictionary dictionaryWithDictionary:@{@"_id": message[@"id"]}];
-
-    for (id key in message[@"fields"]) {
-        object[key] = message[@"fields"][key];
-    }
-
-    if (!self.collections[message[@"collection"]]) {
-        self.collections[message[@"collection"]] = [NSMutableArray array];
-    }
-
-    NSMutableArray *collection = self.collections[message[@"collection"]];
-
-    [collection addObject:object];
-
-    return object;
-}
-
-- (void)_parseRemoved:(NSDictionary *)message {
-    NSString *removedId = [message objectForKey:@"id"];
-    int indexOfRemovedObject = 0;
-
-    NSMutableArray *collection = self.collections[message[@"collection"]];
-
-    for (NSDictionary *object in collection) {
-        if ([object[@"_id"] isEqualToString:removedId]) {
-            break;
-        }
-        indexOfRemovedObject++;
-    }
-
-    [collection removeObjectAtIndex:indexOfRemovedObject];
-}
-
 # pragma mark Meteor SRP Wrapper
-
-static SRPUser *srpUser;
 
 - (NSString *)generateAuthVerificationKeyWithUsername:(NSString *)username password:(NSString *)password {
     self.userName = username;
     self.password = password;
     const char *username_str = [username cStringUsingEncoding:NSASCIIStringEncoding];
     const char *password_str = [password cStringUsingEncoding:NSASCIIStringEncoding];
-    srpUser = srp_user_new(SRP_SHA256, SRP_NG_1024, username_str, password_str, NULL, NULL);
-    srp_user_start_authentication(srpUser);
-    return [NSString stringWithCString:srpUser->Astr encoding:NSASCIIStringEncoding];
+    self.srpUser = srp_user_new(SRP_SHA256, SRP_NG_1024, username_str, password_str, NULL, NULL);
+    srp_user_start_authentication(self.srpUser);
+    return [NSString stringWithCString:self.srpUser->Astr encoding:NSASCIIStringEncoding];
 }
 
 - (void)didReceiveLoginChallengeWithResponse:(NSDictionary *)response {
@@ -285,20 +195,20 @@ static SRPUser *srpUser;
     const char *identity = [identity_string cStringUsingEncoding:NSASCIIStringEncoding];
     const char *password_str = [self.password cStringUsingEncoding:NSASCIIStringEncoding];
     const char *Mstr;
-    srp_user_process_meteor_challenge(srpUser, password_str, salt, identity, B, &Mstr);
+    srp_user_process_meteor_challenge(self.srpUser, password_str, salt, identity, B, &Mstr);
     NSString *M_final = [NSString stringWithCString:Mstr encoding:NSASCIIStringEncoding];
     NSArray *params = @[@{@"srp":@{@"M":M_final}}];
     [self sendWithMethodName:@"login" parameters:params];
 }
 
 - (void)didReceiveHAMKVerificationWithResponse:(NSDictionary *)response {
-    userIsLoggingIn = NO;
-    srp_user_verify_meteor_session(srpUser, [response[@"HAMK"] cStringUsingEncoding:NSASCIIStringEncoding]);
+    srp_user_verify_meteor_session(self.srpUser, [response[@"HAMK"] cStringUsingEncoding:NSASCIIStringEncoding]);
     if (srp_user_is_authenticated) {
         self.sessionToken = response[@"token"];
         self.userId = response[@"id"];
         [self.authDelegate authenticationWasSuccessful];
-        srp_user_delete(srpUser);
+        srp_user_delete(self.srpUser);
+        self.userIsLoggingIn = NO;
     }
 }
 
