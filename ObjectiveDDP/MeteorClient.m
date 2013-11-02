@@ -39,10 +39,7 @@
     [self sendWithMethodName:methodName parameters:parameters notifyOnResponse:NO];
 }
 
--(NSString *)sendWithMethodName:(NSString *)methodName parameters:(NSArray *)parameters notifyOnResponse:(BOOL)notify {
-    if (!self.connected) {
-        return NULL;
-    }
+- (NSString *)_send:(BOOL)notify parameters:(NSArray *)parameters methodName:(NSString *)methodName {
     NSString *methodId = [BSONIdGenerator generate];
     if(notify == YES) {
         [self.methodIds addObject:methodId];
@@ -50,6 +47,15 @@
     [self.ddp methodWithId:methodId
                     method:methodName
                 parameters:parameters];
+    return methodId;
+}
+
+-(NSString *)sendWithMethodName:(NSString *)methodName parameters:(NSArray *)parameters notifyOnResponse:(BOOL)notify {
+    if (![self okToSend]) {
+        return nil;
+    }
+    NSString *methodId;
+    methodId = [self _send:notify parameters:parameters methodName:methodName];
 
     return methodId;
 }
@@ -64,14 +70,14 @@
     if (parameters) {
         [self.subscriptionsParameters setObject:parameters forKey:subscriptionName];
     }
-    if (!self.connected) {
+    if (![self okToSend]) {
         return;
     }
     [self.ddp subscribeWith:uid name:subscriptionName parameters:parameters];
 }
 
 -(void)removeSubscription:(NSString *)subscriptionName {
-    if (!self.connected) {
+    if (![self okToSend]) {
         return;
     }
     NSString *uid = [self.subscriptions objectForKey:subscriptionName];
@@ -82,16 +88,28 @@
     }
 }
 
+- (BOOL)okToSend {
+    if (!self.connected || (self.usingAuth && !self.loggedIn)) {
+        return NO;
+    }
+    return YES;
+}
+
 - (void)logonWithUsername:(NSString *)username password:(NSString *)password {
     if (self.userIsLoggingIn) return;
     NSArray *params = @[@{@"A": [self generateAuthVerificationKeyWithUsername:username password:password],
                           @"user": @{@"email":username}}];
+    self.usingAuth = NO;
+    self.loggedIn = NO;
     self.userIsLoggingIn = YES;
     [self sendWithMethodName:@"beginPasswordExchange" parameters:params];
 }
 
 - (void)logout {
-    [self sendWithMethodName:@"logout" parameters:nil];
+    [self.ddp methodWithId:[BSONIdGenerator generate]
+                    method:@"logout"
+                parameters:nil];
+    self.loggedIn = NO;
 }
 
 #pragma mark <ObjectiveDDPDelegate>
@@ -113,7 +131,10 @@
         [[NSNotificationCenter defaultCenter] postNotificationName:@"connected" object:nil];
         self.connected = YES;
         if (self.sessionToken) {
-            [self sendWithMethodName:@"login" parameters:@[@{@"resume": self.sessionToken}]];
+            //[self sendWithMethodName:@"login" parameters:@[@{@"resume": self.sessionToken}]];
+            [self.ddp methodWithId:[BSONIdGenerator generate]
+                            method:@"login"
+                        parameters:@[@{@"resume": self.sessionToken}]];
         }
         [self _makeMeteorDataSubscriptions];
     }
@@ -209,6 +230,8 @@
         [self.authDelegate authenticationWasSuccessful];
         srp_user_delete(self.srpUser);
         self.userIsLoggingIn = NO;
+        self.usingAuth = YES;
+        self.loggedIn = YES;
     }
 }
 

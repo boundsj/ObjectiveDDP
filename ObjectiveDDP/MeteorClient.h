@@ -19,6 +19,8 @@
 @property (copy, nonatomic) NSString *password;
 @property (copy, nonatomic) NSString *userName;
 @property (assign, nonatomic) BOOL userIsLoggingIn;
+@property (assign, nonatomic) BOOL usingAuth;
+@property (assign, nonatomic) BOOL loggedIn;
 
 // auth
 // TODO: break out into sep class
