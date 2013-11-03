@@ -34,7 +34,7 @@ Todo App Screenshots:
 Development: Writing Your Own App
 --------------
 
-_Note: ObjectiveDDP is a work in progress and subject to change. Although we do make an effort to remain backwards compatible with the original API, please check this readme and the project wiki frequently for updates to stay up to date._
+_Note: ObjectiveDDP is a work in progress and subject to project setup and breaking API changes!_
 
 #### ObjectiveDDP Boilerplate ####
 The example application illustrates everything you need to know about integrating ObjectiveDDP into your iOS application. You can also reference the technical walkthrough in the wiki [ios boilerplate] section for the step by step details of creating a simple iOS app that can connect to a meteor server.
