@@ -99,7 +99,7 @@ static int LOGON_RETRY_MAX = 5;
         && message[@"collection"]) {
         [self _parseRemoved:message];
         NSString *notificationName = [NSString stringWithFormat:@"%@_removed", message[@"collection"]];
-        [[NSNotificationCenter defaultCenter] postNotificationName:notificationName object:self];
+        [[NSNotificationCenter defaultCenter] postNotificationName:notificationName object:self userInfo:@{@"_id": message[@"id"]}];
         [[NSNotificationCenter defaultCenter] postNotificationName:@"removed" object:self];
     }
 }
