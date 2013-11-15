@@ -34,3 +34,6 @@
 
 @end
 
+
+extern NSString *const MeteorClientDidConnectNotification;
+extern NSString *const MeteorClientDidDisconnectNotification;

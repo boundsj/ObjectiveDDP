@@ -181,6 +181,8 @@ static int LOGON_RETRY_MAX = 5;
     [self resetCollections];
     // TODO: pre1 should be a setting
     [self.ddp connectWithSession:nil version:@"pre1" support:nil];
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:MeteorClientDidConnectNotification object:self];
 }
 
 - (void)reconnect {
@@ -193,6 +195,7 @@ static int LOGON_RETRY_MAX = 5;
 - (void)didReceiveConnectionError:(NSError *)error {
     self.websocketReady = NO;
     self.connected = NO;
+    [[NSNotificationCenter defaultCenter] postNotificationName:MeteorClientDidDisconnectNotification object:self];
     [self performSelector:@selector(reconnect)
                withObject:self
                afterDelay:5.0];
@@ -201,6 +204,7 @@ static int LOGON_RETRY_MAX = 5;
 - (void)didReceiveConnectionClose {
     self.websocketReady = NO;
     self.connected = NO;
+    [[NSNotificationCenter defaultCenter] postNotificationName:MeteorClientDidDisconnectNotification object:self];
     [self performSelector:@selector(reconnect)
                withObject:self
                afterDelay:5.0];
@@ -303,3 +307,6 @@ static SRPUser *srpUser;
 }
 
 @end
+
+NSString *const MeteorClientDidConnectNotification = @"boundsj.objectiveddp.connected";
+NSString *const MeteorClientDidDisconnectNotification = @"boundsj.objectiveddp.disconnected";
