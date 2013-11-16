@@ -1,5 +1,5 @@
 #import "ObjectiveDDP.h"
-#import "srp/srp.h"
+#import "srp.h"
 
 @protocol DDPAuthDelegate;
 

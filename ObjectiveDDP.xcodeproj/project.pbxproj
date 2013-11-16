@@ -140,7 +140,6 @@
 		405FD5E01745DABE001F8AE7 /* safestack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = safestack.h; sourceTree = "<group>"; };
 		405FD5E11745DABE001F8AE7 /* seed.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = seed.h; sourceTree = "<group>"; };
 		405FD5E21745DABE001F8AE7 /* sha.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sha.h; sourceTree = "<group>"; };
-		405FD5E31745DABE001F8AE7 /* srp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = srp.h; sourceTree = "<group>"; };
 		405FD5E41745DABE001F8AE7 /* srtp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = srtp.h; sourceTree = "<group>"; };
 		405FD5E51745DABE001F8AE7 /* ssl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ssl.h; sourceTree = "<group>"; };
 		405FD5E61745DABE001F8AE7 /* ssl2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ssl2.h; sourceTree = "<group>"; };
@@ -171,6 +170,7 @@
 		40A305F2178D27E800546C1F /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		40BAB8CC181EFE550098524C /* NSObject+Spec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+Spec.m"; sourceTree = "<group>"; };
 		40BAB8CF182051500098524C /* MeteorClient+Parsing.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MeteorClient+Parsing.m"; sourceTree = "<group>"; };
+		40E901D1183809DF00CFD98C /* ObjectiveDDP.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ObjectiveDDP.podspec; sourceTree = SOURCE_ROOT; };
 		40F8370E1741C62800AF2340 /* MeteorClientSpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MeteorClientSpec.mm; sourceTree = "<group>"; };
 		430E02ACD0BC78CC53F31D72 /* MockSRWebSocket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MockSRWebSocket.m; sourceTree = "<group>"; };
 		430E092B95390D2D558E5F3B /* MockObjectiveDDPDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MockObjectiveDDPDelegate.m; sourceTree = "<group>"; };
@@ -277,6 +277,7 @@
 		4000D63C170E880400296229 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				40E901D1183809DF00CFD98C /* ObjectiveDDP.podspec */,
 				5286FA1887BC49AFB425645B /* Pods.xcconfig */,
 				4000D63D170E880400296229 /* ObjectiveDDP-Prefix.pch */,
 			);
@@ -344,7 +345,6 @@
 				405FD5E01745DABE001F8AE7 /* safestack.h */,
 				405FD5E11745DABE001F8AE7 /* seed.h */,
 				405FD5E21745DABE001F8AE7 /* sha.h */,
-				405FD5E31745DABE001F8AE7 /* srp.h */,
 				405FD5E41745DABE001F8AE7 /* srtp.h */,
 				405FD5E51745DABE001F8AE7 /* ssl.h */,
 				405FD5E61745DABE001F8AE7 /* ssl2.h */,

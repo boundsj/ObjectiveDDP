@@ -23,10 +23,56 @@ describe(@"MeteorClient", ^{
     it(@"is correctly initialized", ^{
         meteorClient.websocketReady should_not be_truthy;
         meteorClient.connected should_not be_truthy;
+        meteorClient.usingAuth should_not be_truthy;
+        meteorClient.loggedIn should_not be_truthy;
         meteorClient.collections should_not be_nil;
         meteorClient.subscriptions should_not be_nil;
     });
-
+    
+    describe(@"#logonWithUserName:password:", ^{
+        context(@"when connected", ^{
+            beforeEach(^{
+                meteorClient.connected = YES;
+                [meteorClient logonWithUsername:@"JesseJames"
+                                       password:@"shot3mUp!"];
+            });
+            
+            it(@"sends logon message correctly", ^{
+                // XXX: add custom matcher that can query the params
+                //      to see what user/pass was sent
+                ddp should have_received(@selector(methodWithId:method:parameters:))
+                .with(anything)
+                .and_with(@"beginPasswordExchange")
+                .and_with(anything);
+            });
+            
+            describe(@"#logout", ^{
+                beforeEach(^{
+                    [meteorClient logout];
+                });
+                
+                it(@"sends the logout message correclty", ^{
+                    ddp should have_received(@selector(methodWithId:method:parameters:))
+                    .with(anything)
+                    .and_with(@"logout")
+                    .and_with(anything);
+                });
+            });
+        });
+        
+        context(@"when not connected", ^{
+            beforeEach(^{
+                meteorClient.connected = NO;
+                [meteorClient logonWithUsername:@"JesseJames"
+                                       password:@"shot3mUp!"];
+            });
+            
+            it(@"does not send login message", ^{
+                ddp should_not have_received(@selector(methodWithId:method:parameters:));
+            });
+        });
+    });
+    
     describe(@"#addSubscription:", ^{
         context(@"when connected", ^{
             beforeEach(^{
@@ -122,50 +168,6 @@ describe(@"MeteorClient", ^{
             });
 
             it(@"does not send method command", ^{
-                ddp should_not have_received(@selector(methodWithId:method:parameters:));
-            });
-        });
-    });
-
-    describe(@"#logonWithUserName:password:", ^{
-        context(@"when connected", ^{
-            beforeEach(^{
-                meteorClient.connected = YES;
-                [meteorClient logonWithUsername:@"JesseJames"
-                                       password:@"shot3mUp!"];
-            });
-
-            it(@"sends logon message correctly", ^{
-                // XXX: add custom matcher that can query the params
-                //      to see what user/pass was sent
-                ddp should have_received(@selector(methodWithId:method:parameters:))
-                    .with(anything)
-                    .and_with(@"beginPasswordExchange")
-                    .and_with(anything);
-            });
-            
-            describe(@"#logout", ^{
-                beforeEach(^{
-                    [meteorClient logout];
-                });
-                
-                it(@"sends the logout message correclty", ^{
-                    ddp should have_received(@selector(methodWithId:method:parameters:))
-                        .with(anything)
-                        .and_with(@"logout")
-                        .and_with(anything);
-                });
-            });
-        });
-
-        context(@"when not connected", ^{
-            beforeEach(^{
-                meteorClient.connected = NO;
-                [meteorClient logonWithUsername:@"JesseJames"
-                                       password:@"shot3mUp!"];
-            });
-
-            it(@"sends logon message correctly", ^{
                 ddp should_not have_received(@selector(methodWithId:method:parameters:));
             });
         });

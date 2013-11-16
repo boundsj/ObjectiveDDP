@@ -1,7 +1,7 @@
 #import "DependencyProvider.h"
 #import "MeteorClient.h"
 #import "BSONIdGenerator.h"
-#import "srp/srp.h"
+#import "srp.h"
 
 @interface MeteorClient (Parsing)
 
