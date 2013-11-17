@@ -33,6 +33,7 @@
 		40D08183172CF93F00434EB3 /* red_light@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 40D0817F172CF93F00434EB3 /* red_light@2x.png */; };
 		40D0818C1731F62D00434EB3 /* ListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 40D0818A1731F62D00434EB3 /* ListViewController.m */; };
 		40D0818D1731F62D00434EB3 /* ListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 40D0818B1731F62D00434EB3 /* ListViewController.xib */; };
+		40E901D71838A5CE00CFD98C /* Podfile in Resources */ = {isa = PBXBuildFile; fileRef = 40E901D61838A5CE00CFD98C /* Podfile */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -70,6 +71,7 @@
 		40D081891731F62D00434EB3 /* ListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ListViewController.h; sourceTree = "<group>"; };
 		40D0818A1731F62D00434EB3 /* ListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ListViewController.m; sourceTree = "<group>"; };
 		40D0818B1731F62D00434EB3 /* ListViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ListViewController.xib; sourceTree = "<group>"; };
+		40E901D61838A5CE00CFD98C /* Podfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Podfile; sourceTree = SOURCE_ROOT; };
 		56C0A81D083A463FBDF5E25F /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = SOURCE_ROOT; };
 		76DEBC654F5B42F786F72A3E /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -140,6 +142,7 @@
 		401AEB3C170E9B4D008B38EA /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				40E901D61838A5CE00CFD98C /* Podfile */,
 				56C0A81D083A463FBDF5E25F /* Pods.xcconfig */,
 				40D0817C172CF93F00434EB3 /* green_light.png */,
 				40D0817D172CF93F00434EB3 /* green_light@2x.png */,
@@ -237,6 +240,7 @@
 				40D08173172CE5DA00434EB3 /* LoginViewController.xib in Resources */,
 				40D08180172CF93F00434EB3 /* green_light.png in Resources */,
 				40D08181172CF93F00434EB3 /* green_light@2x.png in Resources */,
+				40E901D71838A5CE00CFD98C /* Podfile in Resources */,
 				40D08182172CF93F00434EB3 /* red_light.png in Resources */,
 				40D08183172CF93F00434EB3 /* red_light@2x.png in Resources */,
 				40D0818D1731F62D00434EB3 /* ListViewController.xib in Resources */,

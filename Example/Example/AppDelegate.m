@@ -31,8 +31,19 @@
     
     self.window.rootViewController = self.navController;
     [self.window makeKeyAndVisible];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reportConnection) name:MeteorClientDidConnectNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reportDisconnection) name:MeteorClientDidDisconnectNotification object:nil];
 
     return YES;
+}
+
+- (void)reportConnection {
+    NSLog(@"================> connected to server!");
+}
+
+- (void)reportDisconnection {
+    NSLog(@"================> disconnected from server!");    
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
