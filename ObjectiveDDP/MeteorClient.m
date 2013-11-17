@@ -134,7 +134,6 @@ NSString * const MeteorClientDidDisconnectNotification = @"boundsj.objectiveddp.
         [[NSNotificationCenter defaultCenter] postNotificationName:@"connected" object:nil];
         self.connected = YES;
         if (self.sessionToken) {
-            //[self sendWithMethodName:@"login" parameters:@[@{@"resume": self.sessionToken}]];
             [self.ddp methodWithId:[BSONIdGenerator generate]
                             method:@"login"
                         parameters:@[@{@"resume": self.sessionToken}]];
