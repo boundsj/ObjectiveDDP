@@ -231,14 +231,14 @@ describe(@"MeteorClient", ^{
     });
 
     describe(@"#didReceiveMessage", ^{
+        __block NSString *key;
+        __block NSDictionary *methodResponseMessage;
+        
         beforeEach(^{
             spy_on([NSNotificationCenter defaultCenter]);
         });
-
-        context(@"when called with method result message id", ^{
-            __block NSString *key;
-            __block NSDictionary *methodResponseMessage;
-
+        
+        context(@"when called with method response message id", ^{
             beforeEach(^{
                 key = @"key1";
                 methodResponseMessage = @{
@@ -260,6 +260,32 @@ describe(@"MeteorClient", ^{
                     .with(notificationName)
                     .and_with(meteorClient)
                     .and_with(methodResponseMessage[@"result"]);
+            });
+        });
+        
+        context(@"when called with method error message id", ^{
+            beforeEach(^{
+                methodResponseMessage = @{
+                                          @"msg": @"result",
+                                          @"error": @{@"errorType": @"lamesauce"},
+                                          @"id": key
+                                          };
+                [meteorClient.methodIds addObject:key];
+                [meteorClient didReceiveMessage:methodResponseMessage];
+            });
+            
+            it(@"removes the message id", ^{
+                [meteorClient.methodIds containsObject:key] should_not be_truthy;
+            });
+            
+            it(@"sends a notification", ^{
+                NSString *notificationName = [NSString stringWithFormat:@"response_%@", key];
+                NSDictionary *errorDic = methodResponseMessage[@"error"];
+                NSError *error = [NSError errorWithDomain:errorDic[@"errorType"] code:[errorDic[@"error"]integerValue] userInfo:errorDic];
+                [NSNotificationCenter defaultCenter] should have_received(@selector(postNotificationName:object:userInfo:))
+                .with(notificationName)
+                .and_with(meteorClient)
+                .and_with(error);
             });
         });
         

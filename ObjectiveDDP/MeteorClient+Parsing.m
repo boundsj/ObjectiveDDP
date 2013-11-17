@@ -5,7 +5,14 @@
 - (void)_handleMethodResultMessageWithMessageId:(NSString *)messageId message:(NSDictionary *)message msg:(NSString *)msg {
     if ([self.methodIds containsObject:messageId]) {
         if([msg isEqualToString:@"result"]) {
-            NSDictionary *response = message[@"result"];
+            id response;
+            if(message[@"error"]) {
+                NSDictionary *errorDic = message[@"error"];
+                response = [NSError errorWithDomain:errorDic[@"errorType"] code:[errorDic[@"error"]integerValue] userInfo:errorDic];
+            } else {
+                response = message[@"result"];
+            }
+            
             NSString *notificationName = [NSString stringWithFormat:@"response_%@", messageId];
             [[NSNotificationCenter defaultCenter] postNotificationName:notificationName
                                                                 object:self
