@@ -3,6 +3,9 @@
 #import "BSONIdGenerator.h"
 #import "srp/srp.h"
 
+NSString * const MeteorClientDidConnectNotification = @"boundsj.objectiveddp.connected";
+NSString * const MeteorClientDidDisconnectNotification = @"boundsj.objectiveddp.disconnected";
+
 @interface MeteorClient ()
 
 @property (nonatomic, copy) NSString *password;
@@ -307,6 +310,3 @@ static SRPUser *srpUser;
 }
 
 @end
-
-NSString *const MeteorClientDidConnectNotification = @"boundsj.objectiveddp.connected";
-NSString *const MeteorClientDidDisconnectNotification = @"boundsj.objectiveddp.disconnected";

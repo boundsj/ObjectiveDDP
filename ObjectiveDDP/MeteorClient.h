@@ -2,6 +2,9 @@
 
 @protocol DDPAuthDelegate;
 
+extern NSString * const MeteorClientDidConnectNotification;
+extern NSString * const MeteorClientDidDisconnectNotification;
+
 @interface MeteorClient : NSObject<ObjectiveDDPDelegate>
 
 @property (strong, nonatomic) ObjectiveDDP *ddp;
@@ -33,7 +36,3 @@
 - (void)authenticationFailed:(NSString *)reason;
 
 @end
-
-
-extern NSString *const MeteorClientDidConnectNotification;
-extern NSString *const MeteorClientDidDisconnectNotification;
