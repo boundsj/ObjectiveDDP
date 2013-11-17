@@ -3,6 +3,9 @@
 #import "BSONIdGenerator.h"
 #import "srp.h"
 
+NSString * const MeteorClientDidConnectNotification = @"boundsj.objectiveddp.connected";
+NSString * const MeteorClientDidDisconnectNotification = @"boundsj.objectiveddp.disconnected";
+
 @interface MeteorClient (Parsing)
 
 - (void)_handleMethodResultMessageWithMessageId:(NSString *)messageId message:(NSDictionary *)message msg:(NSString *)msg;
@@ -159,6 +162,7 @@
     [self resetCollections];
     // TODO: pre1 should be a setting
     [self.ddp connectWithSession:nil version:@"pre1" support:nil];
+    [[NSNotificationCenter defaultCenter] postNotificationName:MeteorClientDidConnectNotification object:self];
 }
 
 - (void)didReceiveConnectionError:(NSError *)error {
@@ -175,7 +179,7 @@
     [self performSelector:@selector(_reconnect)
                withObject:self
                afterDelay:5.0];
-}
+    [[NSNotificationCenter defaultCenter] postNotificationName:MeteorClientDidDisconnectNotification object:self];}
 
 - (void)_reconnect {
     if (self.ddp.webSocket.readyState == SR_OPEN) {

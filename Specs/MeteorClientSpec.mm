@@ -175,6 +175,7 @@ describe(@"MeteorClient", ^{
 
     describe(@"#didOpen", ^{
         beforeEach(^{
+            spy_on([NSNotificationCenter defaultCenter]);
             NSArray *array = [[[NSArray alloc] init] autorelease];
             meteorClient.collections = [NSMutableDictionary dictionaryWithDictionary:@{@"col1": array}];
             [meteorClient.collections count] should equal(1);
@@ -185,6 +186,12 @@ describe(@"MeteorClient", ^{
             meteorClient.websocketReady should be_truthy;
             [meteorClient.collections count] should equal(0);
             ddp should have_received(@selector(connectWithSession:version:support:));
+        });
+
+        it(@"sends a notification", ^{
+            [NSNotificationCenter defaultCenter] should have_received(@selector(postNotificationName:object:))
+            .with(MeteorClientDidConnectNotification)
+            .and_with(meteorClient);
         });
     });
 
@@ -204,6 +211,7 @@ describe(@"MeteorClient", ^{
     
     describe(@"#didReceiveConnectionError", ^{
         beforeEach(^{
+            spy_on([NSNotificationCenter defaultCenter]);
             meteorClient.websocketReady = YES;
             meteorClient.connected = YES;
             [meteorClient didReceiveConnectionError:nil];
@@ -213,6 +221,12 @@ describe(@"MeteorClient", ^{
             meteorClient.websocketReady should_not be_truthy;
             meteorClient.connected should_not be_truthy;
             ddp should have_received(@selector(connectWebSocket));
+        });
+
+        it(@"sends a notification", ^{
+            [NSNotificationCenter defaultCenter] should have_received(@selector(postNotificationName:object:))
+            .with(MeteorClientDidDisconnectNotification)
+            .and_with(meteorClient);
         });
     });
 
