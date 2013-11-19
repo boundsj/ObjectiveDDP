@@ -20,6 +20,12 @@
 		401AEB82170E9ED2008B38EA /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 401AEB81170E9ED2008B38EA /* CFNetwork.framework */; };
 		401AEB84170E9EEB008B38EA /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 401AEB83170E9EEB008B38EA /* Security.framework */; };
 		4027EDE21783E1F400CAEC1C /* srp.c in Sources */ = {isa = PBXBuildFile; fileRef = 405FD5F61746BCD5001F8AE7 /* srp.c */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		4051C02E183B3CEB00AE0A0F /* KSDeferred.m in Sources */ = {isa = PBXBuildFile; fileRef = 4051C029183B3CEB00AE0A0F /* KSDeferred.m */; };
+		4051C02F183B3CEB00AE0A0F /* KSDeferred.m in Sources */ = {isa = PBXBuildFile; fileRef = 4051C029183B3CEB00AE0A0F /* KSDeferred.m */; };
+		4051C030183B3CEB00AE0A0F /* KSNetworkClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 4051C02B183B3CEB00AE0A0F /* KSNetworkClient.m */; };
+		4051C031183B3CEB00AE0A0F /* KSNetworkClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 4051C02B183B3CEB00AE0A0F /* KSNetworkClient.m */; };
+		4051C032183B3CEB00AE0A0F /* KSPromise.m in Sources */ = {isa = PBXBuildFile; fileRef = 4051C02D183B3CEB00AE0A0F /* KSPromise.m */; };
+		4051C033183B3CEB00AE0A0F /* KSPromise.m in Sources */ = {isa = PBXBuildFile; fileRef = 4051C02D183B3CEB00AE0A0F /* KSPromise.m */; };
 		406F73DD1809D4B5002FD431 /* libcrypto.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 405FD5A71745DABE001F8AE7 /* libcrypto.a */; };
 		4079F9DB170EB31D00194B4A /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4079F9DA170EB31D00194B4A /* UIKit.framework */; };
 		4079F9DC170EB31D00194B4A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4000D639170E880400296229 /* Foundation.framework */; };
@@ -81,6 +87,13 @@
 		401AEB7F170E9ECC008B38EA /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		401AEB81170E9ED2008B38EA /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		401AEB83170E9EEB008B38EA /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		4051C027183B3CEB00AE0A0F /* Deferred-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "Deferred-Prefix.pch"; path = "deferred/Deferred/Deferred-Prefix.pch"; sourceTree = "<group>"; };
+		4051C028183B3CEB00AE0A0F /* KSDeferred.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = KSDeferred.h; path = deferred/Deferred/KSDeferred.h; sourceTree = "<group>"; };
+		4051C029183B3CEB00AE0A0F /* KSDeferred.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = KSDeferred.m; path = deferred/Deferred/KSDeferred.m; sourceTree = "<group>"; };
+		4051C02A183B3CEB00AE0A0F /* KSNetworkClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = KSNetworkClient.h; path = deferred/Deferred/KSNetworkClient.h; sourceTree = "<group>"; };
+		4051C02B183B3CEB00AE0A0F /* KSNetworkClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = KSNetworkClient.m; path = deferred/Deferred/KSNetworkClient.m; sourceTree = "<group>"; };
+		4051C02C183B3CEB00AE0A0F /* KSPromise.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = KSPromise.h; path = deferred/Deferred/KSPromise.h; sourceTree = "<group>"; };
+		4051C02D183B3CEB00AE0A0F /* KSPromise.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = KSPromise.m; path = deferred/Deferred/KSPromise.m; sourceTree = "<group>"; };
 		405FD5A71745DABE001F8AE7 /* libcrypto.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcrypto.a; path = ObjectiveDDP/libcrypto.a; sourceTree = "<group>"; };
 		405FD5A91745DABE001F8AE7 /* aes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = aes.h; sourceTree = "<group>"; };
 		405FD5AA1745DABE001F8AE7 /* asn1.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = asn1.h; sourceTree = "<group>"; };
@@ -220,6 +233,7 @@
 		4000D62D170E880400296229 = {
 			isa = PBXGroup;
 			children = (
+				4051BFE4183B3A0400AE0A0F /* Externals */,
 				40A305F2178D27E800546C1F /* Default-568h@2x.png */,
 				4000D63B170E880400296229 /* ObjectiveDDP */,
 				4079F9DF170EB31D00194B4A /* Specs */,
@@ -282,6 +296,28 @@
 				4000D63D170E880400296229 /* ObjectiveDDP-Prefix.pch */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		4051BFE4183B3A0400AE0A0F /* Externals */ = {
+			isa = PBXGroup;
+			children = (
+				4051C026183B3CD700AE0A0F /* deferred */,
+			);
+			path = Externals;
+			sourceTree = "<group>";
+		};
+		4051C026183B3CD700AE0A0F /* deferred */ = {
+			isa = PBXGroup;
+			children = (
+				4051C027183B3CEB00AE0A0F /* Deferred-Prefix.pch */,
+				4051C028183B3CEB00AE0A0F /* KSDeferred.h */,
+				4051C029183B3CEB00AE0A0F /* KSDeferred.m */,
+				4051C02A183B3CEB00AE0A0F /* KSNetworkClient.h */,
+				4051C02B183B3CEB00AE0A0F /* KSNetworkClient.m */,
+				4051C02C183B3CEB00AE0A0F /* KSPromise.h */,
+				4051C02D183B3CEB00AE0A0F /* KSPromise.m */,
+			);
+			name = deferred;
 			sourceTree = "<group>";
 		};
 		405FD5A81745DABE001F8AE7 /* openssl */ = {
@@ -528,8 +564,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4051C02E183B3CEB00AE0A0F /* KSDeferred.m in Sources */,
 				4000D641170E880400296229 /* ObjectiveDDP.m in Sources */,
 				888B6DFC173B6508001EED80 /* MeteorClient.m in Sources */,
+				4051C032183B3CEB00AE0A0F /* KSPromise.m in Sources */,
+				4051C030183B3CEB00AE0A0F /* KSNetworkClient.m in Sources */,
 				40BAB8D0182051500098524C /* MeteorClient+Parsing.m in Sources */,
 				888B6DFF173B66EA001EED80 /* BSONIdGenerator.m in Sources */,
 				4011C80417BD2AA6002AA28E /* DependencyProvider.m in Sources */,
@@ -541,14 +580,17 @@
 			buildActionMask = 2147483647;
 			files = (
 				40F8370C1741C59700AF2340 /* BSONIdGenerator.m in Sources */,
+				4051C033183B3CEB00AE0A0F /* KSPromise.m in Sources */,
 				40F8370D1741C59700AF2340 /* MeteorClient.m in Sources */,
 				40BAB8D1182051500098524C /* MeteorClient+Parsing.m in Sources */,
 				4079F9F5170EB39200194B4A /* ObjectiveDDP.m in Sources */,
 				4079F9E6170EB31D00194B4A /* main.m in Sources */,
 				4079F9F7170EB3B000194B4A /* ObjectiveDDPSpec.mm in Sources */,
+				4051C02F183B3CEB00AE0A0F /* KSDeferred.m in Sources */,
 				430E08B6E86CA801EE954D0F /* MockObjectiveDDPDelegate.m in Sources */,
 				40BAB8CD181EFE550098524C /* NSObject+Spec.m in Sources */,
 				430E014E41C9666E08613FCE /* MockSRWebSocket.m in Sources */,
+				4051C031183B3CEB00AE0A0F /* KSNetworkClient.m in Sources */,
 				40F8370F1741C62800AF2340 /* MeteorClientSpec.mm in Sources */,
 				4027EDE21783E1F400CAEC1C /* srp.c in Sources */,
 				4011C80517BD2AA6002AA28E /* DependencyProvider.m in Sources */,

@@ -238,6 +238,49 @@ describe(@"MeteorClient", ^{
             spy_on([NSNotificationCenter defaultCenter]);
         });
         
+        describe(@"async method API", ^{
+            __block NSDictionary *returnedResponse;
+            __block NSError *returnedError;
+            
+            beforeEach(^{
+                meteorClient.connected = YES;
+            });
+            
+            context(@"when the response is successful", ^{
+                beforeEach(^{
+                    key = [meteorClient sendWithMethodName:@"robots" parameters:nil asyncCallback:^(NSDictionary *response, NSError *error) {
+                        returnedResponse = response;
+                    }];
+                    [meteorClient didReceiveMessage:@{@"msg": @"result",
+                                                      @"result": @"rule",
+                                                      @"id": key
+                                                      }];
+                });
+                
+                it(@"has the correct returned response", ^{
+                    returnedResponse should equal(@"rule");
+                });
+            });
+        
+            context(@"when the response fails", ^{
+                beforeEach(^{
+                    key = [meteorClient sendWithMethodName:@"robots" parameters:nil asyncCallback:^(NSDictionary *response, NSError *error) {
+                        returnedError = error;
+                    }];
+                    [meteorClient didReceiveMessage:@{@"msg": @"result",
+                                                      @"error": @{@"errorType": @"lamesauce", @"error": @500},
+                                                      @"id": key
+                                                      }];
+                });
+                
+                it(@"has the correct returned response", ^{
+                    NSDictionary *errorDic = @{@"errorType": @"lamesauce", @"error": @500};
+                    NSError *expectedError = [NSError errorWithDomain:errorDic[@"errorType"] code:[errorDic[@"error"]integerValue] userInfo:errorDic];
+                    returnedError should equal(expectedError);
+                });
+            });
+        });
+        
         context(@"when called with method response message id", ^{
             beforeEach(^{
                 key = @"key1";

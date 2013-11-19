@@ -2,9 +2,14 @@
 #import "MeteorClient.h"
 #import "BSONIdGenerator.h"
 #import "srp.h"
+#import "KSDeferred.h"
 
 NSString * const MeteorClientDidConnectNotification = @"boundsj.objectiveddp.connected";
 NSString * const MeteorClientDidDisconnectNotification = @"boundsj.objectiveddp.disconnected";
+NSString * const MeteorClientTransportErrorDomain = @"boundsj.objectiveddp.transport";
+
+NSInteger const MeteorClientNotConnectedError = 1;
+NSInteger const MeteorClientDisconnectedError = 2;
 
 @interface MeteorClient (Parsing)
 
@@ -18,6 +23,12 @@ NSString * const MeteorClientDidDisconnectNotification = @"boundsj.objectiveddp.
 
 @end
 
+@interface MeteorClient ()
+
+@property (strong, nonatomic, readwrite) NSMutableDictionary *deferreds;
+
+@end
+
 @implementation MeteorClient
 
 - (id)init {
@@ -28,6 +39,7 @@ NSString * const MeteorClientDidDisconnectNotification = @"boundsj.objectiveddp.
         self.subscriptionsParameters = [NSMutableDictionary dictionary];
         self.methodIds = [NSMutableSet set];
         self.retryAttempts = 0;
+        self.deferreds = [NSMutableDictionary dictionary];
     }
     return self;
 }
@@ -57,9 +69,26 @@ NSString * const MeteorClientDidDisconnectNotification = @"boundsj.objectiveddp.
     if (![self okToSend]) {
         return nil;
     }
-    NSString *methodId;
-    methodId = [self _send:notify parameters:parameters methodName:methodName];
+    return [self _send:notify parameters:parameters methodName:methodName];
+}
 
+- (NSString *)sendWithMethodName:(NSString *)methodName parameters:(NSArray *)parameters asyncCallback:(asyncCallback)asyncCallback {
+    
+    if (![self okToSend]) {
+        asyncCallback(nil, [NSError errorWithDomain:MeteorClientTransportErrorDomain code:MeteorClientNotConnectedError userInfo:@{NSLocalizedDescriptionKey: @"You are not connected"}]);
+        return nil;
+    }
+    
+    KSDeferred *deferred = [KSDeferred defer];
+    NSString *methodId = [self _send:YES parameters:parameters methodName:methodName];
+    [self.deferreds setObject:deferred forKey:methodId];
+    [deferred.promise then:^id(id value) {
+        asyncCallback(value, nil);
+        return value;
+    } error:^id(NSError *error) {
+        asyncCallback(nil, error);
+        return error;
+    }];
     return methodId;
 }
 
@@ -175,10 +204,21 @@ NSString * const MeteorClientDidDisconnectNotification = @"boundsj.objectiveddp.
 - (void)_handleConnectionError {
     self.websocketReady = NO;
     self.connected = NO;
+    [self _invalidateUnresolvedMethods];
     [self performSelector:@selector(_reconnect)
                withObject:self
                afterDelay:5.0];
-    [[NSNotificationCenter defaultCenter] postNotificationName:MeteorClientDidDisconnectNotification object:self];}
+    [[NSNotificationCenter defaultCenter] postNotificationName:MeteorClientDidDisconnectNotification object:self];
+}
+
+- (void)_invalidateUnresolvedMethods {
+    for (NSString *methodId in self.methodIds) {
+        void(^asyncCallback)(NSDictionary *response, NSError *error) = self.deferreds[@""];
+        asyncCallback(nil, [NSError errorWithDomain:MeteorClientTransportErrorDomain code:MeteorClientNotConnectedError userInfo:@{NSLocalizedDescriptionKey: @"You were disconnected"}]);
+    }
+    [self.methodIds removeAllObjects];
+    [self.deferreds removeAllObjects];
+}
 
 - (void)_reconnect {
     if (self.ddp.webSocket.readyState == SR_OPEN) {
