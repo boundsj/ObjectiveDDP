@@ -1,24 +1,27 @@
 #import "MeteorClient.h"
-#import "KSDeferred.h"
 
 @implementation MeteorClient (Parsing)
 
 - (void)_handleMethodResultMessageWithMessageId:(NSString *)messageId message:(NSDictionary *)message msg:(NSString *)msg {
     if ([self.methodIds containsObject:messageId]) {
-        KSDeferred *deferred = [self.deferreds objectForKey:messageId];
-
         if([msg isEqualToString:@"result"]) {
+            asyncCallback callback = [self.deferreds objectForKey:messageId];
             id response;
             if(message[@"error"]) {
                 NSDictionary *errorDesc = message[@"error"];
-                response = [NSError errorWithDomain:errorDesc[@"errorType"] code:[errorDesc[@"error"]integerValue] userInfo:errorDesc];
-                [deferred rejectWithError:response];
+                NSDictionary *userInfo = @{NSLocalizedDescriptionKey: errorDesc};
+                NSError *responseError = [NSError errorWithDomain:errorDesc[@"errorType"] code:[errorDesc[@"error"]integerValue] userInfo:userInfo];
+                if (callback)
+                    callback(nil, responseError);
+                response = responseError;
             } else {
                 response = message[@"result"];
-                [deferred resolveWithValue:response];
+                if (callback)
+                    callback(response, nil);
             }
             NSString *notificationName = [NSString stringWithFormat:@"response_%@", messageId];
             [[NSNotificationCenter defaultCenter] postNotificationName:notificationName object:self userInfo:response];
+            [self.deferreds removeObjectForKey:messageId];
             [self.methodIds removeObject:messageId];
         }
     }

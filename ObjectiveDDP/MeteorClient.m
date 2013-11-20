@@ -2,7 +2,6 @@
 #import "MeteorClient.h"
 #import "BSONIdGenerator.h"
 #import "srp.h"
-#import "KSDeferred.h"
 
 NSString * const MeteorClientDidConnectNotification = @"boundsj.objectiveddp.connected";
 NSString * const MeteorClientDidDisconnectNotification = @"boundsj.objectiveddp.disconnected";
@@ -72,23 +71,17 @@ NSInteger const MeteorClientDisconnectedError = 2;
     return [self _send:notify parameters:parameters methodName:methodName];
 }
 
-- (NSString *)sendWithMethodName:(NSString *)methodName parameters:(NSArray *)parameters asyncCallback:(asyncCallback)asyncCallback {
-    
+- (NSString *)callMethodName:(NSString *)methodName parameters:(NSArray *)parameters asyncCallback:(asyncCallback)asyncCallback {
     if (![self okToSend]) {
-        asyncCallback(nil, [NSError errorWithDomain:MeteorClientTransportErrorDomain code:MeteorClientNotConnectedError userInfo:@{NSLocalizedDescriptionKey: @"You are not connected"}]);
+        NSDictionary *userInfo = @{NSLocalizedDescriptionKey: @"You are not connected"};
+        NSError *notConnectedError = [NSError errorWithDomain:MeteorClientTransportErrorDomain code:MeteorClientNotConnectedError userInfo:userInfo];
+        asyncCallback(nil, notConnectedError);
         return nil;
     }
-    
-    KSDeferred *deferred = [KSDeferred defer];
     NSString *methodId = [self _send:YES parameters:parameters methodName:methodName];
-    [self.deferreds setObject:deferred forKey:methodId];
-    [deferred.promise then:^id(id value) {
-        asyncCallback(value, nil);
-        return value;
-    } error:^id(NSError *error) {
-        asyncCallback(nil, error);
-        return error;
-    }];
+    if (asyncCallback) {
+        [self.deferreds setObject:[asyncCallback copy] forKey:methodId];
+    }
     return methodId;
 }
 
@@ -213,8 +206,8 @@ NSInteger const MeteorClientDisconnectedError = 2;
 
 - (void)_invalidateUnresolvedMethods {
     for (NSString *methodId in self.methodIds) {
-        void(^asyncCallback)(NSDictionary *response, NSError *error) = self.deferreds[@""];
-        asyncCallback(nil, [NSError errorWithDomain:MeteorClientTransportErrorDomain code:MeteorClientNotConnectedError userInfo:@{NSLocalizedDescriptionKey: @"You were disconnected"}]);
+        asyncCallback callback = self.deferreds[methodId];
+        callback(nil, [NSError errorWithDomain:MeteorClientTransportErrorDomain code:MeteorClientNotConnectedError userInfo:@{NSLocalizedDescriptionKey: @"You were disconnected"}]);
     }
     [self.methodIds removeAllObjects];
     [self.deferreds removeAllObjects];

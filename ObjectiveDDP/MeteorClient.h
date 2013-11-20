@@ -10,6 +10,8 @@ extern NSString * const MeteorClientTransportErrorDomain;
 extern NSInteger const MeteorClientNotConnectedError;
 extern NSInteger const MeteorClientDisconnectedError;
 
+typedef void(^asyncCallback)(NSDictionary *response, NSError *error);
+
 @interface MeteorClient : NSObject<ObjectiveDDPDelegate>
 
 @property (strong, nonatomic) ObjectiveDDP *ddp;
@@ -34,10 +36,8 @@ extern NSInteger const MeteorClientDisconnectedError;
 // TODO: break out into sep class
 @property (assign, nonatomic) SRPUser *srpUser;
 
-typedef void(^asyncCallback)(NSDictionary *response, NSError *error);
-
 - (NSString *)sendWithMethodName:(NSString *)methodName parameters:(NSArray *)parameters notifyOnResponse:(BOOL)notify;
-- (NSString *)sendWithMethodName:(NSString *)methodName parameters:(NSArray *)parameters asyncCallback:(asyncCallback)asyncCallback;
+- (NSString *)callMethodName:(NSString *)methodName parameters:(NSArray *)parameters asyncCallback:(asyncCallback)asyncCallback;
 - (void)sendWithMethodName:(NSString *)methodName parameters:(NSArray *)parameters;
 - (void)addSubscription:(NSString *)subscriptionName;
 - (void)addSubscription:(NSString *)subscriptionName withParameters:(NSArray *)parameters;

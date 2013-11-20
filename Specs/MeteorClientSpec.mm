@@ -210,17 +210,31 @@ describe(@"MeteorClient", ^{
     });
     
     describe(@"#didReceiveConnectionError", ^{
+        __block NSError *rejectError;
+        
         beforeEach(^{
             spy_on([NSNotificationCenter defaultCenter]);
             meteorClient.websocketReady = YES;
             meteorClient.connected = YES;
+            [meteorClient callMethodName:@"robots" parameters:nil asyncCallback:^(NSDictionary *response, NSError *error) {
+                rejectError = error;
+            }];
+            meteorClient.methodIds.count should equal(1);
+            meteorClient.deferreds.count should equal(1);
             [meteorClient didReceiveConnectionError:nil];
         });
         
         it(@"resets collections and reconnects web socket", ^{
             meteorClient.websocketReady should_not be_truthy;
             meteorClient.connected should_not be_truthy;
+            meteorClient.methodIds.count should equal(0);
+            meteorClient.deferreds.count should equal(0);
             ddp should have_received(@selector(connectWebSocket));
+        });
+        
+        it(@"rejects unresolved callbacks", ^{
+            NSError *expectedError = [NSError errorWithDomain:MeteorClientTransportErrorDomain code:MeteorClientNotConnectedError userInfo:@{NSLocalizedDescriptionKey: @"You were disconnected"}];
+            rejectError should equal(expectedError);
         });
 
         it(@"sends a notification", ^{
@@ -232,11 +246,6 @@ describe(@"MeteorClient", ^{
 
     describe(@"#didReceiveMessage", ^{
         __block NSString *key;
-        __block NSDictionary *methodResponseMessage;
-        
-        beforeEach(^{
-            spy_on([NSNotificationCenter defaultCenter]);
-        });
         
         describe(@"async method API", ^{
             __block NSDictionary *returnedResponse;
@@ -248,13 +257,13 @@ describe(@"MeteorClient", ^{
             
             context(@"when the response is successful", ^{
                 beforeEach(^{
-                    key = [meteorClient sendWithMethodName:@"robots" parameters:nil asyncCallback:^(NSDictionary *response, NSError *error) {
+                    key = [meteorClient callMethodName:@"robots" parameters:nil asyncCallback:^(NSDictionary *response, NSError *error) {
                         returnedResponse = response;
                     }];
                     [meteorClient didReceiveMessage:@{@"msg": @"result",
                                                       @"result": @"rule",
                                                       @"id": key
-                                                      }];
+                                                     }];
                 });
                 
                 it(@"has the correct returned response", ^{
@@ -264,7 +273,7 @@ describe(@"MeteorClient", ^{
         
             context(@"when the response fails", ^{
                 beforeEach(^{
-                    key = [meteorClient sendWithMethodName:@"robots" parameters:nil asyncCallback:^(NSDictionary *response, NSError *error) {
+                    key = [meteorClient callMethodName:@"robots" parameters:nil asyncCallback:^(NSDictionary *response, NSError *error) {
                         returnedError = error;
                     }];
                     [meteorClient didReceiveMessage:@{@"msg": @"result",
@@ -275,60 +284,12 @@ describe(@"MeteorClient", ^{
                 
                 it(@"has the correct returned response", ^{
                     NSDictionary *errorDic = @{@"errorType": @"lamesauce", @"error": @500};
-                    NSError *expectedError = [NSError errorWithDomain:errorDic[@"errorType"] code:[errorDic[@"error"]integerValue] userInfo:errorDic];
+                    NSDictionary *userInfo = @{NSLocalizedDescriptionKey: errorDic};
+                    NSError *expectedError = [NSError errorWithDomain:errorDic[@"errorType"] code:[errorDic[@"error"]integerValue] userInfo:userInfo];
+                    
                     returnedError should equal(expectedError);
+
                 });
-            });
-        });
-        
-        context(@"when called with method response message id", ^{
-            beforeEach(^{
-                key = @"key1";
-                methodResponseMessage = @{
-                    @"msg": @"result",
-                    @"result": @"awesomesauce",
-                    @"id": key
-                };
-                [meteorClient.methodIds addObject:key];
-                [meteorClient didReceiveMessage:methodResponseMessage];
-            });
-
-            it(@"removes the message id", ^{
-                [meteorClient.methodIds containsObject:key] should_not be_truthy;
-            });
-
-            it(@"sends a notification", ^{
-                NSString *notificationName = [NSString stringWithFormat:@"response_%@", key];
-                [NSNotificationCenter defaultCenter] should have_received(@selector(postNotificationName:object:userInfo:))
-                    .with(notificationName)
-                    .and_with(meteorClient)
-                    .and_with(methodResponseMessage[@"result"]);
-            });
-        });
-        
-        context(@"when called with method error message id", ^{
-            beforeEach(^{
-                methodResponseMessage = @{
-                                          @"msg": @"result",
-                                          @"error": @{@"errorType": @"lamesauce"},
-                                          @"id": key
-                                          };
-                [meteorClient.methodIds addObject:key];
-                [meteorClient didReceiveMessage:methodResponseMessage];
-            });
-            
-            it(@"removes the message id", ^{
-                [meteorClient.methodIds containsObject:key] should_not be_truthy;
-            });
-            
-            it(@"sends a notification", ^{
-                NSString *notificationName = [NSString stringWithFormat:@"response_%@", key];
-                NSDictionary *errorDic = methodResponseMessage[@"error"];
-                NSError *error = [NSError errorWithDomain:errorDic[@"errorType"] code:[errorDic[@"error"]integerValue] userInfo:errorDic];
-                [NSNotificationCenter defaultCenter] should have_received(@selector(postNotificationName:object:userInfo:))
-                .with(notificationName)
-                .and_with(meteorClient)
-                .and_with(error);
             });
         });
         
