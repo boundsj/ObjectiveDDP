@@ -62,6 +62,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		052BE033183F8655005CBD6E /* MeteorClient+Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MeteorClient+Private.h"; sourceTree = "<group>"; };
 		22BE0B3F1B814D98AAAE26CF /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		2459525257B94E909C3CA1DF /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = SOURCE_ROOT; };
 		2C1F0C9084EA4B2DBD349673 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -264,6 +265,7 @@
 				888B6DFE173B66EA001EED80 /* BSONIdGenerator.m */,
 				888B6DFA173B6508001EED80 /* MeteorClient.h */,
 				888B6DFB173B6508001EED80 /* MeteorClient.m */,
+				052BE033183F8655005CBD6E /* MeteorClient+Private.h */,
 				40BAB8CF182051500098524C /* MeteorClient+Parsing.m */,
 				4000D63E170E880400296229 /* ObjectiveDDP.h */,
 				4000D640170E880400296229 /* ObjectiveDDP.m */,

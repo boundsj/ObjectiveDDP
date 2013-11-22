@@ -1,63 +1,64 @@
 #import "ObjectiveDDP.h"
-#import "srp.h"
 
 @protocol DDPAuthDelegate;
 
 extern NSString * const MeteorClientDidConnectNotification;
 extern NSString * const MeteorClientDidDisconnectNotification;
+
+/** Errors due to transport (connection) problems will have this domain. For errors being reported
+    from the backend, they will have the "errorType" key as their error domain. */
 extern NSString * const MeteorClientTransportErrorDomain;
 
-extern NSInteger const MeteorClientNotConnectedError;
-extern NSInteger const MeteorClientDisconnectedError;
+enum {
+    /** Can't perform request because client isn't connected. */
+    MeteorClientNotConnectedError = 1,
+    
+    /** Request failed because websocket got disconnected before response arrived. */
+    MeteorClientDisconnectedError,
+};
 
-typedef void(^asyncCallback)(NSDictionary *response, NSError *error);
+typedef void(^MeteorClientMethodCallback)(NSDictionary *response, NSError *error);
+
 
 @interface MeteorClient : NSObject<ObjectiveDDPDelegate>
+@property(strong, nonatomic) ObjectiveDDP *ddp;
+@property(weak, nonatomic) id<DDPAuthDelegate> authDelegate;
 
-@property (strong, nonatomic) ObjectiveDDP *ddp;
-@property (weak, nonatomic) id<DDPAuthDelegate> authDelegate;
-@property (strong, nonatomic) NSMutableDictionary *subscriptions;
-@property (strong, nonatomic) NSMutableDictionary *subscriptionsParameters;
-@property (strong, nonatomic) NSMutableSet *methodIds;
-@property (strong, nonatomic, readonly) NSMutableDictionary *deferreds;
-@property (strong, nonatomic) NSMutableDictionary *collections;
-@property (copy, nonatomic) NSString *sessionToken;
-@property (copy, nonatomic) NSString *userId;
-@property (assign, nonatomic) BOOL websocketReady;
-@property (assign, nonatomic) BOOL connected;
-@property (assign, nonatomic) int retryAttempts;
-@property (copy, nonatomic) NSString *password;
-@property (copy, nonatomic) NSString *userName;
-@property (assign, nonatomic) BOOL userIsLoggingIn;
-@property (assign, nonatomic) BOOL usingAuth;
-@property (assign, nonatomic) BOOL loggedIn;
+@property(strong, nonatomic, readonly) NSMutableDictionary *collections;
+@property(copy, nonatomic, readonly) NSString *userId;
+@property(assign, nonatomic, readonly) BOOL connected;
+@property(assign, nonatomic, readonly) BOOL userIsLoggingIn;
+@property(assign, nonatomic, readonly) BOOL loggedIn;
 
-// auth
-// TODO: break out into sep class
-@property (assign, nonatomic) SRPUser *srpUser;
 
+#pragma mark Request/response
+
+/** Send a request with the given methodName and parameters.
+    @param notify Whether to send a "response_%d" NSNotification when response comes back
+*/
 - (NSString *)sendWithMethodName:(NSString *)methodName parameters:(NSArray *)parameters notifyOnResponse:(BOOL)notify;
-- (NSString *)callMethodName:(NSString *)methodName parameters:(NSArray *)parameters asyncCallback:(asyncCallback)asyncCallback;
+
+/** Like sendWithMethodName:parameters:notifyOnResponse:YES but also calls your provided
+    callback when the response comes back. */
+- (NSString *)callMethodName:(NSString *)methodName parameters:(NSArray *)parameters responseCallback:(MeteorClientMethodCallback)asyncCallback;
+
+/** Fire-and-forget. Forwards to sendWithMethodName:parameters:notifyOnResponse:NO. */
 - (void)sendWithMethodName:(NSString *)methodName parameters:(NSArray *)parameters;
+
+#pragma mark Collections and subscriptions
+
 - (void)addSubscription:(NSString *)subscriptionName;
 - (void)addSubscription:(NSString *)subscriptionName withParameters:(NSArray *)parameters;
 - (void)removeSubscription:(NSString *)subscriptionName;
-- (void)resetCollections;
+
+#pragma mark Login
+
 - (void)logonWithUsername:(NSString *)username password:(NSString *)password;
 - (void)logout;
-
-// auth
-// TODO: break out in to sep class
-- (NSString *)generateAuthVerificationKeyWithUsername:(NSString *)username password:(NSString *)password;
-- (void)didReceiveLoginChallengeWithResponse:(NSDictionary *)response;
-- (void)didReceiveHAMKVerificationWithResponse:(NSDictionary *)response;
-
 @end
 
 @protocol DDPAuthDelegate <NSObject>
-
 - (void)authenticationWasSuccessful;
 - (void)authenticationFailed:(NSString *)reason;
-
 @end
 

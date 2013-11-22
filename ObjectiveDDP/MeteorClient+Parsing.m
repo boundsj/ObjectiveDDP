@@ -1,16 +1,16 @@
-#import "MeteorClient.h"
+#import "MeteorClient+Private.h"
 
 @implementation MeteorClient (Parsing)
 
 - (void)_handleMethodResultMessageWithMessageId:(NSString *)messageId message:(NSDictionary *)message msg:(NSString *)msg {
-    if ([self.methodIds containsObject:messageId]) {
+    if ([_methodIds containsObject:messageId]) {
         if([msg isEqualToString:@"result"]) {
-            asyncCallback callback = [self.deferreds objectForKey:messageId];
+            MeteorClientMethodCallback callback = _responseCallbacks[messageId];
             id response;
             if(message[@"error"]) {
                 NSDictionary *errorDesc = message[@"error"];
                 NSDictionary *userInfo = @{NSLocalizedDescriptionKey: errorDesc};
-                NSError *responseError = [NSError errorWithDomain:errorDesc[@"errorType"] code:[errorDesc[@"error"]integerValue] userInfo:userInfo];
+                NSError *responseError = [NSError errorWithDomain:errorDesc[@"errorType"] code:[errorDesc[@"error"] integerValue] userInfo:userInfo];
                 if (callback)
                     callback(nil, responseError);
                 response = responseError;
@@ -21,8 +21,8 @@
             }
             NSString *notificationName = [NSString stringWithFormat:@"response_%@", messageId];
             [[NSNotificationCenter defaultCenter] postNotificationName:notificationName object:self userInfo:response];
-            [self.deferreds removeObjectForKey:messageId];
-            [self.methodIds removeObject:messageId];
+            [_responseCallbacks removeObjectForKey:messageId];
+            [_methodIds removeObject:messageId];
         }
     }
 }
@@ -45,10 +45,10 @@ static int LOGON_RETRY_MAX = 5;
        && message[@"error"]
        && [message[@"error"][@"error"]integerValue] == 403) {
         self.userIsLoggingIn = NO;
-        if (++self.retryAttempts < LOGON_RETRY_MAX && self.connected) {
-            [self logonWithUsername:self.userName password:self.password];
+        if (++_retryAttempts < LOGON_RETRY_MAX && self.connected) {
+            [self logonWithUsername:_userName password:_password];
         } else {
-            self.retryAttempts = 0;
+            _retryAttempts = 0;
             [self.authDelegate authenticationFailed:message[@"error"][@"reason"]];
         }
     }

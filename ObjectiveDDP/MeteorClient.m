@@ -1,5 +1,6 @@
 #import "DependencyProvider.h"
 #import "MeteorClient.h"
+#import "MeteorClient+Private.h"
 #import "BSONIdGenerator.h"
 #import "srp.h"
 
@@ -7,38 +8,18 @@ NSString * const MeteorClientDidConnectNotification = @"boundsj.objectiveddp.con
 NSString * const MeteorClientDidDisconnectNotification = @"boundsj.objectiveddp.disconnected";
 NSString * const MeteorClientTransportErrorDomain = @"boundsj.objectiveddp.transport";
 
-NSInteger const MeteorClientNotConnectedError = 1;
-NSInteger const MeteorClientDisconnectedError = 2;
-
-@interface MeteorClient (Parsing)
-
-- (void)_handleMethodResultMessageWithMessageId:(NSString *)messageId message:(NSDictionary *)message msg:(NSString *)msg;
-- (void)_handleLoginChallengeResponse:(NSDictionary *)message msg:(NSString *)msg;
-- (void)_handleLoginError:(NSDictionary *)message msg:(NSString *)msg;
-- (void)_handleHAMKVerification:(NSDictionary *)message msg:(NSString *)msg;
-- (void)_handleAddedMessage:(NSDictionary *)message msg:(NSString *)msg;
-- (void)_handleRemovedMessage:(NSDictionary *)message msg:(NSString *)msg;
-- (void)_handleChangedMessage:(NSDictionary *)message msg:(NSString *)msg;
-
-@end
-
-@interface MeteorClient ()
-
-@property (strong, nonatomic, readwrite) NSMutableDictionary *deferreds;
-
-@end
 
 @implementation MeteorClient
 
 - (id)init {
     self = [super init];
     if (self) {
-        self.collections = [NSMutableDictionary dictionary];
-        self.subscriptions = [NSMutableDictionary dictionary];
-        self.subscriptionsParameters = [NSMutableDictionary dictionary];
-        self.methodIds = [NSMutableSet set];
-        self.retryAttempts = 0;
-        self.deferreds = [NSMutableDictionary dictionary];
+        _collections = [NSMutableDictionary dictionary];
+        _subscriptions = [NSMutableDictionary dictionary];
+        _subscriptionsParameters = [NSMutableDictionary dictionary];
+        _methodIds = [NSMutableSet set];
+        _retryAttempts = 0;
+        _responseCallbacks = [NSMutableDictionary dictionary];
     }
     return self;
 }
@@ -56,7 +37,7 @@ NSInteger const MeteorClientDisconnectedError = 2;
 - (NSString *)_send:(BOOL)notify parameters:(NSArray *)parameters methodName:(NSString *)methodName {
     NSString *methodId = [BSONIdGenerator generate];
     if(notify == YES) {
-        [self.methodIds addObject:methodId];
+        [_methodIds addObject:methodId];
     }
     [self.ddp methodWithId:methodId
                     method:methodName
@@ -71,16 +52,16 @@ NSInteger const MeteorClientDisconnectedError = 2;
     return [self _send:notify parameters:parameters methodName:methodName];
 }
 
-- (NSString *)callMethodName:(NSString *)methodName parameters:(NSArray *)parameters asyncCallback:(asyncCallback)asyncCallback {
+- (NSString *)callMethodName:(NSString *)methodName parameters:(NSArray *)parameters responseCallback:(MeteorClientMethodCallback)responseCallback {
     if (![self okToSend]) {
         NSDictionary *userInfo = @{NSLocalizedDescriptionKey: @"You are not connected"};
         NSError *notConnectedError = [NSError errorWithDomain:MeteorClientTransportErrorDomain code:MeteorClientNotConnectedError userInfo:userInfo];
-        asyncCallback(nil, notConnectedError);
+        responseCallback(nil, notConnectedError);
         return nil;
     }
     NSString *methodId = [self _send:YES parameters:parameters methodName:methodName];
-    if (asyncCallback) {
-        [self.deferreds setObject:[asyncCallback copy] forKey:methodId];
+    if (responseCallback) {
+        _responseCallbacks[methodId] = [responseCallback copy];
     }
     return methodId;
 }
@@ -91,9 +72,9 @@ NSInteger const MeteorClientDisconnectedError = 2;
 
 - (void)addSubscription:(NSString *)subscriptionName withParameters:(NSArray *)parameters {
     NSString *uid = [BSONIdGenerator generate];
-    [self.subscriptions setObject:uid forKey:subscriptionName];
+    [_subscriptions setObject:uid forKey:subscriptionName];
     if (parameters) {
-        [self.subscriptionsParameters setObject:parameters forKey:subscriptionName];
+        [_subscriptionsParameters setObject:parameters forKey:subscriptionName];
     }
     if (![self okToSend]) {
         return;
@@ -105,16 +86,16 @@ NSInteger const MeteorClientDisconnectedError = 2;
     if (![self okToSend]) {
         return;
     }
-    NSString *uid = [self.subscriptions objectForKey:subscriptionName];
+    NSString *uid = [_subscriptions objectForKey:subscriptionName];
     if (uid) {
         [self.ddp unsubscribeWith:uid];
         // XXX: Should we really remove sub until we hear back from sever?
-        [self.subscriptions removeObjectForKey:subscriptionName];
+        [_subscriptions removeObjectForKey:subscriptionName];
     }
 }
 
 - (BOOL)okToSend {
-    if (!self.connected || (self.usingAuth && !self.loggedIn)) {
+    if (!self.connected || (_usingAuth && !_loggedIn)) {
         return NO;
     }
     return YES;
@@ -124,7 +105,7 @@ NSInteger const MeteorClientDisconnectedError = 2;
     if (self.userIsLoggingIn) return;
     NSArray *params = @[@{@"A": [self generateAuthVerificationKeyWithUsername:username password:password],
                           @"user": @{@"email":username}}];
-    self.usingAuth = NO;
+    _usingAuth = NO;
     self.loggedIn = NO;
     self.userIsLoggingIn = YES;
     [self sendWithMethodName:@"beginPasswordExchange" parameters:params];
@@ -155,10 +136,10 @@ NSInteger const MeteorClientDisconnectedError = 2;
     if (msg && [msg isEqualToString:@"connected"]) {
         [[NSNotificationCenter defaultCenter] postNotificationName:@"connected" object:nil];
         self.connected = YES;
-        if (self.sessionToken) {
+        if (_sessionToken) {
             [self.ddp methodWithId:[BSONIdGenerator generate]
                             method:@"login"
-                        parameters:@[@{@"resume": self.sessionToken}]];
+                        parameters:@[@{@"resume": _sessionToken}]];
         }
         [self _makeMeteorDataSubscriptions];
     }
@@ -166,8 +147,8 @@ NSInteger const MeteorClientDisconnectedError = 2;
     if (msg && [msg isEqualToString:@"ready"]) {
         NSArray *subs = message[@"subs"];
         for(NSString *readySubscription in subs) {
-            for(NSString *subscriptionName in self.subscriptions) {
-                NSString *curSubId = self.subscriptions[subscriptionName];
+            for(NSString *subscriptionName in _subscriptions) {
+                NSString *curSubId = _subscriptions[subscriptionName];
                 if([curSubId isEqualToString:readySubscription]) {
                     NSString *notificationName = [NSString stringWithFormat:@"%@_ready", subscriptionName];
                     [[NSNotificationCenter defaultCenter] postNotificationName:notificationName object:self];
@@ -179,7 +160,7 @@ NSInteger const MeteorClientDisconnectedError = 2;
 }
 
 - (void)didOpen {
-    self.websocketReady = YES;
+    _websocketReady = YES;
     [self resetCollections];
     // TODO: pre1 should be a setting
     [self.ddp connectWithSession:nil version:@"pre1" support:nil];
@@ -195,7 +176,7 @@ NSInteger const MeteorClientDisconnectedError = 2;
 }
 
 - (void)_handleConnectionError {
-    self.websocketReady = NO;
+    _websocketReady = NO;
     self.connected = NO;
     [self _invalidateUnresolvedMethods];
     [self performSelector:@selector(_reconnect)
@@ -205,12 +186,12 @@ NSInteger const MeteorClientDisconnectedError = 2;
 }
 
 - (void)_invalidateUnresolvedMethods {
-    for (NSString *methodId in self.methodIds) {
-        asyncCallback callback = self.deferreds[methodId];
+    for (NSString *methodId in _methodIds) {
+        MeteorClientMethodCallback callback = _responseCallbacks[methodId];
         callback(nil, [NSError errorWithDomain:MeteorClientTransportErrorDomain code:MeteorClientNotConnectedError userInfo:@{NSLocalizedDescriptionKey: @"You were disconnected"}]);
     }
-    [self.methodIds removeAllObjects];
-    [self.deferreds removeAllObjects];
+    [_methodIds removeAllObjects];
+    [_responseCallbacks removeAllObjects];
 }
 
 - (void)_reconnect {
@@ -223,10 +204,10 @@ NSInteger const MeteorClientDisconnectedError = 2;
 #pragma mark Meteor Data Managment
 
 - (void)_makeMeteorDataSubscriptions {
-    for (NSString *key in [self.subscriptions allKeys]) {
+    for (NSString *key in [_subscriptions allKeys]) {
         NSString *uid = [BSONIdGenerator generate];
-        [self.subscriptions setObject:uid forKey:key];  
-        NSArray *params = self.subscriptionsParameters[key];
+        [_subscriptions setObject:uid forKey:key];
+        NSArray *params = _subscriptionsParameters[key];
         [self.ddp subscribeWith:uid name:key parameters:params];
     }
 }
@@ -234,13 +215,13 @@ NSInteger const MeteorClientDisconnectedError = 2;
 # pragma mark Meteor SRP Wrapper
 
 - (NSString *)generateAuthVerificationKeyWithUsername:(NSString *)username password:(NSString *)password {
-    self.userName = username;
-    self.password = password;
+    _userName = username;
+    _password = password;
     const char *username_str = [username cStringUsingEncoding:NSASCIIStringEncoding];
     const char *password_str = [password cStringUsingEncoding:NSASCIIStringEncoding];
-    self.srpUser = srp_user_new(SRP_SHA256, SRP_NG_1024, username_str, password_str, NULL, NULL);
-    srp_user_start_authentication(self.srpUser);
-    return [NSString stringWithCString:self.srpUser->Astr encoding:NSASCIIStringEncoding];
+    _srpUser = srp_user_new(SRP_SHA256, SRP_NG_1024, username_str, password_str, NULL, NULL);
+    srp_user_start_authentication(_srpUser);
+    return [NSString stringWithCString:_srpUser->Astr encoding:NSASCIIStringEncoding];
 }
 
 - (void)didReceiveLoginChallengeWithResponse:(NSDictionary *)response {
@@ -250,23 +231,23 @@ NSInteger const MeteorClientDisconnectedError = 2;
     const char *salt = [salt_string cStringUsingEncoding:NSASCIIStringEncoding];
     NSString *identity_string = response[@"identity"];
     const char *identity = [identity_string cStringUsingEncoding:NSASCIIStringEncoding];
-    const char *password_str = [self.password cStringUsingEncoding:NSASCIIStringEncoding];
+    const char *password_str = [_password cStringUsingEncoding:NSASCIIStringEncoding];
     const char *Mstr;
-    srp_user_process_meteor_challenge(self.srpUser, password_str, salt, identity, B, &Mstr);
+    srp_user_process_meteor_challenge(_srpUser, password_str, salt, identity, B, &Mstr);
     NSString *M_final = [NSString stringWithCString:Mstr encoding:NSASCIIStringEncoding];
     NSArray *params = @[@{@"srp":@{@"M":M_final}}];
     [self sendWithMethodName:@"login" parameters:params];
 }
 
 - (void)didReceiveHAMKVerificationWithResponse:(NSDictionary *)response {
-    srp_user_verify_meteor_session(self.srpUser, [response[@"HAMK"] cStringUsingEncoding:NSASCIIStringEncoding]);
+    srp_user_verify_meteor_session(_srpUser, [response[@"HAMK"] cStringUsingEncoding:NSASCIIStringEncoding]);
     if (srp_user_is_authenticated) {
-        self.sessionToken = response[@"token"];
+        _sessionToken = response[@"token"];
         self.userId = response[@"id"];
         [self.authDelegate authenticationWasSuccessful];
-        srp_user_delete(self.srpUser);
+        srp_user_delete(_srpUser);
         self.userIsLoggingIn = NO;
-        self.usingAuth = YES;
+        _usingAuth = YES;
         self.loggedIn = YES;
     }
 }
