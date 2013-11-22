@@ -134,8 +134,8 @@ NSString * const MeteorClientTransportErrorDomain = @"boundsj.objectiveddp.trans
     [self _handleChangedMessage:message msg:msg];
     
     if (msg && [msg isEqualToString:@"connected"]) {
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"connected" object:nil];
         self.connected = YES;
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"connected" object:nil];
         if (_sessionToken) {
             [self.ddp methodWithId:[BSONIdGenerator generate]
                             method:@"login"
