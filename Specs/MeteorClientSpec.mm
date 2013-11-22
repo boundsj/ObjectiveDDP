@@ -471,10 +471,12 @@ describe(@"MeteorClient", ^{
                 it(@"processes the message correctly", ^{
                     [meteorClient.collections[@"phrases"] count] should equal(0);
                     SEL postSel = @selector(postNotificationName:object:);
+                    SEL postObjSel = @selector(postNotificationName:object:userInfo:);
                     [NSNotificationCenter defaultCenter] should have_received(postSel).with(@"removed")
                                                                                       .and_with(meteorClient);
-                    [NSNotificationCenter defaultCenter] should have_received(postSel).with(@"phrases_removed")
-                                                                                      .and_with(meteorClient);
+                    [NSNotificationCenter defaultCenter] should have_received(postObjSel).with(@"phrases_removed")
+                                                                                         .and_with(meteorClient)
+                                                                                         .and_with(@{@"_id": @"id1"});
                 });
             });
         });
