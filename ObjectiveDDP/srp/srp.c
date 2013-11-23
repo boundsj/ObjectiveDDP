@@ -586,8 +586,6 @@ SRPUser * srp_user_new_with_a(SRP_HashAlgorithm alg,
     usr->a = a;
     usr->A = BN_new();
     usr->S = BN_new();
-    usr->Astr = 0;
-    usr->HAMK = 0;
     
     if (!usr->ng || !usr->a || !usr->A || !usr->S) goto err_exit;
     
@@ -642,12 +640,6 @@ void srp_user_delete( SRPUser * usr ) {
         usr->password = NULL;
         free((char *)usr->username);
         usr->username = NULL;
-        free((char *)usr->HAMK);
-        usr->HAMK = NULL;
-        free((char *)usr->Astr);
-        usr->Astr = NULL;
-        free((char *)usr->Sstr);
-        usr->Sstr = NULL;
         free(usr);
         usr = NULL;
     }
