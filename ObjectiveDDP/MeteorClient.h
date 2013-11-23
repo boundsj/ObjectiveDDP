@@ -20,13 +20,14 @@ typedef void(^MeteorClientMethodCallback)(NSDictionary *response, NSError *error
 
 @interface MeteorClient : NSObject<ObjectiveDDPDelegate>
 
-@property(strong, nonatomic) ObjectiveDDP *ddp;
-@property(weak, nonatomic) id<DDPAuthDelegate> authDelegate;
-@property(strong, nonatomic, readonly) NSMutableDictionary *collections;
-@property(copy, nonatomic, readonly) NSString *userId;
-@property(assign, nonatomic, readonly) BOOL connected;
-@property(assign, nonatomic, readonly) BOOL userIsLoggingIn;
-@property(assign, nonatomic, readonly) BOOL loggedIn;
+@property (nonatomic, strong) ObjectiveDDP *ddp;
+@property (nonatomic, weak) id<DDPAuthDelegate> authDelegate;
+@property (nonatomic, strong, readonly) NSMutableDictionary *collections;
+@property (nonatomic, copy, readonly) NSString *userId;
+@property (nonatomic, assign, readonly) BOOL connected;
+@property (nonatomic, assign, readonly) BOOL userIsLoggingIn;
+@property (nonatomic, assign, readonly) BOOL loggedIn;
+@property (nonatomic, assign, readonly) BOOL websocketReady;
 
 #pragma mark Request/response
 

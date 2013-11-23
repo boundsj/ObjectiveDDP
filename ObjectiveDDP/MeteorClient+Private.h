@@ -1,5 +1,6 @@
 #import "MeteorClient.h"
 
+// declare C linkage in case of C++ (tests)
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -8,11 +9,9 @@ extern "C" {
 }
 #endif
 
-@interface MeteorClient ()
-{
+@interface MeteorClient () {
 @public // for tests. This header is not exported anyway.
     NSMutableDictionary *_subscriptions;
-    BOOL _websocketReady;
     BOOL _usingAuth;
     NSMutableSet *_methodIds;
     NSMutableDictionary *_responseCallbacks;
@@ -21,21 +20,24 @@ extern "C" {
     NSString *_password;
     NSMutableDictionary *_subscriptionsParameters;
     NSString *_sessionToken;
-    // TODO: break out auth into separate class
     SRPUser *_srpUser;
 }
+
 // These are public and should be KVO compliant so use accessor instead of direct ivar access
-@property(copy, nonatomic, readwrite) NSString *userId;
-@property(assign, nonatomic, readwrite) BOOL connected;
-@property(assign, nonatomic, readwrite) BOOL loggedIn;
-@property(assign, nonatomic, readwrite) BOOL userIsLoggingIn;
-@property(strong, nonatomic, readwrite) NSMutableDictionary *collections;
+@property (nonatomic, copy, readwrite) NSString *userId;
+@property (nonatomic, assign, readwrite) BOOL connected;
+@property (nonatomic, assign, readwrite) BOOL loggedIn;
+@property (nonatomic, assign, readwrite) BOOL userIsLoggingIn;
+@property (nonatomic, strong, readwrite) NSMutableDictionary *collections;
+@property (nonatomic, assign, readwrite) BOOL websocketReady;
 
 - (void)didReceiveLoginChallengeWithResponse:(NSDictionary *)response;
 - (void)didReceiveHAMKVerificationWithResponse:(NSDictionary *)response;
+
 @end
 
 @interface MeteorClient (Parsing)
+
 - (void)_handleMethodResultMessageWithMessageId:(NSString *)messageId message:(NSDictionary *)message msg:(NSString *)msg;
 - (void)_handleLoginChallengeResponse:(NSDictionary *)message msg:(NSString *)msg;
 - (void)_handleLoginError:(NSDictionary *)message msg:(NSString *)msg;
@@ -43,4 +45,5 @@ extern "C" {
 - (void)_handleAddedMessage:(NSDictionary *)message msg:(NSString *)msg;
 - (void)_handleRemovedMessage:(NSDictionary *)message msg:(NSString *)msg;
 - (void)_handleChangedMessage:(NSDictionary *)message msg:(NSString *)msg;
+
 @end

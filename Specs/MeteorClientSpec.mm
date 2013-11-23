@@ -21,7 +21,7 @@ describe(@"MeteorClient", ^{
     });
 
     it(@"is correctly initialized", ^{
-        meteorClient->_websocketReady should_not be_truthy;
+        meteorClient.websocketReady should_not be_truthy;
         meteorClient.connected should_not be_truthy;
         meteorClient->_usingAuth should_not be_truthy;
         meteorClient.loggedIn should_not be_truthy;
@@ -183,7 +183,7 @@ describe(@"MeteorClient", ^{
         });
 
         it(@"sets the web socket state to ready", ^{
-            meteorClient->_websocketReady should be_truthy;
+            meteorClient.websocketReady should be_truthy;
             [meteorClient.collections count] should equal(0);
             ddp should have_received(@selector(connectWithSession:version:support:));
         });
@@ -197,24 +197,24 @@ describe(@"MeteorClient", ^{
 
     describe(@"#didReceiveConnectionClose", ^{
         beforeEach(^{
-            meteorClient->_websocketReady = YES;
+            meteorClient.websocketReady = YES;
             meteorClient.connected = YES;
             [meteorClient didReceiveConnectionClose];
         });
 
         it(@"resets collections and reconnects web socket", ^{
-            meteorClient->_websocketReady should_not be_truthy;
+            meteorClient.websocketReady should_not be_truthy;
             meteorClient.connected should_not be_truthy;
             ddp should have_received(@selector(connectWebSocket));
         });
     });
     
-    fdescribe(@"#didReceiveConnectionError", ^{
+    describe(@"#didReceiveConnectionError", ^{
         __block NSError *rejectError;
         
         beforeEach(^{
             spy_on([NSNotificationCenter defaultCenter]);
-            meteorClient->_websocketReady = YES;
+            meteorClient.websocketReady = YES;
             meteorClient.connected = YES;
             [meteorClient callMethodName:@"robots" parameters:nil responseCallback:^(NSDictionary *response, NSError *error) {
                 rejectError = error;
@@ -225,7 +225,7 @@ describe(@"MeteorClient", ^{
         });
         
         it(@"resets collections and reconnects web socket", ^{
-            meteorClient->_websocketReady should_not be_truthy;
+            meteorClient.websocketReady should_not be_truthy;
             meteorClient.connected should_not be_truthy;
             meteorClient->_methodIds.count should equal(0);
             meteorClient->_responseCallbacks.count should equal(0);

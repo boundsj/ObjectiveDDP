@@ -148,7 +148,7 @@ NSString * const MeteorClientTransportErrorDomain = @"boundsj.objectiveddp.trans
 }
 
 - (void)didOpen {
-    _websocketReady = YES;
+    self.websocketReady = YES;
     [self resetCollections];
     [self.ddp connectWithSession:nil version:@"pre1" support:nil];
     [[NSNotificationCenter defaultCenter] postNotificationName:MeteorClientDidConnectNotification object:self];
@@ -176,7 +176,7 @@ NSString * const MeteorClientTransportErrorDomain = @"boundsj.objectiveddp.trans
 }
 
 - (void)_handleConnectionError {
-    _websocketReady = NO;
+    self.websocketReady = NO;
     self.connected = NO;
     [self _invalidateUnresolvedMethods];
     [self performSelector:@selector(_reconnect)

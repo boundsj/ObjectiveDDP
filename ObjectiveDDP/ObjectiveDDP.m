@@ -6,16 +6,14 @@
 - (id)initWithURLString:(NSString *)urlString
                delegate:(id <ObjectiveDDPDelegate>)delegate {
     self = [super init];
-    
     if (self) {
         self.urlString = urlString;
         self.delegate = delegate;
     }
-    
     return self;
 }
 
-#pragma mark Public API
+#pragma mark - Public API
 
 // connect to the underlying websocket
 - (void)connectWebSocket {
@@ -27,12 +25,9 @@
 //  session: string (if trying to connectWebSocket to an existing DDP session)
 //  version: string (the proposed protocol version)
 //  support: array of strings (protocol versions supported by the client, in order of preference)
-- (void)connectWithSession:(NSString *)session
-                   version:(NSString *)version
-                   support:(NSString *)support {
+- (void)connectWithSession:(NSString *)session version:(NSString *)version support:(NSString *)support {
     NSDictionary *fields = @{@"msg": @"connect", @"version": version};
     NSString *json = [self _buildJSONWithFields:fields parameters:nil];
-
     [self.webSocket send:json];
 }
 
@@ -40,12 +35,9 @@
 //  id: string (an arbitrary client-determined identifier for this subscription)
 //  name: string (the name of the subscription)
 //  params: optional array of EJSON items (parameters to the subscription)
-- (void)subscribeWith:(NSString *)id
-                 name:(NSString *)name
-           parameters:(NSArray *)parameters {
+- (void)subscribeWith:(NSString *)id name:(NSString *)name parameters:(NSArray *)parameters {
     NSDictionary *fields = @{@"msg": @"sub", @"name": name, @"id": id};
     NSString *json = [self _buildJSONWithFields:fields parameters:parameters];
-
     [self.webSocket send:json];
 }
 
@@ -54,7 +46,6 @@
 - (void)unsubscribeWith:(NSString *)id {
     NSDictionary *fields = @{@"msg": @"unsub", @"id": id};
     NSString *json = [self _buildJSONWithFields:fields parameters:nil];
-    
     [self.webSocket send:json];
 }
 
@@ -62,29 +53,20 @@
 //  method: string (method name)
 //  params: optional array of EJSON items (parameters to the method)
 //  id: string (an arbitrary client-determined identifier for this method call)
-- (void)methodWithId:(NSString *)id
-              method:(NSString *)method
-          parameters:(NSArray *)parameters {
+- (void)methodWithId:(NSString *)id method:(NSString *)method parameters:(NSArray *)parameters {
     NSDictionary *fields = @{@"msg": @"method", @"method": method, @"id": id};
     NSString *json = [self _buildJSONWithFields:fields parameters:parameters];
-
     [self.webSocket send:json];
 }
 
-#pragma mark private utilities
+#pragma mark - Internal 
 
-- (NSString *)_buildJSONWithFields:(NSDictionary *)fields
-                        parameters:(NSArray *)parameters {
+- (NSString *)_buildJSONWithFields:(NSDictionary *)fields parameters:(NSArray *)parameters {
     NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithDictionary:fields];
-    if (parameters) {
+    if (parameters)
         [dict setObject:parameters forKey:@"params"];
-    }
-    NSData *data = [NSJSONSerialization dataWithJSONObject:dict
-                                                   options:kNilOptions
-                                                     error:nil];
-
-    return [[NSString alloc] initWithData:data
-                                 encoding:NSUTF8StringEncoding];
+    NSData *data = [NSJSONSerialization dataWithJSONObject:dict options:kNilOptions error:nil];
+    return [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
 }
 
 - (void)_setupWebSocket {
@@ -100,22 +82,17 @@
     [self _setupWebSocket];
 }
 
-#pragma mark <SRWebSocketDelegate>
+#pragma mark - <SRWebSocketDelegate>
 
 - (void)webSocketDidOpen:(SRWebSocket *)webSocket {
     [self.delegate didOpen];
 }
 
-- (void)webSocket:(SRWebSocket *)webSocket
- didFailWithError:(NSError *)error {
+- (void)webSocket:(SRWebSocket *)webSocket didFailWithError:(NSError *)error {
     [self.delegate didReceiveConnectionError:error];
 }
 
-- (void)webSocket:(SRWebSocket *)webSocket
- didCloseWithCode:(NSInteger)code
-           reason:(NSString *)reason
-         wasClean:(BOOL)wasClean {
-    NSLog(@"Websocket Closed: %i, %@, %i", code, reason, wasClean);
+- (void)webSocket:(SRWebSocket *)webSocket didCloseWithCode:(NSInteger)code reason:(NSString *)reason wasClean:(BOOL)wasClean {
     [self.delegate didReceiveConnectionClose];
 }
 

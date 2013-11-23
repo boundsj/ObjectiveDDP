@@ -5,31 +5,18 @@
 
 @interface ObjectiveDDP : NSObject <SRWebSocketDelegate>
 
-@property (copy, nonatomic) NSString *urlString;
-@property (assign, nonatomic) id <ObjectiveDDPDelegate> delegate;
-@property (strong, nonatomic) SRWebSocket *webSocket;
+@property (nonatomic, copy) NSString *urlString;
+@property (nonatomic, assign) id <ObjectiveDDPDelegate> delegate;
+@property (nonatomic, strong) SRWebSocket *webSocket;
 
-- (id)initWithURLString:(NSString *)urlString
-               delegate:(id <ObjectiveDDPDelegate>)delegate;
-
+- (id)initWithURLString:(NSString *)urlString delegate:(id <ObjectiveDDPDelegate>)delegate;
 - (void)connectWebSocket;
-
-- (void)connectWithSession:(NSString *)session
-                   version:(NSString *)version
-                   support:(NSString *)support;
-
-- (void)subscribeWith:(NSString *)id
-                 name:(NSString *)name
-           parameters:(NSArray *)parameters;
-
+- (void)connectWithSession:(NSString *)session version:(NSString *)version support:(NSString *)support;
+- (void)subscribeWith:(NSString *)id name:(NSString *)name parameters:(NSArray *)parameters;
 - (void)unsubscribeWith:(NSString *)id;
-
-- (void)methodWithId:(NSString *)id
-              method:(NSString *)method
-          parameters:(NSArray *)parameters;
+- (void)methodWithId:(NSString *)id method:(NSString *)method parameters:(NSArray *)parameters;
 
 @end
-
 
 @protocol ObjectiveDDPDelegate
 
