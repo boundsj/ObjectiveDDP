@@ -103,13 +103,11 @@
 #pragma mark <SRWebSocketDelegate>
 
 - (void)webSocketDidOpen:(SRWebSocket *)webSocket {
-    NSLog(@"Websocket Opened");
     [self.delegate didOpen];
 }
 
 - (void)webSocket:(SRWebSocket *)webSocket
  didFailWithError:(NSError *)error {
-    NSLog(@"Websocket Error: %@", error);
     [self.delegate didReceiveConnectionError:error];
 }
 
