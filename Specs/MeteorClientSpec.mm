@@ -233,7 +233,7 @@ describe(@"MeteorClient", ^{
         });
         
         it(@"rejects unresolved callbacks", ^{
-            NSError *expectedError = [NSError errorWithDomain:MeteorClientTransportErrorDomain code:MeteorClientNotConnectedError userInfo:@{NSLocalizedDescriptionKey: @"You were disconnected"}];
+            NSError *expectedError = [NSError errorWithDomain:MeteorClientTransportErrorDomain code:MeteorClientErrorNotConnected userInfo:@{NSLocalizedDescriptionKey: @"You were disconnected"}];
             rejectError should equal(expectedError);
         });
 

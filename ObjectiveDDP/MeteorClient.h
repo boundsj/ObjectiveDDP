@@ -9,27 +9,24 @@ extern NSString * const MeteorClientDidDisconnectNotification;
     from the backend, they will have the "errorType" key as their error domain. */
 extern NSString * const MeteorClientTransportErrorDomain;
 
-enum {
+NS_ENUM(NSUInteger, MeteorClientError) {
     /** Can't perform request because client isn't connected. */
-    MeteorClientNotConnectedError = 1,
-    
+    MeteorClientErrorNotConnected,
     /** Request failed because websocket got disconnected before response arrived. */
-    MeteorClientDisconnectedError,
+    MeteorClientErrorDisconnectedBeforeCallbackComplete
 };
 
 typedef void(^MeteorClientMethodCallback)(NSDictionary *response, NSError *error);
 
-
 @interface MeteorClient : NSObject<ObjectiveDDPDelegate>
+
 @property(strong, nonatomic) ObjectiveDDP *ddp;
 @property(weak, nonatomic) id<DDPAuthDelegate> authDelegate;
-
 @property(strong, nonatomic, readonly) NSMutableDictionary *collections;
 @property(copy, nonatomic, readonly) NSString *userId;
 @property(assign, nonatomic, readonly) BOOL connected;
 @property(assign, nonatomic, readonly) BOOL userIsLoggingIn;
 @property(assign, nonatomic, readonly) BOOL loggedIn;
-
 
 #pragma mark Request/response
 
@@ -55,10 +52,13 @@ typedef void(^MeteorClientMethodCallback)(NSDictionary *response, NSError *error
 
 - (void)logonWithUsername:(NSString *)username password:(NSString *)password;
 - (void)logout;
+
 @end
 
 @protocol DDPAuthDelegate <NSObject>
+
 - (void)authenticationWasSuccessful;
 - (void)authenticationFailed:(NSString *)reason;
+
 @end
 

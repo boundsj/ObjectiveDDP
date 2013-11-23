@@ -55,7 +55,7 @@ NSString * const MeteorClientTransportErrorDomain = @"boundsj.objectiveddp.trans
 - (NSString *)callMethodName:(NSString *)methodName parameters:(NSArray *)parameters responseCallback:(MeteorClientMethodCallback)responseCallback {
     if (![self okToSend]) {
         NSDictionary *userInfo = @{NSLocalizedDescriptionKey: @"You are not connected"};
-        NSError *notConnectedError = [NSError errorWithDomain:MeteorClientTransportErrorDomain code:MeteorClientNotConnectedError userInfo:userInfo];
+        NSError *notConnectedError = [NSError errorWithDomain:MeteorClientTransportErrorDomain code:MeteorClientErrorNotConnected userInfo:userInfo];
         responseCallback(nil, notConnectedError);
         return nil;
     }
@@ -188,7 +188,7 @@ NSString * const MeteorClientTransportErrorDomain = @"boundsj.objectiveddp.trans
 - (void)_invalidateUnresolvedMethods {
     for (NSString *methodId in _methodIds) {
         MeteorClientMethodCallback callback = _responseCallbacks[methodId];
-        callback(nil, [NSError errorWithDomain:MeteorClientTransportErrorDomain code:MeteorClientNotConnectedError userInfo:@{NSLocalizedDescriptionKey: @"You were disconnected"}]);
+        callback(nil, [NSError errorWithDomain:MeteorClientTransportErrorDomain code:MeteorClientErrorDisconnectedBeforeCallbackComplete userInfo:@{NSLocalizedDescriptionKey: @"You were disconnected"}]);
     }
     [_methodIds removeAllObjects];
     [_responseCallbacks removeAllObjects];
