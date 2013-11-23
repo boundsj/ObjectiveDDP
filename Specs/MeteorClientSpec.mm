@@ -209,7 +209,7 @@ describe(@"MeteorClient", ^{
         });
     });
     
-    describe(@"#didReceiveConnectionError", ^{
+    fdescribe(@"#didReceiveConnectionError", ^{
         __block NSError *rejectError;
         
         beforeEach(^{
@@ -233,7 +233,7 @@ describe(@"MeteorClient", ^{
         });
         
         it(@"rejects unresolved callbacks", ^{
-            NSError *expectedError = [NSError errorWithDomain:MeteorClientTransportErrorDomain code:MeteorClientErrorNotConnected userInfo:@{NSLocalizedDescriptionKey: @"You were disconnected"}];
+            NSError *expectedError = [NSError errorWithDomain:MeteorClientTransportErrorDomain code:MeteorClientErrorDisconnectedBeforeCallbackComplete userInfo:@{NSLocalizedDescriptionKey: @"You were disconnected"}];
             rejectError should equal(expectedError);
         });
 
@@ -247,7 +247,7 @@ describe(@"MeteorClient", ^{
     describe(@"#didReceiveMessage", ^{
         __block NSString *key;
         
-        describe(@"async method API", ^{
+        describe(@"RPC async method response", ^{
             __block NSDictionary *returnedResponse;
             __block NSError *returnedError;
             

@@ -8,7 +8,6 @@ NSString * const MeteorClientDidConnectNotification = @"boundsj.objectiveddp.con
 NSString * const MeteorClientDidDisconnectNotification = @"boundsj.objectiveddp.disconnected";
 NSString * const MeteorClientTransportErrorDomain = @"boundsj.objectiveddp.transport";
 
-
 @implementation MeteorClient
 
 - (id)init {
@@ -32,17 +31,6 @@ NSString * const MeteorClientTransportErrorDomain = @"boundsj.objectiveddp.trans
 
 - (void)sendWithMethodName:(NSString *)methodName parameters:(NSArray *)parameters {
     [self sendWithMethodName:methodName parameters:parameters notifyOnResponse:NO];
-}
-
-- (NSString *)_send:(BOOL)notify parameters:(NSArray *)parameters methodName:(NSString *)methodName {
-    NSString *methodId = [BSONIdGenerator generate];
-    if(notify == YES) {
-        [_methodIds addObject:methodId];
-    }
-    [self.ddp methodWithId:methodId
-                    method:methodName
-                parameters:parameters];
-    return methodId;
 }
 
 -(NSString *)sendWithMethodName:(NSString *)methodName parameters:(NSArray *)parameters notifyOnResponse:(BOOL)notify {
@@ -82,7 +70,7 @@ NSString * const MeteorClientTransportErrorDomain = @"boundsj.objectiveddp.trans
     [self.ddp subscribeWith:uid name:subscriptionName parameters:parameters];
 }
 
--(void)removeSubscription:(NSString *)subscriptionName {
+- (void)removeSubscription:(NSString *)subscriptionName {
     if (![self okToSend]) {
         return;
     }
@@ -162,9 +150,21 @@ NSString * const MeteorClientTransportErrorDomain = @"boundsj.objectiveddp.trans
 - (void)didOpen {
     _websocketReady = YES;
     [self resetCollections];
-    // TODO: pre1 should be a setting
     [self.ddp connectWithSession:nil version:@"pre1" support:nil];
     [[NSNotificationCenter defaultCenter] postNotificationName:MeteorClientDidConnectNotification object:self];
+}
+
+#pragma mark - Internal
+
+- (NSString *)_send:(BOOL)notify parameters:(NSArray *)parameters methodName:(NSString *)methodName {
+    NSString *methodId = [BSONIdGenerator generate];
+    if(notify == YES) {
+        [_methodIds addObject:methodId];
+    }
+    [self.ddp methodWithId:methodId
+                    method:methodName
+                parameters:parameters];
+    return methodId;
 }
 
 - (void)didReceiveConnectionError:(NSError *)error {
@@ -201,7 +201,7 @@ NSString * const MeteorClientTransportErrorDomain = @"boundsj.objectiveddp.trans
     [self.ddp connectWebSocket];
 }
 
-#pragma mark Meteor Data Managment
+#pragma mark - Meteor Data Managment
 
 - (void)_makeMeteorDataSubscriptions {
     for (NSString *key in [_subscriptions allKeys]) {
@@ -212,7 +212,7 @@ NSString * const MeteorClientTransportErrorDomain = @"boundsj.objectiveddp.trans
     }
 }
 
-# pragma mark Meteor SRP Wrapper
+# pragma mark - Meteor SRP Wrapper
 
 - (NSString *)generateAuthVerificationKeyWithUsername:(NSString *)username password:(NSString *)password {
     _userName = username;
