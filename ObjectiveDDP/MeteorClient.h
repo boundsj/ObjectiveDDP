@@ -31,10 +31,8 @@ typedef void(^MeteorClientMethodCallback)(NSDictionary *response, NSError *error
 @property (nonatomic, weak) id<DDPAuthDelegate> authDelegate;
 @property (nonatomic, strong, readonly) NSMutableDictionary *collections;
 @property (nonatomic, copy, readonly) NSString *userId;
-@property (nonatomic, assign, readonly) BOOL connected;
-@property (nonatomic, assign, readonly) BOOL userIsLoggingIn;
-@property (nonatomic, assign, readonly) BOOL loggedIn;
 @property (nonatomic, assign, readonly) BOOL websocketReady;
+@property (nonatomic, assign, readonly) BOOL connected;
 @property (nonatomic, assign, readonly) AuthState authState;
 
 #pragma mark - Methods

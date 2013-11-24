@@ -86,7 +86,8 @@ NSString * const MeteorClientTransportErrorDomain = @"boundsj.objectiveddp.trans
 }
 
 - (void)logonWithUsername:(NSString *)username password:(NSString *)password {
-    if (self.userIsLoggingIn) return;
+    if (self.authState == AuthStateLoggingIn)
+        return;
     NSArray *params = @[@{@"A": [self generateAuthVerificationKeyWithUsername:username password:password],
                           @"user": @{@"email":username}}];
     [self _setAuthStateToLoggingIn];
@@ -114,7 +115,7 @@ NSString * const MeteorClientTransportErrorDomain = @"boundsj.objectiveddp.trans
     [self.ddp methodWithId:[BSONIdGenerator generate]
                     method:@"logout"
                 parameters:nil];
-    self.loggedIn = NO;
+    [self _setAuthStatetoLoggedOut];
 }
 
 #pragma mark <ObjectiveDDPDelegate>
@@ -233,33 +234,15 @@ NSString * const MeteorClientTransportErrorDomain = @"boundsj.objectiveddp.trans
     return NO;
 }
 
-#pragma mark - Temporary Internal
-
-/***
- *
- * Temporary internal methods to manage state until transition to enums only
- * is complate
- *
- ***/
-
 - (void)_setAuthStateToLoggingIn {
-    _usingAuth = NO;
-    self.loggedIn = NO;
-    self.userIsLoggingIn = YES;
     self.authState = AuthStateLoggingIn;
 }
 
 - (void)_setAuthStateToLoggedIn {
-    self.userIsLoggingIn = NO;
-    _usingAuth = YES;
-    self.loggedIn = YES;
     self.authState = AuthStateLoggedIn;
 }
 
 - (void)_setAuthStatetoLoggedOut {
-    self.loggedIn = NO;
-    _usingAuth = YES;
-    self.userIsLoggingIn = NO;
     self.authState = AuthStateLoggedOut;
 }
 

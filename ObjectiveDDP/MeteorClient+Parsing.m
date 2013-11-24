@@ -45,7 +45,7 @@ static int LOGON_RETRY_MAX = 5;
     if([msg isEqualToString:@"result"]
        && message[@"error"]
        && [message[@"error"][@"error"] integerValue] == 403) {
-        self.userIsLoggingIn = NO;
+        [self _setAuthStatetoLoggedOut];
         if (++_retryAttempts < LOGON_RETRY_MAX && self.connected) {
             [self logonWithUsername:_userName password:_password];
         } else {

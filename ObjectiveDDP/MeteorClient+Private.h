@@ -12,7 +12,6 @@ extern "C" {
 @interface MeteorClient () {
 @public // for tests. This header is not exported anyway.
     NSMutableDictionary *_subscriptions;
-    BOOL _usingAuth;
     NSMutableSet *_methodIds;
     NSMutableDictionary *_responseCallbacks;
     MeteorClientMethodCallback _logonMethodCallback;
@@ -27,8 +26,6 @@ extern "C" {
 // These are public and should be KVO compliant so use accessor instead of direct ivar access
 @property (nonatomic, copy, readwrite) NSString *userId;
 @property (nonatomic, assign, readwrite) BOOL connected;
-@property (nonatomic, assign, readwrite) BOOL loggedIn;
-@property (nonatomic, assign, readwrite) BOOL userIsLoggingIn;
 @property (nonatomic, strong, readwrite) NSMutableDictionary *collections;
 @property (nonatomic, assign, readwrite) BOOL websocketReady;
 @property (nonatomic, assign, readwrite) AuthState authState;

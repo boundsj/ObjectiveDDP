@@ -23,8 +23,6 @@ describe(@"MeteorClient", ^{
     it(@"is correctly initialized", ^{
         meteorClient.websocketReady should_not be_truthy;
         meteorClient.connected should_not be_truthy;
-        meteorClient->_usingAuth should_not be_truthy;
-        meteorClient.loggedIn should_not be_truthy;
         meteorClient.collections should_not be_nil;
         meteorClient->_subscriptions should_not be_nil;
         meteorClient.authState should equal(AuthStateNoAuth);
