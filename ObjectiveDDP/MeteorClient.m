@@ -2,7 +2,6 @@
 #import "MeteorClient.h"
 #import "MeteorClient+Private.h"
 #import "BSONIdGenerator.h"
-#import "srp.h"
 
 NSString * const MeteorClientDidConnectNotification = @"boundsj.objectiveddp.connected";
 NSString * const MeteorClientDidDisconnectNotification = @"boundsj.objectiveddp.disconnected";
@@ -41,12 +40,9 @@ NSString * const MeteorClientTransportErrorDomain = @"boundsj.objectiveddp.trans
 }
 
 - (NSString *)callMethodName:(NSString *)methodName parameters:(NSArray *)parameters responseCallback:(MeteorClientMethodCallback)responseCallback {
-    if (![self okToSend]) {
-        NSDictionary *userInfo = @{NSLocalizedDescriptionKey: @"You are not connected"};
-        NSError *notConnectedError = [NSError errorWithDomain:MeteorClientTransportErrorDomain code:MeteorClientErrorNotConnected userInfo:userInfo];
-        responseCallback(nil, notConnectedError);
+    if ([self _rejectIfNotConnected:responseCallback]) {
         return nil;
-    }
+    };
     NSString *methodId = [self _send:YES parameters:parameters methodName:methodName];
     if (responseCallback) {
         _responseCallbacks[methodId] = [responseCallback copy];
@@ -83,7 +79,7 @@ NSString * const MeteorClientTransportErrorDomain = @"boundsj.objectiveddp.trans
 }
 
 - (BOOL)okToSend {
-    if (!self.connected || (_usingAuth && !_loggedIn)) {
+    if (!self.connected || self.authState == AuthStateLoggedOut) {
         return NO;
     }
     return YES;
@@ -93,10 +89,25 @@ NSString * const MeteorClientTransportErrorDomain = @"boundsj.objectiveddp.trans
     if (self.userIsLoggingIn) return;
     NSArray *params = @[@{@"A": [self generateAuthVerificationKeyWithUsername:username password:password],
                           @"user": @{@"email":username}}];
-    _usingAuth = NO;
-    self.loggedIn = NO;
-    self.userIsLoggingIn = YES;
+    [self _setAuthStateToLoggingIn];
     [self sendWithMethodName:@"beginPasswordExchange" parameters:params];
+}
+
+- (void)logonWithUsername:(NSString *)username password:(NSString *)password responseCallback:(MeteorClientMethodCallback)responseCallback {
+    if (self.authState == AuthStateLoggingIn) {
+        NSString *errorDesc = [NSString stringWithFormat:@"You must wait for the current logon request to finish before sending another."];
+        NSError *logonError = [NSError errorWithDomain:MeteorClientTransportErrorDomain code:MeteorClientErrorLogonRejected userInfo:@{NSLocalizedDescriptionKey: errorDesc}];
+        responseCallback(nil, logonError);
+        return;
+    }
+    if ([self _rejectIfNotConnected:responseCallback]) {
+        return;
+    }
+    NSArray *params = @[@{@"A": [self generateAuthVerificationKeyWithUsername:username password:password],
+                          @"user": @{@"email":username}}];
+    [self _setAuthStateToLoggingIn];
+    [self callMethodName:@"beginPasswordExchange" parameters:params responseCallback:nil];
+    _logonMethodCallback = responseCallback;
 }
 
 - (void)logout {
@@ -154,6 +165,14 @@ NSString * const MeteorClientTransportErrorDomain = @"boundsj.objectiveddp.trans
     [[NSNotificationCenter defaultCenter] postNotificationName:MeteorClientDidConnectNotification object:self];
 }
 
+- (void)didReceiveConnectionError:(NSError *)error {
+    [self _handleConnectionError];
+}
+
+- (void)didReceiveConnectionClose {
+    [self _handleConnectionError];
+}
+
 #pragma mark - Internal
 
 - (NSString *)_send:(BOOL)notify parameters:(NSArray *)parameters methodName:(NSString *)methodName {
@@ -165,14 +184,6 @@ NSString * const MeteorClientTransportErrorDomain = @"boundsj.objectiveddp.trans
                     method:methodName
                 parameters:parameters];
     return methodId;
-}
-
-- (void)didReceiveConnectionError:(NSError *)error {
-    [self _handleConnectionError];
-}
-
-- (void)didReceiveConnectionClose {
-    [self _handleConnectionError];
 }
 
 - (void)_handleConnectionError {
@@ -201,8 +212,6 @@ NSString * const MeteorClientTransportErrorDomain = @"boundsj.objectiveddp.trans
     [self.ddp connectWebSocket];
 }
 
-#pragma mark - Meteor Data Managment
-
 - (void)_makeMeteorDataSubscriptions {
     for (NSString *key in [_subscriptions allKeys]) {
         NSString *uid = [BSONIdGenerator generate];
@@ -212,7 +221,49 @@ NSString * const MeteorClientTransportErrorDomain = @"boundsj.objectiveddp.trans
     }
 }
 
-# pragma mark - Meteor SRP Wrapper
+- (BOOL)_rejectIfNotConnected:(MeteorClientMethodCallback)responseCallback {
+    if (![self okToSend]) {
+        NSDictionary *userInfo = @{NSLocalizedDescriptionKey: @"You are not connected"};
+        NSError *notConnectedError = [NSError errorWithDomain:MeteorClientTransportErrorDomain code:MeteorClientErrorNotConnected userInfo:userInfo];
+        if (responseCallback) {
+            responseCallback(nil, notConnectedError);
+        }
+        return YES;
+    }
+    return NO;
+}
+
+#pragma mark - Temporary Internal
+
+/***
+ *
+ * Temporary internal methods to manage state until transition to enums only
+ * is complate
+ *
+ ***/
+
+- (void)_setAuthStateToLoggingIn {
+    _usingAuth = NO;
+    self.loggedIn = NO;
+    self.userIsLoggingIn = YES;
+    self.authState = AuthStateLoggingIn;
+}
+
+- (void)_setAuthStateToLoggedIn {
+    self.userIsLoggingIn = NO;
+    _usingAuth = YES;
+    self.loggedIn = YES;
+    self.authState = AuthStateLoggedIn;
+}
+
+- (void)_setAuthStatetoLoggedOut {
+    self.loggedIn = NO;
+    _usingAuth = YES;
+    self.userIsLoggingIn = NO;
+    self.authState = AuthStateLoggedOut;
+}
+
+# pragma mark - SRP Auth Internal
 
 - (NSString *)generateAuthVerificationKeyWithUsername:(NSString *)username password:(NSString *)password {
     _userName = username;
@@ -222,34 +273,6 @@ NSString * const MeteorClientTransportErrorDomain = @"boundsj.objectiveddp.trans
     _srpUser = srp_user_new(SRP_SHA256, SRP_NG_1024, username_str, password_str, NULL, NULL);
     srp_user_start_authentication(_srpUser);
     return [NSString stringWithCString:_srpUser->Astr encoding:NSASCIIStringEncoding];
-}
-
-- (void)didReceiveLoginChallengeWithResponse:(NSDictionary *)response {
-    NSString *B_string = response[@"B"];
-    const char *B = [B_string cStringUsingEncoding:NSASCIIStringEncoding];
-    NSString *salt_string = response[@"salt"];
-    const char *salt = [salt_string cStringUsingEncoding:NSASCIIStringEncoding];
-    NSString *identity_string = response[@"identity"];
-    const char *identity = [identity_string cStringUsingEncoding:NSASCIIStringEncoding];
-    const char *password_str = [_password cStringUsingEncoding:NSASCIIStringEncoding];
-    const char *Mstr;
-    srp_user_process_meteor_challenge(_srpUser, password_str, salt, identity, B, &Mstr);
-    NSString *M_final = [NSString stringWithCString:Mstr encoding:NSASCIIStringEncoding];
-    NSArray *params = @[@{@"srp":@{@"M":M_final}}];
-    [self sendWithMethodName:@"login" parameters:params];
-}
-
-- (void)didReceiveHAMKVerificationWithResponse:(NSDictionary *)response {
-    srp_user_verify_meteor_session(_srpUser, [response[@"HAMK"] cStringUsingEncoding:NSASCIIStringEncoding]);
-    if (srp_user_is_authenticated) {
-        _sessionToken = response[@"token"];
-        self.userId = response[@"id"];
-        [self.authDelegate authenticationWasSuccessful];
-        srp_user_delete(_srpUser);
-        self.userIsLoggingIn = NO;
-        _usingAuth = YES;
-        self.loggedIn = YES;
-    }
 }
 
 @end

@@ -10,10 +10,17 @@ extern NSString * const MeteorClientDidDisconnectNotification;
 extern NSString * const MeteorClientTransportErrorDomain;
 
 NS_ENUM(NSUInteger, MeteorClientError) {
-    /** Can't perform request because client isn't connected. */
     MeteorClientErrorNotConnected,
-    /** Request failed because websocket got disconnected before response arrived. */
-    MeteorClientErrorDisconnectedBeforeCallbackComplete
+    MeteorClientErrorDisconnectedBeforeCallbackComplete,
+    MeteorClientErrorLogonRejected
+};
+
+typedef NS_ENUM(NSUInteger, AuthState) {
+    AuthStateNoAuth,
+    AuthStateLoggingIn,
+    AuthStateLoggedIn,
+    /* implies using auth but not currently authorized */
+    AuthStateLoggedOut
 };
 
 typedef void(^MeteorClientMethodCallback)(NSDictionary *response, NSError *error);
@@ -28,33 +35,26 @@ typedef void(^MeteorClientMethodCallback)(NSDictionary *response, NSError *error
 @property (nonatomic, assign, readonly) BOOL userIsLoggingIn;
 @property (nonatomic, assign, readonly) BOOL loggedIn;
 @property (nonatomic, assign, readonly) BOOL websocketReady;
+@property (nonatomic, assign, readonly) AuthState authState;
 
-#pragma mark Request/response
+#pragma mark - Methods
 
-/** Send a request with the given methodName and parameters.
-    @param notify Whether to send a "response_%d" NSNotification when response comes back
-*/
-- (NSString *)sendWithMethodName:(NSString *)methodName parameters:(NSArray *)parameters notifyOnResponse:(BOOL)notify;
-
-/** Like sendWithMethodName:parameters:notifyOnResponse:YES but also calls your provided
-    callback when the response comes back. */
 - (NSString *)callMethodName:(NSString *)methodName parameters:(NSArray *)parameters responseCallback:(MeteorClientMethodCallback)asyncCallback;
-
-/** Fire-and-forget. Forwards to sendWithMethodName:parameters:notifyOnResponse:NO. */
-- (void)sendWithMethodName:(NSString *)methodName parameters:(NSArray *)parameters;
-
-#pragma mark Collections and subscriptions
-
+- (void)logonWithUsername:(NSString *)username password:(NSString *)password responseCallback:(MeteorClientMethodCallback)responseCallback;
 - (void)addSubscription:(NSString *)subscriptionName;
 - (void)addSubscription:(NSString *)subscriptionName withParameters:(NSArray *)parameters;
 - (void)removeSubscription:(NSString *)subscriptionName;
-
-#pragma mark Login
-
-- (void)logonWithUsername:(NSString *)username password:(NSString *)password;
 - (void)logout;
 
+// Deprecated methods
+
+- (void)logonWithUsername:(NSString *)username password:(NSString *)password __attribute__((deprecated("use logonWithUsername:password:responseCallback: instead")));
+- (NSString *)sendWithMethodName:(NSString *)methodName parameters:(NSArray *)parameters notifyOnResponse:(BOOL)notify __attribute__((deprecated("use callMethodName:parameters:responseCallback: instead")));
+- (void)sendWithMethodName:(NSString *)methodName parameters:(NSArray *)parameters __attribute__((deprecated("use callMethodName:parameters:responseCallback: instead")));
+
 @end
+
+#pragma mark - <DDPAuthDelegate>
 
 @protocol DDPAuthDelegate <NSObject>
 
@@ -62,4 +62,3 @@ typedef void(^MeteorClientMethodCallback)(NSDictionary *response, NSError *error
 - (void)authenticationFailed:(NSString *)reason;
 
 @end
-

@@ -1,4 +1,5 @@
 #import "MeteorClient+Private.h"
+#import "srp.h"
 
 @implementation MeteorClient (Parsing)
 
@@ -43,12 +44,18 @@ static int LOGON_RETRY_MAX = 5;
 - (void)_handleLoginError:(NSDictionary *)message msg:(NSString *)msg {
     if([msg isEqualToString:@"result"]
        && message[@"error"]
-       && [message[@"error"][@"error"]integerValue] == 403) {
+       && [message[@"error"][@"error"] integerValue] == 403) {
         self.userIsLoggingIn = NO;
         if (++_retryAttempts < LOGON_RETRY_MAX && self.connected) {
             [self logonWithUsername:_userName password:_password];
         } else {
             _retryAttempts = 0;
+            NSString *errorDesc = [NSString stringWithFormat:@"Logon failed with error %@", @403];
+            NSError *logonError = [NSError errorWithDomain:MeteorClientTransportErrorDomain code:MeteorClientErrorLogonRejected userInfo:@{NSLocalizedDescriptionKey: errorDesc}];
+            if (_logonMethodCallback) {
+                _logonMethodCallback(nil, logonError);
+                _logonMethodCallback = nil;
+            }
             [self.authDelegate authenticationFailed:message[@"error"][@"reason"]];
         }
     }
@@ -78,19 +85,14 @@ static int LOGON_RETRY_MAX = 5;
 
 - (NSDictionary *)_parseObjectAndAddToCollection:(NSDictionary *)message {
     NSMutableDictionary *object = [NSMutableDictionary dictionaryWithDictionary:@{@"_id": message[@"id"]}];
-    
     for (id key in message[@"fields"]) {
         object[key] = message[@"fields"][key];
     }
-    
     if (!self.collections[message[@"collection"]]) {
         self.collections[message[@"collection"]] = [NSMutableArray array];
     }
-    
     NSMutableArray *collection = self.collections[message[@"collection"]];
-    
     [collection addObject:object];
-    
     return object;
 }
 
@@ -139,6 +141,38 @@ static int LOGON_RETRY_MAX = 5;
         object[key] = message[@"fields"][key];
     }
     return object;
+}
+
+#pragma mark - SRP Auth Parsing
+
+- (void)didReceiveLoginChallengeWithResponse:(NSDictionary *)response {
+    NSString *B_string = response[@"B"];
+    const char *B = [B_string cStringUsingEncoding:NSASCIIStringEncoding];
+    NSString *salt_string = response[@"salt"];
+    const char *salt = [salt_string cStringUsingEncoding:NSASCIIStringEncoding];
+    NSString *identity_string = response[@"identity"];
+    const char *identity = [identity_string cStringUsingEncoding:NSASCIIStringEncoding];
+    const char *password_str = [_password cStringUsingEncoding:NSASCIIStringEncoding];
+    const char *Mstr;
+    srp_user_process_meteor_challenge(_srpUser, password_str, salt, identity, B, &Mstr);
+    NSString *M_final = [NSString stringWithCString:Mstr encoding:NSASCIIStringEncoding];
+    NSArray *params = @[@{@"srp":@{@"M":M_final}}];
+    [self sendWithMethodName:@"login" parameters:params];
+}
+
+- (void)didReceiveHAMKVerificationWithResponse:(NSDictionary *)response {
+    srp_user_verify_meteor_session(_srpUser, [response[@"HAMK"] cStringUsingEncoding:NSASCIIStringEncoding]);
+    if (srp_user_is_authenticated) {
+        _sessionToken = response[@"token"];
+        self.userId = response[@"id"];
+        [self.authDelegate authenticationWasSuccessful];
+        srp_user_delete(_srpUser);
+        [self _setAuthStateToLoggedIn];
+        if (_logonMethodCallback) {
+            _logonMethodCallback(@{@"logon": @"success"}, nil);
+            _logonMethodCallback = nil;
+        }
+    }
 }
 
 @end

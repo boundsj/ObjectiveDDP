@@ -15,6 +15,7 @@ extern "C" {
     BOOL _usingAuth;
     NSMutableSet *_methodIds;
     NSMutableDictionary *_responseCallbacks;
+    MeteorClientMethodCallback _logonMethodCallback;
     int _retryAttempts;
     NSString *_userName;
     NSString *_password;
@@ -30,9 +31,12 @@ extern "C" {
 @property (nonatomic, assign, readwrite) BOOL userIsLoggingIn;
 @property (nonatomic, strong, readwrite) NSMutableDictionary *collections;
 @property (nonatomic, assign, readwrite) BOOL websocketReady;
+@property (nonatomic, assign, readwrite) AuthState authState;
 
-- (void)didReceiveLoginChallengeWithResponse:(NSDictionary *)response;
-- (void)didReceiveHAMKVerificationWithResponse:(NSDictionary *)response;
+// temporary methods to corral state vars
+- (void)_setAuthStateToLoggingIn;
+- (void)_setAuthStateToLoggedIn;
+- (void)_setAuthStatetoLoggedOut;
 
 @end
 
@@ -45,5 +49,9 @@ extern "C" {
 - (void)_handleAddedMessage:(NSDictionary *)message msg:(NSString *)msg;
 - (void)_handleRemovedMessage:(NSDictionary *)message msg:(NSString *)msg;
 - (void)_handleChangedMessage:(NSDictionary *)message msg:(NSString *)msg;
+
+# pragma mark - SRP Auth Parsing
+- (void)didReceiveLoginChallengeWithResponse:(NSDictionary *)response;
+- (void)didReceiveHAMKVerificationWithResponse:(NSDictionary *)response;
 
 @end
