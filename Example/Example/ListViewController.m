@@ -112,8 +112,8 @@ static UITextField *shareWithTF;
 }
 
 - (void)didClickShareWithButton:(id)sender {
-    [self.meteor sendWithMethodName:@"/lists/update"
-                         parameters:@[@{@"_id": selectedList[@"_id"]}, @{@"$set":@{@"share_with": shareWithTF.text}}]];
+    NSArray *parameters = @[@{@"_id": selectedList[@"_id"]}, @{@"$set":@{@"share_with": shareWithTF.text}}];
+    [self.meteor callMethodName:@"/lists/update" parameters:parameters responseCallback:nil];
     [[[self.view subviews] lastObject] removeFromSuperview];
     [[[self.view subviews] lastObject] removeFromSuperview];
 }
@@ -124,10 +124,8 @@ static UITextField *shareWithTF;
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle
                                             forRowAtIndexPath:(NSIndexPath *)indexPath {
-
     NSDictionary *list = self.lists[indexPath.row];
-    [self.meteor sendWithMethodName:@"/lists/remove"
-                         parameters:@[@{@"_id": list[@"_id"]}]];
+    [self.meteor callMethodName:@"/lists/remove" parameters:@[@{@"_id": list[@"_id"]}] responseCallback:nil];
 }
 
 #pragma mark <UITableViewDelegate>

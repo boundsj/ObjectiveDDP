@@ -1,7 +1,8 @@
 #import <UIKit/UIKit.h>
-#import <ObjectiveDDP/MeteorClient.h>
 
-@interface LoginViewController : UIViewController<DDPAuthDelegate>
+@class MeteorClient;
+
+@interface LoginViewController : UIViewController
 
 @property (weak, nonatomic) IBOutlet UITextField *username;
 @property (weak, nonatomic) IBOutlet UITextField *password;

@@ -92,28 +92,17 @@
         forRowAtIndexPath:(NSIndexPath *)indexPath {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         NSDictionary *thing = self.computedList[indexPath.row];
-
-        // Specifically NOT removing the object locally
-        // we'll get a notification from the meteor server when this has been done
-        // and that'll cause us to update our local cache:
-        //
-        //  [self.things removeObject:thing];
-
-        // Could implement meteor style "latency compensation" by removing here
-        // and syncing subscription to server later
-
-        [self.meteor sendWithMethodName:@"/things/remove"
-                             parameters:@[@{@"_id": thing[@"_id"]}]];
+        [self.meteor callMethodName:@"/things/remove" parameters:@[@{@"_id": thing[@"_id"]}] responseCallback:nil];
     }
 }
 
 - (void)didAddThing:(NSString *)message {
     [self dismissViewControllerAnimated:YES completion:nil];
-    [self.meteor sendWithMethodName:@"/things/insert"
-                         parameters:@[@{@"_id": [[NSUUID UUID] UUIDString],
-                                      @"msg": message,
-                                      @"owner": self.userId,
-                                      @"listName": self.listName}]];
+    NSArray *parameters = @[@{@"_id": [[NSUUID UUID] UUIDString],
+                              @"msg": message,
+                              @"owner": self.userId,
+                              @"listName": self.listName}];
+    [self.meteor callMethodName:@"/things/insert" parameters:parameters responseCallback:nil];
 }
 
 @end
