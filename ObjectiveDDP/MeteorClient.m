@@ -101,6 +101,7 @@ NSString * const MeteorClientTransportErrorDomain = @"boundsj.objectiveddp.trans
         responseCallback(nil, logonError);
         return;
     }
+    self.authState = AuthStateLoggingIn;
     if ([self _rejectIfNotConnected:responseCallback]) {
         return;
     }
