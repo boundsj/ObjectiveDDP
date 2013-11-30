@@ -16,9 +16,9 @@
                     callback(nil, responseError);
                 response = responseError;
             } else {
-                response = message[@"result"];
-                if (callback)
-                    callback(response, nil);
+                if (callback) {
+                    callback(message, nil);
+                }
             }
             NSString *notificationName = [NSString stringWithFormat:@"response_%@", messageId];
             [[NSNotificationCenter defaultCenter] postNotificationName:notificationName object:self userInfo:response];
@@ -47,7 +47,7 @@ static int LOGON_RETRY_MAX = 5;
        && [message[@"error"][@"error"] integerValue] == 403) {
         [self _setAuthStatetoLoggedOut];
         if (++_retryAttempts < LOGON_RETRY_MAX && self.connected) {
-            [self logonWithUsername:_userName password:_password];
+            [self logonWithUsername:_userName password:_password responseCallback:_logonMethodCallback];
         } else {
             _retryAttempts = 0;
             NSString *errorDesc = [NSString stringWithFormat:@"Logon failed with error %@", @403];

@@ -131,6 +131,10 @@ if (Meteor.isServer) {
   Meteor.methods({
     updateRelatedThings: function(listName, shareWith) {
       Things.update({listName: listName}, {$set: {share_with: shareWith}}, {multi: true});
+    },
+
+    sayHelloTo: function(name) {
+      return "hello " + name;
     }
   });
 

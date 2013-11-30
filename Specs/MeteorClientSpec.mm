@@ -360,6 +360,7 @@ describe(@"MeteorClient", ^{
                     key = [meteorClient callMethodName:@"robots" parameters:nil responseCallback:^(NSDictionary *response, NSError *error) {
                         returnedResponse = response;
                     }];
+                    
                     [meteorClient didReceiveMessage:@{@"msg": @"result",
                                                       @"result": @"rule",
                                                       @"id": key
@@ -367,7 +368,7 @@ describe(@"MeteorClient", ^{
                 });
                 
                 it(@"has the correct returned response", ^{
-                    returnedResponse should equal(@"rule");
+                    returnedResponse[@"result"] should equal(@"rule");
                 });
             });
         

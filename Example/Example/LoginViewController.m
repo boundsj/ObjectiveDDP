@@ -46,6 +46,18 @@
     }];
 }
 
+- (IBAction)didTapSayHiButton {
+    [self.meteor callMethodName:@"sayHelloTo" parameters:@[self.username.text] responseCallback:^(NSDictionary *response, NSError *error) {
+        NSString *message = response[@"result"];
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Meteor Todos"
+                                                        message:message
+                                                       delegate:nil
+                                              cancelButtonTitle:@"Great"
+                                              otherButtonTitles:nil];
+        [alert show];
+    }];
+}
+
 #pragma mark - Internal
 
 - (void)handleSuccessfulAuth {
