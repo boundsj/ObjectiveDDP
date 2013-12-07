@@ -22,6 +22,7 @@ extern "C" {
     NSMutableDictionary *_subscriptionsParameters;
     NSString *_sessionToken;
     SRPUser *_srpUser;
+    BOOL _disconnecting;
 }
 
 // These are public and should be KVO compliant so use accessor instead of direct ivar access
