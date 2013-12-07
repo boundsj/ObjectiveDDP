@@ -18,6 +18,7 @@ extern "C" {
     int _retryAttempts;
     NSString *_userName;
     NSString *_password;
+    NSDictionary *_loginParams;
     NSMutableDictionary *_subscriptionsParameters;
     NSString *_sessionToken;
     SRPUser *_srpUser;

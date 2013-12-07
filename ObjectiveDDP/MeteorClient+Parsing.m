@@ -47,7 +47,7 @@ static int LOGON_RETRY_MAX = 5;
        && [message[@"error"][@"error"] integerValue] == 403) {
         [self _setAuthStatetoLoggedOut];
         if (++_retryAttempts < LOGON_RETRY_MAX && self.connected) {
-            [self logonWithUsername:_userName password:_password responseCallback:_logonMethodCallback];
+            [self logonWithUsername:_userName password:_password parameters:_loginParams responseCallback:_logonMethodCallback];
         } else {
             _retryAttempts = 0;
             NSString *errorDesc = [NSString stringWithFormat:@"Logon failed with error %@", @403];

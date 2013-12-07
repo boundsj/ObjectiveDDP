@@ -94,7 +94,7 @@ NSString * const MeteorClientTransportErrorDomain = @"boundsj.objectiveddp.trans
     [self sendWithMethodName:@"beginPasswordExchange" parameters:params];
 }
 
-- (void)logonWithUsername:(NSString *)username password:(NSString *)password responseCallback:(MeteorClientMethodCallback)responseCallback {
+- (void)logonWithUsername:(NSString *)username password:(NSString *)password parameters:(NSDictionary *)loginParams responseCallback:(MeteorClientMethodCallback)responseCallback {
     if (self.authState == AuthStateLoggingIn) {
         NSString *errorDesc = [NSString stringWithFormat:@"You must wait for the current logon request to finish before sending another."];
         NSError *logonError = [NSError errorWithDomain:MeteorClientTransportErrorDomain code:MeteorClientErrorLogonRejected userInfo:@{NSLocalizedDescriptionKey: errorDesc}];
@@ -105,8 +105,17 @@ NSString * const MeteorClientTransportErrorDomain = @"boundsj.objectiveddp.trans
     if ([self _rejectIfNotConnected:responseCallback]) {
         return;
     }
+    NSString *usernameField = @"email";
+    NSString *userCollection = @"user";
+    if (loginParams) {
+        _loginParams = loginParams;
+        if (loginParams[@"usernameField"])
+            usernameField = loginParams[@"usernameField"];
+        if (loginParams[@"userCollection"])
+            userCollection = loginParams[@"userCollection"];
+    }
     NSArray *params = @[@{@"A": [self generateAuthVerificationKeyWithUsername:username password:password],
-                          @"user": @{@"email":username}}];
+                          userCollection: @{usernameField:username}}];
     [self _setAuthStateToLoggingIn];
     [self callMethodName:@"beginPasswordExchange" parameters:params responseCallback:nil];
     _logonMethodCallback = responseCallback;
