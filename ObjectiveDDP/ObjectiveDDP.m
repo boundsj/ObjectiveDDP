@@ -18,7 +18,13 @@
 // connect to the underlying websocket
 - (void)connectWebSocket {
     [self _closeConnection];
+    [self _setupWebSocket];
     [self.webSocket open];
+}
+
+// disconnect from the websocket
+- (void)disconnectWebSocket {
+    [self _closeConnection];
 }
 
 //connect (client -> server)
@@ -70,7 +76,6 @@
 }
 
 - (void)_setupWebSocket {
-    self.webSocket = nil;
     NSURL *url = [NSURL URLWithString:self.urlString];
     NSURLRequest *request = [NSURLRequest requestWithURL:url];
     self.webSocket = [[DependencyProvider sharedProvider] provideSRWebSocketWithRequest:request];
@@ -79,7 +84,7 @@
 
 - (void)_closeConnection {
     [self.webSocket close];
-    [self _setupWebSocket];
+    self.webSocket = nil;
 }
 
 #pragma mark - <SRWebSocketDelegate>
