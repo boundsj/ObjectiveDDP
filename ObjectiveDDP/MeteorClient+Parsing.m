@@ -44,7 +44,8 @@ static int LOGON_RETRY_MAX = 5;
 - (void)_handleLoginError:(NSDictionary *)message msg:(NSString *)msg {
     if([msg isEqualToString:@"result"]
        && message[@"error"]
-       && [message[@"error"][@"error"] integerValue] == 403) {
+       && [message[@"error"][@"error"] integerValue] == 403
+       && self.authState != AuthStateLoggedOut) {
         [self _setAuthStatetoLoggedOut];
         if (++_retryAttempts < LOGON_RETRY_MAX && self.connected) {
             [self logonWithUsername:_userName password:_password responseCallback:_logonMethodCallback];

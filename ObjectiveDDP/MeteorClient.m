@@ -86,8 +86,9 @@ NSString * const MeteorClientTransportErrorDomain = @"boundsj.objectiveddp.trans
 }
 
 - (void)logonWithUsername:(NSString *)username password:(NSString *)password {
-    if (self.authState == AuthStateLoggingIn)
+    if (self.authState == AuthStateLoggingIn) {
         return;
+    }
     NSArray *params = @[@{@"A": [self generateAuthVerificationKeyWithUsername:username password:password],
                           @"user": @{@"email":username}}];
     [self _setAuthStateToLoggingIn];
@@ -101,7 +102,7 @@ NSString * const MeteorClientTransportErrorDomain = @"boundsj.objectiveddp.trans
         responseCallback(nil, logonError);
         return;
     }
-    self.authState = AuthStateLoggingIn;
+    [self _setAuthStateToLoggingIn];
     if ([self _rejectIfNotConnected:responseCallback]) {
         return;
     }
