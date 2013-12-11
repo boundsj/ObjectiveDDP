@@ -117,11 +117,6 @@ NSString * const MeteorClientTransportErrorDomain = @"boundsj.objectiveddp.trans
     [self _setAuthStatetoLoggedOut];
 }
 
-- (void)disconnect {
-    _disconnecting = YES;
-    [self.ddp disconnectWebSocket];
-}
-
 #pragma mark <ObjectiveDDPDelegate>
 
 - (void)didReceiveMessage:(NSDictionary *)message {
@@ -195,11 +190,6 @@ NSString * const MeteorClientTransportErrorDomain = @"boundsj.objectiveddp.trans
     self.websocketReady = NO;
     self.connected = NO;
     [self _invalidateUnresolvedMethods];
-    if (_disconnecting){
-        _disconnecting = NO;
-        return;
-    }
-    NSLog(@"reconnecting");
     [self performSelector:@selector(_reconnect)
                withObject:self
                afterDelay:5.0];

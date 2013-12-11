@@ -11,7 +11,6 @@
 
 - (id)initWithURLString:(NSString *)urlString delegate:(id <ObjectiveDDPDelegate>)delegate;
 - (void)connectWebSocket;
-- (void)disconnectWebSocket;
 - (void)connectWithSession:(NSString *)session version:(NSString *)version support:(NSString *)support;
 - (void)subscribeWith:(NSString *)id name:(NSString *)name parameters:(NSArray *)parameters;
 - (void)unsubscribeWith:(NSString *)id;
