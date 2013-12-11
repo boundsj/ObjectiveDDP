@@ -85,8 +85,8 @@ NSString * const MeteorClientTransportErrorDomain = @"boundsj.objectiveddp.trans
     return YES;
 }
 
-- (void)logonWithUsername:(NSString *)username password:(NSString *)password {
-    [self logonWithUserParameters:@{@"user":@{@"email":username}} username:username password:password responseCallback:nil];
+- (void)logonWithUsername:(NSString *)username password:(NSString *)password responseCallback:(MeteorClientMethodCallback)responseCallback {
+    [self logonWithUserParameters:@{@"user":@{@"email":username}} username:username password:password responseCallback:responseCallback];
 }
 
 - (void)logonWithUserParameters:(NSDictionary *)userParameters username:(NSString *)username password:(NSString *)password responseCallback:(MeteorClientMethodCallback)responseCallback
