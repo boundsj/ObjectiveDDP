@@ -18,9 +18,11 @@ extern "C" {
     int _retryAttempts;
     NSString *_userName;
     NSString *_password;
+    NSDictionary *_logonParams;
     NSMutableDictionary *_subscriptionsParameters;
     NSString *_sessionToken;
     SRPUser *_srpUser;
+    BOOL _disconnecting;
 }
 
 // These are public and should be KVO compliant so use accessor instead of direct ivar access
