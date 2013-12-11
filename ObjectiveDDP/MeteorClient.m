@@ -202,7 +202,6 @@ NSString * const MeteorClientTransportErrorDomain = @"boundsj.objectiveddp.trans
         _disconnecting = NO;
         return;
     }
-    NSLog(@"reconnecting");
     [self performSelector:@selector(_reconnect)
                withObject:self
                afterDelay:5.0];
