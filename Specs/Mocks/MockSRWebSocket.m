@@ -19,5 +19,6 @@
 
 - (void)open { /* mock no op */ }
 - (void)send:(id)data { /* mock no op */ }
+- (void)close { /* mock no op */ }
 
 @end

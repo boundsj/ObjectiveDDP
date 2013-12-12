@@ -31,7 +31,7 @@ extern "C" {
 @property (nonatomic, assign, readwrite) BOOL websocketReady;
 @property (nonatomic, assign, readwrite) AuthState authState;
 
-// temporary methods to corral state vars
+//xxx: temporary methods to corral state vars
 - (void)_setAuthStateToLoggingIn;
 - (void)_setAuthStateToLoggedIn;
 - (void)_setAuthStatetoLoggedOut;

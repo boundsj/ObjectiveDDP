@@ -69,7 +69,18 @@ describe(@"ObjectiveDDP", ^{
                     fakeDDPDelegate should have_received("didReceiveConnectionError:");
                 });
             });
+            
+            describe(@"when disconnectWebSocket is called", ^{
+                beforeEach(^{
+                    [ddp disconnectWebSocket];
+                });
+                
+                it(@"closes the web socket", ^{
+                    fakeSRWebSocket should have_received(@selector(close));
+                });
+            });
         });
+        
 
         describe(@"when connect is called with no session or support", ^{
             beforeEach(^{
@@ -158,6 +169,9 @@ describe(@"ObjectiveDDP", ^{
                 NSString *expected = @"{\"msg\":\"unsub\",\"id\":\"id1\"}";
                 fakeSRWebSocket should have_received("send:").with(expected);
             });
+        });
+        
+        xdescribe(@"when ", ^{
         });
     });
 });

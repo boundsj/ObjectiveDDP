@@ -9,6 +9,7 @@ extern NSString * const MeteorClientDidDisconnectNotification;
     from the backend, they will have the "errorType" key as their error domain. */
 extern NSString * const MeteorClientTransportErrorDomain;
 
+// xxx:
 NS_ENUM(NSUInteger, MeteorClientError) {
     MeteorClientErrorNotConnected,
     MeteorClientErrorDisconnectedBeforeCallbackComplete,

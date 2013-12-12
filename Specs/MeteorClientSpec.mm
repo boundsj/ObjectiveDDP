@@ -28,6 +28,16 @@ describe(@"MeteorClient", ^{
         meteorClient.authState should equal(AuthStateNoAuth);
     });
     
+    describe(@"#disconnect", ^{
+        beforeEach(^{
+            [meteorClient disconnect];
+        });
+        
+        it(@"tells ddp to disconnect", ^{
+            ddp should have_received(@selector(disconnectWebSocket));
+        });        
+    });
+    
     describe(@"#logonWithUsername:password:responseCallback:", ^{
         __block NSDictionary *successResponse = nil;
         __block NSError *errorResponse = nil;
@@ -299,13 +309,29 @@ describe(@"MeteorClient", ^{
         beforeEach(^{
             meteorClient.websocketReady = YES;
             meteorClient.connected = YES;
-            [meteorClient didReceiveConnectionClose];
         });
-
-        it(@"resets collections and reconnects web socket", ^{
-            meteorClient.websocketReady should_not be_truthy;
-            meteorClient.connected should_not be_truthy;
-            ddp should have_received(@selector(connectWebSocket));
+        
+        context(@"when websocket is not disconnecting", ^{
+            beforeEach(^{
+                [meteorClient didReceiveConnectionClose];
+            });
+            
+            it(@"resets collections and reconnects web socket", ^{
+                meteorClient.websocketReady should_not be_truthy;
+                meteorClient.connected should_not be_truthy;
+                ddp should have_received(@selector(connectWebSocket));
+            });
+        });
+        
+        context(@"when websocket is disconnecting", ^{
+            beforeEach(^{
+                [meteorClient disconnect];
+                [meteorClient didReceiveConnectionClose];
+            });
+            
+            it(@"does not attempt to reconnect", ^{
+                ddp should_not have_received(@selector(connectWebSocket));
+            });
         });
     });
     
@@ -321,26 +347,42 @@ describe(@"MeteorClient", ^{
             }];
             meteorClient->_methodIds.count should equal(1);
             meteorClient->_responseCallbacks.count should equal(1);
-            [meteorClient didReceiveConnectionError:nil];
         });
         
-        it(@"resets collections and reconnects web socket", ^{
-            meteorClient.websocketReady should_not be_truthy;
-            meteorClient.connected should_not be_truthy;
-            meteorClient->_methodIds.count should equal(0);
-            meteorClient->_responseCallbacks.count should equal(0);
-            ddp should have_received(@selector(connectWebSocket));
+        context(@"when websocket is not disconnecting", ^{
+            beforeEach(^{
+                [meteorClient didReceiveConnectionError:nil];
+            });
+            
+            it(@"resets collections and reconnects web socket", ^{
+                meteorClient.websocketReady should_not be_truthy;
+                meteorClient.connected should_not be_truthy;
+                meteorClient->_methodIds.count should equal(0);
+                meteorClient->_responseCallbacks.count should equal(0);
+                ddp should have_received(@selector(connectWebSocket));
+            });
+            
+            it(@"rejects unresolved callbacks", ^{
+                NSError *expectedError = [NSError errorWithDomain:MeteorClientTransportErrorDomain code:MeteorClientErrorDisconnectedBeforeCallbackComplete userInfo:@{NSLocalizedDescriptionKey: @"You were disconnected"}];
+                rejectError should equal(expectedError);
+            });
+            
+            it(@"sends a notification", ^{
+                [NSNotificationCenter defaultCenter] should have_received(@selector(postNotificationName:object:))
+                .with(MeteorClientDidDisconnectNotification)
+                .and_with(meteorClient);
+            });
         });
         
-        it(@"rejects unresolved callbacks", ^{
-            NSError *expectedError = [NSError errorWithDomain:MeteorClientTransportErrorDomain code:MeteorClientErrorDisconnectedBeforeCallbackComplete userInfo:@{NSLocalizedDescriptionKey: @"You were disconnected"}];
-            rejectError should equal(expectedError);
-        });
-
-        it(@"sends a notification", ^{
-            [NSNotificationCenter defaultCenter] should have_received(@selector(postNotificationName:object:))
-            .with(MeteorClientDidDisconnectNotification)
-            .and_with(meteorClient);
+        context(@"when the websocket is disconnecting", ^{
+            beforeEach(^{
+                [meteorClient disconnect];
+                [meteorClient didReceiveConnectionError:nil];
+            });
+            
+            it(@"does not attempt to reconnect", ^{
+                ddp should_not have_received(@selector(connectWebSocket));
+            });
         });
     });
 

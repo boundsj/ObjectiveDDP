@@ -198,14 +198,12 @@ NSString * const MeteorClientTransportErrorDomain = @"boundsj.objectiveddp.trans
     self.websocketReady = NO;
     self.connected = NO;
     [self _invalidateUnresolvedMethods];
-    if (_disconnecting){
+    [[NSNotificationCenter defaultCenter] postNotificationName:MeteorClientDidDisconnectNotification object:self];
+    if (_disconnecting) {
         _disconnecting = NO;
         return;
     }
-    [self performSelector:@selector(_reconnect)
-               withObject:self
-               afterDelay:5.0];
-    [[NSNotificationCenter defaultCenter] postNotificationName:MeteorClientDidDisconnectNotification object:self];
+    [self performSelector:@selector(_reconnect) withObject:self afterDelay:5.0];
 }
 
 - (void)_invalidateUnresolvedMethods {
