@@ -38,6 +38,30 @@ describe(@"MeteorClient", ^{
         });        
     });
     
+    describe(@"#logonWithUserParameters:username:password", ^{
+        context(@"when connected", ^{
+            beforeEach(^{
+                meteorClient.connected = YES;
+                [meteorClient logonWithUserParameters:@{@"user": @"mrt"} username:@"mrt@ateam.com" password:@"fool" responseCallback:nil];
+            });
+            
+            it(@"sends logon message correctly", ^{
+                NSArray *sentMessages = [(id<CedarDouble>)ddp sent_messages];
+                NSInvocation *invocation = sentMessages[1];
+                NSArray *sentParameters;
+                [invocation getArgument:&sentParameters atIndex:4];
+                
+                ddp should have_received(@selector(methodWithId:method:parameters:))
+                .with(anything)
+                .and_with(@"beginPasswordExchange")
+                .and_with(anything);
+                NSDictionary *parameterDictionary = sentParameters[0];
+                [parameterDictionary allKeys] should contain(@"user");
+                parameterDictionary[@"user"] should equal(@"mrt");
+            });
+        });
+    });
+    
     describe(@"#logonWithUsername:password:responseCallback:", ^{
         __block NSDictionary *successResponse = nil;
         __block NSError *errorResponse = nil;

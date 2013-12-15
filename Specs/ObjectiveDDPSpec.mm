@@ -170,9 +170,6 @@ describe(@"ObjectiveDDP", ^{
                 fakeSRWebSocket should have_received("send:").with(expected);
             });
         });
-        
-        xdescribe(@"when ", ^{
-        });
     });
 });
 
