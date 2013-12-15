@@ -85,27 +85,39 @@ NSString * const MeteorClientTransportErrorDomain = @"boundsj.objectiveddp.trans
     return YES;
 }
 
-- (void)logonWithUsername:(NSString *)username password:(NSString *)password responseCallback:(MeteorClientMethodCallback)responseCallback {
-    [self logonWithUserParameters:@{@"user":@{@"email":username}} username:username password:password responseCallback:responseCallback];
+- (void)logonWithUsername:(NSString *)username password:(NSString *)password {
+    [self logonWithUserParameters:_logonParams username:username password:password responseCallback:nil];
 }
 
-- (void)logonWithUserParameters:(NSDictionary *)userParameters username:(NSString *)username password:(NSString *)password responseCallback:(MeteorClientMethodCallback)responseCallback
-{
+- (void)logonWithUsername:(NSString *)username password:(NSString *)password responseCallback:(MeteorClientMethodCallback)responseCallback {
+    [self logonWithUserParameters:_logonParams username:username password:password responseCallback:responseCallback];
+}
+
+- (void)logonWithUserParameters:(NSDictionary *)userParameters username:(NSString *)username password:(NSString *)password responseCallback:(MeteorClientMethodCallback)responseCallback {
     if (self.authState == AuthStateLoggingIn) {
         NSString *errorDesc = [NSString stringWithFormat:@"You must wait for the current logon request to finish before sending another."];
         NSError *logonError = [NSError errorWithDomain:MeteorClientTransportErrorDomain code:MeteorClientErrorLogonRejected userInfo:@{NSLocalizedDescriptionKey: errorDesc}];
-        responseCallback(nil, logonError);
+        if (responseCallback) {
+            responseCallback(nil, logonError);
+        }
         return;
     }
     [self _setAuthStateToLoggingIn];
+    
     if ([self _rejectIfNotConnected:responseCallback]) {
         return;
     }
+    
+    if (!userParameters) {
+        userParameters = @{@"user": @{@"email": username}};
+    }
+   
     NSMutableDictionary *mutableUserParameters = [userParameters mutableCopy];
     mutableUserParameters[@"A"] = [self generateAuthVerificationKeyWithUsername:username password:password];
-    NSArray *params = @[mutableUserParameters];
+    
     [self _setAuthStateToLoggingIn];
-    [self callMethodName:@"beginPasswordExchange" parameters:params responseCallback:nil];
+    
+    [self callMethodName:@"beginPasswordExchange" parameters:@[mutableUserParameters] responseCallback:nil];
     _logonParams = userParameters;
     _logonMethodCallback = responseCallback;
 }

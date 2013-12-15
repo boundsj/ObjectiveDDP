@@ -479,14 +479,12 @@ describe(@"MeteorClient", ^{
             __block NSDictionary *authErrorMessage;
             
             beforeEach(^{
-                authErrorMessage = @{
-                                     @"msg": @"result",
+                authErrorMessage = @{@"msg": @"result",
                                      @"error": @{@"error": @403,
-                                                 @"reason":
-                                                 @"are you kidding me?"}};
+                                                 @"reason": @"are you kidding me?"}};
             });
             
-            context(@"before max rejects occurs and connected", ^{
+            context(@"before max rejects occurs", ^{
                 beforeEach(^{
                     meteorClient->_retryAttempts = 0;
                     meteorClient->_userName = @"mknightsham";
