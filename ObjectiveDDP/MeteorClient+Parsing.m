@@ -158,7 +158,7 @@ static int LOGON_RETRY_MAX = 5;
     srp_user_process_meteor_challenge(_srpUser, password_str, salt, identity, B, &Mstr);
     NSString *M_final = [NSString stringWithCString:Mstr encoding:NSASCIIStringEncoding];
     NSArray *params = @[@{@"srp":@{@"M":M_final}}];
-    [self sendWithMethodName:@"login" parameters:params];
+    [self callMethodName:@"login" parameters:params responseCallback:nil];
 }
 
 - (void)didReceiveHAMKVerificationWithResponse:(NSDictionary *)response {
