@@ -13,7 +13,6 @@ ObjectiveDDP should run well with iOS projects using ARC and iOS 6.0 or above. _
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     self.meteorClient = [[MeteorClient alloc] init];
     [self.meteorClient addSubscription:@"awesome_server_mongo_collection"];
-    loginController.meteor = self.meteorClient;
     ObjectiveDDP *ddp = [[ObjectiveDDP alloc] initWithURLString:@"wss://awesomeapp.meteor.com/websocket" delegate:self.meteorClient];
     self.meteorClient.ddp = ddp;
     [self.meteorClient.ddp connectWebSocket];
