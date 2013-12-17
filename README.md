@@ -7,7 +7,7 @@ What's Inside
 
 ObjectiveDDP should run well with iOS projects using ARC and iOS 6.0 or above. Check out the [example application](https://github.com/boundsj/ObjectiveDDP/wiki/Example-Application) and the [project wiki](https://github.com/boundsj/ObjectiveDDP/wiki) for more information. Here is a sneak peak:
 
-##### Load the library and connect to a meteor server
+##### Load the library and connect to a meteor server:
 
 ```objective-c
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
@@ -18,6 +18,18 @@ ObjectiveDDP should run well with iOS projects using ARC and iOS 6.0 or above. C
     self.meteorClient.ddp = ddp;
     [self.meteorClient.ddp connectWebSocket];
 }
+```
+
+##### Logon using SRP authentication:
+
+```objective-c
+    [self.meteor logonWithUsername:self.username.text password:self.password.text responseCallback:^(NSDictionary *response, NSError *error) {
+        if (error) {
+            [self handleFailedAuth:error];
+            return;
+        }
+        [self handleSuccessfulAuth];
+    }];
 ```
 
 License
