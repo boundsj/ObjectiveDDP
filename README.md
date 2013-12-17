@@ -23,13 +23,13 @@ ObjectiveDDP should run well with iOS projects using ARC and iOS 6.0 or above. C
 ##### Logon using SRP authentication:
 
 ```objective-c
-    [self.meteor logonWithUsername:self.username.text password:self.password.text responseCallback:^(NSDictionary *response, NSError *error) {
-        if (error) {
-            [self handleFailedAuth:error];
-            return;
-        }
-        [self handleSuccessfulAuth];
-    }];
+[self.meteor logonWithUsername:self.username.text password:self.password.text responseCallback:^(NSDictionary *response, NSError *error) {
+    if (error) {
+        [self handleFailedAuth:error];
+        return;
+    }
+    [self handleSuccessfulAuth];
+}];
 ```
 
 License
