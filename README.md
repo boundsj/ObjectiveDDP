@@ -1,6 +1,6 @@
 ObjectiveDDP
 ============
-Connect your applications written in Objective-C to server applications that communicate with the [DDP protocol created by Meteor] and, if required by your server, authenticate with [SRP]. Out of the box, this library allows your iOS applications to communicate and authenticate with Meteor servers or any server using the DDP/SRP protocols.
+Connect your iOS applications written in Objective-C to server applications that communicate with the [DDP protocol created by Meteor] and, if required by your server, authenticate with [SRP]. Out of the box, this library allows your iOS applications to communicate and authenticate with Meteor servers or any server using the DDP/SRP protocols.
 
 What's Inside
 -------------
