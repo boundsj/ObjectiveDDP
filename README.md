@@ -5,7 +5,7 @@ Connect your applications written in Objective-C to server applications that com
 What's Inside
 -------------
 
-ObjectiveDDP should run well with iOS projects using ARC and iOS 6.0 or above. Check out the [example application](https://github.com/boundsj/ObjectiveDDP/wiki/Example-Application) and the [project wiki](https://github.com/boundsj/ObjectiveDDP/wiki) for more information. Here is a sneak peak:
+ObjectiveDDP should run well with iOS projects using ARC and iOS 6.0 or above. __**Check out the [example application](https://github.com/boundsj/ObjectiveDDP/wiki/Example-Application) and the [project wiki](https://github.com/boundsj/ObjectiveDDP/wiki) for more information.**__ Here is a sneak peak:
 
 ##### Load the library and connect to a meteor server:
 
@@ -30,6 +30,60 @@ ObjectiveDDP should run well with iOS projects using ARC and iOS 6.0 or above. C
     }
     [self handleSuccessfulAuth];
 }];
+```
+
+##### Call a remote function on the server:
+
+```objecctive-c
+[self.meteor callMethodName:@"sayHelloTo" parameters:@[self.username.text] responseCallback:^(NSDictionary *response, NSError *error) {
+    NSString *message = response[@"result"];
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Meteor Todos"
+                                                    message:message
+                                                   delegate:nil
+                                          cancelButtonTitle:@"Great"
+                                          otherButtonTitles:nil];
+    [alert show];
+}];
+```
+
+##### Listen for updates that meteor sends regarding the collection previously subscribed to:
+
+```objective-c
+- (void)viewWillAppear:(BOOL)animated {
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(didReceiveAddedUpdate:)
+                                                 name:@"awesome_server_mongo_collection_added"
+                                               object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(didReceiveRemovedUpdate:)
+                                                 name:@"awesome_server_mongo_collection_removed"
+                                               object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(didReceiveChangeUpdate:)
+                                                 name:@"awesome_server_mongo_collection_changed"
+                                               object:nil];
+}
+```
+
+##### Send CRUD updates to the meteor server to change the collection:
+
+```objective-c
+NSString *message = @"I am the walrus";
+NSString *anId = [[NSUUID UUID] UUIDString];
+NSArray *parameters = @[@{@"_id": anId,
+                          @"msg": message,
+                          @"owner": self.userId,
+                          @"info": self.importantInformation}];
+
+// add a document                          
+[self.meteor callMethodName:@"/awesome_server_mongo_collection/insert" 
+                 parameters:parameters 
+           responseCallback:nil];
+
+// then remove it
+[self.meteor callMethodName:@"/awesome_server_mongo_collection/insert/remove" 
+                 parameters:@[@{@"_id": anId}] 
+           responseCallback:nil];
 ```
 
 License
