@@ -261,6 +261,7 @@ NSString * const MeteorClientTransportErrorDomain = @"boundsj.objectiveddp.trans
 }
 
 - (void)_setAuthStatetoLoggedOut {
+    _logonParams = nil;
     self.authState = AuthStateLoggedOut;
 }
 
