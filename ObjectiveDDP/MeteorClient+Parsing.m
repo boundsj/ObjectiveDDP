@@ -163,7 +163,7 @@ static int LOGON_RETRY_MAX = 5;
 
 - (void)didReceiveHAMKVerificationWithResponse:(NSDictionary *)response {
     srp_user_verify_meteor_session(_srpUser, [response[@"HAMK"] cStringUsingEncoding:NSASCIIStringEncoding]);
-    if (srp_user_is_authenticated) {
+    if (srp_user_is_authenticated(_srpUser)) {
         _sessionToken = response[@"token"];
         self.userId = response[@"id"];
         [self.authDelegate authenticationWasSuccessful];
