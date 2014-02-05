@@ -503,6 +503,10 @@ describe(@"MeteorClient", ^{
             __block NSDictionary *authErrorMessage;
             
             beforeEach(^{
+                // assume we are in loggin in state since
+                // auth error (login reject) only occurs then
+                meteorClient.authState = AuthStateLoggingIn;
+                
                 authErrorMessage = @{@"msg": @"result",
                                      @"error": @{@"error": @403,
                                                  @"reason": @"are you kidding me?"}};
