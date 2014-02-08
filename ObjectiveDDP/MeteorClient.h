@@ -19,9 +19,7 @@ NS_ENUM(NSUInteger, MeteorClientError) {
 typedef NS_ENUM(NSUInteger, AuthState) {
     AuthStateNoAuth,
     AuthStateLoggingIn,
-    AuthStateLoggedIn,
-    /* implies using auth but not currently authorized */
-    AuthStateLoggedOut
+    AuthStateLoggedIn
 };
 
 typedef void(^MeteorClientMethodCallback)(NSDictionary *response, NSError *error);
@@ -41,6 +39,7 @@ typedef void(^MeteorClientMethodCallback)(NSDictionary *response, NSError *error
 - (NSString *)callMethodName:(NSString *)methodName parameters:(NSArray *)parameters responseCallback:(MeteorClientMethodCallback)asyncCallback;
 - (void)logonWithUsername:(NSString *)username password:(NSString *)password responseCallback:(MeteorClientMethodCallback)responseCallback;
 - (void)logonWithUserParameters:(NSDictionary *)userParameters username:(NSString *)username password:(NSString *)password responseCallback:(MeteorClientMethodCallback)responseCallback;
+- (void)signupWithUsername:(NSString *)username password:(NSString *)password responseCallback:(MeteorClientMethodCallback)responseCallback;
 - (void)addSubscription:(NSString *)subscriptionName;
 - (void)addSubscription:(NSString *)subscriptionName withParameters:(NSArray *)parameters;
 - (void)removeSubscription:(NSString *)subscriptionName;

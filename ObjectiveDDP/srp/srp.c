@@ -284,6 +284,53 @@ static BIGNUM * H_nn( SRP_HashAlgorithm alg, const BIGNUM * n1, const BIGNUM * n
     return BN_bin2bn(buff, hash_length(alg), NULL);
 }
 
+// output is len*2+1 long, and must be free()'d
+static char *tohex(const unsigned char *bytes, size_t len) {
+	char *hexbuffer = malloc(len*2+1);
+	for(int i = 0; i < len; i++)
+		snprintf(hexbuffer + i*2, 3, "%02x", bytes[i]);
+	hexbuffer[len*2+1] = 0;
+	return hexbuffer;
+}
+
+static BIGNUM * H_ns( SRP_HashAlgorithm alg, const BIGNUM * salt, const unsigned char * x_intermediate, int x_intermediate_len )
+{
+    unsigned char   hashed[ SHA256_DIGEST_LENGTH ];
+    int             salt_len  = BN_num_bytes(salt);
+    int             unhashed_len = salt_len + x_intermediate_len*2;
+    unsigned char * unhashed    = (unsigned char *) malloc( unhashed_len + 1);
+    if (!unhashed)
+       return 0;
+	// XXX<nevyn>: Different from upstream.
+	// Compare with meteor.js: https://github.com/meteor/meteor/blob/9f38258b54926e820be787798fcf1755bc84e947/packages/srp/srp.js?source=cc#L21
+	// This code concats the *hex string* of the buffer, not the buffer itself.
+    BN_bn2bin(salt, unhashed); // stick salt onto beginning of buffer
+	char *intermediate_as_hex = tohex(x_intermediate, x_intermediate_len);
+    memcpy( unhashed + salt_len, intermediate_as_hex, x_intermediate_len*2 + 1 ); // stick intermediate onto end of buffer, plus a nul
+	free(intermediate_as_hex);
+		
+    hash( alg, unhashed, unhashed_len, hashed );
+    free(unhashed);
+
+    return BN_bin2bn(hashed, hash_length(alg), NULL);
+}
+    
+static BIGNUM * calculate_x( SRP_HashAlgorithm alg, const BIGNUM * salt, const char * username, const unsigned char * password, int password_len )
+{
+    unsigned char ucp_hash[SHA256_DIGEST_LENGTH];
+    HashCTX       ctx;
+
+    hash_init( alg, &ctx );
+
+    hash_update( alg, &ctx, username, strlen(username) );
+    hash_update( alg, &ctx, ":", 1 );
+    hash_update( alg, &ctx, password, password_len );
+    
+    hash_final( alg, &ctx, ucp_hash );
+        
+    return H_ns( alg, salt, ucp_hash, hash_length(alg) );
+}
+
 static void update_hash_n( SRP_HashAlgorithm alg, HashCTX *ctx, const BIGNUM * n )
 {
     unsigned long len = BN_num_bytes(n);
@@ -883,3 +930,58 @@ void srp_user_verify_session( SRPUser * usr, const unsigned char * bytes_HAMK )
     if ( memcmp( usr->H_AMK, bytes_HAMK, hash_length(usr->hash_alg) ) == 0 )
         usr->authenticated = 1;
 }
+
+
+// XXX<nevyn>: We desperately want salt to be ascii-only, so I've added the option to input the salt instead of generating it.
+void srp_create_salted_verification_key( SRP_HashAlgorithm alg, 
+                                         SRP_NGType ng_type, const char * username,
+                                         const unsigned char * password, int len_password,
+                                         const unsigned char ** bytes_s, int * len_s, 
+                                         const unsigned char ** bytes_v, int * len_v,
+                                         const char * n_hex, const char * g_hex,
+										 _Bool use_given_salt )
+{
+    BIGNUM     * s   = BN_new();
+    BIGNUM     * v   = BN_new();
+    BIGNUM     * x   = 0;
+    BN_CTX     * ctx = BN_CTX_new();
+    NGConstant * ng  = new_ng( ng_type, n_hex, g_hex );
+
+    if( !s || !v || !ctx || !ng )
+       goto cleanup_and_exit;
+
+    init_random(); /* Only happens once */
+    
+	if(!use_given_salt) {
+		BN_rand(s, 32, -1, 0);
+		*bytes_s = (const unsigned char *) malloc( *len_s );
+		*len_s   = BN_num_bytes(s);
+	} else {
+		BN_bin2bn(*bytes_s, *len_s, s);
+	}
+	
+    *bytes_v = (const unsigned char *) malloc( *len_v );
+    
+    x = calculate_x( alg, s, username, password, len_password );
+
+    if( !x )
+       goto cleanup_and_exit;
+
+    BN_mod_exp(v, ng->g, x, ng->N, ctx);
+        
+    *len_v   = BN_num_bytes(v);
+
+    if (!bytes_s || !bytes_v)
+       goto cleanup_and_exit;
+    
+    BN_bn2bin(s, (unsigned char *) *bytes_s);
+    BN_bn2bin(v, (unsigned char *) *bytes_v);
+    
+ cleanup_and_exit:
+    delete_ng( ng );
+    BN_free(s);
+    BN_free(v);
+    BN_free(x);
+    BN_CTX_free(ctx);
+}
+

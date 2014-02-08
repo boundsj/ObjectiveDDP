@@ -2,6 +2,7 @@
 #import "MeteorClient.h"
 #import "MeteorClient+Private.h"
 #import "BSONIdGenerator.h"
+#import "NSData+DDPHex.h"
 
 NSString * const MeteorClientDidConnectNotification = @"boundsj.objectiveddp.connected";
 NSString * const MeteorClientDidDisconnectNotification = @"boundsj.objectiveddp.disconnected";
@@ -78,11 +79,49 @@ NSString * const MeteorClientTransportErrorDomain = @"boundsj.objectiveddp.trans
     }
 }
 
-- (BOOL)okToSend {
-    if (!self.connected || self.authState == AuthStateLoggedOut) {
-        return NO;
+static NSString *randomId(int length) {
+	static NSArray *characters;
+	static dispatch_once_t onceToken;
+	dispatch_once(&onceToken, ^{
+		characters = [NSMutableArray new];
+		for(char c = 'A'; c < 'Z'; c++)
+			[(NSMutableArray*)characters addObject:[[NSString alloc] initWithBytes:&c length:1 encoding:NSUTF8StringEncoding]];
+		for(char c = 'a'; c < 'z'; c++)
+			[(NSMutableArray*)characters addObject:[[NSString alloc] initWithBytes:&c length:1 encoding:NSUTF8StringEncoding]];
+		for(char c = '0'; c < '9'; c++)
+			[(NSMutableArray*)characters addObject:[[NSString alloc] initWithBytes:&c length:1 encoding:NSUTF8StringEncoding]];
+	});
+	NSMutableString *salt = [NSMutableString new];
+	for(int i = 0; i < length; i++)
+		[salt appendString:characters[arc4random_uniform(characters.count)]];
+	return salt;
+}
+
+- (void)signupWithUsername:(NSString *)username password:(NSString *)password responseCallback:(MeteorClientMethodCallback)responseCallback {
+    if ([self _rejectIfNotConnected:responseCallback]) {
+        return;
     }
-    return YES;
+    //[self _setAuthStateToLoggingIn];
+    NSData *passwordData = [password dataUsingEncoding:NSUTF8StringEncoding];
+    const unsigned char *bytes_s, *bytes_v;
+    int len_s, len_v;
+    NSString *identity = randomId(16);
+    NSString *salt = randomId(16);
+    bytes_s = (void *)[salt UTF8String];
+    len_s = strlen([salt UTF8String]);
+    srp_create_salted_verification_key(SRP_SHA256, SRP_NG_1024, [identity UTF8String], passwordData.bytes, passwordData.length, &bytes_s, &len_s, &bytes_v, &len_v, NULL, NULL, true);
+    NSString *verifier = [[NSData dataWithBytesNoCopy:(void*)bytes_v length:len_v freeWhenDone:YES] ddp_toHex];
+    NSArray *parameters = @[@{@"email": username,
+                                 @"srp": @{@"identity": identity,
+                                           @"salt": salt,
+                                           @"verifier": verifier}}];
+    [self callMethodName:@"createUser" parameters:parameters responseCallback:^(NSDictionary *response, NSError *error) {
+        if (error) {
+            responseCallback(nil, error);
+            return;
+        }
+        [self logonWithUsername:username password:password responseCallback:responseCallback];
+    }];
 }
 
 - (void)logonWithUsername:(NSString *)username password:(NSString *)password {
@@ -224,6 +263,13 @@ NSString * const MeteorClientTransportErrorDomain = @"boundsj.objectiveddp.trans
     [_responseCallbacks removeAllObjects];
 }
 
+- (BOOL)okToSend {
+    if (!self.connected) {
+        return NO;
+    }
+    return YES;
+}
+
 - (void)_reconnect {
     if (self.ddp.webSocket.readyState == SR_OPEN) {
         return;
@@ -262,7 +308,7 @@ NSString * const MeteorClientTransportErrorDomain = @"boundsj.objectiveddp.trans
 
 - (void)_setAuthStatetoLoggedOut {
     _logonParams = nil;
-    self.authState = AuthStateLoggedOut;
+    self.authState = AuthStateNoAuth;
 }
 
 # pragma mark - SRP Auth Internal

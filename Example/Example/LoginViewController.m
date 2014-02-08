@@ -58,6 +58,16 @@
     }];
 }
 
+- (IBAction)didTapCreateAccountButton:(id)sender {
+    [self.meteor signupWithUsername:self.username.text password:self.password.text responseCallback:^(NSDictionary *response, NSError *error) {
+        if (error) {
+            [self handleFailedAuth:error];
+            return;
+        }
+        [self handleSuccessfulAuth];
+    }];
+}
+
 #pragma mark - Internal
 
 - (void)handleSuccessfulAuth {
@@ -70,7 +80,7 @@
 
 - (void)handleFailedAuth:(NSError *)error {
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Meteor Todos"
-                                                    message:[error localizedDescription]
+                                                    message:[error description]
                                                    delegate:nil
                                           cancelButtonTitle:@"Try Again"
                                           otherButtonTitles:nil];
