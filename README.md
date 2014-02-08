@@ -80,7 +80,7 @@ NSArray *parameters = @[@{@"_id": anId,
            responseCallback:nil];
 
 // then remove it
-[self.meteor callMethodName:@"/awesome_server_mongo_collection/insert/remove" 
+[self.meteor callMethodName:@"/awesome_server_mongo_collection/remove" 
                  parameters:@[@{@"_id": anId}] 
            responseCallback:nil];
 ```
