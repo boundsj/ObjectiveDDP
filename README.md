@@ -7,6 +7,13 @@ What's Inside
 
 ObjectiveDDP should run well with iOS projects using ARC and iOS 6.0 or above. __**Check out the [example application](https://github.com/boundsj/ObjectiveDDP/wiki/Example-Application) and the [project wiki](https://github.com/boundsj/ObjectiveDDP/wiki) for more information.**__ Here is a sneak peak:
 
+##### Integrate it with your project using CocoaPods:
+
+```
+pod 'ObjectiveDDP', '~> 0.1.3'
+```
+For more information about this, check out [Linking and Building](https://github.com/boundsj/ObjectiveDDP/wiki/Linking-and-using-ObjectiveDDP) in the wiki.
+
 ##### Load the library and connect to a meteor server:
 
 ```objective-c
@@ -74,14 +81,14 @@ NSArray *parameters = @[@{@"_id": anId,
                           @"owner": self.userId,
                           @"info": self.importantInformation}];
 
-// add a document                          
-[self.meteor callMethodName:@"/awesome_server_mongo_collection/insert" 
-                 parameters:parameters 
+// add a document
+[self.meteor callMethodName:@"/awesome_server_mongo_collection/insert"
+                 parameters:parameters
            responseCallback:nil];
 
 // then remove it
-[self.meteor callMethodName:@"/awesome_server_mongo_collection/remove" 
-                 parameters:@[@{@"_id": anId}] 
+[self.meteor callMethodName:@"/awesome_server_mongo_collection/remove"
+                 parameters:@[@{@"_id": anId}]
            responseCallback:nil];
 ```
 
@@ -90,5 +97,3 @@ License
 **[MIT]**
 
 [MIT]: http://opensource.org/licenses/MIT
-
-
