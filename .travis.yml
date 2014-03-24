@@ -1,2 +1,7 @@
- language: objective-c
- script: rake
+language: objective-c
+
+install:
+  - brew install ios-sim
+  - gem install thrust
+
+script: rake specs
