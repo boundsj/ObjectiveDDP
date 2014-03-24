@@ -1,9 +1,5 @@
 .idea
-Podfile.lock
-ObjectiveDDP.xcworkspace/xcuserdata
-ObjectiveDDP.xcworkspace/xcshareddata/
-Example/Example.xcworkspace/xcuserdata/
-Example/Example.xcworkspace/xcshareddata/
-Example/Example.xcodeproj/xcuserdata
+xcuserdata
+xcshareddata
 Example/Pods
 build
