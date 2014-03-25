@@ -729,7 +729,7 @@
 				INFOPLIST_FILE = "Specs/Specs-Info.plist";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					/Users/boundsj/workspace/ios/ObjectiveDDP/ObjectiveDDP,
+					"$(SRCROOT)/ObjectiveDDP/",
 				);
 				OTHER_LDFLAGS = (
 					"$(inherited)",
@@ -760,7 +760,7 @@
 				INFOPLIST_FILE = "Specs/Specs-Info.plist";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					/Users/boundsj/workspace/ios/ObjectiveDDP/ObjectiveDDP,
+					"$(SRCROOT)/ObjectiveDDP/",
 				);
 				OTHER_CFLAGS = (
 					"$(inherited)",
