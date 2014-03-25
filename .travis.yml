@@ -1,5 +1,8 @@
 language: objective-c
 
+rvm:
+  - 1.9.3
+
 install:
   - brew install ios-sim
   - gem install thrust
