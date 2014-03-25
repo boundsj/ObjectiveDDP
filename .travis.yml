@@ -3,5 +3,6 @@ language: objective-c
 install:
   - brew install ios-sim
   - gem install thrust
+  - pod install
 
 script: rake specs
