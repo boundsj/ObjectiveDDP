@@ -413,6 +413,10 @@ describe(@"MeteorClient", ^{
     describe(@"#didReceiveMessage", ^{
         __block NSString *key;
         
+        beforeEach(^{
+            spy_on([NSNotificationCenter defaultCenter]);
+        });
+        
         describe(@"RPC async method response", ^{
             __block NSDictionary *returnedResponse;
             __block NSError *returnedError;
@@ -462,9 +466,8 @@ describe(@"MeteorClient", ^{
         
         context(@"when called with a login challenge response", ^{
             beforeEach(^{
-                meteorClient->_srpUser = (SRPUser *)malloc(sizeof(SRPUser));
-                meteorClient->_srpUser->Astr = [@"astringy" cStringUsingEncoding:NSASCIIStringEncoding];
-                
+                meteorClient->_srpUser = srp_user_new(SRP_SHA256, SRP_NG_1024, "dummy", "dummy", NULL, NULL);
+                meteorClient->_srpUser->Astr = [@"astringy" cStringUsingEncoding:NSASCIIStringEncoding];                
                 meteorClient.connected = YES;
                 meteorClient->_password = @"ardv4rkz";
                 NSDictionary *challengeMessage = @{@"msg": @"result",

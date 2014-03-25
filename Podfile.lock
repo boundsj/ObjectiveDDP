@@ -1,7 +1,9 @@
 PODS:
+  - Cedar (0.9.5)
   - SocketRocket (0.3.1-beta2)
 
 DEPENDENCIES:
+  - Cedar (~> 0.9.5)
   - SocketRocket (from `git@github.com:square/SocketRocket.git`)
 
 EXTERNAL SOURCES:
@@ -9,6 +11,7 @@ EXTERNAL SOURCES:
     :git: git@github.com:square/SocketRocket.git
 
 SPEC CHECKSUMS:
+  Cedar: 16cbb75084031aa41304cdeb0d0c8319c1af1cae
   SocketRocket: 9cbe08469513356cddc0afcab1ff160bd190296a
 
-COCOAPODS: 0.19.1
+COCOAPODS: 0.29.0
