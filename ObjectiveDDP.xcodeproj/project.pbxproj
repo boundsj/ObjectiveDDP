@@ -21,8 +21,6 @@
 		4024012B18A5F52D00C8421E /* NSData+DDPHex.m in Sources */ = {isa = PBXBuildFile; fileRef = 4024012918A5F52D00C8421E /* NSData+DDPHex.m */; };
 		4024012C18A5F52D00C8421E /* NSData+DDPHex.m in Sources */ = {isa = PBXBuildFile; fileRef = 4024012918A5F52D00C8421E /* NSData+DDPHex.m */; };
 		4027EDE21783E1F400CAEC1C /* srp.c in Sources */ = {isa = PBXBuildFile; fileRef = 405FD5F61746BCD5001F8AE7 /* srp.c */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		402A56F718E12FA200E9416B /* libPods-Specs-Cedar.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 402A56F418E12FA200E9416B /* libPods-Specs-Cedar.a */; };
-		402A56F818E12FA200E9416B /* libPods-Specs-SocketRocket.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 402A56F518E12FA200E9416B /* libPods-Specs-SocketRocket.a */; };
 		402A56FA18E133C100E9416B /* libcrypto.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 405FD5A71745DABE001F8AE7 /* libcrypto.a */; };
 		4079F9DB170EB31D00194B4A /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4079F9DA170EB31D00194B4A /* UIKit.framework */; };
 		4079F9DC170EB31D00194B4A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4000D639170E880400296229 /* Foundation.framework */; };
@@ -45,6 +43,7 @@
 		430E08B6E86CA801EE954D0F /* MockObjectiveDDPDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 430E092B95390D2D558E5F3B /* MockObjectiveDDPDelegate.m */; };
 		888B6DFC173B6508001EED80 /* MeteorClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 888B6DFB173B6508001EED80 /* MeteorClient.m */; };
 		888B6DFF173B66EA001EED80 /* BSONIdGenerator.m in Sources */ = {isa = PBXBuildFile; fileRef = 888B6DFE173B66EA001EED80 /* BSONIdGenerator.m */; };
+		9D5C797475E743E2B3045686 /* libPods-Specs.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 210CADCB337849BC9A15A9A0 /* libPods-Specs.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -84,9 +83,9 @@
 		401AEB83170E9EEB008B38EA /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		4024012918A5F52D00C8421E /* NSData+DDPHex.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSData+DDPHex.m"; sourceTree = "<group>"; };
 		4024012A18A5F52D00C8421E /* NSData+DDPHex.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSData+DDPHex.h"; sourceTree = "<group>"; };
-		402A56F418E12FA200E9416B /* libPods-Specs-Cedar.a */ = {isa = PBXFileReference; lastKnownFileType = file; name = "libPods-Specs-Cedar.a"; path = "Pods/build/Debug-iphoneos/libPods-Specs-Cedar.a"; sourceTree = "<group>"; };
-		402A56F518E12FA200E9416B /* libPods-Specs-SocketRocket.a */ = {isa = PBXFileReference; lastKnownFileType = file; name = "libPods-Specs-SocketRocket.a"; path = "Pods/build/Debug-iphoneos/libPods-Specs-SocketRocket.a"; sourceTree = "<group>"; };
-		402A56F618E12FA200E9416B /* libPods-Specs.a */ = {isa = PBXFileReference; lastKnownFileType = file; name = "libPods-Specs.a"; path = "Pods/build/Debug-iphoneos/libPods-Specs.a"; sourceTree = "<group>"; };
+		402A56F418E12FA200E9416B /* libPods-Specs-Cedar.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libPods-Specs-Cedar.a"; path = "Pods/build/Debug-iphoneos/libPods-Specs-Cedar.a"; sourceTree = "<group>"; };
+		402A56F518E12FA200E9416B /* libPods-Specs-SocketRocket.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libPods-Specs-SocketRocket.a"; path = "Pods/build/Debug-iphoneos/libPods-Specs-SocketRocket.a"; sourceTree = "<group>"; };
+		402A56F618E12FA200E9416B /* libPods-Specs.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libPods-Specs.a"; path = "Pods/build/Debug-iphoneos/libPods-Specs.a"; sourceTree = "<group>"; };
 		405FD5A71745DABE001F8AE7 /* libcrypto.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcrypto.a; path = ObjectiveDDP/libcrypto.a; sourceTree = "<group>"; };
 		405FD5A91745DABE001F8AE7 /* aes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = aes.h; sourceTree = "<group>"; };
 		405FD5AA1745DABE001F8AE7 /* asn1.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = asn1.h; sourceTree = "<group>"; };
@@ -209,8 +208,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				402A56FA18E133C100E9416B /* libcrypto.a in Frameworks */,
-				402A56F718E12FA200E9416B /* libPods-Specs-Cedar.a in Frameworks */,
-				402A56F818E12FA200E9416B /* libPods-Specs-SocketRocket.a in Frameworks */,
 				4079F9F4170EB36700194B4A /* libicucore.dylib in Frameworks */,
 				4079F9F3170EB36000194B4A /* SystemConfiguration.framework in Frameworks */,
 				4079F9F2170EB35800194B4A /* CFNetwork.framework in Frameworks */,
@@ -218,6 +215,7 @@
 				4079F9DB170EB31D00194B4A /* UIKit.framework in Frameworks */,
 				4079F9DC170EB31D00194B4A /* Foundation.framework in Frameworks */,
 				4079F9DE170EB31D00194B4A /* CoreGraphics.framework in Frameworks */,
+				9D5C797475E743E2B3045686 /* libPods-Specs.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -764,7 +762,10 @@
 					"$(inherited)",
 					/Users/boundsj/workspace/ios/ObjectiveDDP/ObjectiveDDP,
 				);
-				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				OTHER_CFLAGS = (
+					"$(inherited)",
+					"-DNS_BLOCK_ASSERTIONS=1",
+				);
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
