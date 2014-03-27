@@ -959,8 +959,6 @@ void srp_create_salted_verification_key( SRP_HashAlgorithm alg,
 	} else {
 		BN_bin2bn(*bytes_s, *len_s, s);
 	}
-	
-    *bytes_v = (const unsigned char *) malloc( *len_v );
     
     x = calculate_x( alg, s, username, password, len_password );
 
@@ -970,6 +968,7 @@ void srp_create_salted_verification_key( SRP_HashAlgorithm alg,
     BN_mod_exp(v, ng->g, x, ng->N, ctx);
         
     *len_v   = BN_num_bytes(v);
+    *bytes_v = (const unsigned char *) malloc( *len_v );
 
     if (!bytes_s || !bytes_v)
        goto cleanup_and_exit;
