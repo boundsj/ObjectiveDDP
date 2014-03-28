@@ -5,14 +5,14 @@ PODS:
 
 DEPENDENCIES:
   - Cedar (~> 0.9.5)
-  - RBHive (from `git@github.com:boundsj/RBHive.git`)
-  - SocketRocket (from `git@github.com:square/SocketRocket.git`)
+  - RBHive (from `https://github.com/boundsj/RBHive.git`)
+  - SocketRocket (from `https://github.com/square/SocketRocket.git`)
 
 EXTERNAL SOURCES:
   RBHive:
-    :git: git@github.com:boundsj/RBHive.git
+    :git: https://github.com/boundsj/RBHive.git
   SocketRocket:
-    :git: git@github.com:square/SocketRocket.git
+    :git: https://github.com/square/SocketRocket.git
 
 SPEC CHECKSUMS:
   Cedar: 16cbb75084031aa41304cdeb0d0c8319c1af1cae
