@@ -4,9 +4,16 @@
 #import "MeteorClient+Private.h"
 #import "BSONIdGenerator.h"
 #import "NSData+DDPHex.h"
+#import "DDPConnectedSubscriptionService.h"
 
 NSString * const MeteorClientDidDisconnectNotification = @"boundsj.objectiveddp.disconnected";
 NSString * const MeteorClientTransportErrorDomain = @"boundsj.objectiveddp.transport";
+
+@interface MeteorClient ()
+
+@property (nonatomic, strong) id<DDPMeteorSubscribing> subscriptionService;
+
+@end
 
 @implementation MeteorClient
 
@@ -19,20 +26,21 @@ NSString * const MeteorClientTransportErrorDomain = @"boundsj.objectiveddp.trans
         _methodIds = [NSMutableSet set];
         _retryAttempts = 0;
         _responseCallbacks = [NSMutableDictionary dictionary];
+        _subscriptionService = [[DependencyProvider sharedProvider] provideDDPConnectedSubscriptionService];
     }
     return self;
 }
 
-- (id)initWithConnectionString:(NSString *)connectionString delegate:(id<MeteorClientDelegate>)delegate {
+- (id)initWithConnectionString:(NSString *)connectionString delegate:(id<DDPMeteorClientDelegate>)delegate {
     self = [self init];
     if (self) {
-        self.ddp = [[DependencyProvider sharedProvider] provideObjectiveDDPWithConnectionString:connectionString delegate:self];
-        self.delegate = delegate;
+        _ddp = [[DependencyProvider sharedProvider] provideObjectiveDDPWithConnectionString:connectionString delegate:self];
+        _delegate = delegate;
     }
     return self;
 }
 
-#pragma mark MeteorClient public API
+#pragma mark MeteorClient Public
 
 - (void)connect {
     [self.ddp connectWebSocket];
@@ -194,21 +202,30 @@ static NSString *randomId(int length) {
     NSString *messageId = message[@"id"];
     
     [self _handleMethodResultMessageWithMessageId:messageId message:message msg:msg];
+    
     [self _handleLoginChallengeResponse:message msg:msg];
-    [self _handleLoginError:message msg:msg];    
+    [self _handleLoginError:message msg:msg];
     [self _handleHAMKVerification:message msg:msg];
+    
     [self _handleAddedMessage:message msg:msg];
     [self _handleRemovedMessage:message msg:msg];
     [self _handleChangedMessage:message msg:msg];
     
     if (msg && [msg isEqualToString:@"connected"]) {
         self.connected = YES;
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"connected" object:nil];
+        [self.delegate meteorClientDidConnectToServer:self];
+        [self.subscriptionService makeSubscriptions];
+        
+        // refactor_XXX: session & login mgmt should be sep object
         if (_sessionToken) {
             [self.ddp methodWithId:[BSONIdGenerator generate]
                             method:@"login"
                         parameters:@[@{@"resume": _sessionToken}]];
         }
+        
+        // refactor_XXX: this work needs to be moved to sub service,
+        //               leaving for now as a refernce till code
+        //               gets moved
         [self _makeMeteorDataSubscriptions];
     }
     
@@ -228,11 +245,11 @@ static NSString *randomId(int length) {
 }
 
 - (void)didOpen {
-    // XXX: replace this, collection management should be a sep object that is powered
-    // by RBHive.
+    // refactor_XXX: remove explicit collection management in meteor client
     [self resetCollections];
     
-    [self.delegate didConnectToWebsocket];
+    
+    [self.delegate meteorClientDidConnectToWebsocket:self];
     [self.ddp connectWithSession:nil version:@"pre1" support:nil];
 }
 

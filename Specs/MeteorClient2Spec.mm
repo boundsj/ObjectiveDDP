@@ -1,6 +1,7 @@
 #import "MeteorClient.h"
 #import "FakeDependencyProvider.h"
 #import "FakeObjectiveDDP.h"
+#import "DDPConnectedSubscriptionService.h"
 
 using namespace Cedar::Matchers;
 using namespace Cedar::Doubles;
@@ -10,14 +11,19 @@ SPEC_BEGIN(MeteorClientSpec)
 fdescribe(@"MeteorClient", ^{
     __block MeteorClient *meteorClient;
     __block FakeObjectiveDDP *fakeDDP;
-    __block id<MeteorClientDelegate> meteorClientDelegate;
+    __block id<DDPMeteorClientDelegate> meteorClientDelegate;
+    __block id<DDPMeteorSubscribing> subscriptionService;
     
     beforeEach(^{
-        spy_on(fakeProvider);
         fakeDDP = [[FakeObjectiveDDP alloc] init];
-        spy_on(fakeDDP);
         fakeProvider.fakeObjectiveDDP = fakeDDP;
-        meteorClientDelegate = nice_fake_for(@protocol(MeteorClientDelegate));
+        
+        subscriptionService = nice_fake_for(@protocol(DDPMeteorSubscribing));
+        fakeProvider.fakeDDPSubscriptionService = subscriptionService;
+
+        meteorClientDelegate = nice_fake_for(@protocol(DDPMeteorClientDelegate));
+        spy_on(fakeProvider);
+        spy_on(fakeDDP);
         
         meteorClient = [[MeteorClient alloc] initWithConnectionString:@"ws://xanadu.com/websocket" delegate:meteorClientDelegate];
     });
@@ -41,13 +47,40 @@ fdescribe(@"MeteorClient", ^{
             });
             
             it(@"should tell its delegate", ^{
-                meteorClientDelegate should have_received(@selector(didConnectToWebsocket));
+                meteorClientDelegate should have_received(@selector(meteorClientDidConnectToWebsocket:)).with(meteorClient);
             });
             
-            it(@"should use ddp to connect", ^{
+            it(@"should use ddp to connect to the meteor server", ^{
                 fakeDDP should have_received(@selector(connectWithSession:version:support:)).with(nil, @"pre1", nil);
             });
+            
+            context(@"when the connection to the meteor server succeeds", ^{
+                beforeEach(^{
+                    [fakeDDP succeedMeteorConnect];
+                });
+                
+                it(@"should update the connected state", ^{
+                    meteorClient.connected should be_truthy;
+                });
+                
+                it(@"should tell its delegate", ^{
+                    meteorClientDelegate should have_received(@selector(meteorClientDidConnectToServer:)).with(meteorClient);
+                });
+                
+                it(@"should tell its subscription service", ^{
+                    subscriptionService should have_received(@selector(makeSubscriptions));
+                });
+            });
+            
+            xcontext(@"when the connection to the meteor server fails", ^{
+            });
         });
+        
+        xcontext(@"when the web socket connection attempt fails", ^{
+        });
+    });
+    
+    xdescribe(@"connecting to a web socket with a stored session", ^{
     });
 });
 

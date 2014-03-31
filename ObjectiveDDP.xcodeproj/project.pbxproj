@@ -23,7 +23,11 @@
 		4027EDE21783E1F400CAEC1C /* srp.c in Sources */ = {isa = PBXBuildFile; fileRef = 405FD5F61746BCD5001F8AE7 /* srp.c */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		402A3B9C18E8CBAB0045F1BA /* MeteorClient2Spec.mm in Sources */ = {isa = PBXBuildFile; fileRef = 402A3B9B18E8CBAB0045F1BA /* MeteorClient2Spec.mm */; };
 		402A3B9F18E8DB760045F1BA /* FakeObjectiveDDP.m in Sources */ = {isa = PBXBuildFile; fileRef = 402A3B9E18E8DB760045F1BA /* FakeObjectiveDDP.m */; };
+		402A3BA218E9221D0045F1BA /* DDPConnectedSubscriptionService.m in Sources */ = {isa = PBXBuildFile; fileRef = 402A3BA118E9221D0045F1BA /* DDPConnectedSubscriptionService.m */; };
+		402A3BA318E9221D0045F1BA /* DDPConnectedSubscriptionService.m in Sources */ = {isa = PBXBuildFile; fileRef = 402A3BA118E9221D0045F1BA /* DDPConnectedSubscriptionService.m */; };
 		402A56FA18E133C100E9416B /* libcrypto.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 405FD5A71745DABE001F8AE7 /* libcrypto.a */; };
+		4035CAC418E93C4D000D2963 /* DDPDisconnectedSubscriptionService.m in Sources */ = {isa = PBXBuildFile; fileRef = 4035CAC318E93C4D000D2963 /* DDPDisconnectedSubscriptionService.m */; };
+		4035CAC518E93C4D000D2963 /* DDPDisconnectedSubscriptionService.m in Sources */ = {isa = PBXBuildFile; fileRef = 4035CAC318E93C4D000D2963 /* DDPDisconnectedSubscriptionService.m */; };
 		4079F9DB170EB31D00194B4A /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4079F9DA170EB31D00194B4A /* UIKit.framework */; };
 		4079F9DC170EB31D00194B4A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4000D639170E880400296229 /* Foundation.framework */; };
 		4079F9DE170EB31D00194B4A /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4079F9DD170EB31D00194B4A /* CoreGraphics.framework */; };
@@ -88,9 +92,14 @@
 		402A3B9B18E8CBAB0045F1BA /* MeteorClient2Spec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MeteorClient2Spec.mm; sourceTree = "<group>"; };
 		402A3B9D18E8DB760045F1BA /* FakeObjectiveDDP.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FakeObjectiveDDP.h; sourceTree = "<group>"; };
 		402A3B9E18E8DB760045F1BA /* FakeObjectiveDDP.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FakeObjectiveDDP.m; sourceTree = "<group>"; };
+		402A3BA118E9221D0045F1BA /* DDPConnectedSubscriptionService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDPConnectedSubscriptionService.m; sourceTree = "<group>"; };
 		402A56F418E12FA200E9416B /* libPods-Specs-Cedar.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libPods-Specs-Cedar.a"; path = "Pods/build/Debug-iphoneos/libPods-Specs-Cedar.a"; sourceTree = "<group>"; };
 		402A56F518E12FA200E9416B /* libPods-Specs-SocketRocket.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libPods-Specs-SocketRocket.a"; path = "Pods/build/Debug-iphoneos/libPods-Specs-SocketRocket.a"; sourceTree = "<group>"; };
 		402A56F618E12FA200E9416B /* libPods-Specs.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libPods-Specs.a"; path = "Pods/build/Debug-iphoneos/libPods-Specs.a"; sourceTree = "<group>"; };
+		4035CAC318E93C4D000D2963 /* DDPDisconnectedSubscriptionService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDPDisconnectedSubscriptionService.m; sourceTree = "<group>"; };
+		4035CAC718E93CDF000D2963 /* DDPSubscriptionService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDPSubscriptionService.h; sourceTree = "<group>"; };
+		4035CAC818E93DAE000D2963 /* DDPConnectedSubscriptionService.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DDPConnectedSubscriptionService.h; sourceTree = "<group>"; };
+		4035CAC918E93DBE000D2963 /* DDPDisconnectedSubscriptionService.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DDPDisconnectedSubscriptionService.h; sourceTree = "<group>"; };
 		405FD5A71745DABE001F8AE7 /* libcrypto.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcrypto.a; path = ObjectiveDDP/libcrypto.a; sourceTree = "<group>"; };
 		405FD5A91745DABE001F8AE7 /* aes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = aes.h; sourceTree = "<group>"; };
 		405FD5AA1745DABE001F8AE7 /* asn1.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = asn1.h; sourceTree = "<group>"; };
@@ -276,20 +285,25 @@
 		4000D63B170E880400296229 /* ObjectiveDDP */ = {
 			isa = PBXGroup;
 			children = (
-				4024012918A5F52D00C8421E /* NSData+DDPHex.m */,
-				4024012A18A5F52D00C8421E /* NSData+DDPHex.h */,
-				4011C80217BD2AA6002AA28E /* DependencyProvider.h */,
-				4011C80317BD2AA6002AA28E /* DependencyProvider.m */,
 				888B6DFD173B66EA001EED80 /* BSONIdGenerator.h */,
 				888B6DFE173B66EA001EED80 /* BSONIdGenerator.m */,
+				4035CAC818E93DAE000D2963 /* DDPConnectedSubscriptionService.h */,
+				402A3BA118E9221D0045F1BA /* DDPConnectedSubscriptionService.m */,
+				4035CAC918E93DBE000D2963 /* DDPDisconnectedSubscriptionService.h */,
+				4035CAC318E93C4D000D2963 /* DDPDisconnectedSubscriptionService.m */,
+				4035CAC718E93CDF000D2963 /* DDPSubscriptionService.h */,
+				4011C80217BD2AA6002AA28E /* DependencyProvider.h */,
+				4011C80317BD2AA6002AA28E /* DependencyProvider.m */,
+				40BAB8CF182051500098524C /* MeteorClient+Parsing.m */,
+				052BE033183F8655005CBD6E /* MeteorClient+Private.h */,
 				888B6DFA173B6508001EED80 /* MeteorClient.h */,
 				888B6DFB173B6508001EED80 /* MeteorClient.m */,
-				052BE033183F8655005CBD6E /* MeteorClient+Private.h */,
-				40BAB8CF182051500098524C /* MeteorClient+Parsing.m */,
+				4024012A18A5F52D00C8421E /* NSData+DDPHex.h */,
+				4024012918A5F52D00C8421E /* NSData+DDPHex.m */,
 				4000D63E170E880400296229 /* ObjectiveDDP.h */,
 				4000D640170E880400296229 /* ObjectiveDDP.m */,
-				405FD5F51746BCD5001F8AE7 /* srp */,
 				405FD5A81745DABE001F8AE7 /* openssl */,
+				405FD5F51746BCD5001F8AE7 /* srp */,
 				4000D63C170E880400296229 /* Supporting Files */,
 			);
 			path = ObjectiveDDP;
@@ -585,11 +599,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4035CAC418E93C4D000D2963 /* DDPDisconnectedSubscriptionService.m in Sources */,
 				4000D641170E880400296229 /* ObjectiveDDP.m in Sources */,
 				4024012B18A5F52D00C8421E /* NSData+DDPHex.m in Sources */,
 				888B6DFC173B6508001EED80 /* MeteorClient.m in Sources */,
 				40BAB8D0182051500098524C /* MeteorClient+Parsing.m in Sources */,
 				888B6DFF173B66EA001EED80 /* BSONIdGenerator.m in Sources */,
+				402A3BA218E9221D0045F1BA /* DDPConnectedSubscriptionService.m in Sources */,
 				4011C80417BD2AA6002AA28E /* DependencyProvider.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -598,10 +614,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4035CAC518E93C4D000D2963 /* DDPDisconnectedSubscriptionService.m in Sources */,
 				40F8370C1741C59700AF2340 /* BSONIdGenerator.m in Sources */,
 				402A3B9F18E8DB760045F1BA /* FakeObjectiveDDP.m in Sources */,
 				40F8370D1741C59700AF2340 /* MeteorClient.m in Sources */,
 				402A3B9C18E8CBAB0045F1BA /* MeteorClient2Spec.mm in Sources */,
+				402A3BA318E9221D0045F1BA /* DDPConnectedSubscriptionService.m in Sources */,
 				40BAB8D1182051500098524C /* MeteorClient+Parsing.m in Sources */,
 				4079F9F5170EB39200194B4A /* ObjectiveDDP.m in Sources */,
 				4079F9E6170EB31D00194B4A /* main.m in Sources */,

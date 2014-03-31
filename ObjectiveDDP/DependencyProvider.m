@@ -1,6 +1,7 @@
 #import "DependencyProvider.h"
 #import <SocketRocket/SRWebSocket.h>
 #import "ObjectiveDDP.h"
+#import "DDPConnectedSubscriptionService.h"
 
 @implementation DependencyProvider
 
@@ -19,6 +20,10 @@ static DependencyProvider *sharedProvider = nil;
 
 - (ObjectiveDDP *)provideObjectiveDDPWithConnectionString:(NSString *)connectionString delegate:(id<ObjectiveDDPDelegate>)delegate {
     return [[ObjectiveDDP alloc] initWithURLString:connectionString delegate:delegate];
+}
+
+- (id<DDPMeteorSubscribing>)provideDDPConnectedSubscriptionService {
+    return [[DDPConnectedSubscriptionService alloc] init];
 }
 
 @end

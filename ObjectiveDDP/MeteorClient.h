@@ -1,7 +1,7 @@
 #import "ObjectiveDDP.h"
 
 @protocol DDPAuthDelegate;
-@protocol MeteorClientDelegate;
+@protocol DDPMeteorClientDelegate;
 
 extern NSString * const MeteorClientDidDisconnectNotification;
 
@@ -26,16 +26,27 @@ typedef void(^MeteorClientMethodCallback)(NSDictionary *response, NSError *error
 
 @interface MeteorClient : NSObject<ObjectiveDDPDelegate>
 
+// keeping these around so they can be set/overwritten individually if user wants
 @property (nonatomic, strong) ObjectiveDDP *ddp;
-@property (nonatomic, weak) id<MeteorClientDelegate> delegate;
+@property (nonatomic, weak) id<DDPMeteorClientDelegate> delegate;
 @property (nonatomic, weak) id<DDPAuthDelegate> authDelegate;
+
+// refactor_XXX: we will no longer be maintaining collections
+//               by default
 @property (nonatomic, strong, readonly) NSMutableDictionary *collections;
+
 @property (nonatomic, copy, readonly) NSString *userId;
-@property (nonatomic, assign, readonly) BOOL websocketReady;
+
+
+// refactor_XXX: carefully review public exposed state stuff
 @property (nonatomic, assign, readonly) BOOL connected;
 @property (nonatomic, assign, readonly) AuthState authState;
 
-- (id)initWithConnectionString:(NSString *)connectionString delegate:(id<MeteorClientDelegate>)delegate;
+
+
+
+
+- (id)initWithConnectionString:(NSString *)connectionString delegate:(id<DDPMeteorClientDelegate>)delegate;
 - (void)connect;
 - (NSString *)callMethodName:(NSString *)methodName parameters:(NSArray *)parameters responseCallback:(MeteorClientMethodCallback)asyncCallback;
 - (void)logonWithUsername:(NSString *)username password:(NSString *)password responseCallback:(MeteorClientMethodCallback)responseCallback;
@@ -62,8 +73,9 @@ typedef void(^MeteorClientMethodCallback)(NSDictionary *response, NSError *error
 
 @end
 
-@protocol MeteorClientDelegate <NSObject>
+@protocol DDPMeteorClientDelegate <NSObject>
 
-- (void)didConnectToWebsocket;
+- (void)meteorClientDidConnectToWebsocket:(MeteorClient *)meteorClient;
+- (void)meteorClientDidConnectToServer:(MeteorClient *)meteorClient;
 
 @end

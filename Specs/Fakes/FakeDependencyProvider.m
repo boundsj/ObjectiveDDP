@@ -1,6 +1,7 @@
 #import "FakeDependencyProvider.h"
 #import "FakeSRWebSocket.h"
 #import "FakeObjectiveDDP.h"
+#import "DDPConnectedSubscriptionService.h"
 
 @implementation FakeDependencyProvider
 
@@ -21,6 +22,14 @@
     }
 
     return [super provideObjectiveDDPWithConnectionString:connectionString delegate:delegate];
+}
+
+- (id<DDPMeteorSubscribing>)provideDDPConnectedSubscriptionService {
+    if (self.fakeDDPSubscriptionService) {
+        return self.fakeDDPSubscriptionService;
+    }
+    
+    return [super provideDDPConnectedSubscriptionService];
 }
 
 @end

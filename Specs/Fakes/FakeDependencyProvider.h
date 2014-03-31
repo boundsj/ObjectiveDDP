@@ -7,5 +7,6 @@
 
 @property (nonatomic, strong) FakeSRWebSocket *fakeSRWebSocket;
 @property (nonatomic, strong) FakeObjectiveDDP *fakeObjectiveDDP;
+@property (nonatomic, strong) id<DDPMeteorSubscribing> fakeDDPSubscriptionService;
 
 @end

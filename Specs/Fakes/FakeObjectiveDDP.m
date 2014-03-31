@@ -6,4 +6,9 @@
     [self.delegate didOpen];
 }
 
+- (void)succeedMeteorConnect {
+    NSDictionary *connectedMessage = @{@"msg": @"connected"};
+    [self.delegate didReceiveMessage:connectedMessage];
+}
+
 @end
