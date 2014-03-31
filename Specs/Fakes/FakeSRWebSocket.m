@@ -1,6 +1,6 @@
-#import "MockSRWebSocket.h"
+#import "FakeSRWebSocket.h"
 
-@implementation MockSRWebSocket
+@implementation FakeSRWebSocket
 
 - (void)connectionSuccess {
    [self.delegate webSocketDidOpen:self];

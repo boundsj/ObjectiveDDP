@@ -1,8 +1,8 @@
 #import "ObjectiveDDP.h"
 
 @protocol DDPAuthDelegate;
+@protocol MeteorClientDelegate;
 
-extern NSString * const MeteorClientDidConnectNotification;
 extern NSString * const MeteorClientDidDisconnectNotification;
 
 /** Errors due to transport (connection) problems will have this domain. For errors being reported
@@ -27,6 +27,7 @@ typedef void(^MeteorClientMethodCallback)(NSDictionary *response, NSError *error
 @interface MeteorClient : NSObject<ObjectiveDDPDelegate>
 
 @property (nonatomic, strong) ObjectiveDDP *ddp;
+@property (nonatomic, weak) id<MeteorClientDelegate> delegate;
 @property (nonatomic, weak) id<DDPAuthDelegate> authDelegate;
 @property (nonatomic, strong, readonly) NSMutableDictionary *collections;
 @property (nonatomic, copy, readonly) NSString *userId;
@@ -34,8 +35,8 @@ typedef void(^MeteorClientMethodCallback)(NSDictionary *response, NSError *error
 @property (nonatomic, assign, readonly) BOOL connected;
 @property (nonatomic, assign, readonly) AuthState authState;
 
-#pragma mark - Methods
-
+- (id)initWithConnectionString:(NSString *)connectionString delegate:(id<MeteorClientDelegate>)delegate;
+- (void)connect;
 - (NSString *)callMethodName:(NSString *)methodName parameters:(NSArray *)parameters responseCallback:(MeteorClientMethodCallback)asyncCallback;
 - (void)logonWithUsername:(NSString *)username password:(NSString *)password responseCallback:(MeteorClientMethodCallback)responseCallback;
 - (void)logonWithUserParameters:(NSDictionary *)userParameters username:(NSString *)username password:(NSString *)password responseCallback:(MeteorClientMethodCallback)responseCallback;
@@ -54,11 +55,15 @@ typedef void(^MeteorClientMethodCallback)(NSDictionary *response, NSError *error
 
 @end
 
-#pragma mark - <DDPAuthDelegate>
-
 @protocol DDPAuthDelegate <NSObject>
 
 - (void)authenticationWasSuccessful;
 - (void)authenticationFailed:(NSString *)reason;
+
+@end
+
+@protocol MeteorClientDelegate <NSObject>
+
+- (void)didConnectToWebsocket;
 
 @end

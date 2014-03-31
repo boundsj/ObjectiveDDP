@@ -1,10 +1,10 @@
 #import "DependencyProvider.h"
 #import "MeteorClient.h"
+#import "DependencyProvider.h"
 #import "MeteorClient+Private.h"
 #import "BSONIdGenerator.h"
 #import "NSData+DDPHex.h"
 
-NSString * const MeteorClientDidConnectNotification = @"boundsj.objectiveddp.connected";
 NSString * const MeteorClientDidDisconnectNotification = @"boundsj.objectiveddp.disconnected";
 NSString * const MeteorClientTransportErrorDomain = @"boundsj.objectiveddp.transport";
 
@@ -23,7 +23,20 @@ NSString * const MeteorClientTransportErrorDomain = @"boundsj.objectiveddp.trans
     return self;
 }
 
+- (id)initWithConnectionString:(NSString *)connectionString delegate:(id<MeteorClientDelegate>)delegate {
+    self = [self init];
+    if (self) {
+        self.ddp = [[DependencyProvider sharedProvider] provideObjectiveDDPWithConnectionString:connectionString delegate:self];
+        self.delegate = delegate;
+    }
+    return self;
+}
+
 #pragma mark MeteorClient public API
+
+- (void)connect {
+    [self.ddp connectWebSocket];
+}
 
 - (void)resetCollections {
     [self.collections removeAllObjects];
@@ -215,10 +228,12 @@ static NSString *randomId(int length) {
 }
 
 - (void)didOpen {
-    self.websocketReady = YES;
+    // XXX: replace this, collection management should be a sep object that is powered
+    // by RBHive.
     [self resetCollections];
+    
+    [self.delegate didConnectToWebsocket];
     [self.ddp connectWithSession:nil version:@"pre1" support:nil];
-    [[NSNotificationCenter defaultCenter] postNotificationName:MeteorClientDidConnectNotification object:self];
 }
 
 - (void)didReceiveConnectionError:(NSError *)error {
@@ -242,8 +257,7 @@ static NSString *randomId(int length) {
     return methodId;
 }
 
-- (void)_handleConnectionError {
-    self.websocketReady = NO;
+- (void)_handleConnectionError {    
     self.connected = NO;
     [self _invalidateUnresolvedMethods];
     [[NSNotificationCenter defaultCenter] postNotificationName:MeteorClientDidDisconnectNotification object:self];

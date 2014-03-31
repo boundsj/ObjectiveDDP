@@ -29,7 +29,6 @@ extern "C" {
 @property (nonatomic, copy, readwrite) NSString *userId;
 @property (nonatomic, assign, readwrite) BOOL connected;
 @property (nonatomic, strong, readwrite) NSMutableDictionary *collections;
-@property (nonatomic, assign, readwrite) BOOL websocketReady;
 @property (nonatomic, assign, readwrite) AuthState authState;
 
 //xxx: temporary methods to corral state vars

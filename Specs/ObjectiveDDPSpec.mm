@@ -1,6 +1,6 @@
 #import "ObjectiveDDP.h"
 #import "MockObjectiveDDPDelegate.h"
-#import "MockSRWebSocket.h"
+#import "FakeSRWebSocket.h"
 
 using namespace Cedar::Matchers;
 using namespace Cedar::Doubles;
@@ -9,12 +9,12 @@ SPEC_BEGIN(ObjectiveDDPSpec)
 
 describe(@"ObjectiveDDP", ^{
     __block ObjectiveDDP *ddp;
-    __block MockSRWebSocket *fakeSRWebSocket;
+    __block FakeSRWebSocket *fakeSRWebSocket;
     __block MockObjectiveDDPDelegate<CedarDouble> *fakeDDPDelegate;
 
     describe(@"when the framework is initialized", ^{
         beforeEach(^{
-            fakeSRWebSocket = [[MockSRWebSocket alloc] init];
+            fakeSRWebSocket = [[FakeSRWebSocket alloc] init];
             fakeProvider.fakeSRWebSocket = fakeSRWebSocket;
             
             fakeDDPDelegate = nice_fake_for(@protocol(ObjectiveDDPDelegate));

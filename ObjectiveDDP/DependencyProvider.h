@@ -1,4 +1,5 @@
 #import <Foundation/Foundation.h>
+#import "ObjectiveDDP.h"
 
 @class SRWebSocket;
 
@@ -6,5 +7,6 @@
 
 + (DependencyProvider *)sharedProvider;
 - (SRWebSocket *)provideSRWebSocketWithRequest:(NSURLRequest *)request;
+- (ObjectiveDDP *)provideObjectiveDDPWithConnectionString:(NSString *)connectionString delegate:(id<ObjectiveDDPDelegate>)delegate;
 
 @end
