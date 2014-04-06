@@ -30,17 +30,22 @@ typedef void(^MeteorClientMethodCallback)(NSDictionary *response, NSError *error
 @property (nonatomic, strong) ObjectiveDDP *ddp;
 @property (nonatomic, weak) id<DDPMeteorClientDelegate> delegate;
 @property (nonatomic, weak) id<DDPAuthDelegate> authDelegate;
+@property (nonatomic, copy, readonly) NSString *userId;
+@property (nonatomic, strong, readonly) NSMutableDictionary *subscriptions;
+
 
 // refactor_XXX: we will no longer be maintaining collections
 //               by default
 @property (nonatomic, strong, readonly) NSMutableDictionary *collections;
 
-@property (nonatomic, copy, readonly) NSString *userId;
+
 
 
 // refactor_XXX: carefully review public exposed state stuff
 @property (nonatomic, assign, readonly) BOOL connected;
 @property (nonatomic, assign, readonly) AuthState authState;
+
+
 
 
 
@@ -58,11 +63,15 @@ typedef void(^MeteorClientMethodCallback)(NSDictionary *response, NSError *error
 - (void)logout;
 - (void)disconnect;
 
+
+
 // Deprecated methods
 
 - (void)logonWithUsername:(NSString *)username password:(NSString *)password __attribute__((deprecated("use logonWithUsername:password:responseCallback: instead")));
 - (NSString *)sendWithMethodName:(NSString *)methodName parameters:(NSArray *)parameters notifyOnResponse:(BOOL)notify __attribute__((deprecated("use callMethodName:parameters:responseCallback: instead")));
 - (void)sendWithMethodName:(NSString *)methodName parameters:(NSArray *)parameters __attribute__((deprecated("use callMethodName:parameters:responseCallback: instead")));
+
+
 
 @end
 

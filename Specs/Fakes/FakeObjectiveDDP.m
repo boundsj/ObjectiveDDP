@@ -11,4 +11,8 @@
     [self.delegate didReceiveMessage:connectedMessage];
 }
 
+- (void)connectWithSession:(NSString *)session version:(NSString *)version support:(NSString *)support {
+    
+}
+
 @end

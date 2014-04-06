@@ -12,6 +12,7 @@ NSString * const MeteorClientTransportErrorDomain = @"boundsj.objectiveddp.trans
 @interface MeteorClient ()
 
 @property (nonatomic, strong) id<DDPMeteorSubscribing> subscriptionService;
+@property (nonatomic, strong, readwrite) NSMutableDictionary *subscriptions;
 
 @end
 
@@ -78,7 +79,7 @@ NSString * const MeteorClientTransportErrorDomain = @"boundsj.objectiveddp.trans
 
 - (void)addSubscription:(NSString *)subscriptionName withParameters:(NSArray *)parameters {
     NSString *uid = [BSONIdGenerator generate];
-    [_subscriptions setObject:uid forKey:subscriptionName];
+    [self.subscriptions setObject:uid forKey:subscriptionName];
     if (parameters) {
         [_subscriptionsParameters setObject:parameters forKey:subscriptionName];
     }
@@ -92,11 +93,11 @@ NSString * const MeteorClientTransportErrorDomain = @"boundsj.objectiveddp.trans
     if (![self okToSend]) {
         return;
     }
-    NSString *uid = [_subscriptions objectForKey:subscriptionName];
+    NSString *uid = [self.subscriptions objectForKey:subscriptionName];
     if (uid) {
         [self.ddp unsubscribeWith:uid];
         // XXX: Should we really remove sub until we hear back from sever?
-        [_subscriptions removeObjectForKey:subscriptionName];
+        [self.subscriptions removeObjectForKey:subscriptionName];
     }
 }
 
@@ -122,7 +123,6 @@ static NSString *randomId(int length) {
     if ([self _rejectIfNotConnected:responseCallback]) {
         return;
     }
-    //[self _setAuthStateToLoggingIn];
     NSData *passwordData = [password dataUsingEncoding:NSUTF8StringEncoding];
     const unsigned char *bytes_s, *bytes_v;
     int len_s, len_v;
@@ -214,26 +214,22 @@ static NSString *randomId(int length) {
     if (msg && [msg isEqualToString:@"connected"]) {
         self.connected = YES;
         [self.delegate meteorClientDidConnectToServer:self];
-        [self.subscriptionService makeSubscriptions];
+        [self.subscriptionService makeSubscriptionsWithDDP:self.ddp subscriptions:self.subscriptions];
+        
         
         // refactor_XXX: session & login mgmt should be sep object
         if (_sessionToken) {
             [self.ddp methodWithId:[BSONIdGenerator generate]
                             method:@"login"
                         parameters:@[@{@"resume": _sessionToken}]];
-        }
-        
-        // refactor_XXX: this work needs to be moved to sub service,
-        //               leaving for now as a refernce till code
-        //               gets moved
-        [self _makeMeteorDataSubscriptions];
+        }    
     }
     
     if (msg && [msg isEqualToString:@"ready"]) {
         NSArray *subs = message[@"subs"];
         for(NSString *readySubscription in subs) {
-            for(NSString *subscriptionName in _subscriptions) {
-                NSString *curSubId = _subscriptions[subscriptionName];
+            for(NSString *subscriptionName in self.subscriptions) {
+                NSString *curSubId = self.subscriptions[subscriptionName];
                 if([curSubId isEqualToString:readySubscription]) {
                     NSString *notificationName = [NSString stringWithFormat:@"%@_ready", subscriptionName];
                     [[NSNotificationCenter defaultCenter] postNotificationName:notificationName object:self];
@@ -306,15 +302,6 @@ static NSString *randomId(int length) {
         return;
     }
     [self.ddp connectWebSocket];
-}
-
-- (void)_makeMeteorDataSubscriptions {
-    for (NSString *key in [_subscriptions allKeys]) {
-        NSString *uid = [BSONIdGenerator generate];
-        [_subscriptions setObject:uid forKey:key];
-        NSArray *params = _subscriptionsParameters[key];
-        [self.ddp subscribeWith:uid name:key parameters:params];
-    }
 }
 
 - (BOOL)_rejectIfNotConnected:(MeteorClientMethodCallback)responseCallback {

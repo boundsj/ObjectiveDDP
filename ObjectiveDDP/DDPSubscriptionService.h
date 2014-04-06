@@ -1,7 +1,8 @@
 #import <Foundation/Foundation.h>
+#import "ObjectiveDDP.h"
 
 @protocol DDPMeteorSubscribing <NSObject>
 
-- (void)makeSubscriptions;
+- (void)makeSubscriptionsWithDDP:(ObjectiveDDP *)ddp subscriptions:(NSDictionary *)subscriptions;
 
 @end
