@@ -4,7 +4,7 @@ rvm:
   - 1.9.3
 
 install:
-  - gem install cocoapods -v 0.29.0
+  - gem install cocoapods -v 0.32.1
   - brew install ios-sim
   - gem install thrust
   - pod install

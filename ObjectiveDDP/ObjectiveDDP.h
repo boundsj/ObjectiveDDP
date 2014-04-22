@@ -1,5 +1,5 @@
 #import <Foundation/Foundation.h>
-#import <SocketRocket/SRWebSocket.h>
+#import "SRWebSocket.h"
 
 @protocol ObjectiveDDPDelegate;
 

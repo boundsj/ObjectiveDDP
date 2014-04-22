@@ -462,11 +462,9 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 4000D644170E880400296229 /* Build configuration list for PBXNativeTarget "ObjectiveDDP" */;
 			buildPhases = (
-				B638BF64C5BC4674960ADF49 /* Check Pods Manifest.lock */,
 				4000D632170E880400296229 /* Sources */,
 				4000D633170E880400296229 /* Frameworks */,
 				4000D634170E880400296229 /* CopyFiles */,
-				648CA590930A4D87BE530DBD /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -550,37 +548,7 @@
 			shellScript = "\"${SRCROOT}/Pods/Pods-Specs-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		648CA590930A4D87BE530DBD /* Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Pods-ObjectiveDDP-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		82360CA10123479089FC1E90 /* Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Check Pods Manifest.lock";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
-			showEnvVarsInLog = 0;
-		};
-		B638BF64C5BC4674960ADF49 /* Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -710,37 +678,41 @@
 		};
 		4000D645170E880400296229 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 04128F1E085D40B0B8D7A368 /* Pods-ObjectiveDDP.xcconfig */;
 			buildSettings = {
 				DSTROOT = /tmp/ObjectiveDDP.dst;
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "ObjectiveDDP/ObjectiveDDP-Prefix.pch";
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/ObjectiveDDP/openssl",
+					"$(SRCROOT)/ObjectiveDDP/Pods/**",
 				);
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				OTHER_LDFLAGS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/Pods/Headers/**";
 			};
 			name = Debug;
 		};
 		4000D646170E880400296229 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 04128F1E085D40B0B8D7A368 /* Pods-ObjectiveDDP.xcconfig */;
 			buildSettings = {
 				DSTROOT = /tmp/ObjectiveDDP.dst;
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "ObjectiveDDP/ObjectiveDDP-Prefix.pch";
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/ObjectiveDDP/openssl",
+					"$(SRCROOT)/ObjectiveDDP/Pods/**",
 				);
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				OTHER_LDFLAGS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/Pods/Headers/**";
 			};
 			name = Release;
 		};

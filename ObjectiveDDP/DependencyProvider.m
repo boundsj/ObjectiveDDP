@@ -1,5 +1,5 @@
 #import "DependencyProvider.h"
-#import <SocketRocket/SRWebSocket.h>
+#import "SRWebSocket.h"
 #import "ObjectiveDDP.h"
 #import "DDPConnectedSubscriptionService.h"
 
