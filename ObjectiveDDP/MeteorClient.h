@@ -84,9 +84,9 @@ typedef void(^MeteorClientMethodCallback)(NSDictionary *response, NSError *error
 
 @protocol DDPMeteorClientDelegate <NSObject>
 
-// XXX: make optional
-
+@optional
 - (void)meteorClientDidConnectToWebsocket:(MeteorClient *)meteorClient;
+- (void)meteorClient:(MeteorClient *)meteorClient didReceiveWebsocketConnectionError:(NSError *)error;
 - (void)meteorClientDidConnectToServer:(MeteorClient *)meteorClient;
 
 @end

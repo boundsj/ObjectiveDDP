@@ -217,7 +217,11 @@ static NSString *randomId(int length) {
     
     if (msg && [msg isEqualToString:@"connected"]) {
         self.connected = YES;
-        [self.delegate meteorClientDidConnectToServer:self];
+        
+        if ([self.delegate respondsToSelector:@selector(meteorClientDidConnectToServer:)]) {
+            [self.delegate meteorClientDidConnectToServer:self];
+        }
+        
         [self.subscriptionService makeSubscriptionsWithDDP:self.ddp subscriptions:self.subscriptions];
         
         
@@ -249,13 +253,17 @@ static NSString *randomId(int length) {
     // refactor_XXX: remove explicit collection management in meteor client
     [self resetCollections];
     
-    
-    [self.delegate meteorClientDidConnectToWebsocket:self];
+    if ([self.delegate respondsToSelector:@selector(meteorClientDidConnectToWebsocket:)]) {
+        [self.delegate meteorClientDidConnectToWebsocket:self];
+    }
     [self.ddp connectWithSession:nil version:@"pre1" support:nil];
 }
 
 - (void)didReceiveConnectionError:(NSError *)error {
     [self _handleConnectionError];
+    if ([self.delegate respondsToSelector:@selector(meteorClient:didReceiveWebsocketConnectionError:)]) {
+        [self.delegate meteorClient:self didReceiveWebsocketConnectionError:error];
+    }
 }
 
 - (void)didReceiveConnectionClose {

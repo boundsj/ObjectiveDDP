@@ -18,7 +18,12 @@ describe(@"MeteorClient", ^{
         fakeDDP = [[FakeObjectiveDDP alloc] init];
         fakeProvider.fakeObjectiveDDP = fakeDDP;
         
-        meteorClientDelegate = nice_fake_for(@protocol(DDPMeteorClientDelegate));
+        meteorClientDelegate = fake_for(@protocol(DDPMeteorClientDelegate));
+        // stub optional delegate methods
+        meteorClientDelegate stub_method(@selector(meteorClientDidConnectToWebsocket:));
+        meteorClientDelegate stub_method(@selector(meteorClientDidConnectToServer:));
+        meteorClientDelegate stub_method(@selector(meteorClient:didReceiveWebsocketConnectionError:));
+        
         spy_on(fakeProvider);
         spy_on(fakeDDP);
         
@@ -28,9 +33,9 @@ describe(@"MeteorClient", ^{
         meteorClient = [[MeteorClient alloc] initWithConnectionString:@"ws://xanadu.com/websocket" delegate:meteorClientDelegate];
     });
     
-    // can we make this more behavioral later on?
-    it(@"should use the dependency provider to create a ddp instance", ^{
-        fakeProvider should have_received(@selector(provideObjectiveDDPWithConnectionString:delegate:)).with(@"ws://xanadu.com/websocket", meteorClient);
+    it(@"should get a correctly configured ddp instance", ^{
+        meteorClient.ddp should be_same_instance_as(fakeDDP);
+        meteorClient.ddp.urlString should equal(@"ws://xanadu.com/websocket");
     });
     
     describe(@"connecting to a web socket without a stored session and with subscriptions made previously", ^{
@@ -61,7 +66,7 @@ describe(@"MeteorClient", ^{
                     [fakeDDP succeedMeteorConnect];
                 });
                 
-                it(@"should update the connected state", ^{
+                it(@"should set the correct the connected state", ^{
                     meteorClient.connected should be_truthy;
                 });
                 
@@ -72,13 +77,33 @@ describe(@"MeteorClient", ^{
                 it(@"should tell its subscription service to make subscriptions", ^{
                     subscriptionService should have_received(@selector(makeSubscriptionsWithDDP:subscriptions:)).with(meteorClient.ddp, meteorClient.subscriptions);
                 });
+                
+                xcontext(@"when a different subscription is made", ^{
+                });
+                
+                xcontext(@"when a subscription is removed", ^{
+                });
             });
             
             xcontext(@"when the connection to the meteor server fails", ^{
             });
         });
         
-        xcontext(@"when the web socket connection attempt fails", ^{
+        context(@"when the web socket connection attempt fails", ^{
+            __block NSError *error;
+            
+            beforeEach(^{
+                error = [NSError errorWithDomain:@"error.com" code:42 userInfo:nil];
+                [fakeDDP errorWebSocketWithError:error];
+            });
+            
+            it(@"should set the correct the connected state", ^{
+                meteorClient.connected should be_falsy;
+            });
+            
+            it(@"should tell its delegate", ^{
+                meteorClientDelegate should have_received(@selector(meteorClient:didReceiveWebsocketConnectionError:)).with(meteorClient, error);
+            });
         });
     });
     

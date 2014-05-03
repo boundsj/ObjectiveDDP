@@ -6,6 +6,10 @@
     [self.delegate didOpen];
 }
 
+- (void)errorWebSocketWithError:(NSError *)error {
+    [self.delegate didReceiveConnectionError:error];
+}
+
 - (void)succeedMeteorConnect {
     NSDictionary *connectedMessage = @{@"msg": @"connected"};
     [self.delegate didReceiveMessage:connectedMessage];
