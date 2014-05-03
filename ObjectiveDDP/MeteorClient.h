@@ -10,7 +10,7 @@ extern NSString * const MeteorClientDidDisconnectNotification;
 extern NSString * const MeteorClientTransportErrorDomain;
 
 // xxx:
-NS_ENUM(NSUInteger, MeteorClientError) {
+typedef NS_ENUM(NSUInteger, MeteorClientError) {
     MeteorClientErrorNotConnected,
     MeteorClientErrorDisconnectedBeforeCallbackComplete,
     MeteorClientErrorLogonRejected
@@ -31,7 +31,7 @@ typedef void(^MeteorClientMethodCallback)(NSDictionary *response, NSError *error
 @property (nonatomic, weak) id<DDPMeteorClientDelegate> delegate;
 @property (nonatomic, weak) id<DDPAuthDelegate> authDelegate;
 @property (nonatomic, copy, readonly) NSString *userId;
-@property (nonatomic, strong, readonly) NSMutableDictionary *subscriptions;
+@property (nonatomic, strong, readonly) NSMutableArray *subscriptions;
 
 
 // refactor_XXX: we will no longer be maintaining collections
@@ -83,6 +83,8 @@ typedef void(^MeteorClientMethodCallback)(NSDictionary *response, NSError *error
 @end
 
 @protocol DDPMeteorClientDelegate <NSObject>
+
+// XXX: make optional
 
 - (void)meteorClientDidConnectToWebsocket:(MeteorClient *)meteorClient;
 - (void)meteorClientDidConnectToServer:(MeteorClient *)meteorClient;

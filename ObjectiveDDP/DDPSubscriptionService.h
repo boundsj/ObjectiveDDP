@@ -3,6 +3,6 @@
 
 @protocol DDPMeteorSubscribing <NSObject>
 
-- (void)makeSubscriptionsWithDDP:(ObjectiveDDP *)ddp subscriptions:(NSDictionary *)subscriptions;
+- (void)makeSubscriptionsWithDDP:(ObjectiveDDP *)ddp subscriptions:(NSArray *)subscriptions;
 
 @end

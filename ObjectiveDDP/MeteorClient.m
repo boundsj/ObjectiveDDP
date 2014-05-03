@@ -12,7 +12,7 @@ NSString * const MeteorClientTransportErrorDomain = @"boundsj.objectiveddp.trans
 @interface MeteorClient ()
 
 @property (nonatomic, strong) id<DDPMeteorSubscribing> subscriptionService;
-@property (nonatomic, strong, readwrite) NSMutableDictionary *subscriptions;
+@property (nonatomic, strong, readwrite) NSMutableArray *subscriptions;
 
 @end
 
@@ -22,8 +22,7 @@ NSString * const MeteorClientTransportErrorDomain = @"boundsj.objectiveddp.trans
     self = [super init];
     if (self) {
         _collections = [NSMutableDictionary dictionary];
-        _subscriptions = [NSMutableDictionary dictionary];
-        _subscriptionsParameters = [NSMutableDictionary dictionary];
+        _subscriptions = [NSMutableArray array];
         _methodIds = [NSMutableSet set];
         _retryAttempts = 0;
         _responseCallbacks = [NSMutableDictionary dictionary];
@@ -79,25 +78,29 @@ NSString * const MeteorClientTransportErrorDomain = @"boundsj.objectiveddp.trans
 
 - (void)addSubscription:(NSString *)subscriptionName withParameters:(NSArray *)parameters {
     NSString *uid = [BSONIdGenerator generate];
-    [self.subscriptions setObject:uid forKey:subscriptionName];
+    NSMutableDictionary *subscription = [@{@"name": subscriptionName, @"uid": uid} mutableCopy];
     if (parameters) {
-        [_subscriptionsParameters setObject:parameters forKey:subscriptionName];
+        subscription[@"params"] = parameters;
     }
+    [self.subscriptions addObject:[subscription copy]];
+    
     if (![self okToSend]) {
         return;
     }
+    
     [self.ddp subscribeWith:uid name:subscriptionName parameters:parameters];
 }
 
 - (void)removeSubscription:(NSString *)subscriptionName {
-    if (![self okToSend]) {
-        return;
-    }
-    NSString *uid = [self.subscriptions objectForKey:subscriptionName];
+    if (![self okToSend]) { return; }
+    
+    NSDictionary *subscription = [[self.subscriptions filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"name = %@", subscriptionName]] lastObject];
+    
+    NSString *uid = subscription[@"uid"];
+    
     if (uid) {
         [self.ddp unsubscribeWith:uid];
-        // XXX: Should we really remove sub until we hear back from sever?
-        [self.subscriptions removeObjectForKey:subscriptionName];
+        [self.subscriptions removeObject:subscription];
     }
 }
 
@@ -197,6 +200,7 @@ static NSString *randomId(int length) {
 #pragma mark <ObjectiveDDPDelegate>
 
 - (void)didReceiveMessage:(NSDictionary *)message {
+    NSLog(@"================> %@", message);
     NSString *msg = [message objectForKey:@"msg"];
     if (!msg) return;
     NSString *messageId = message[@"id"];
@@ -228,8 +232,9 @@ static NSString *randomId(int length) {
     if (msg && [msg isEqualToString:@"ready"]) {
         NSArray *subs = message[@"subs"];
         for(NSString *readySubscription in subs) {
-            for(NSString *subscriptionName in self.subscriptions) {
-                NSString *curSubId = self.subscriptions[subscriptionName];
+            for(NSDictionary *subscription in self.subscriptions) {
+                NSString *curSubId = subscription[@"uid"];
+                NSString *subscriptionName = subscription[@"name"];
                 if([curSubId isEqualToString:readySubscription]) {
                     NSString *notificationName = [NSString stringWithFormat:@"%@_ready", subscriptionName];
                     [[NSNotificationCenter defaultCenter] postNotificationName:notificationName object:self];

@@ -54,7 +54,7 @@ describe(@"MeteorClient", ^{
             
             it(@"should use ddp to connect to the meteor server", ^{
                 fakeDDP should have_received(@selector(connectWithSession:version:support:)).with(nil, @"pre1", nil);
-            });
+            }); 
             
             context(@"when the connection to the meteor server succeeds", ^{
                 beforeEach(^{

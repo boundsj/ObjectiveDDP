@@ -2,7 +2,7 @@
 
 @implementation DDPDisconnectedSubscriptionService : NSObject
 
-- (void)makeSubscriptionsWithDDP:(ObjectiveDDP *)ddp configuration:(NSDictionary *)configuration {
+- (void)makeSubscriptionsWithDDP:(ObjectiveDDP *)ddp subscriptions:(NSArray *)subscriptions {
     
 }
 

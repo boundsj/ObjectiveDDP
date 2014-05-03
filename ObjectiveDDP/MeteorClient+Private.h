@@ -11,7 +11,6 @@ extern "C" {
 
 @interface MeteorClient () {
 @public // for tests. This header is not exported anyway.
-    NSMutableDictionary *_subscriptions;
     NSMutableSet *_methodIds;
     NSMutableDictionary *_responseCallbacks;
     MeteorClientMethodCallback _logonMethodCallback;
@@ -19,7 +18,6 @@ extern "C" {
     NSString *_userName;
     NSString *_password;
     NSDictionary *_logonParams;
-    NSMutableDictionary *_subscriptionsParameters;
     NSString *_sessionToken;
     SRPUser *_srpUser;
     BOOL _disconnecting;

@@ -14,17 +14,16 @@ describe(@"DDPConnectedSubscriptionService", ^{
         service = [[DDPConnectedSubscriptionService alloc] init];
     });
     
-    describe(@"-makeSubscriptionsWithDDP:configuration:", ^{
-        __block NSDictionary *subscriptions;
+    describe(@"-makeSubscriptionsWithDDP:subscriptions:", ^{
+        __block NSArray *subscriptions;
         
         beforeEach(^{
-            subscriptions = @{ @"stuff": @{@"uid": @"1234"},
-                               @"other-stuff": @{@"uid": @"4321",
-                                                 @"params": @[]} };
+            subscriptions = @[@{@"name": @"stuff", @"uid": @"1234"},
+  @{@"name": @"other-stuff", @"uid": @"4321", @"params": @[]}];
             [service makeSubscriptionsWithDDP:ddp subscriptions:subscriptions];
         });
         
-        it(@"should use ddp to send subscribe reqeusts", ^{
+        it(@"should use ddp to send subscribe requests", ^{
             ddp should have_received(@selector(subscribeWith:name:parameters:)).with(@"1234", @"stuff", nil);
             ddp should have_received(@selector(subscribeWith:name:parameters:)).with(@"4321", @"other-stuff", @[]);
         });
