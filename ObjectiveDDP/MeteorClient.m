@@ -7,9 +7,21 @@ NSString * const MeteorClientDidConnectNotification = @"boundsj.objectiveddp.con
 NSString * const MeteorClientDidDisconnectNotification = @"boundsj.objectiveddp.disconnected";
 NSString * const MeteorClientTransportErrorDomain = @"boundsj.objectiveddp.transport";
 
+@interface MeteorClient ()
+
+@property (nonatomic, copy, readwrite) NSString *ddpVersion;
+
+@end
+
 @implementation MeteorClient
 
-- (id)init {
+- (id)init
+{
+    [self doesNotRecognizeSelector:_cmd];
+    return nil;
+}
+
+- (id)initWithDDPVersion:(NSString *)ddpVersion {
     self = [super init];
     if (self) {
         _collections = [NSMutableDictionary dictionary];
@@ -18,6 +30,7 @@ NSString * const MeteorClientTransportErrorDomain = @"boundsj.objectiveddp.trans
         _methodIds = [NSMutableSet set];
         _retryAttempts = 0;
         _responseCallbacks = [NSMutableDictionary dictionary];
+        _ddpVersion = ddpVersion;
     }
     return self;
 }
@@ -178,7 +191,7 @@ NSString * const MeteorClientTransportErrorDomain = @"boundsj.objectiveddp.trans
 - (void)didOpen {
     self.websocketReady = YES;
     [self resetCollections];
-    [self.ddp connectWithSession:nil version:@"pre1" support:nil];
+    [self.ddp connectWithSession:nil version:self.ddpVersion support:nil];
     [[NSNotificationCenter defaultCenter] postNotificationName:MeteorClientDidConnectNotification object:self];
 }
 

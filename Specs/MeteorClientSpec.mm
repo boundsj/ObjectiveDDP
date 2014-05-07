@@ -10,10 +10,12 @@ SPEC_BEGIN(MeteorClientSpec)
 describe(@"MeteorClient", ^{
     __block MeteorClient *meteorClient;
     __block ObjectiveDDP *ddp;
+    __block NSString *bestDDPVersion;
 
     beforeEach(^{
+        bestDDPVersion = @"best_version_ever";
         ddp = nice_fake_for([ObjectiveDDP class]);
-        meteorClient = [[[MeteorClient alloc] init] autorelease];
+        meteorClient = [[[MeteorClient alloc] initWithDDPVersion:bestDDPVersion] autorelease];
         ddp.delegate = meteorClient;
         meteorClient.ddp = ddp;
         meteorClient.authDelegate = nice_fake_for(@protocol(DDPAuthDelegate));
@@ -26,6 +28,7 @@ describe(@"MeteorClient", ^{
         meteorClient.collections should_not be_nil;
         meteorClient->_subscriptions should_not be_nil;
         meteorClient.authState should equal(AuthStateNoAuth);
+        meteorClient.ddpVersion should equal(bestDDPVersion);
     });
     
     describe(@"#disconnect", ^{

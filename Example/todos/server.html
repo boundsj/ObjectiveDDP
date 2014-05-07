@@ -12,7 +12,7 @@
   <div class="navbar-inner">
     <a class="brand" href="#">TodoS</a>
     <div style="float: right">
-        {{ loginButtons align="right" }}
+        {{> loginButtons align="right" }}
     </div>
   </div>
 </div>
@@ -39,7 +39,7 @@
             <h3>Things:</h3>
             <ul>
                 {{#each things}}
-                  <div class="well"">
+                  <div class="well">
                     <li>{{msg}} <button class="remove-item">Delete</button></li>
                   </div>
                 {{/each}}

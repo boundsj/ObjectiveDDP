@@ -10,7 +10,7 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     
-    self.meteorClient = [[MeteorClient alloc] init];
+    self.meteorClient = [[MeteorClient alloc] initWithDDPVersion:@"pre2"];
     [self.meteorClient addSubscription:@"things"];
     [self.meteorClient addSubscription:@"lists"];
     LoginViewController *loginController = [[LoginViewController alloc] initWithNibName:@"LoginViewController"
