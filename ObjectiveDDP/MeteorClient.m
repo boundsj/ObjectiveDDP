@@ -162,6 +162,12 @@ NSString * const MeteorClientTransportErrorDomain = @"boundsj.objectiveddp.trans
     [self _handleRemovedMessage:message msg:msg];
     [self _handleChangedMessage:message msg:msg];
     
+    if (msg && [msg isEqualToString:@"ping"]) {
+        //pong
+        [self.ddp pong:messageId];
+    }
+    
+
     if (msg && [msg isEqualToString:@"connected"]) {
         self.connected = YES;
         [[NSNotificationCenter defaultCenter] postNotificationName:@"connected" object:nil];
