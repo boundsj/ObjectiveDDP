@@ -1,13 +1,6 @@
 #import "MeteorClient.h"
 
-// declare C linkage in case of C++ (tests)
-#ifdef __cplusplus
-extern "C" {
-#endif
-#import "srp.h"
-#ifdef __cplusplus
-}
-#endif
+
 
 @interface MeteorClient () {
 @public // for tests. This header is not exported anyway.
@@ -21,7 +14,6 @@ extern "C" {
     NSDictionary *_logonParams;
     NSMutableDictionary *_subscriptionsParameters;
     NSString *_sessionToken;
-    SRPUser *_srpUser;
     BOOL _disconnecting;
 }
 
