@@ -46,6 +46,7 @@
 		888B6DFC173B6508001EED80 /* MeteorClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 888B6DFB173B6508001EED80 /* MeteorClient.m */; };
 		888B6DFF173B66EA001EED80 /* BSONIdGenerator.m in Sources */ = {isa = PBXBuildFile; fileRef = 888B6DFE173B66EA001EED80 /* BSONIdGenerator.m */; };
 		9D3C062D54114FB1AC5700F0 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 22BE0B3F1B814D98AAAE26CF /* libPods.a */; };
+		EAACE68C195C13CD0084A000 /* HashValue.m in Sources */ = {isa = PBXBuildFile; fileRef = EAACE68B195C13CD0084A000 /* HashValue.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -182,6 +183,8 @@
 		888B6DFB173B6508001EED80 /* MeteorClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MeteorClient.m; sourceTree = "<group>"; };
 		888B6DFD173B66EA001EED80 /* BSONIdGenerator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BSONIdGenerator.h; sourceTree = "<group>"; };
 		888B6DFE173B66EA001EED80 /* BSONIdGenerator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BSONIdGenerator.m; sourceTree = "<group>"; };
+		EAACE68A195C13CD0084A000 /* HashValue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HashValue.h; sourceTree = "<group>"; };
+		EAACE68B195C13CD0084A000 /* HashValue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HashValue.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -259,6 +262,7 @@
 		4000D63B170E880400296229 /* ObjectiveDDP */ = {
 			isa = PBXGroup;
 			children = (
+				EAACE689195C13CD0084A000 /* HashValue */,
 				4011C80217BD2AA6002AA28E /* DependencyProvider.h */,
 				4011C80317BD2AA6002AA28E /* DependencyProvider.m */,
 				888B6DFD173B66EA001EED80 /* BSONIdGenerator.h */,
@@ -416,6 +420,15 @@
 			path = Mocks;
 			sourceTree = "<group>";
 		};
+		EAACE689195C13CD0084A000 /* HashValue */ = {
+			isa = PBXGroup;
+			children = (
+				EAACE68A195C13CD0084A000 /* HashValue.h */,
+				EAACE68B195C13CD0084A000 /* HashValue.m */,
+			);
+			path = HashValue;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -549,6 +562,7 @@
 				4079F9E6170EB31D00194B4A /* main.m in Sources */,
 				4079F9F7170EB3B000194B4A /* ObjectiveDDPSpec.mm in Sources */,
 				430E08B6E86CA801EE954D0F /* MockObjectiveDDPDelegate.m in Sources */,
+				EAACE68C195C13CD0084A000 /* HashValue.m in Sources */,
 				40BAB8CD181EFE550098524C /* NSObject+Spec.m in Sources */,
 				430E014E41C9666E08613FCE /* MockSRWebSocket.m in Sources */,
 				40F8370F1741C62800AF2340 /* MeteorClientSpec.mm in Sources */,
