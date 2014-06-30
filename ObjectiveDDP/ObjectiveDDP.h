@@ -9,10 +9,12 @@
 @property (nonatomic, assign) id <ObjectiveDDPDelegate> delegate;
 @property (nonatomic, strong) SRWebSocket *webSocket;
 
+- (void)pong:(NSString *)id;
+
 - (id)initWithURLString:(NSString *)urlString delegate:(id <ObjectiveDDPDelegate>)delegate;
 - (void)connectWebSocket;
 - (void)disconnectWebSocket;
-- (void)connectWithSession:(NSString *)session version:(NSString *)version support:(NSString *)support;
+- (void)connectWithSession:(NSString *)session version:(NSString *)version support:(NSArray *)support;
 - (void)subscribeWith:(NSString *)id name:(NSString *)name parameters:(NSArray *)parameters;
 - (void)unsubscribeWith:(NSString *)id;
 - (void)methodWithId:(NSString *)id method:(NSString *)method parameters:(NSArray *)parameters;

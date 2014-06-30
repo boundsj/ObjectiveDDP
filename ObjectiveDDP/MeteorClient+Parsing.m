@@ -1,5 +1,4 @@
 #import "MeteorClient+Private.h"
-#import "srp.h"
 
 @implementation MeteorClient (Parsing)
 
@@ -142,38 +141,6 @@ static int LOGON_RETRY_MAX = 5;
         object[key] = message[@"fields"][key];
     }
     return object;
-}
-
-#pragma mark - SRP Auth Parsing
-
-- (void)didReceiveLoginChallengeWithResponse:(NSDictionary *)response {
-    NSString *B_string = response[@"B"];
-    const char *B = [B_string cStringUsingEncoding:NSASCIIStringEncoding];
-    NSString *salt_string = response[@"salt"];
-    const char *salt = [salt_string cStringUsingEncoding:NSASCIIStringEncoding];
-    NSString *identity_string = response[@"identity"];
-    const char *identity = [identity_string cStringUsingEncoding:NSASCIIStringEncoding];
-    const char *password_str = [_password cStringUsingEncoding:NSASCIIStringEncoding];
-    const char *Mstr;
-    srp_user_process_meteor_challenge(_srpUser, password_str, salt, identity, B, &Mstr);
-    NSString *M_final = [NSString stringWithCString:Mstr encoding:NSASCIIStringEncoding];
-    NSArray *params = @[@{@"srp":@{@"M":M_final}}];
-    [self callMethodName:@"login" parameters:params responseCallback:nil];
-}
-
-- (void)didReceiveHAMKVerificationWithResponse:(NSDictionary *)response {
-    srp_user_verify_meteor_session(_srpUser, [response[@"HAMK"] cStringUsingEncoding:NSASCIIStringEncoding]);
-    if (srp_user_is_authenticated(_srpUser)) {
-        _sessionToken = response[@"token"];
-        self.userId = response[@"id"];
-        [self.authDelegate authenticationWasSuccessful];
-        srp_user_delete(_srpUser);
-        [self _setAuthStateToLoggedIn];
-        if (_logonMethodCallback) {
-            _logonMethodCallback(@{@"logon": @"success"}, nil);
-            _logonMethodCallback = nil;
-        }
-    }
 }
 
 @end

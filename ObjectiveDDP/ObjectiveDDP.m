@@ -27,12 +27,23 @@
     [self _closeConnection];
 }
 
+//pong (client -> server):
+//  id: string (the id send with the ping)
+- (void)pong:(NSString *)id {
+    NSDictionary *fields = @{@"msg": @"pong"};
+    if (id)
+        fields = @{@"msg": @"pong", @"id": id};
+    
+    NSString *json = [self _buildJSONWithFields:fields parameters:nil];
+    [self.webSocket send:json];
+}
+
 //connect (client -> server)
 //  session: string (if trying to connectWebSocket to an existing DDP session)
 //  version: string (the proposed protocol version)
 //  support: array of strings (protocol versions supported by the client, in order of preference)
-- (void)connectWithSession:(NSString *)session version:(NSString *)version support:(NSString *)support {
-    NSDictionary *fields = @{@"msg": @"connect", @"version": version};
+- (void)connectWithSession:(NSString *)session version:(NSString *)version support:(NSArray *)support {
+    NSDictionary *fields = @{@"msg": @"connect", @"version": version, @"support": support};
     NSString *json = [self _buildJSONWithFields:fields parameters:nil];
     [self.webSocket send:json];
 }

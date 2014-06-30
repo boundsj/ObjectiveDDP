@@ -1,3 +1,4 @@
+#import <CommonCrypto/CommonDigest.h>
 #import "DependencyProvider.h"
 #import "MeteorClient.h"
 #import "MeteorClient+Private.h"
@@ -31,6 +32,12 @@ NSString * const MeteorClientTransportErrorDomain = @"boundsj.objectiveddp.trans
         _retryAttempts = 0;
         _responseCallbacks = [NSMutableDictionary dictionary];
         _ddpVersion = ddpVersion;
+        if ([ddpVersion isEqualToString:@"pre2"]) {
+            _supportedVersions = [[NSArray alloc] initWithObjects:@"pre2",@"pre1", nil];
+        } else {
+            _supportedVersions = [[NSArray alloc] initWithObjects:@"pre1",@"pre2", nil];
+        }
+        
     }
     return self;
 }
@@ -122,17 +129,35 @@ NSString * const MeteorClientTransportErrorDomain = @"boundsj.objectiveddp.trans
     }
     
     if (!userParameters) {
-        userParameters = @{@"user": @{@"email": username}};
+        
+        userParameters = @{@"user": @{@"email": username}, @"password": @{ @"digest": [self sha256:password], @"algorithm": @"sha-256" } };
     }
-   
+    
     NSMutableDictionary *mutableUserParameters = [userParameters mutableCopy];
-    mutableUserParameters[@"A"] = [self generateAuthVerificationKeyWithUsername:username password:password];
+    
     
     [self _setAuthStateToLoggingIn];
     
-    [self callMethodName:@"beginPasswordExchange" parameters:@[mutableUserParameters] responseCallback:nil];
+    [self callMethodName:@"login" parameters:@[mutableUserParameters] responseCallback:^(NSDictionary *response, NSError *error) {
+        responseCallback(response, error);
+    }];
+    
     _logonParams = userParameters;
     _logonMethodCallback = responseCallback;
+}
+
+-(NSString*) sha256:(NSString *)clear{
+    const char *s=[clear cStringUsingEncoding:NSASCIIStringEncoding];
+    NSData *keyData=[NSData dataWithBytes:s length:strlen(s)];
+    
+    uint8_t digest[CC_SHA256_DIGEST_LENGTH]={0};
+    CC_SHA256(keyData.bytes, keyData.length, digest);
+    NSData *out=[NSData dataWithBytes:digest length:CC_SHA256_DIGEST_LENGTH];
+    NSString *hash=[out description];
+    hash = [hash stringByReplacingOccurrencesOfString:@" " withString:@""];
+    hash = [hash stringByReplacingOccurrencesOfString:@"<" withString:@""];
+    hash = [hash stringByReplacingOccurrencesOfString:@">" withString:@""];
+    return hash;
 }
 
 - (void)logout {
@@ -155,13 +180,20 @@ NSString * const MeteorClientTransportErrorDomain = @"boundsj.objectiveddp.trans
     NSString *messageId = message[@"id"];
     
     [self _handleMethodResultMessageWithMessageId:messageId message:message msg:msg];
-    [self _handleLoginChallengeResponse:message msg:msg];
-    [self _handleLoginError:message msg:msg];    
-    [self _handleHAMKVerification:message msg:msg];
+//  no longer needed with version 0.8.2
+//    [self _handleLoginChallengeResponse:message msg:msg];
+//    [self _handleLoginError:message msg:msg];    
+//    [self _handleHAMKVerification:message msg:msg];
     [self _handleAddedMessage:message msg:msg];
     [self _handleRemovedMessage:message msg:msg];
     [self _handleChangedMessage:message msg:msg];
     
+    if (msg && [msg isEqualToString:@"ping"]) {
+        //pong
+        [self.ddp pong:messageId];
+    }
+    
+
     if (msg && [msg isEqualToString:@"connected"]) {
         self.connected = YES;
         [[NSNotificationCenter defaultCenter] postNotificationName:@"connected" object:nil];
@@ -191,7 +223,7 @@ NSString * const MeteorClientTransportErrorDomain = @"boundsj.objectiveddp.trans
 - (void)didOpen {
     self.websocketReady = YES;
     [self resetCollections];
-    [self.ddp connectWithSession:nil version:self.ddpVersion support:nil];
+    [self.ddp connectWithSession:nil version:self.ddpVersion support:self.supportedVersions];
     [[NSNotificationCenter defaultCenter] postNotificationName:MeteorClientDidConnectNotification object:self];
 }
 
@@ -276,18 +308,6 @@ NSString * const MeteorClientTransportErrorDomain = @"boundsj.objectiveddp.trans
 - (void)_setAuthStatetoLoggedOut {
     _logonParams = nil;
     self.authState = AuthStateLoggedOut;
-}
-
-# pragma mark - SRP Auth Internal
-
-- (NSString *)generateAuthVerificationKeyWithUsername:(NSString *)username password:(NSString *)password {
-    _userName = username;
-    _password = password;
-    const char *username_str = [username cStringUsingEncoding:NSASCIIStringEncoding];
-    const char *password_str = [password cStringUsingEncoding:NSASCIIStringEncoding];
-    _srpUser = srp_user_new(SRP_SHA256, SRP_NG_1024, username_str, password_str, NULL, NULL);
-    srp_user_start_authentication(_srpUser);
-    return [NSString stringWithCString:_srpUser->Astr encoding:NSASCIIStringEncoding];
 }
 
 @end
