@@ -3,6 +3,15 @@ ObjectiveDDP
 
 [![Build Status](https://travis-ci.org/boundsj/ObjectiveDDP.png)](https://travis-ci.org/boundsj/ObjectiveDDP)
 
+```
+Note:
+Recent changes to meteor (https://github.com/meteor/meteor/blob/release/0.8.2/History.md) 
+have fundamentally changed the way authorization works. Because of this, the current 
+version of the master branch of this project (and all future releases) will only be 
+compatible with meteor 0.8.2 and above. Please update your meteor server 
+as soon as possible.
+```
+
 Connect your iOS applications written in Objective-C to server applications that communicate with the [DDP protocol created by Meteor](https://github.com/meteor/meteor/blob/devel/packages/livedata/DDP.md) and, if required by your server, authenticate with it.
 
 What's Inside
