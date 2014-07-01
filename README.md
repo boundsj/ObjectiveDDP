@@ -3,12 +3,12 @@ ObjectiveDDP
 
 [![Build Status](https://travis-ci.org/boundsj/ObjectiveDDP.png)](https://travis-ci.org/boundsj/ObjectiveDDP)
 
-Connect your iOS applications written in Objective-C to server applications that communicate with the [DDP protocol created by Meteor](https://github.com/meteor/meteor/blob/devel/packages/livedata/DDP.md) and, if required by your server, authenticate with [SRP](http://srp.stanford.edu/). Out of the box, this library allows your iOS applications to communicate and authenticate with Meteor servers or any server using the DDP/SRP protocols.
+Connect your iOS applications written in Objective-C to server applications that communicate with the [DDP protocol created by Meteor](https://github.com/meteor/meteor/blob/devel/packages/livedata/DDP.md) and, if required by your server, authenticate with it.
 
 What's Inside
 -------------
 
-ObjectiveDDP should run well with iOS projects using ARC and iOS 6.0 or above. __**Check out the [example application](https://github.com/boundsj/ObjectiveDDP/wiki/Example-Application) and the [project wiki](https://github.com/boundsj/ObjectiveDDP/wiki) for more information.**__ Here is a sneak peak:
+ObjectiveDDP should run well with iOS projects using ARC and iOS 7.0 or above. __**Check out the [example application](https://github.com/boundsj/ObjectiveDDP/wiki/Example-Application) and the [project wiki](https://github.com/boundsj/ObjectiveDDP/wiki) for more information.**__ Here is a sneak peak:
 
 ##### Integrate it with your project using CocoaPods:
 
