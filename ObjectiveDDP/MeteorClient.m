@@ -16,8 +16,7 @@ NSString * const MeteorClientTransportErrorDomain = @"boundsj.objectiveddp.trans
 
 @implementation MeteorClient
 
-- (id)init
-{
+- (id)init {
     [self doesNotRecognizeSelector:_cmd];
     return nil;
 }
@@ -29,15 +28,13 @@ NSString * const MeteorClientTransportErrorDomain = @"boundsj.objectiveddp.trans
         _subscriptions = [NSMutableDictionary dictionary];
         _subscriptionsParameters = [NSMutableDictionary dictionary];
         _methodIds = [NSMutableSet set];
-        _retryAttempts = 0;
         _responseCallbacks = [NSMutableDictionary dictionary];
         _ddpVersion = ddpVersion;
         if ([ddpVersion isEqualToString:@"pre2"]) {
-            _supportedVersions = [[NSArray alloc] initWithObjects:@"pre2",@"pre1", nil];
+            _supportedVersions = @[@"pre2", @"pre1"];
         } else {
-            _supportedVersions = [[NSArray alloc] initWithObjects:@"pre1",@"pre2", nil];
+            _supportedVersions = @[@"pre2", @"pre1"];
         }
-        
     }
     return self;
 }
@@ -93,7 +90,6 @@ NSString * const MeteorClientTransportErrorDomain = @"boundsj.objectiveddp.trans
     NSString *uid = [_subscriptions objectForKey:subscriptionName];
     if (uid) {
         [self.ddp unsubscribeWith:uid];
-        // XXX: Should we really remove sub until we hear back from sever?
         [_subscriptions removeObjectForKey:subscriptionName];
     }
 }
@@ -129,16 +125,18 @@ NSString * const MeteorClientTransportErrorDomain = @"boundsj.objectiveddp.trans
     }
     
     if (!userParameters) {
-        
         userParameters = @{@"user": @{@"email": username}, @"password": @{ @"digest": [self sha256:password], @"algorithm": @"sha-256" } };
     }
     
     NSMutableDictionary *mutableUserParameters = [userParameters mutableCopy];
     
-    
-    [self _setAuthStateToLoggingIn];
-    
     [self callMethodName:@"login" parameters:@[mutableUserParameters] responseCallback:^(NSDictionary *response, NSError *error) {
+        if (error) {
+            [self _setAuthStatetoLoggedOut];
+        } else {
+            [self _setAuthStateToLoggedIn];
+            self.userId = response[@"result"][@"id"];
+        }
         responseCallback(response, error);
     }];
     
@@ -146,17 +144,21 @@ NSString * const MeteorClientTransportErrorDomain = @"boundsj.objectiveddp.trans
     _logonMethodCallback = responseCallback;
 }
 
--(NSString*) sha256:(NSString *)clear{
-    const char *s=[clear cStringUsingEncoding:NSASCIIStringEncoding];
-    NSData *keyData=[NSData dataWithBytes:s length:strlen(s)];
+// move this to string category
+- (NSString *)sha256:(NSString *)clear {
+    const char *s = [clear cStringUsingEncoding:NSASCIIStringEncoding];
+    NSData *keyData = [NSData dataWithBytes:s length:strlen(s)];
     
-    uint8_t digest[CC_SHA256_DIGEST_LENGTH]={0};
-    CC_SHA256(keyData.bytes, keyData.length, digest);
-    NSData *out=[NSData dataWithBytes:digest length:CC_SHA256_DIGEST_LENGTH];
-    NSString *hash=[out description];
+    uint8_t digest[CC_SHA256_DIGEST_LENGTH] = {0};
+    CC_SHA256(keyData.bytes, (unsigned int)keyData.length, digest);
+    NSData *digestData = [NSData dataWithBytes:digest length:CC_SHA256_DIGEST_LENGTH];
+    NSString *hash = [digestData description];
+    
+    // refactor this
     hash = [hash stringByReplacingOccurrencesOfString:@" " withString:@""];
     hash = [hash stringByReplacingOccurrencesOfString:@"<" withString:@""];
     hash = [hash stringByReplacingOccurrencesOfString:@">" withString:@""];
+    
     return hash;
 }
 
@@ -180,20 +182,14 @@ NSString * const MeteorClientTransportErrorDomain = @"boundsj.objectiveddp.trans
     NSString *messageId = message[@"id"];
     
     [self _handleMethodResultMessageWithMessageId:messageId message:message msg:msg];
-//  no longer needed with version 0.8.2
-//    [self _handleLoginChallengeResponse:message msg:msg];
-//    [self _handleLoginError:message msg:msg];    
-//    [self _handleHAMKVerification:message msg:msg];
     [self _handleAddedMessage:message msg:msg];
     [self _handleRemovedMessage:message msg:msg];
     [self _handleChangedMessage:message msg:msg];
     
     if (msg && [msg isEqualToString:@"ping"]) {
-        //pong
         [self.ddp pong:messageId];
     }
     
-
     if (msg && [msg isEqualToString:@"connected"]) {
         self.connected = YES;
         [[NSNotificationCenter defaultCenter] postNotificationName:@"connected" object:nil];

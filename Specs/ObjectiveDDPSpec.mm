@@ -81,18 +81,15 @@ describe(@"ObjectiveDDP", ^{
             });
         });
         
-
         describe(@"when connect is called with no session or support", ^{
             beforeEach(^{
                 [ddp connectWebSocket];
                 [fakeSRWebSocket connectionSuccess];
-                [ddp connectWithSession:nil
-                                version:@"smersion"
-                                support:nil];
+                [ddp connectWithSession:nil version:@"smersion" support:@[@"smersion"]];
             });
 
             it(@"should call the web socket with correct JSON", ^{
-                NSString *expected = @"{\"msg\":\"connect\",\"version\":\"smersion\"}";
+                NSString *expected = @"{\"msg\":\"connect\",\"version\":\"smersion\",\"support\":[\"smersion\"]}";
                 fakeSRWebSocket should have_received("send:").with(expected);
             });
 

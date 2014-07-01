@@ -1,14 +1,11 @@
 #import "MeteorClient.h"
 
-
-
 @interface MeteorClient () {
 @public // for tests. This header is not exported anyway.
     NSMutableDictionary *_subscriptions;
     NSMutableSet *_methodIds;
     NSMutableDictionary *_responseCallbacks;
     MeteorClientMethodCallback _logonMethodCallback;
-    int _retryAttempts;
     NSString *_userName;
     NSString *_password;
     NSDictionary *_logonParams;
@@ -34,15 +31,8 @@
 @interface MeteorClient (Parsing)
 
 - (void)_handleMethodResultMessageWithMessageId:(NSString *)messageId message:(NSDictionary *)message msg:(NSString *)msg;
-- (void)_handleLoginChallengeResponse:(NSDictionary *)message msg:(NSString *)msg;
-- (void)_handleLoginError:(NSDictionary *)message msg:(NSString *)msg;
-- (void)_handleHAMKVerification:(NSDictionary *)message msg:(NSString *)msg;
 - (void)_handleAddedMessage:(NSDictionary *)message msg:(NSString *)msg;
 - (void)_handleRemovedMessage:(NSDictionary *)message msg:(NSString *)msg;
 - (void)_handleChangedMessage:(NSDictionary *)message msg:(NSString *)msg;
-
-# pragma mark - SRP Auth Parsing
-- (void)didReceiveLoginChallengeWithResponse:(NSDictionary *)response;
-- (void)didReceiveHAMKVerificationWithResponse:(NSDictionary *)response;
 
 @end

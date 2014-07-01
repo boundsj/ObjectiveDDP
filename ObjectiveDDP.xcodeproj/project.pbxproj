@@ -80,7 +80,6 @@
 		401AEB7F170E9ECC008B38EA /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		401AEB81170E9ED2008B38EA /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		401AEB83170E9EEB008B38EA /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
-		405FD5A71745DABE001F8AE7 /* libcrypto.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcrypto.a; path = ObjectiveDDP/libcrypto.a; sourceTree = "<group>"; };
 		4079F9D9170EB31D00194B4A /* Specs.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Specs.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4079F9DA170EB31D00194B4A /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		4079F9DD170EB31D00194B4A /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -162,7 +161,6 @@
 		4000D638170E880400296229 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				405FD5A71745DABE001F8AE7 /* libcrypto.a */,
 				2C1F0C9084EA4B2DBD349673 /* libPods.a */,
 				401AEB7D170E9EC7008B38EA /* libicucore.dylib */,
 				4079F9DD170EB31D00194B4A /* CoreGraphics.framework */,
@@ -518,7 +516,6 @@
 				);
 				OTHER_LDFLAGS = (
 					"-ObjC",
-					"-lcrypto",
 					"-all_load",
 					"-lstdc++",
 				);
@@ -550,7 +547,6 @@
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
 				OTHER_LDFLAGS = (
 					"-ObjC",
-					"-lcrypto",
 					"-all_load",
 					"-lstdc++",
 				);

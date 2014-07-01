@@ -4,7 +4,7 @@
 
 static NSInteger methodCallCount = 1;
 + (NSString *)generate {
-  return [NSString stringWithFormat:@"%d", methodCallCount++];
+  return [NSString stringWithFormat:@"%ld", (long)methodCallCount++];
 }
 
 @end

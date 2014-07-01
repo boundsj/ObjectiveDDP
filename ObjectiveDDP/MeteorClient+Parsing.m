@@ -9,10 +9,11 @@
             id response;
             if(message[@"error"]) {
                 NSDictionary *errorDesc = message[@"error"];
-                NSDictionary *userInfo = @{NSLocalizedDescriptionKey: errorDesc};
+                NSDictionary *userInfo = @{NSLocalizedDescriptionKey: errorDesc[@"message"]};
                 NSError *responseError = [NSError errorWithDomain:errorDesc[@"errorType"] code:[errorDesc[@"error"] integerValue] userInfo:userInfo];
-                if (callback)
+                if (callback) {
                     callback(nil, responseError);
+                }
                 response = responseError;
             } else {
                 if (callback) {
@@ -24,52 +25,6 @@
             [_responseCallbacks removeObjectForKey:messageId];
             [_methodIds removeObject:messageId];
         }
-    }
-}
-
-- (void)_handleLoginChallengeResponse:(NSDictionary *)message msg:(NSString *)msg {
-    if ([msg isEqualToString:@"result"]
-        && message[@"result"]
-        && [message[@"result"] isKindOfClass:[NSDictionary class]]
-        && message[@"result"][@"B"]
-        && message[@"result"][@"identity"]
-        && message[@"result"][@"salt"]) {
-        [self didReceiveLoginChallengeWithResponse:message[@"result"]];
-    }
-}
-
-static int LOGON_RETRY_MAX = 5;
-
-- (void)_handleLoginError:(NSDictionary *)message msg:(NSString *)msg {
-    if([msg isEqualToString:@"result"]
-       && message[@"error"]
-       && [message[@"error"][@"error"] integerValue] == 403
-       && self.authState == AuthStateLoggingIn) {
-        [self _setAuthStatetoLoggedOut];
-        if (++_retryAttempts < LOGON_RETRY_MAX && self.connected) {
-            [self logonWithUserParameters:_logonParams username:_userName password:_password responseCallback:_logonMethodCallback];
-        } else {
-            _retryAttempts = 0;
-            NSString *errorDesc = [NSString stringWithFormat:@"Logon failed with error %@", @403];
-            NSError *logonError = [NSError errorWithDomain:MeteorClientTransportErrorDomain code:MeteorClientErrorLogonRejected userInfo:@{NSLocalizedDescriptionKey: errorDesc}];
-            if (_logonMethodCallback) {
-                _logonMethodCallback(nil, logonError);
-                _logonMethodCallback = nil;
-            }
-            [self.authDelegate authenticationFailed:message[@"error"][@"reason"]];
-        }
-    }
-}
-
-- (void)_handleHAMKVerification:(NSDictionary *)message msg:(NSString *)msg {
-    if (msg && [msg isEqualToString:@"result"]
-        && message[@"result"]
-        && [message[@"result"] isKindOfClass:[NSDictionary class]]
-        && message[@"result"][@"id"]
-        && message[@"result"][@"HAMK"]
-        && message[@"result"][@"token"]) {
-        NSDictionary *response = message[@"result"];
-        [self didReceiveHAMKVerificationWithResponse:response];
     }
 }
 
