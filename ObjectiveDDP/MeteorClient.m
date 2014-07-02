@@ -102,14 +102,14 @@ NSString * const MeteorClientTransportErrorDomain = @"boundsj.objectiveddp.trans
 }
 
 - (void)logonWithUsername:(NSString *)username password:(NSString *)password {
-    [self logonWithUserParameters:_logonParams username:username password:password responseCallback:nil];
+    [self logonWithUserParameters:[self _buildUserParametersWithUsername:username password:password] responseCallback:nil];
 }
 
 - (void)logonWithUsername:(NSString *)username password:(NSString *)password responseCallback:(MeteorClientMethodCallback)responseCallback {
-    [self logonWithUserParameters:_logonParams username:username password:password responseCallback:responseCallback];
+    [self logonWithUserParameters:[self _buildUserParametersWithUsername:username password:password] responseCallback:responseCallback];
 }
 
-- (void)logonWithUserParameters:(NSDictionary *)userParameters username:(NSString *)username password:(NSString *)password responseCallback:(MeteorClientMethodCallback)responseCallback {
+- (void)logonWithUserParameters:(NSDictionary *)userParameters responseCallback:(MeteorClientMethodCallback)responseCallback {
     if (self.authState == AuthStateLoggingIn) {
         NSString *errorDesc = [NSString stringWithFormat:@"You must wait for the current logon request to finish before sending another."];
         NSError *logonError = [NSError errorWithDomain:MeteorClientTransportErrorDomain code:MeteorClientErrorLogonRejected userInfo:@{NSLocalizedDescriptionKey: errorDesc}];
@@ -122,10 +122,6 @@ NSString * const MeteorClientTransportErrorDomain = @"boundsj.objectiveddp.trans
     
     if ([self _rejectIfNotConnected:responseCallback]) {
         return;
-    }
-    
-    if (!userParameters) {
-        userParameters = @{@"user": @{@"email": username}, @"password": @{ @"digest": [self sha256:password], @"algorithm": @"sha-256" } };
     }
     
     NSMutableDictionary *mutableUserParameters = [userParameters mutableCopy];
@@ -304,6 +300,35 @@ NSString * const MeteorClientTransportErrorDomain = @"boundsj.objectiveddp.trans
 - (void)_setAuthStatetoLoggedOut {
     _logonParams = nil;
     self.authState = AuthStateLoggedOut;
+}
+
+- (BOOL)_validEmail:(NSString *)email {
+    if (![email length]) {
+        return NO;
+    }
+    
+    NSString *regExPattern = @"[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}";
+    NSRegularExpression *regEx = [[NSRegularExpression alloc] initWithPattern:regExPattern options:NSRegularExpressionCaseInsensitive error:nil];
+    NSUInteger regExMatches = [regEx numberOfMatchesInString:email options:0 range:NSMakeRange(0, [email length])];
+    
+    if (!regExMatches) {
+        return NO;
+    } else {
+        return YES;
+    }
+}
+
+- (NSDictionary *)_buildUserParametersWithUsername:(NSString *)username password:(NSString *)password
+{
+    NSMutableDictionary *userParameters = [NSMutableDictionary dictionaryWithDictionary:@{ @"password": @{ @"digest": [self sha256:password], @"algorithm": @"sha-256" } }];
+    
+    if ([self _validEmail:username]) {
+        userParameters[@"user"] = @{@"email": username};
+    } else {
+        userParameters[@"user"] = @{@"username": username};
+    }
+    
+    return [userParameters copy];
 }
 
 @end
