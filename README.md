@@ -38,10 +38,32 @@ For more information about this, check out [Linking and Building](https://github
 }
 ```
 
-##### Logon using SRP authentication:
+##### Logon using bcrypt authentication:
 
 ```objective-c
 [self.meteor logonWithUsername:self.username.text password:self.password.text responseCallback:^(NSDictionary *response, NSError *error) {
+    if (error) {
+        [self handleFailedAuth:error];
+        return;
+    }
+    [self handleSuccessfulAuth];
+}];
+```
+or with email
+
+```objective-c
+[self.meteor logonWithEmail:self.email.text password:self.password.text responseCallback:^(NSDictionary *response, NSError *error) {
+    if (error) {
+        [self handleFailedAuth:error];
+        return;
+    }
+    [self handleSuccessfulAuth];
+}];
+```
+or if you accept both
+
+```objective-c
+[self.meteor logonWithUsernameOrEmail:self.usernameOrEmail.text password:self.password.text responseCallback:^(NSDictionary *response, NSError *error) {
     if (error) {
         [self handleFailedAuth:error];
         return;
