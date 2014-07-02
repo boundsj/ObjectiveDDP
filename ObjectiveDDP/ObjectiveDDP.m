@@ -27,6 +27,16 @@
     [self _closeConnection];
 }
 
+//ping (client -> server):
+//  id: string (the id for the ping)
+- (void)ping:(NSString *)id {
+    NSDictionary *fields = @{@"msg": @"ping"};
+    if (id)
+        fields = @{@"msg": @"ping", @"id": id};
+    NSString *json = [self _buildJSONWithFields:fields parameters:nil];
+    [self.webSocket send:json];
+}
+
 //pong (client -> server):
 //  id: string (the id send with the ping)
 - (void)pong:(NSString *)id {
