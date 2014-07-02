@@ -175,7 +175,7 @@ NSString * const MeteorClientTransportErrorDomain = @"boundsj.objectiveddp.trans
 }
 
 - (void)ping {
-    if (![self okToSend]) {
+    if (!self.connected) {
         return;
     }
     [self.ddp ping:[BSONIdGenerator generate]];
