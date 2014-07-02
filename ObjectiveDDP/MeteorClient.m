@@ -178,6 +178,13 @@ NSString * const MeteorClientTransportErrorDomain = @"boundsj.objectiveddp.trans
     [self.ddp disconnectWebSocket];
 }
 
+- (void)ping {
+    if (!self.connected) {
+        return;
+    }
+    [self.ddp ping:[BSONIdGenerator generate]];
+}
+
 #pragma mark <ObjectiveDDPDelegate>
 
 - (void)didReceiveMessage:(NSDictionary *)message {

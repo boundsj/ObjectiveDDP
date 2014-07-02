@@ -54,6 +54,7 @@ typedef void(^MeteorClientMethodCallback)(NSDictionary *response, NSError *error
 - (void)removeSubscription:(NSString *)subscriptionName;
 - (void)logout;
 - (void)disconnect;
+- (void)ping;
 
 // Deprecated methods
 
