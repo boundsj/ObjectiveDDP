@@ -46,6 +46,8 @@ typedef void(^MeteorClientMethodCallback)(NSDictionary *response, NSError *error
 
 - (NSString *)callMethodName:(NSString *)methodName parameters:(NSArray *)parameters responseCallback:(MeteorClientMethodCallback)asyncCallback;
 - (void)logonWithUsername:(NSString *)username password:(NSString *)password responseCallback:(MeteorClientMethodCallback)responseCallback;
+- (void)logonWithEmail:(NSString *)email password:(NSString *)password responseCallback:(MeteorClientMethodCallback)responseCallback;
+- (void)logonWithUsernameOrEmail:(NSString *)usernameOrEmail password:(NSString *)password responseCallback:(MeteorClientMethodCallback)responseCallback;
 - (void)logonWithUserParameters:(NSDictionary *)userParameters responseCallback:(MeteorClientMethodCallback)responseCallback;
 - (void)addSubscription:(NSString *)subscriptionName;
 - (void)addSubscription:(NSString *)subscriptionName withParameters:(NSArray *)parameters;

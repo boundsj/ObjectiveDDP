@@ -25,8 +25,9 @@
 - (void)_setAuthStateToLoggingIn;
 - (void)_setAuthStateToLoggedIn;
 - (void)_setAuthStatetoLoggedOut;
-- (BOOL)_validEmail:(NSString *)email;
 - (NSDictionary *)_buildUserParametersWithUsername:(NSString *)username password:(NSString *)password;
+- (NSDictionary *)_buildUserParametersWithEmail:(NSString *)email password:(NSString *)password;
+- (NSDictionary *)_buildUserParametersWithUsernameOrEmail:(NSString *)usernameOrEmail password:(NSString *)password;
 
 @end
 

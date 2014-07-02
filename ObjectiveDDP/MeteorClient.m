@@ -109,6 +109,14 @@ NSString * const MeteorClientTransportErrorDomain = @"boundsj.objectiveddp.trans
     [self logonWithUserParameters:[self _buildUserParametersWithUsername:username password:password] responseCallback:responseCallback];
 }
 
+- (void)logonWithEmail:(NSString *)email password:(NSString *)password responseCallback:(MeteorClientMethodCallback)responseCallback {
+    [self logonWithUserParameters:[self _buildUserParametersWithEmail:email password:password] responseCallback:responseCallback];
+}
+
+- (void)logonWithUsernameOrEmail:(NSString *)usernameOrEmail password:(NSString *)password responseCallback:(MeteorClientMethodCallback)responseCallback {
+    [self logonWithUserParameters:[self _buildUserParametersWithUsernameOrEmail:usernameOrEmail password:password] responseCallback:responseCallback];
+}
+
 - (void)logonWithUserParameters:(NSDictionary *)userParameters responseCallback:(MeteorClientMethodCallback)responseCallback {
     if (self.authState == AuthStateLoggingIn) {
         NSString *errorDesc = [NSString stringWithFormat:@"You must wait for the current logon request to finish before sending another."];
@@ -302,33 +310,23 @@ NSString * const MeteorClientTransportErrorDomain = @"boundsj.objectiveddp.trans
     self.authState = AuthStateLoggedOut;
 }
 
-- (BOOL)_validEmail:(NSString *)email {
-    if (![email length]) {
-        return NO;
-    }
-    
-    NSString *regExPattern = @"[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}";
-    NSRegularExpression *regEx = [[NSRegularExpression alloc] initWithPattern:regExPattern options:NSRegularExpressionCaseInsensitive error:nil];
-    NSUInteger regExMatches = [regEx numberOfMatchesInString:email options:0 range:NSMakeRange(0, [email length])];
-    
-    if (!regExMatches) {
-        return NO;
-    } else {
-        return YES;
-    }
-}
-
 - (NSDictionary *)_buildUserParametersWithUsername:(NSString *)username password:(NSString *)password
 {
-    NSMutableDictionary *userParameters = [NSMutableDictionary dictionaryWithDictionary:@{ @"password": @{ @"digest": [self sha256:password], @"algorithm": @"sha-256" } }];
-    
-    if ([self _validEmail:username]) {
-        userParameters[@"user"] = @{@"email": username};
+    return @{ @"user": @{ @"username": username }, @"password": @{ @"digest": [self sha256:password], @"algorithm": @"sha-256" } };
+}
+
+- (NSDictionary *)_buildUserParametersWithEmail:(NSString *)email password:(NSString *)password
+{
+    return @{ @"user": @{ @"email": email }, @"password": @{ @"digest": [self sha256:password], @"algorithm": @"sha-256" } };
+}
+
+- (NSDictionary *)_buildUserParametersWithUsernameOrEmail:(NSString *)usernameOrEmail password:(NSString *)password
+{
+    if ([usernameOrEmail rangeOfString:@"@"].location == NSNotFound) {
+        return [self _buildUserParametersWithUsername:usernameOrEmail password:password];
     } else {
-        userParameters[@"user"] = @{@"username": username};
+        return [self _buildUserParametersWithEmail:usernameOrEmail password:password];
     }
-    
-    return [userParameters copy];
 }
 
 @end
