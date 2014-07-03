@@ -45,7 +45,7 @@ describe(@"MeteorClient", ^{
         context(@"when connected", ^{
             beforeEach(^{
                 meteorClient.connected = YES;
-                [meteorClient logonWithUserParameters:@{@"user": @"mrt"} username:@"mrt@ateam.com" password:@"fool" responseCallback:nil];
+                [meteorClient logonWithEmail:@"mrt@ateam.com" password:@"fool" responseCallback:nil];
             });
             
             it(@"sends logon message correctly", ^{
@@ -53,7 +53,7 @@ describe(@"MeteorClient", ^{
                 NSInvocation *invocation = sentMessages[1];
                 NSArray *sentParameters;
                 [invocation getArgument:&sentParameters atIndex:4];
-                ddp should have_received(@selector(methodWithId:method:parameters:)).with(@"1").and_with(@"login").and_with(@[@{@"user": @"mrt"}]);
+                ddp should have_received(@selector(methodWithId:method:parameters:)).with(@"1").and_with(@"login").and_with(@[@{ @"user": @{ @"email": @"mrt@ateam.com" }, @"password": @{ @"digest": [meteorClient sha256:@"fool"], @"algorithm": @"sha-256" } }]);
             });
         });
     });
