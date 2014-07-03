@@ -41,11 +41,11 @@ describe(@"MeteorClient", ^{
         });        
     });
     
-    describe(@"#logonWithUserParameters:username:password", ^{
+    describe(@"#logonWithUserParameters:", ^{
         context(@"when connected", ^{
             beforeEach(^{
                 meteorClient.connected = YES;
-                [meteorClient logonWithEmail:@"mrt@ateam.com" password:@"fool" responseCallback:nil];
+                [meteorClient logonWithUserParameters:@{ @"user": @{ @"email": @"mrt@ateam.com" }, @"password": @{ @"digest": [meteorClient sha256:@"fool"], @"algorithm": @"sha-256" } } responseCallback:nil];
             });
             
             it(@"sends logon message correctly", ^{
