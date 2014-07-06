@@ -37,7 +37,7 @@
         return;
     }
 
-    [self.meteor logonWithUsername:self.username.text password:self.password.text responseCallback:^(NSDictionary *response, NSError *error) {
+    [self.meteor logonWithEmail:self.username.text password:self.password.text responseCallback:^(NSDictionary *response, NSError *error) {
         if (error) {
             [self handleFailedAuth:error];
             return;
@@ -47,7 +47,7 @@
 }
 
 - (IBAction)didTapSayHiButton {
-    [self.meteor callMethodName:@"sayHelloTo" parameters:@[self.username.text] responseCallback:^(NSDictionary *response, NSError *error) {
+    [self.meteor callMethodName:@"sayHelloTo" parameters:@[self.email.text] responseCallback:^(NSDictionary *response, NSError *error) {
         NSString *message = response[@"result"];
         [[[UIAlertView alloc] initWithTitle:@"Meteor Todos" message:message delegate:nil cancelButtonTitle:@"Great" otherButtonTitles:nil] show];
     }];
