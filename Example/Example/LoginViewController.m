@@ -37,7 +37,7 @@
         return;
     }
 
-    [self.meteor logonWithEmail:self.username.text password:self.password.text responseCallback:^(NSDictionary *response, NSError *error) {
+    [self.meteor logonWithEmail:self.email.text password:self.password.text responseCallback:^(NSDictionary *response, NSError *error) {
         if (error) {
             [self handleFailedAuth:error];
             return;
