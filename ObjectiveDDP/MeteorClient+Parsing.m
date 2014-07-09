@@ -29,7 +29,7 @@
 }
 
 - (void)_handleAddedMessage:(NSDictionary *)message msg:(NSString *)msg {
-    if (msg && [msg isEqualToString:@"added"]
+    if ([msg isEqualToString:@"added"]
         && message[@"collection"]) {
         NSDictionary *object = [self _parseObjectAndAddToCollection:message];
         NSString *notificationName = [NSString stringWithFormat:@"%@_added", message[@"collection"]];
@@ -37,6 +37,82 @@
         [[NSNotificationCenter defaultCenter] postNotificationName:@"added" object:self userInfo:object];
     }
 }
+
+- (void)_handleAddedBeforeMessage:(NSDictionary *)message msg:(NSString *)msg {
+    if ([msg isEqualToString:@"addedBefore"]
+        && message[@"collection"]) {
+        NSDictionary *object = [self _parseObjectAndAddToCollection:message beforeId:[message valueForKey:@"before"]];
+        NSString *notificationName = [NSString stringWithFormat:@"%@_addedBefore", message[@"collection"]];
+        [[NSNotificationCenter defaultCenter] postNotificationName:notificationName object:self userInfo:object];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"addedBefore" object:self userInfo:object];
+    }
+}
+
+- (void)_handleMovedBeforeMessage:(NSDictionary *)message msg:(NSString *)msg {
+    
+    if ([msg isEqualToString:@"movedBefore"]
+        && message[@"collection"]) {
+        NSDictionary *object = [self _parseMovedBefore:message];
+        NSString *notificationName = [NSString stringWithFormat:@"%@_movedBefore", message[@"collection"]];
+        [[NSNotificationCenter defaultCenter] postNotificationName:notificationName object:self userInfo:object];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"movedBefore" object:self userInfo:object];
+    }
+}
+
+
+
+
+- (NSDictionary *)_parseMovedBefore:(NSDictionary *)message {
+    NSMutableDictionary *object = [NSMutableDictionary dictionaryWithDictionary:@{@"_id": message[@"id"]}];
+    for (id key in message[@"fields"]) {
+        object[key] = message[@"fields"][key];
+    }
+    NSMutableArray *collection = self.collections[message[@"collection"]];
+    
+    NSString * beforeDocumentId = [message valueForKey:@"before"];
+    
+    if (!beforeDocumentId) {
+        //move document to end
+        NSUInteger documentToMoveIndex = [self _indexForDocumentId:[object valueForKey:@"_id"] inCollection:collection];
+        id object = [collection objectAtIndex:documentToMoveIndex];
+        [collection removeObjectAtIndex:documentToMoveIndex];
+        [collection addObject:object];
+    }
+    else{
+        NSUInteger documentToMoveIndex = [self _indexForDocumentId:[object valueForKey:@"_id"] inCollection:collection];
+        NSUInteger documentToInsertBeforeIndex = [self _indexForDocumentId:beforeDocumentId inCollection:collection];
+        if (documentToMoveIndex != NSNotFound && documentToInsertBeforeIndex) {
+            id object = [collection objectAtIndex:documentToMoveIndex];
+            [collection removeObjectAtIndex:documentToMoveIndex];
+            [collection insertObject:object atIndex:documentToInsertBeforeIndex];
+        }
+    }
+    return object;
+}
+
+
+- (NSUInteger)_indexForDocumentId:(NSString*)documentId inCollection:(NSMutableArray*)collection {
+    
+    //get index of document to insert before
+    NSUInteger documentIndex = [collection indexOfObjectPassingTest:^BOOL(id obj, NSUInteger idx, BOOL *stop) {
+        if ([[obj valueForKey:@"_id"] isEqualToString:documentId]) {
+            *stop = YES;
+            return YES;
+        }
+        return NO;
+    }];
+    
+    if (documentIndex != NSNotFound) {
+        NSLog(@"The title of category at index %i is %@", documentIndex, [[collection objectAtIndex:documentIndex] valueForKey:@"_id"]);
+    }
+    else {
+        NSLog(@"Not found");
+    }
+    
+    return documentIndex;
+}
+
+
 
 - (NSDictionary *)_parseObjectAndAddToCollection:(NSDictionary *)message {
     NSMutableDictionary *object = [NSMutableDictionary dictionaryWithDictionary:@{@"_id": message[@"id"]}];
@@ -51,8 +127,30 @@
     return object;
 }
 
+- (NSDictionary *)_parseObjectAndAddToCollection:(NSDictionary *)message beforeId:(NSString*)documentId {
+    NSMutableDictionary *object = [NSMutableDictionary dictionaryWithDictionary:@{@"_id": message[@"id"]}];
+    for (id key in message[@"fields"]) {
+        object[key] = message[@"fields"][key];
+    }
+    NSMutableArray *collection = self.collections[message[@"collection"]];
+    
+    //if no documentId, insert at end
+    if (documentId) {
+        NSUInteger documentIndex = [self _indexForDocumentId:documentId inCollection:collection];
+        if (documentIndex != NSNotFound) {
+            //insert new object at the current (before) object's index
+            [collection insertObject:object atIndex:documentIndex];
+        }
+    }
+    else{
+        [collection addObject:object];
+    }
+    return object;
+}
+
+
 - (void)_handleRemovedMessage:(NSDictionary *)message msg:(NSString *)msg {
-    if (msg && [msg isEqualToString:@"removed"]
+    if ([msg isEqualToString:@"removed"]
         && message[@"collection"]) {
         [self _parseRemoved:message];
         NSString *notificationName = [NSString stringWithFormat:@"%@_removed", message[@"collection"]];
@@ -78,7 +176,7 @@
 }
 
 - (void)_handleChangedMessage:(NSDictionary *)message msg:(NSString *)msg {
-    if (msg && [msg isEqualToString:@"changed"]
+    if ([msg isEqualToString:@"changed"]
         && message[@"collection"]) {
         NSDictionary *object = [self _parseObjectAndUpdateCollection:message];
         NSString *notificationName = [NSString stringWithFormat:@"%@_changed", message[@"collection"]];
@@ -87,6 +185,7 @@
     }
 }
 
+/* TODO - check if this is right - it doesn't seem to rest the collection array with the new change */
 - (NSDictionary *)_parseObjectAndUpdateCollection:(NSDictionary *)message {
     NSPredicate *pred = [NSPredicate predicateWithFormat:@"(_id like %@)", message[@"id"]];
     NSMutableArray *collection = self.collections[message[@"collection"]];

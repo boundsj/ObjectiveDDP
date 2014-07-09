@@ -228,19 +228,23 @@ NSString * const MeteorClientTransportErrorDomain = @"boundsj.objectiveddp.trans
 
 - (void)didReceiveMessage:(NSDictionary *)message {
     NSString *msg = [message objectForKey:@"msg"];
+    
     if (!msg) return;
+    
     NSString *messageId = message[@"id"];
     
     [self _handleMethodResultMessageWithMessageId:messageId message:message msg:msg];
     [self _handleAddedMessage:message msg:msg];
+    [self _handleAddedBeforeMessage:message msg:msg];
+    [self _handleMovedBeforeMessage:message msg:msg];
     [self _handleRemovedMessage:message msg:msg];
     [self _handleChangedMessage:message msg:msg];
-    
-    if (msg && [msg isEqualToString:@"ping"]) {
+
+    if ([msg isEqualToString:@"ping"]) {
         [self.ddp pong:messageId];
     }
     
-    if (msg && [msg isEqualToString:@"connected"]) {
+    if ([msg isEqualToString:@"connected"]) {
         self.connected = YES;
         [[NSNotificationCenter defaultCenter] postNotificationName:@"connected" object:nil];
         if (_sessionToken) {
@@ -251,7 +255,7 @@ NSString * const MeteorClientTransportErrorDomain = @"boundsj.objectiveddp.trans
         [self _makeMeteorDataSubscriptions];
     }
     
-    if (msg && [msg isEqualToString:@"ready"]) {
+    if ([msg isEqualToString:@"ready"]) {
         NSArray *subs = message[@"subs"];
         for(NSString *readySubscription in subs) {
             for(NSString *subscriptionName in _subscriptions) {
@@ -264,6 +268,37 @@ NSString * const MeteorClientTransportErrorDomain = @"boundsj.objectiveddp.trans
             }
         }
     }
+    
+    else if ([msg isEqualToString:@"updated"]) {
+        NSArray *methods = message[@"methods"];
+        for(NSString *updateMethod in methods) {
+            for(NSString *methodId in _methodIds) {
+                if([methodId isEqualToString:updateMethod]) {
+                    NSString *notificationName = [NSString stringWithFormat:@"%@_update", methodId];
+                    [[NSNotificationCenter defaultCenter] postNotificationName:notificationName object:self];
+                    break;
+                }
+            }
+        }
+    }
+    
+    else if ([msg isEqualToString:@"addedBefore"]) {
+        
+    }
+    
+    else if ([msg isEqualToString:@"movedBefore"]) {
+        
+    }
+    
+    else if ([msg isEqualToString:@"nosub"]) {
+        
+    }
+    
+    else if ([msg isEqualToString:@"error"]) {
+        
+    }
+    
+    NSLog(@"msg is %@", msg);
 }
 
 - (void)didOpen {

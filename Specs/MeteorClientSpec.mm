@@ -423,6 +423,8 @@ describe(@"MeteorClient", ^{
                     .and_with(meteorClient);
             });
         });
+        
+        //write tests for addedbefore and addedafter
 
         context(@"when called with an 'added' message", ^{
             beforeEach(^{
