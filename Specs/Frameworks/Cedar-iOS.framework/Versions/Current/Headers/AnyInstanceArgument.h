@@ -17,9 +17,7 @@ namespace Cedar { namespace Doubles {
 
         virtual bool matches_encoding(const char *) const;
         virtual bool matches_bytes(void *) const;
-        virtual unsigned int specificity_ranking() const { return 1; }
 
-        virtual bool matches(const Argument &) const;
     private:
         const Class class_;
     };

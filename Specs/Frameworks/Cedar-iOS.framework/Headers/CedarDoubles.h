@@ -4,7 +4,6 @@
 #import "CDRProtocolFake.h"
 #import "HaveReceived.h"
 #import "StubbedMethod.h"
-#import "RejectedMethod.h"
 
 #import "Argument.h"
 #import "AnyArgument.h"

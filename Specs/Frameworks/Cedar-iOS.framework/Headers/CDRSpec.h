@@ -2,7 +2,7 @@
 #import "CDRExampleBase.h"
 
 @protocol CDRExampleReporter;
-@class CDRExampleGroup, CDRExample, CDRSpecHelper, CDRSymbolicator;
+@class CDRExampleGroup, CDRExample, SpecHelper, CDRSymbolicator;
 
 @protocol CDRSpec
 @end
@@ -54,7 +54,6 @@ void fail(NSString *);
 
 - (void)defineBehaviors;
 - (void)markAsFocusedClosestToLineNumber:(NSUInteger)lineNumber;
-- (NSArray *)allChildren;
 @end
 
 @interface CDRSpec (SpecDeclaration)

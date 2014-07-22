@@ -18,20 +18,16 @@ namespace Cedar { namespace Doubles {
 
         virtual bool matches_encoding(const char *) const;
         virtual bool matches_bytes(void *) const;
-        virtual unsigned int specificity_ranking() const;
 
-    protected:
+    private:
         bool both_are_objects(const char *) const;
         bool both_are_not_objects(const char *) const;
-        bool both_are_not_pointers(const char *) const;
-        bool both_are_not_cstrings(const char *) const;
-        bool both_are_not_objects_pointers_nor_cstrings(const char *) const;
         bool nil_argument(const char *) const;
-        bool both_are_nil(void *) const;
 
     private:
         const T value_;
     };
+
 
     template<typename T>
     ValueArgument<T>::ValueArgument(const T & value) : Argument(), value_(value) {}
@@ -57,24 +53,16 @@ namespace Cedar { namespace Doubles {
     template<typename T>
     /* virtual */ bool ValueArgument<T>::matches_encoding(const char * actual_argument_encoding) const {
         return this->both_are_objects(actual_argument_encoding) ||
-        this->both_are_not_objects_pointers_nor_cstrings(actual_argument_encoding) ||
+        this->both_are_not_objects(actual_argument_encoding) ||
         this->nil_argument(actual_argument_encoding);
     }
 
     template<typename T>
     /* virtual */ bool ValueArgument<T>::matches_bytes(void * actual_argument_bytes) const {
-        if (actual_argument_bytes) {
-            return (Matchers::Comparators::compare_equal(value_, *(static_cast<T *>(actual_argument_bytes))) ||
-                    this->both_are_nil(actual_argument_bytes));
-        } else {
-            return false;
-        }
+        return Matchers::Comparators::compare_equal(value_, *(static_cast<T *>(actual_argument_bytes)));
     }
 
-    template<typename T>
-    /* virtual */ unsigned int ValueArgument<T>::specificity_ranking() const { return 1000; }
-
-#pragma mark - Protected interface
+#pragma mark - Private interface
     template<typename T>
     bool ValueArgument<T>::both_are_objects(const char * actual_argument_encoding) const {
         return 0 == strncmp(@encode(T), "@", 1) && 0 == strncmp(actual_argument_encoding, "@", 1);
@@ -86,50 +74,9 @@ namespace Cedar { namespace Doubles {
     }
 
     template<typename T>
-    bool ValueArgument<T>::both_are_not_pointers(const char * actual_argument_encoding) const {
-        return 0 != strncmp(@encode(T), "^", 1) && 0 != strncmp(actual_argument_encoding, "^", 1);
-    }
-
-    template<typename T>
-    bool ValueArgument<T>::both_are_not_cstrings(const char * actual_argument_encoding) const {
-        return 0 != strncmp(@encode(T), "*", 1) && 0 != strncmp(actual_argument_encoding, "*", 1);
-    }
-
-    template<typename T>
-    bool ValueArgument<T>::both_are_not_objects_pointers_nor_cstrings(const char * actual_argument_encoding) const {
-        return this->both_are_not_objects(actual_argument_encoding) &&
-        this->both_are_not_pointers(actual_argument_encoding) &&
-        this->both_are_not_cstrings(actual_argument_encoding);
-    }
-
-    template<typename T>
     bool ValueArgument<T>::nil_argument(const char * actual_argument_encoding) const {
         void *nil_pointer = 0;
         return 0 == strncmp(actual_argument_encoding, "@", 1) && this->matches_bytes(&nil_pointer);
     }
-
-    template<typename T>
-    bool ValueArgument<T>::both_are_nil(void * actual_argument_bytes) const {
-        return (0 == strncmp(@encode(T), "@", 1) &&
-                [[NSValue value:&value_ withObjCType:@encode(T)] nonretainedObjectValue] == nil &&
-                [[NSValue value:actual_argument_bytes withObjCType:@encode(id)] nonretainedObjectValue] == nil);
-    }
-
-#pragma mark - CharValueArgument
-    class CharValueArgument : public ValueArgument<const char*> {
-    public:
-        explicit CharValueArgument(const char *value) : ValueArgument<const char*>(value) {};
-        virtual bool matches_encoding(const char * actual_argument_encoding) const {
-            return this->both_are_objects(actual_argument_encoding) ||
-            this->both_are_cstrings(actual_argument_encoding) ||
-            this->nil_argument(actual_argument_encoding);
-        }
-    private:
-        bool both_are_cstrings(const char * actual_argument_encoding) const {
-            return this->both_are_not_objects(actual_argument_encoding) &&
-            this->both_are_not_pointers(actual_argument_encoding) &&
-            0 == strncmp(actual_argument_encoding, "*", 1);
-        }
-    };
 
 }}

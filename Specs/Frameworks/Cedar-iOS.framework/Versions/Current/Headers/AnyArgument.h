@@ -17,11 +17,11 @@ namespace Cedar { namespace Doubles {
 
         virtual bool matches_encoding(const char *) const { return true; }
         virtual bool matches_bytes(void *) const { return true; }
-        virtual unsigned int specificity_ranking() const { return 0; }
+
     };
 
     namespace Arguments {
-        extern const Argument::shared_ptr_t anything;
+        static const Argument::shared_ptr_t anything = Argument::shared_ptr_t(new Doubles::AnyArgument());
     }
 
 }}
