@@ -361,7 +361,7 @@ NSString * const MeteorClientTransportErrorDomain = @"boundsj.objectiveddp.trans
     return @{ @"username": username,@"email": email,
               @"password": @{ @"digest": [self sha256:password], @"algorithm": @"sha-256" },
               @"profile": @{ @"fullname": fullname,
-                             @"signupToken": @"",
+                             @"signupToken": @""
                              } };
 }
 
