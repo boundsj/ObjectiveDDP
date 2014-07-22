@@ -14,7 +14,7 @@ namespace Cedar { namespace Matchers { namespace Comparators {
 
 #pragma mark NSNumber
     inline bool compare_equal(NSNumber * const actualValue, NSNumber * const expectedValue) {
-        return [actualValue isEqualToNumber:expectedValue];
+        return expectedValue ? [actualValue isEqualToNumber:expectedValue] : false;
     }
 
     inline bool compare_equal(NSNumber * const actualValue, const id expectedValue) {
@@ -47,4 +47,110 @@ namespace Cedar { namespace Matchers { namespace Comparators {
         return compare_equal(expectedValue, actualValue);
     }
 
+#pragma mark NSDecimalNumber
+    inline bool compare_equal(NSDecimalNumber * const actualValue, NSDecimalNumber * const expectedValue) {
+        return compare_equal(actualValue, static_cast<const id>(expectedValue));
+    }
+
+    inline bool compare_equal(NSDecimalNumber * const actualValue, NSNumber * const expectedValue) {
+        return compare_equal(actualValue, static_cast<const id>(expectedValue));
+    }
+
+    inline bool compare_equal(NSNumber * const actualValue, NSDecimalNumber * const expectedValue) {
+        return compare_equal(expectedValue, static_cast<const id>(actualValue));
+    }
+
+    inline bool compare_equal(NSDecimalNumber * const actualValue, const id expectedValue) {
+        return [expectedValue isEqual:actualValue];
+    }
+
+    inline bool compare_equal(NSDecimalNumber * const actualValue, NSObject * const expectedValue) {
+        return compare_equal(actualValue, static_cast<const id>(expectedValue));
+    }
+
+    inline bool compare_equal(NSDecimalNumber * const actualValue, NSValue * const expectedValue) {
+        return compare_equal(actualValue, static_cast<const id>(expectedValue));
+    }
+
+    template<typename U>
+    bool compare_equal(NSDecimalNumber * const actualValue, const U & expectedValue) {
+        return compare_equal(actualValue, @(expectedValue));
+    }
+
+    template<typename T>
+    bool compare_equal(const T & actualValue, NSDecimalNumber * const expectedValue) {
+        return compare_equal(expectedValue, actualValue);
+    }
+
+#pragma mark NSDecimal
+    inline bool compare_equal(const NSDecimal & actualValue, const id expectedValue) {
+        return [[NSDecimalNumber decimalNumberWithDecimal:actualValue] isEqual:expectedValue];
+    }
+
+    inline bool compare_equal(const id actualValue, const NSDecimal & expectedValue) {
+        return compare_equal(expectedValue, actualValue);
+    }
+
+    inline bool compare_equal(const NSDecimal & actualValue, NSNumber * const expectedValue) {
+        return compare_equal(actualValue, static_cast<const id>(expectedValue));
+    }
+
+    inline bool compare_equal(NSNumber * const actualValue, const NSDecimal & expectedValue) {
+        return compare_equal(expectedValue, static_cast<const id>(actualValue));
+    }
+
+    inline bool compare_equal(const NSDecimal & actualValue, NSObject * const expectedValue) {
+        return compare_equal(actualValue, static_cast<const id>(expectedValue));
+    }
+
+    inline bool compare_equal(NSObject * const actualValue, const NSDecimal & expectedValue) {
+        return compare_equal(expectedValue, static_cast<const id>(actualValue));
+    }
+
+    inline bool compare_equal(const NSDecimal & actualValue, NSValue * const expectedValue) {
+        return compare_equal(actualValue, static_cast<const id>(expectedValue));
+    }
+
+    inline bool compare_equal(NSValue * const actualValue, const NSDecimal & expectedValue) {
+        return compare_equal(expectedValue, static_cast<const id>(actualValue));
+    }
+
+    inline bool compare_equal(const NSDecimal & actualValue, const NSDecimal & expectedValue) {
+        return NSOrderedSame == NSDecimalCompare(&actualValue, &expectedValue);
+    }
+
+    inline bool compare_equal(const NSDecimal & actualValue, NSDecimalNumber * const expectedValue) {
+        return compare_equal(actualValue, [expectedValue decimalValue]);
+    }
+
+    inline bool compare_equal(NSDecimalNumber * const actualValue, const NSDecimal & expectedValue) {
+        return compare_equal([actualValue decimalValue], expectedValue);
+    }
+
+    template<typename U>
+    bool compare_equal(const NSDecimal & actualValue, const U & expectedValue) {
+        return compare_equal(actualValue, @(expectedValue));
+    }
+
+    template<typename T>
+    bool compare_equal(const T & actualValue, const NSDecimal & expectedValue) {
+        return compare_equal(@(actualValue), expectedValue);
+    }
+
+#pragma mark C Strings
+    template<typename U>
+    bool compare_equal(char *actualValue, const U & expectedValue) {
+        return strcmp(actualValue, expectedValue) == 0;
+    }
+
+    template<typename U>
+    bool compare_equal(const char *actualValue, const U & expectedValue) {
+        return strcmp(actualValue, expectedValue) == 0;
+    }
+
+#pragma mark NSRange
+    template<typename U>
+    bool compare_equal(NSRange const actualValue, const U & expectedValue) {
+        return NSEqualRanges(actualValue, expectedValue);
+    }
 }}}

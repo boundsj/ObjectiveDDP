@@ -1,9 +1,8 @@
 #import <Foundation/Foundation.h>
 #import "CDRExampleParent.h"
 
-@protocol CDRExampleReporter;
-
-enum CDRExampleState {
+@class CDRSpec, CDRReportDispatcher;
+typedef NS_ENUM(NSInteger, CDRExampleState) {
     CDRExampleStateIncomplete = 0x00,
     CDRExampleStateSkipped = 0x01,
     CDRExampleStatePassed = 0x03,
@@ -11,23 +10,29 @@ enum CDRExampleState {
     CDRExampleStateFailed = 0x0F,
     CDRExampleStateError = 0x1F
 };
-typedef enum CDRExampleState CDRExampleState;
 
 @interface CDRExampleBase : NSObject {
   NSString *text_;
-  id<CDRExampleParent> parent_;
+  NSObject<CDRExampleParent> *parent_;
+  CDRSpec *spec_;
   BOOL focused_;
-  NSTimeInterval runTime_;
+  NSUInteger stackAddress_;
+  NSDate *startDate_;
+  NSDate *endDate_;
 }
 
 @property (nonatomic, readonly) NSString *text;
-@property (nonatomic, assign) id<CDRExampleParent> parent;
+@property (nonatomic, assign) NSObject<CDRExampleParent> *parent;
+@property (nonatomic, assign) CDRSpec *spec;
 @property (nonatomic, assign, getter=isFocused) BOOL focused;
 @property (nonatomic) NSUInteger stackAddress;
+@property (nonatomic, readonly) NSDate *startDate;
+@property (nonatomic, readonly) NSDate *endDate;
 
 - (id)initWithText:(NSString *)text;
 
-- (void)run;
+
+- (void)runWithDispatcher:(CDRReportDispatcher *)dispatcher;
 - (BOOL)shouldRun;
 
 - (BOOL)hasChildren;
@@ -36,10 +41,11 @@ typedef enum CDRExampleState CDRExampleState;
 - (NSString *)message;
 - (NSString *)fullText;
 - (NSMutableArray *)fullTextInPieces;
+
+- (NSTimeInterval)runTime;
+- (CDRExampleState)state;
 @end
 
 @interface CDRExampleBase (RunReporting)
-- (CDRExampleState)state;
-- (NSTimeInterval)runTime;
 - (float)progress;
 @end
