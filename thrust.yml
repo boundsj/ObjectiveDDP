@@ -26,7 +26,7 @@ ios_spec_targets:
     scheme: Specs # use in addition to target when you want to use a scheme (necessary if you are building with an xcode workspace)
     build_configuration: Debug # name of the build configuration
     build_sdk: iphonesimulator # SDK used to build the target. Optional, defaults to latest iphonesimulator.
-    runtime_sdk: 7.0 # SDK used to run the target. Not optional.
+    runtime_sdk: 7.1 # SDK used to run the target. Not optional.
     device: iPhone # Device to run the specs on. Optional, defaults to iPhone.
 
   #integration:

@@ -41,6 +41,56 @@ describe(@"MeteorClient", ^{
         });        
     });
     
+//    describe(@"#signupWithEmail:password:fullname:responseCallback:", ^{
+//        
+//        context(@"when connected", ^{
+//            beforeEach(^{
+//                meteorClient.connected = YES;
+//                [meteorClient signupWithEmail:@"mrt@ateam.com" password:@"password" fullname:@"mr bean" responseCallback:nil];
+//            });
+//            
+//            it(@"sends signup message correctly", ^{
+//                NSArray *sentMessages = [(id<CedarDouble>)ddp sent_messages];
+//                NSInvocation *invocation = sentMessages[1];
+//                NSArray *sentParameters;
+//                [invocation getArgument:&sentParameters atIndex:4];
+//                ddp should have_received(@selector(methodWithId:method:parameters:)).with(@"1").and_with(@"createUser").and_with(@[@{ @"username": @"",
+//                @"email": @"mrt@ateam.com", @"password": @{ @"digest": [meteorClient sha256:@"password"], @"algorithm": @"sha-256" },
+//                @"profile": @{ @"fullname": @"mr bean",@"signupToken": @"" } }]);
+//            });
+//            
+//        });
+//        
+//        afterEach(^{
+//            [meteorClient logout];
+//            meteorClient.connected = NO;
+//        
+//        });
+//    });
+    
+//    describe(@"#signupWithUsername:password:fullname:responseCallback:", ^{
+//        
+//        context(@"with username", ^{
+//            beforeEach(^{
+//                meteorClient.connected = YES;
+//                [meteorClient signupWithUsername:@"fox" password:@"fool" fullname:@"mr fox" responseCallback:nil];
+//            });
+//            
+//            
+//            it(@"sends signup message correctly", ^{
+//                NSArray *sentMessages = [(id<CedarDouble>)ddp sent_messages];
+//                NSInvocation *invocation = sentMessages[1];
+//                NSArray *sentParameters;
+//                [invocation getArgument:&sentParameters atIndex:4];
+////                NSLog(@"%@", [sentParameters debugDescription]);
+//                ddp should have_received(@selector(methodWithId:method:parameters:)).with(@"1").and_with(@"createUser").and_with(@[@{ @"username": @"fox",
+//                @"email": @"", @"password":@{ @"digest": [meteorClient sha256:@"fool"], @"algorithm": @"sha-256" },
+//                @"profile": @{ @"fullname": @"mr fox",@"signupToken": @"" }}]);
+//            });
+//            
+//        });
+//    });
+    
     describe(@"#logonWithUserParameters:", ^{
         context(@"when connected", ^{
             beforeEach(^{
