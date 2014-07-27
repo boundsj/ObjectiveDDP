@@ -22,7 +22,7 @@ ObjectiveDDP should run well with iOS projects using ARC and iOS 7.0 or above. _
 ##### Integrate it with your project using CocoaPods:
 
 ```
-pod 'ObjectiveDDP', '~> 0.1.3'
+pod 'ObjectiveDDP', '~> 0.1.5'
 ```
 For more information about this, check out [Linking and Building](https://github.com/boundsj/ObjectiveDDP/wiki/Linking-and-using-ObjectiveDDP) in the wiki.
 
@@ -37,6 +37,41 @@ For more information about this, check out [Linking and Building](https://github
     [self.meteorClient.ddp connectWebSocket];
 }
 ```
+
+##### Signup with username:
+
+```objective-c
+[self.meteor signupWithUsername:self.username.text password:self.password.text fullname:self.fullname responseCallback:^(NSDictionary *response, NSError *error) {
+    if (error) {
+        [self handleFailedAuth:error];
+        return;
+    }
+    [self handleSuccessfulAuth];
+}];
+```
+or with email
+
+```objective-c
+[self.meteor signupWithEmail:self.email.text password:self.password.text fullname:self.fullname.text responseCallback:^(NSDictionary *response, NSError *error) {
+    if (error) {
+        [self handleFailedAuth:error];
+        return;
+    }
+    [self handleSuccessfulAuth];
+}];
+```
+or with both
+
+```objective-c
+[self.meteor signupWithUsernameAndEmail:self.username.text email:self.email.text password:self.password.text fullname:self.fullname.text responseCallback:^(NSDictionary *response, NSError *error) {
+    if (error) {
+        [self handleFailedAuth:error];
+        return;
+    }
+    [self handleSuccessfulAuth];
+}];
+```
+
 
 ##### Logon using bcrypt authentication:
 
