@@ -1,0 +1,3 @@
+platform :ios, '7.0'
+
+pod 'ObjectiveDDP', :git => 'https://github.com/boundsj/ObjectiveDDP.git', :branch => 'master'
