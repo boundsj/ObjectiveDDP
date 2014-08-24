@@ -4,6 +4,7 @@
 #import "MeteorClient+Private.h"
 #import "BSONIdGenerator.h"
 
+NSString * const MeteorClientConnectionReadyNotification = @"bounsj.objectiveddp.ready";
 NSString * const MeteorClientDidConnectNotification = @"boundsj.objectiveddp.connected";
 NSString * const MeteorClientDidDisconnectNotification = @"boundsj.objectiveddp.disconnected";
 NSString * const MeteorClientTransportErrorDomain = @"boundsj.objectiveddp.transport";
@@ -246,7 +247,7 @@ NSString * const MeteorClientTransportErrorDomain = @"boundsj.objectiveddp.trans
     
     if ([msg isEqualToString:@"connected"]) {
         self.connected = YES;
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"connected" object:nil];
+        [[NSNotificationCenter defaultCenter] postNotificationName:MeteorClientConnectionReadyNotification object:self];
         if (_sessionToken) {
             [self.ddp methodWithId:[BSONIdGenerator generate]
                             method:@"login"

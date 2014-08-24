@@ -2,6 +2,7 @@
 
 @protocol DDPAuthDelegate;
 
+extern NSString * const MeteorClientConnectionReadyNotification;
 extern NSString * const MeteorClientDidConnectNotification;
 extern NSString * const MeteorClientDidDisconnectNotification;
 
