@@ -233,11 +233,11 @@
 		430E092A40EC4FAED3B6C76B /* Mocks */ = {
 			isa = PBXGroup;
 			children = (
-				430E0AEA2F4C48D01B0BC222 /* MockSRWebSocket.h */,
 				430E092B95390D2D558E5F3B /* MockObjectiveDDPDelegate.m */,
-				430E02ACD0BC78CC53F31D72 /* MockSRWebSocket.m */,
 				430E0F1E6C3E7422A8791E24 /* MockObjectiveDDPDelegate.h */,
 				4011C80617BD2C06002AA28E /* FakeDependencyProvider.h */,
+				430E02ACD0BC78CC53F31D72 /* MockSRWebSocket.m */,
+				430E0AEA2F4C48D01B0BC222 /* MockSRWebSocket.h */,
 				4011C80717BD2C06002AA28E /* FakeDependencyProvider.m */,
 			);
 			path = Mocks;

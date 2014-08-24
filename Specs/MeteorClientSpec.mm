@@ -424,7 +424,6 @@ describe(@"MeteorClient", ^{
             });
         });
         
-        //write tests for addedbefore and addedafter
 
         context(@"when called with an 'added' message", ^{
             beforeEach(^{
@@ -450,7 +449,7 @@ describe(@"MeteorClient", ^{
                                                                                   .and_with(meteorClient)
                                                                                   .and_with(phrase);
             });
-
+            
             context(@"when called with a changed message", ^{
                 beforeEach(^{
                     NSDictionary *changedMessage = @{
@@ -476,6 +475,8 @@ describe(@"MeteorClient", ^{
                                                                                        .and_with(phrase);
                 });
             });
+            
+            
 
             context(@"when called with a removed message", ^{
                 beforeEach(^{
@@ -500,6 +501,91 @@ describe(@"MeteorClient", ^{
                 });
             });
         });
+        
+        context(@"when called with an 'addedBefore' message", ^{
+            beforeEach(^{
+                NSDictionary *addedMessage = @{
+                                               @"msg": @"added",
+                                               @"id": @"id0",
+                                               @"collection": @"phrases",
+                                               @"fields": @{@"text": @"this is ridiculous"}
+                                               };
+                
+                [meteorClient didReceiveMessage:addedMessage];
+                
+                NSDictionary *addedBeforeMessage = @{
+                                               @"msg": @"addedBefore",
+                                               @"id": @"id1",
+                                               @"collection": @"phrases",
+                                               @"fields": @{@"text": @"this is before ridiculous"},
+                                               @"before":@"id0"
+                                               };
+                
+                [meteorClient didReceiveMessage:addedBeforeMessage];
+            });
+            
+            it(@"processes the message correctly", ^{
+                [meteorClient.collections[@"phrases"] count] should equal(2);
+                //check the order
+                NSDictionary *phrase = meteorClient.collections[@"phrases"][0];
+                phrase[@"text"] should equal(@"this is before ridiculous");
+                SEL postSel = @selector(postNotificationName:object:userInfo:);
+                [NSNotificationCenter defaultCenter] should have_received(postSel).with(@"addedBefore")
+                .and_with(meteorClient)
+                .and_with(phrase);
+                [NSNotificationCenter defaultCenter] should have_received(postSel).with(@"phrases_addedBefore")
+                .and_with(meteorClient)
+                .and_with(phrase);
+            });
+        });
+        
+        context(@"when called with an 'movedBefore' message", ^{
+            beforeEach(^{
+                NSDictionary *addedMessage = @{
+                                               @"msg": @"added",
+                                               @"id": @"id0",
+                                               @"collection": @"phrases",
+                                               @"fields": @{@"text": @"this is ridiculous"}
+                                               };
+                
+                [meteorClient didReceiveMessage:addedMessage];
+                
+                NSDictionary *addedNextMessage = @{
+                                               @"msg": @"added",
+                                               @"id": @"id1",
+                                               @"collection": @"phrases",
+                                               @"fields": @{@"text": @"this is before ridiculous"}
+                                               };
+                
+                [meteorClient didReceiveMessage:addedNextMessage];
+                
+                NSDictionary *movedBeforeMessage = @{
+                                                     @"msg": @"movedBefore",
+                                                     @"id": @"id1",
+                                                     @"collection": @"phrases",
+                                                     @"before":@"id0"
+                                                     };
+                
+                [meteorClient didReceiveMessage:movedBeforeMessage];
+            });
+            
+            it(@"processes the message correctly", ^{
+                [meteorClient.collections[@"phrases"] count] should equal(2);
+                NSDictionary *itemId = @{@"_id": @"id1"};
+                
+                //check the order
+                NSDictionary *phrase = meteorClient.collections[@"phrases"][0];
+                phrase[@"text"] should equal(@"this is before ridiculous");
+                SEL postSel = @selector(postNotificationName:object:userInfo:);
+                [NSNotificationCenter defaultCenter] should have_received(postSel).with(@"movedBefore")
+                .and_with(meteorClient)
+                .and_with(itemId);
+                [NSNotificationCenter defaultCenter] should have_received(postSel).with(@"phrases_movedBefore")
+                .and_with(meteorClient)
+                .and_with(itemId);
+            });
+        });
+
     });
 });
 

@@ -71,7 +71,7 @@
     
     NSString * beforeDocumentId = [message valueForKey:@"before"];
     
-    if (!beforeDocumentId) {
+    if (!beforeDocumentId) { //perhaps call added?
         //move document to end
         NSUInteger documentToMoveIndex = [self _indexForDocumentId:[object valueForKey:@"_id"] inCollection:collection];
         id object = [collection objectAtIndex:documentToMoveIndex];
@@ -81,7 +81,7 @@
     else{
         NSUInteger documentToMoveIndex = [self _indexForDocumentId:[object valueForKey:@"_id"] inCollection:collection];
         NSUInteger documentToInsertBeforeIndex = [self _indexForDocumentId:beforeDocumentId inCollection:collection];
-        if (documentToMoveIndex != NSNotFound && documentToInsertBeforeIndex) {
+        if (documentToMoveIndex != NSNotFound && documentToInsertBeforeIndex != NSNotFound) {
             id object = [collection objectAtIndex:documentToMoveIndex];
             [collection removeObjectAtIndex:documentToMoveIndex];
             [collection insertObject:object atIndex:documentToInsertBeforeIndex];
@@ -127,6 +127,8 @@
     return object;
 }
 
+
+
 - (NSDictionary *)_parseObjectAndAddToCollection:(NSDictionary *)message beforeId:(NSString*)documentId {
     NSMutableDictionary *object = [NSMutableDictionary dictionaryWithDictionary:@{@"_id": message[@"id"]}];
     for (id key in message[@"fields"]) {
@@ -149,6 +151,7 @@
 }
 
 
+
 - (void)_handleRemovedMessage:(NSDictionary *)message msg:(NSString *)msg {
     if ([msg isEqualToString:@"removed"]
         && message[@"collection"]) {
@@ -158,6 +161,8 @@
         [[NSNotificationCenter defaultCenter] postNotificationName:@"removed" object:self];
     }
 }
+
+
 
 - (void)_parseRemoved:(NSDictionary *)message {
     NSString *removedId = [message objectForKey:@"id"];
@@ -175,6 +180,8 @@
     [collection removeObjectAtIndex:indexOfRemovedObject];
 }
 
+
+
 - (void)_handleChangedMessage:(NSDictionary *)message msg:(NSString *)msg {
     if ([msg isEqualToString:@"changed"]
         && message[@"collection"]) {
@@ -185,7 +192,8 @@
     }
 }
 
-/* TODO - check if this is right - it doesn't seem to rest the collection array with the new change */
+
+
 - (NSDictionary *)_parseObjectAndUpdateCollection:(NSDictionary *)message {
     NSPredicate *pred = [NSPredicate predicateWithFormat:@"(_id like %@)", message[@"id"]];
     NSMutableArray *collection = self.collections[message[@"collection"]];
