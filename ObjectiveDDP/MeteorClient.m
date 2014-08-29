@@ -339,6 +339,7 @@ NSString * const MeteorClientTransportErrorDomain = @"boundsj.objectiveddp.trans
         _disconnecting = NO;
         return;
     }
+    // TODO improve callback to use exponential backoff
     [self performSelector:@selector(_reconnect) withObject:self afterDelay:5.0];
 }
 

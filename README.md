@@ -161,6 +161,19 @@ NSArray *parameters = @[@{@"_id": anId,
            responseCallback:nil];
 ```
 
+##### Listen for notifications:
+
+MeteorClientConnectionReadyNotification - When the server responds as accepting the DDP protocal version to communicate on, you won't be able to call any methods to meteor until this happens
+
+```objective-c
+
+[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reportConnection) name:MeteorClientDidConnectNotification object:nil];
+[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reportConnectionReady) name:MeteorClientConnectionReadyNotification object:nil];
+[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reportDisconnection) name:MeteorClientDidDisconnectNotification object:nil];
+
+
+```
+
 License
 --------------
 **[MIT]**
