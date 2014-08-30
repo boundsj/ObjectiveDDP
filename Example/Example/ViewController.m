@@ -49,7 +49,8 @@
 
 - (NSArray *)computedList {
     NSPredicate *pred = [NSPredicate predicateWithFormat:@"(listName like %@)", self.listName];
-    return [self.meteor.collections[@"things"] filteredArrayUsingPredicate:pred];
+    M13MutableOrderedDictionary *things = self.meteor.collections[@"things"];
+    return [things.allObjects filteredArrayUsingPredicate:pred];
 }
 
 #pragma mark UI Actions
