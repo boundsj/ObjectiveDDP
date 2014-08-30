@@ -260,7 +260,7 @@ describe(@"MeteorClient", ^{
     describe(@"#didOpen", ^{
         beforeEach(^{
             spy_on([NSNotificationCenter defaultCenter]);
-            NSArray *array = [[[NSArray alloc] init] autorelease];
+            M13MutableOrderedDictionary *array = [[[M13MutableOrderedDictionary alloc] init] autorelease];
             meteorClient.collections = [NSMutableDictionary dictionaryWithDictionary:@{@"col1": array}];
             [meteorClient.collections count] should equal(1);
             [meteorClient didOpen];
@@ -571,18 +571,16 @@ describe(@"MeteorClient", ^{
             
             it(@"processes the message correctly", ^{
                 [meteorClient.collections[@"phrases"] count] should equal(2);
-                NSDictionary *itemId = @{@"_id": @"id1"};
-                
                 //check the order
                 NSDictionary *phrase = meteorClient.collections[@"phrases"][0];
                 phrase[@"text"] should equal(@"this is before ridiculous");
                 SEL postSel = @selector(postNotificationName:object:userInfo:);
                 [NSNotificationCenter defaultCenter] should have_received(postSel).with(@"movedBefore")
                 .and_with(meteorClient)
-                .and_with(itemId);
+                .and_with(phrase);
                 [NSNotificationCenter defaultCenter] should have_received(postSel).with(@"phrases_movedBefore")
                 .and_with(meteorClient)
-                .and_with(itemId);
+                .and_with(phrase);
             });
         });
 
