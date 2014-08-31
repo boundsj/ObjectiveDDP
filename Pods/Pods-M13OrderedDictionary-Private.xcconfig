@@ -1,0 +1,5 @@
+#include "Pods-M13OrderedDictionary.xcconfig"
+GCC_PREPROCESSOR_DEFINITIONS = COCOAPODS=1
+HEADER_SEARCH_PATHS = "${PODS_ROOT}/BuildHeaders" "${PODS_ROOT}/BuildHeaders/M13OrderedDictionary" "${PODS_ROOT}/Headers" "${PODS_ROOT}/Headers/M13OrderedDictionary" "${PODS_ROOT}/Headers/SocketRocket"
+OTHER_LDFLAGS = -ObjC ${PODS_M__ORDEREDDICTIONARY_OTHER_LDFLAGS}
+PODS_ROOT = ${SRCROOT}
