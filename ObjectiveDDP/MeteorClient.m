@@ -96,7 +96,7 @@ NSString * const MeteorClientTransportErrorDomain = @"boundsj.objectiveddp.trans
 }
 
 - (BOOL)okToSend {
-    if (!self.connected || self.authState == AuthStateLoggedOut) {
+    if (!self.connected) {
         return NO;
     }
     return YES;
