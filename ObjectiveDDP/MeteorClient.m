@@ -298,8 +298,6 @@ NSString * const MeteorClientTransportErrorDomain = @"boundsj.objectiveddp.trans
     else if ([msg isEqualToString:@"error"]) {
         
     }
-    
-    NSLog(@"msg is %@", msg);
 }
 
 - (void)didOpen {
