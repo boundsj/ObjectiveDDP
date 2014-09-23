@@ -6,6 +6,12 @@
 // project.
 
 
+// M13OrderedDictionary
+#define COCOAPODS_POD_AVAILABLE_M13OrderedDictionary
+#define COCOAPODS_VERSION_MAJOR_M13OrderedDictionary 1
+#define COCOAPODS_VERSION_MINOR_M13OrderedDictionary 0
+#define COCOAPODS_VERSION_PATCH_M13OrderedDictionary 3
+
 // SocketRocket
 #define COCOAPODS_POD_AVAILABLE_SocketRocket
 #define COCOAPODS_VERSION_MAJOR_SocketRocket 0

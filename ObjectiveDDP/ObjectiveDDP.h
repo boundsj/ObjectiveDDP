@@ -1,5 +1,6 @@
 #import <Foundation/Foundation.h>
 #import <SocketRocket/SRWebSocket.h>
+#import <M13OrderedDictionary/M13OrderedDictionary.h>
 
 @protocol ObjectiveDDPDelegate;
 

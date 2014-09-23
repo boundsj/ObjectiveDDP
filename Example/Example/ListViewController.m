@@ -5,7 +5,7 @@
 @interface ListViewController ()
 
 @property (weak, nonatomic) IBOutlet UITableView *tableview;
-@property (strong, nonatomic) NSMutableArray *lists;
+@property (strong, nonatomic) M13MutableOrderedDictionary *lists;
 
 @end
 

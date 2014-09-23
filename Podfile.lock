@@ -1,7 +1,9 @@
 PODS:
+  - M13OrderedDictionary (1.0.3)
   - SocketRocket (0.3.1-beta2)
 
 DEPENDENCIES:
+  - M13OrderedDictionary
   - SocketRocket (from `git@github.com:square/SocketRocket.git`)
 
 EXTERNAL SOURCES:
@@ -9,6 +11,7 @@ EXTERNAL SOURCES:
     :git: git@github.com:square/SocketRocket.git
 
 SPEC CHECKSUMS:
+  M13OrderedDictionary: fe00e7cd13f00719e208a85ce1f33a79db19fd71
   SocketRocket: 9cbe08469513356cddc0afcab1ff160bd190296a
 
-COCOAPODS: 0.19.1
+COCOAPODS: 0.32.1
