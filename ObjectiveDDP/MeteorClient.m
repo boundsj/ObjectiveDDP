@@ -141,6 +141,7 @@ NSString * const MeteorClientTransportErrorDomain = @"boundsj.objectiveddp.trans
         } else {
             [self _setAuthStateToLoggedIn];
             self.userId = response[@"result"][@"id"];
+            _sessionToken = response[@"result"][@"token"];
         }
         responseCallback(response, error);
     }];
@@ -182,6 +183,7 @@ NSString * const MeteorClientTransportErrorDomain = @"boundsj.objectiveddp.trans
         } else {
             [self _setAuthStateToLoggedIn];
             self.userId = response[@"result"][@"id"];
+            _sessionToken = response[@"result"][@"token"];
         }
         responseCallback(response, error);
     }];
@@ -216,6 +218,13 @@ NSString * const MeteorClientTransportErrorDomain = @"boundsj.objectiveddp.trans
 - (void)disconnect {
     _disconnecting = YES;
     [self.ddp disconnectWebSocket];
+}
+
+- (void)reconnect {
+    if (self.ddp.webSocket.readyState == SR_OPEN) {
+        return;
+    }
+    [self.ddp connectWebSocket];
 }
 
 - (void)ping {
