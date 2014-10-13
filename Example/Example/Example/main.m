@@ -2,16 +2,14 @@
 //  main.m
 //  Example
 //
-//  Created by Jesse Bounds on 4/4/13.
-//  Copyright (c) 2013 Rebounds. All rights reserved.
+//  Created by Michael Arthur on 14/10/14.
+//  Copyright (c) 2014 Jesse Bounds. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
-
 #import "AppDelegate.h"
 
-int main(int argc, char *argv[])
-{
+int main(int argc, char * argv[]) {
     @autoreleasepool {
         return UIApplicationMain(argc, argv, nil, NSStringFromClass([AppDelegate class]));
     }

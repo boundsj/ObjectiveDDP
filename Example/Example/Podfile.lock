@@ -1,6 +1,6 @@
 PODS:
   - M13OrderedDictionary (1.0.3)
-  - ObjectiveDDP (0.1.7):
+  - ObjectiveDDP (0.1.8):
     - M13OrderedDictionary
     - SocketRocket (= 0.3.1-beta2)
   - SocketRocket (0.3.1-beta2)
@@ -14,7 +14,7 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   M13OrderedDictionary: fe00e7cd13f00719e208a85ce1f33a79db19fd71
-  ObjectiveDDP: a915604417f76a739d735a61e39f442f9fbf80f4
+  ObjectiveDDP: 45092fa5df4f5d7e0a5a6041bad87e420895cf6d
   SocketRocket: 79a68ae186063c65e1fe6f638b1ae2927aa5f304
 
-COCOAPODS: 0.33.1
+COCOAPODS: 0.34.2

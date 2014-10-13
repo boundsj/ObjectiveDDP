@@ -1,7 +1,6 @@
 #import "AppDelegate.h"
 #import "ViewController.h"
 #import "LoginViewController.h"
-#import "MeteorClient.h"
 #import "ObjectiveDDP.h"
 #import <ObjectiveDDP/MeteorClient.h>
 
