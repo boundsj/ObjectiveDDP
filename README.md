@@ -12,17 +12,17 @@ compatible with meteor 0.8.2 and above. Please update your meteor server
 as soon as possible.
 ```
 
-Connect your iOS applications written in Objective-C to server applications that communicate with the [DDP protocol created by Meteor](https://github.com/meteor/meteor/blob/devel/packages/livedata/DDP.md) and, if required by your server, authenticate with it.
+Connect your iOS applications written in Objective-C to server applications that communicate with the [DDP protocol created by Meteor](https://github.com/meteor/meteor/blob/devel/packages/ddp/DDP.md) and, if required by your server, authenticate with it.
 
 What's Inside
 -------------
 
-ObjectiveDDP should run well with iOS projects using ARC and iOS 7.0 or above. __**Check out the [example application](https://github.com/boundsj/ObjectiveDDP/wiki/Example-Application) and the [project wiki](https://github.com/boundsj/ObjectiveDDP/wiki) for more information.**__ Here is a sneak peak:
+ObjectiveDDP should run well with iOS projects using ARC and iOS 7.1 or above. __**Check out the [example application](https://github.com/boundsj/ObjectiveDDP/wiki/Example-Application) and the [project wiki](https://github.com/boundsj/ObjectiveDDP/wiki) for more information.**__ Here is a sneak peak:
 
 ##### Integrate it with your project using CocoaPods:
 
 ```
-pod 'ObjectiveDDP', '~> 0.1.6'
+pod 'ObjectiveDDP', '~> 0.1.8'
 ```
 For more information about this, check out [Linking and Building](https://github.com/boundsj/ObjectiveDDP/wiki/Linking-and-using-ObjectiveDDP) in the wiki.
 
@@ -73,7 +73,7 @@ or with both
 ```
 
 
-##### Logon using bcrypt authentication:
+##### Logon using authentication:
 
 ```objective-c
 [self.meteor logonWithUsername:self.username.text password:self.password.text responseCallback:^(NSDictionary *response, NSError *error) {
@@ -171,8 +171,8 @@ MeteorClientConnectionReadyNotification - When the server responds as accepting 
 [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reportConnectionReady) name:MeteorClientConnectionReadyNotification object:nil];
 [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reportDisconnection) name:MeteorClientDidDisconnectNotification object:nil];
 
-
 ```
+
 
 License
 --------------

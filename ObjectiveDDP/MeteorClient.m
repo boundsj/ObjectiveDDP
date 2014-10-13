@@ -36,8 +36,8 @@ double const MeteorClientMaxRetryIncrease = 6;
         _ddpVersion = ddpVersion;
         _maxRetryIncrement = MeteorClientMaxRetryIncrease;
         _tries = MeteorClientRetryIncreaseBy;
-        if ([ddpVersion isEqualToString:@"pre2"]) {
-            _supportedVersions = @[@"pre2", @"pre1"];
+        if ([ddpVersion isEqualToString:@"1"]) {
+            _supportedVersions = @[@"1", @"pre2"];
         } else {
             _supportedVersions = @[@"pre2", @"pre1"];
         }
