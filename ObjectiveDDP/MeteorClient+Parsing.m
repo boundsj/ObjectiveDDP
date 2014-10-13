@@ -106,7 +106,7 @@
     }];
     
     if (documentIndex != NSNotFound) {
-        NSLog(@"The title of category at index %i is %@", documentIndex, [[collection objectAtIndex:documentIndex] valueForKey:@"_id"]);
+        NSLog(@"The title of category at index %lu is %@", (unsigned long)documentIndex, [[collection objectAtIndex:documentIndex] valueForKey:@"_id"]);
     }
     else {
         NSLog(@"Not found");

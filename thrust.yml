@@ -1,4 +1,4 @@
-thrust_version: 0.3
+thrust_version: 0.4
 workspace_name: ObjectiveDDP # use if building with an xcode workspace
 app_name: ObjectiveDDP
 ios_sim_binary: 'ios-sim' # or wax-sim. iOS only.

@@ -33,6 +33,7 @@ typedef void(^MeteorClientMethodCallback)(NSDictionary *response, NSError *error
 @property (nonatomic, weak) id<DDPAuthDelegate> authDelegate;
 @property (nonatomic, strong, readonly) NSMutableDictionary *collections;
 @property (nonatomic, copy, readonly) NSString *userId;
+@property (nonatomic, copy, readonly) NSString *sessionToken;
 @property (nonatomic, assign, readonly) BOOL websocketReady;
 @property (nonatomic, assign, readonly) BOOL connected;
 @property (nonatomic, assign, readonly) AuthState authState;
@@ -45,6 +46,7 @@ typedef void(^MeteorClientMethodCallback)(NSDictionary *response, NSError *error
 
 #pragma mark - Methods
 
+- (void) logonWithSessionToken:(NSString *) sessionToken;
 - (NSString *)callMethodName:(NSString *)methodName parameters:(NSArray *)parameters responseCallback:(MeteorClientMethodCallback)asyncCallback;
 - (void)logonWithUsername:(NSString *)username password:(NSString *)password responseCallback:(MeteorClientMethodCallback)responseCallback;
 - (void)logonWithEmail:(NSString *)email password:(NSString *)password responseCallback:(MeteorClientMethodCallback)responseCallback;

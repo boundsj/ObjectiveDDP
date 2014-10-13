@@ -6,15 +6,15 @@ PODS:
   - SocketRocket (0.3.1-beta2)
 
 DEPENDENCIES:
-  - ObjectiveDDP (from `https://github.com/cerupcat/ObjectiveDDP.git`)
+  - ObjectiveDDP (from `https://github.com/boundsj/ObjectiveDDP.git`)
 
 EXTERNAL SOURCES:
   ObjectiveDDP:
-    :git: https://github.com/cerupcat/ObjectiveDDP.git
+    :git: https://github.com/boundsj/ObjectiveDDP.git
 
 SPEC CHECKSUMS:
   M13OrderedDictionary: fe00e7cd13f00719e208a85ce1f33a79db19fd71
   ObjectiveDDP: a915604417f76a739d735a61e39f442f9fbf80f4
   SocketRocket: 79a68ae186063c65e1fe6f638b1ae2927aa5f304
 
-COCOAPODS: 0.32.1
+COCOAPODS: 0.33.1
