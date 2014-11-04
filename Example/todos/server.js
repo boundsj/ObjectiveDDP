@@ -5,13 +5,15 @@ if (Meteor.isClient) {
   Meteor.subscribe('things');
   Meteor.subscribe('lists');
 
-  Template.main.things = function () {
-    return Things.find({listName: Session.get('list-name')});
-  };
+  Template.main.helpers({
+    things: function () {
+      return Things.find({listName: Session.get('list-name')});
+    },
 
-  Template.main.lists = function() {
-    return Lists.find();
-  };
+    lists: function() {
+      return Lists.find();
+    }
+  });
 
   Template.main.events({
     'click .add-item': function () {
