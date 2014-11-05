@@ -16,6 +16,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
      // Override point for customization after application launch. creates our singleton
     var meteorClient = initialiseMeteor("pre2", "wss://ddptester.meteor.com/websocket");
+    
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: NSDictionary?) -> Bool {
        
@@ -30,12 +31,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         self.navController = UINavigationController(rootViewController:loginController)
         self.navController.navigationBarHidden = true
         
-        self.window?.rootViewController = self.navController
-        self.window?.makeKeyAndVisible()
+        //This needs to be modified to fix the screen size issue. (Currently a Bug)
+        self.window = UIWindow(frame: UIScreen.mainScreen().bounds)
+        self.window!.rootViewController = self.navController
+        self.window!.makeKeyAndVisible()
+        println(self.window?.frame)
+        
         
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "reportConnection", name: MeteorClientDidConnectNotification, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "reportDisconnection", name: MeteorClientDidDisconnectNotification, object: nil)
+        
         return true
     }
     
