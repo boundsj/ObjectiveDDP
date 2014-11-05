@@ -16,28 +16,29 @@ class ViewController: UIViewController,UITableViewDataSource, AddViewControllerD
     
     @IBOutlet weak var tableview: UITableView!
     
-    required init(coder aDecoder: NSCoder!) {
+    required init(coder aDecoder: NSCoder) {
         super.init()
-        if aDecoder != nil {
-            
-        }
+        /* if aDecoder != nil {
+        
+        }*/
         
     }
     
     override init(nibName nibNameOrNil: String!, bundle nibBundleOrNil: NSBundle!) {
+        /*if(self != nil) {
+        
+        }*/
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
-        if(self != nil) {
-            
-        }
+        
     }
     
     init(nibNameOrNil: String!, bundle nibBundleOrNil: NSBundle!, meteor: MeteorClient!, listName:NSString!) {
         
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
-        if(self != nil) {
-            self.meteor = meteor
-            self.listName = listName
-        }
+        // if(self != nil) {
+        self.meteor = meteor
+        self.listName = listName
+        //}
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -58,8 +59,14 @@ class ViewController: UIViewController,UITableViewDataSource, AddViewControllerD
     }
     
     func computedList() -> NSArray {
-        var pred:NSPredicate = NSPredicate(format: "(listName like %@)", self.listName)
-        return self.meteor.collections["things"].filteredArrayUsingPredicate(pred)
+        
+        
+        var pred:NSPredicate = NSPredicate(format: "(listName like %@)", self.listName)!
+        let temp = self.meteor.collections["things"] as M13MutableOrderedDictionary
+        let temp2 = temp.getArray() as NSArray
+        return temp2.filteredArrayUsingPredicate(pred)
+        
+        
     }
     
     @IBAction func didTouchAdd(sender: AnyObject) {
@@ -69,11 +76,15 @@ class ViewController: UIViewController,UITableViewDataSource, AddViewControllerD
         self.presentViewController(addController, animated: true, completion: nil)
     }
     
-    func tableView(tableView: UITableView!, numberOfRowsInSection section: Int) -> Int {
-        return self.computedList().count
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if(self.meteor.collections["things"] != nil){
+            
+            return self.computedList().count
+        }
+        return 0
     }
     
-    func tableView(tableView: UITableView!, cellForRowAtIndexPath indexPath: NSIndexPath!) -> UITableViewCell! {
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cellIdentifier:NSString! = "thing"
         var cell:UITableViewCell
         
@@ -82,30 +93,38 @@ class ViewController: UIViewController,UITableViewDataSource, AddViewControllerD
         } else {
             cell = UITableViewCell(style: UITableViewCellStyle.Default, reuseIdentifier: cellIdentifier) as UITableViewCell
         }
-        
-        var thing:NSDictionary = self.computedList()[indexPath.row] as NSDictionary
-        cell.textLabel.text = thing["msg"] as String
-        
+        //If statement prevents crash
+        if(self.meteor.collections["things"] != nil){
+            var thing:NSDictionary = self.computedList()[indexPath.row] as NSDictionary
+            cell.textLabel.text = thing["msg"] as String
+            return cell
+        }
+        cell.textLabel.text = "dummy"
         return cell
+        
     }
     
-    func tableView(tableView: UITableView!, canEditRowAtIndexPath indexPath: NSIndexPath!) -> Bool {
+    func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
         return true
     }
     
-    func tableView(tableView: UITableView!, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath!) {
+    func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
         if(editingStyle == UITableViewCellEditingStyle.Delete) {
-            var thing:NSDictionary = self.computedList()[indexPath.row] as NSDictionary
-            self.meteor.callMethodName("/things/remove", parameters: [["_id":thing["_id"]]], responseCallback: nil)
+            //If statement prevents crash
+            if(self.meteor.collections["things"] != nil){
+                var thing:NSDictionary = self.computedList()[indexPath.row] as NSDictionary
+                let thingy = thing["_id"] as NSString
+                self.meteor.callMethodName("/things/remove", parameters: [["_id":thingy]], responseCallback: nil)
+            }
         }
     }
     
     func didAddThing(message: NSString!) {
         self.dismissViewControllerAnimated(true, completion: nil)
-        var parameters:NSArray = [["_id": NSUUID.UUID().UUIDString,
-                                    "msg":message,
-                                    "owner":self.userId,
-                                    "listName":self.listName]]
+        var parameters:NSArray = [["_id": NSUUID().UUIDString,
+            "msg":message,
+            "owner":self.userId,
+            "listName":self.listName]]
         
         self.meteor.callMethodName("/things/insert", parameters: parameters, responseCallback: nil)
     }
@@ -116,12 +135,12 @@ class ViewController: UIViewController,UITableViewDataSource, AddViewControllerD
         
         
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-
-
+    
+    
 }
 

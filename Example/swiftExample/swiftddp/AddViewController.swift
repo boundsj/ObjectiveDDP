@@ -15,16 +15,16 @@ class AddViewController : UIViewController {
     @IBOutlet weak var messageTextView: UITextView!
     var delegate:AddViewControllerDelegate!
     
-    required init(coder aDecoder: NSCoder!) {
+    required init(coder aDecoder: NSCoder) {
         fatalError("NSCoding not supported")
     }
     
     override init(nibName nibNameOrNil: String!, bundle nibBundleOrNil: NSBundle!) {
         
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
-        if (self != nil) {
+       /* if (self != nil) {
             
-        }
+        }*/
     }
     
     
