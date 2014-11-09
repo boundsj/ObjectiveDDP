@@ -12,6 +12,11 @@ compatible with meteor 0.8.2 and above. Please update your meteor server
 as soon as possible.
 ```
 
+```
+Note 2:
+DDP is at version 1 and this library aims to be compatible with 1 and above, pre2 may or may not work with newer versions of this library.
+```
+
 Connect your iOS applications written in Objective-C to server applications that communicate with the [DDP protocol created by Meteor](https://github.com/meteor/meteor/blob/devel/packages/ddp/DDP.md) and, if required by your server, authenticate with it.
 
 What's Inside
