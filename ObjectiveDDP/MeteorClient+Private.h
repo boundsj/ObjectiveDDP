@@ -5,10 +5,8 @@
     NSMutableDictionary *_subscriptions;
     NSMutableSet *_methodIds;
     NSMutableDictionary *_responseCallbacks;
-    MeteorClientMethodCallback _logonMethodCallback;
     NSString *_userName;
     NSString *_password;
-    NSDictionary *_logonParams;
     NSMutableDictionary *_subscriptionsParameters;
     BOOL _disconnecting;
     double _tries;
