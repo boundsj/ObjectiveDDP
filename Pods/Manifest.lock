@@ -1,20 +1,20 @@
 PODS:
   - Cedar (0.10.0)
+  - jetfire (0.1.0)
   - M13OrderedDictionary (1.0.3)
-  - SocketRocket (0.3.1-beta2)
 
 DEPENDENCIES:
   - Cedar
+  - jetfire (from `git@github.com:acmacalister/jetfire.git`)
   - M13OrderedDictionary
-  - SocketRocket (from `git@github.com:square/SocketRocket.git`)
 
 EXTERNAL SOURCES:
-  SocketRocket:
-    :git: git@github.com:square/SocketRocket.git
+  jetfire:
+    :git: git@github.com:acmacalister/jetfire.git
 
 SPEC CHECKSUMS:
   Cedar: 65b780d0e75ccb626a43890347315de1b822ec8e
+  jetfire: 28a33b1147c1558c369cc9440142bc715e0142f4
   M13OrderedDictionary: fe00e7cd13f00719e208a85ce1f33a79db19fd71
-  SocketRocket: 9cbe08469513356cddc0afcab1ff160bd190296a
 
-COCOAPODS: 0.34.2
+COCOAPODS: 0.34.4

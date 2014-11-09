@@ -19,7 +19,7 @@
 - (void)connectWebSocket {
     [self _closeConnection];
     [self _setupWebSocket];
-    [self.webSocket open];
+    [self.webSocket connect];
 }
 
 // disconnect from the websocket
@@ -34,7 +34,7 @@
     if (id)
         fields = @{@"msg": @"ping", @"id": id};
     NSString *json = [self _buildJSONWithFields:fields parameters:nil];
-    [self.webSocket send:json];
+    [self.webSocket writeString:json];
 }
 
 //pong (client -> server):
@@ -45,7 +45,7 @@
         fields = @{@"msg": @"pong", @"id": id};
     
     NSString *json = [self _buildJSONWithFields:fields parameters:nil];
-    [self.webSocket send:json];
+    [self.webSocket writeString:json];
 }
 
 //connect (client -> server)
@@ -55,7 +55,7 @@
 - (void)connectWithSession:(NSString *)session version:(NSString *)version support:(NSArray *)support {
     NSDictionary *fields = @{@"msg": @"connect", @"version": version, @"support": support};
     NSString *json = [self _buildJSONWithFields:fields parameters:nil];
-    [self.webSocket send:json];
+    [self.webSocket writeString:json];
 }
 
 //sub (client -> server):
@@ -65,7 +65,7 @@
 - (void)subscribeWith:(NSString *)id name:(NSString *)name parameters:(NSArray *)parameters {
     NSDictionary *fields = @{@"msg": @"sub", @"name": name, @"id": id};
     NSString *json = [self _buildJSONWithFields:fields parameters:parameters];
-    [self.webSocket send:json];
+    [self.webSocket writeString:json];
 }
 
 //unsub (client -> server):
@@ -73,7 +73,7 @@
 - (void)unsubscribeWith:(NSString *)id {
     NSDictionary *fields = @{@"msg": @"unsub", @"id": id};
     NSString *json = [self _buildJSONWithFields:fields parameters:nil];
-    [self.webSocket send:json];
+    [self.webSocket writeString:json];
 }
 
 //method (client -> server):
@@ -83,7 +83,7 @@
 - (void)methodWithId:(NSString *)id method:(NSString *)method parameters:(NSArray *)parameters {
     NSDictionary *fields = @{@"msg": @"method", @"method": method, @"id": id};
     NSString *json = [self _buildJSONWithFields:fields parameters:parameters];
-    [self.webSocket send:json];
+    [self.webSocket writeString:json];
 }
 
 #pragma mark - Internal 
@@ -98,31 +98,33 @@
 
 - (void)_setupWebSocket {
     NSURL *url = [NSURL URLWithString:self.urlString];
-    NSURLRequest *request = [NSURLRequest requestWithURL:url];
-    self.webSocket = [[DependencyProvider sharedProvider] provideSRWebSocketWithRequest:request];
+    self.webSocket = [[DependencyProvider sharedProvider] provideJFWebSocketWithURL:url];
     self.webSocket.delegate = self;
 }
 
 - (void)_closeConnection {
-    [self.webSocket close];
+    [self.webSocket disconnect];
     self.webSocket = nil;
 }
 
-#pragma mark - <SRWebSocketDelegate>
+#pragma mark - <JFWebSocketDelegate>
 
-- (void)webSocketDidOpen:(SRWebSocket *)webSocket {
+- (void) websocketDidConnect:(JFWebSocket *)socket {
     [self.delegate didOpen];
 }
 
-- (void)webSocket:(SRWebSocket *)webSocket didFailWithError:(NSError *)error {
+
+- (void) websocketDidWriteError:(JFWebSocket *)socket error:(NSError *)error {
     [self.delegate didReceiveConnectionError:error];
 }
 
-- (void)webSocket:(SRWebSocket *)webSocket didCloseWithCode:(NSInteger)code reason:(NSString *)reason wasClean:(BOOL)wasClean {
+
+- (void) websocketDidDisconnect:(JFWebSocket *)socket error:(NSError *)error {
     [self.delegate didReceiveConnectionClose];
 }
 
-- (void)webSocket:(SRWebSocket *)webSocket didReceiveMessage:(id)message {
+
+- (void) websocket:(JFWebSocket *)socket didReceiveMessage:(NSString *)message {
     // TODO: write test case for parse error (handle)
     NSData *data = [(NSString *)message dataUsingEncoding:NSUTF8StringEncoding];
     NSDictionary *dictionary = [NSJSONSerialization JSONObjectWithData:data

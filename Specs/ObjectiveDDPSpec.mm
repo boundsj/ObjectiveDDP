@@ -90,7 +90,7 @@ describe(@"ObjectiveDDP", ^{
 
             it(@"should call the web socket with correct JSON", ^{
                 NSString *expected = @"{\"msg\":\"connect\",\"version\":\"smersion\",\"support\":[\"smersion\"]}";
-                fakeSRWebSocket should have_received("send:").with(expected);
+                fakeSRWebSocket should have_received("writeString:").with(expected);
             });
 
             describe(@"when the websocket is opened successfully", ^{
@@ -137,7 +137,7 @@ describe(@"ObjectiveDDP", ^{
 
             it(@"should call the websocket correctly", ^{
                 NSString *expected = @"{\"msg\":\"sub\",\"name\":\"publishedCollection\",\"id\":\"id1\"}";
-                fakeSRWebSocket should have_received("send:").with(expected);
+                fakeSRWebSocket should have_received("writeString:").with(expected);
             });
         });
 
@@ -151,7 +151,7 @@ describe(@"ObjectiveDDP", ^{
 
             it(@"should call the websocket correctly", ^{
                 NSString *expected = @"{\"method\":\"\\/do\\/something\",\"id\":\"id\",\"params\":[{\"_id\":\"abc\",\"msg\":\"ohai\"}],\"msg\":\"method\"}";
-                fakeSRWebSocket should have_received("send:").with(expected);
+                fakeSRWebSocket should have_received("writeString:").with(expected);
             });
         });
 
@@ -164,7 +164,7 @@ describe(@"ObjectiveDDP", ^{
 
             it(@"calls the websocket correctly", ^{
                 NSString *expected = @"{\"msg\":\"unsub\",\"id\":\"id1\"}";
-                fakeSRWebSocket should have_received("send:").with(expected);
+                fakeSRWebSocket should have_received("writeString:").with(expected);
             });
         });
     });

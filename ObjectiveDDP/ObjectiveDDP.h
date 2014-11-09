@@ -1,14 +1,14 @@
 #import <Foundation/Foundation.h>
-#import <SocketRocket/SRWebSocket.h>
+#import <jetfire/JFWebSocket.h>
 #import <M13OrderedDictionary/M13OrderedDictionary.h>
 
 @protocol ObjectiveDDPDelegate;
 
-@interface ObjectiveDDP : NSObject <SRWebSocketDelegate>
+@interface ObjectiveDDP : NSObject <JFWebSocketDelegate>
 
 @property (nonatomic, copy) NSString *urlString;
 @property (nonatomic, assign) id <ObjectiveDDPDelegate> delegate;
-@property (nonatomic, strong) SRWebSocket *webSocket;
+@property (nonatomic, strong) JFWebSocket *webSocket;
 
 - (void)ping:(NSString *)id;
 - (void)pong:(NSString *)id;

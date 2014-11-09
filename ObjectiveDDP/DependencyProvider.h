@@ -1,10 +1,10 @@
 #import <Foundation/Foundation.h>
 
-@class SRWebSocket;
+@class JFWebSocket;
 
 @interface DependencyProvider : NSObject
 
 + (DependencyProvider *)sharedProvider;
-- (SRWebSocket *)provideSRWebSocketWithRequest:(NSURLRequest *)request;
+- (JFWebSocket *)provideJFWebSocketWithURL:(NSURLRequest *)request;
 
 @end

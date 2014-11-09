@@ -1,5 +1,5 @@
 #import "DependencyProvider.h"
-#import <SocketRocket/SRWebSocket.h>
+#import <jetfire/JFWebsocket.h>
 
 @implementation DependencyProvider
 
@@ -12,8 +12,8 @@ static DependencyProvider *sharedProvider = nil;
     return sharedProvider;
 }
 
-- (SRWebSocket *)provideSRWebSocketWithRequest:(NSURLRequest *)request {
-    return [[SRWebSocket alloc] initWithURLRequest:request];
+- (JFWebSocket *)provideJFWebSocketWithURL:(NSURL *)url {
+    return [[JFWebSocket alloc] initWithURL:url protocols:@[@"DDP"]];
 }
 
 @end

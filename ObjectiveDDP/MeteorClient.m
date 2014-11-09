@@ -229,7 +229,7 @@ double const MeteorClientMaxRetryIncrease = 6;
 }
 
 - (void)reconnect {
-    if (self.ddp.webSocket.readyState == SR_OPEN) {
+    if (self.ddp.webSocket.isConnected) {
         return;
     }
     [self.ddp connectWebSocket];
