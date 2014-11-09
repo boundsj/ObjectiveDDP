@@ -10,6 +10,6 @@ Pod::Spec.new do |s|
   s.source         = { :git => 'https://github.com/boundsj/ObjectiveDDP.git', :tag => 'v0.1.9' }
   s.source_files   = 'ObjectiveDDP/*.{h,m,c}'
   s.requires_arc   = true
-  s.dependency 'SocketRocket', '0.3.1-beta2'
+  s.dependency 'jetfire'
   s.dependency 'M13OrderedDictionary'
 end

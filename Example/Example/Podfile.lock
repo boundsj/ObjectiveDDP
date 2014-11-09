@@ -1,20 +1,21 @@
 PODS:
   - M13OrderedDictionary (1.0.4)
-  - ObjectiveDDP (0.1.8):
+  - ObjectiveDDP (0.1.9):
     - M13OrderedDictionary
     - SocketRocket (= 0.3.1-beta2)
   - SocketRocket (0.3.1-beta2)
 
 DEPENDENCIES:
-  - ObjectiveDDP (from `https://github.com/boundsj/ObjectiveDDP.git`)
+  - ObjectiveDDP (from `https://github.com/boundsj/ObjectiveDDP.git`, branch `replace-socketrocket`)
 
 EXTERNAL SOURCES:
   ObjectiveDDP:
+    :branch: replace-socketrocket
     :git: https://github.com/boundsj/ObjectiveDDP.git
 
 SPEC CHECKSUMS:
   M13OrderedDictionary: 9ef1914ec638e0ed5845ce910218f6aa354c79d5
-  ObjectiveDDP: 45092fa5df4f5d7e0a5a6041bad87e420895cf6d
+  ObjectiveDDP: d7eb090d8ce678d83ff0645a03ff62e66a948b73
   SocketRocket: 79a68ae186063c65e1fe6f638b1ae2927aa5f304
 
 COCOAPODS: 0.34.4
