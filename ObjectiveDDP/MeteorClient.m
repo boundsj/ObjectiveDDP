@@ -151,14 +151,14 @@ double const MeteorClientMaxRetryIncrease = 6;
     [self callMethodName:@"login" parameters:@[mutableUserParameters] responseCallback:^(NSDictionary *response, NSError *error) {
         if (error) {
             [self _setAuthStatetoLoggedOut];
+            [self.authDelegate authenticationFailedWithError:error];
         } else {
             [self _setAuthStateToLoggedIn:response[@"result"][@"id"] withToken:response[@"result"][@"token"]];
+            [self.authDelegate authenticationWasSuccessful];
         }
         responseCallback(response, error);
     }];
     
-    _logonParams = userParameters;
-    _logonMethodCallback = responseCallback;
 }
 
 - (void)signupWithUsernameAndEmail:(NSString *)username email:(NSString *)email password:(NSString *)password fullname:(NSString *)fullname responseCallback:(MeteorClientMethodCallback)responseCallback {
@@ -177,6 +177,7 @@ double const MeteorClientMaxRetryIncrease = 6;
 	if (self.authState == AuthStateLoggingIn) {
         NSString *errorDesc = [NSString stringWithFormat:@"You must wait for the current signup request to finish before sending another."];
         NSError *logonError = [NSError errorWithDomain:MeteorClientTransportErrorDomain code:MeteorClientErrorLogonRejected userInfo:@{NSLocalizedDescriptionKey: errorDesc}];
+        [self.authDelegate authenticationFailedWithError:logonError];
         if (responseCallback) {
             responseCallback(nil, logonError);
         }
@@ -190,8 +191,10 @@ double const MeteorClientMaxRetryIncrease = 6;
     [self callMethodName:@"createUser" parameters:@[mutableUserParameters] responseCallback:^(NSDictionary *response, NSError *error) {
         if (error) {
             [self _setAuthStatetoLoggedOut];
+            [self.authDelegate authenticationFailedWithError:error];
         } else {
             [self _setAuthStateToLoggedIn:response[@"result"][@"id"] withToken:response[@"result"][@"token"]];
+            [self.authDelegate authenticationWasSuccessful];
         }
         responseCallback(response, error);
     }];
@@ -407,7 +410,6 @@ double const MeteorClientMaxRetryIncrease = 6;
 }
 
 - (void)_setAuthStatetoLoggedOut {
-    _logonParams = nil;
     self.authState = AuthStateLoggedOut;
     self.userId = nil;
 }

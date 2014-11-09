@@ -79,6 +79,6 @@ typedef void(^MeteorClientMethodCallback)(NSDictionary *response, NSError *error
 @protocol DDPAuthDelegate <NSObject>
 
 - (void)authenticationWasSuccessful;
-- (void)authenticationFailed:(NSString *)reason;
+- (void)authenticationFailedWithError:(NSError *)reason;
 
 @end
