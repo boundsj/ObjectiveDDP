@@ -116,22 +116,22 @@ double const MeteorClientMaxRetryIncrease = 6;
 }
 
 - (void)logonWithUsername:(NSString *)username password:(NSString *)password {
-    [self logonWithUserParameters:[self _buildUserParametersWithUsername:username password:password] responseCallback:nil];
+    [self logonWithUserParameters:[self _buildUserParametersWithUsername:username password:password] plainPassword:password responseCallback:nil];
 }
 
 - (void)logonWithUsername:(NSString *)username password:(NSString *)password responseCallback:(MeteorClientMethodCallback)responseCallback {
-    [self logonWithUserParameters:[self _buildUserParametersWithUsername:username password:password] responseCallback:responseCallback];
+    [self logonWithUserParameters:[self _buildUserParametersWithUsername:username password:password] plainPassword:password responseCallback:responseCallback];
 }
 
 - (void)logonWithEmail:(NSString *)email password:(NSString *)password responseCallback:(MeteorClientMethodCallback)responseCallback {
-    [self logonWithUserParameters:[self _buildUserParametersWithEmail:email password:password] responseCallback:responseCallback];
+    [self logonWithUserParameters:[self _buildUserParametersWithEmail:email password:password] plainPassword:password responseCallback:responseCallback];
 }
 
 - (void)logonWithUsernameOrEmail:(NSString *)usernameOrEmail password:(NSString *)password responseCallback:(MeteorClientMethodCallback)responseCallback {
-    [self logonWithUserParameters:[self _buildUserParametersWithUsernameOrEmail:usernameOrEmail password:password] responseCallback:responseCallback];
+    [self logonWithUserParameters:[self _buildUserParametersWithUsernameOrEmail:usernameOrEmail password:password] plainPassword:password responseCallback:responseCallback];
 }
 
-- (void)logonWithUserParameters:(NSDictionary *)userParameters responseCallback:(MeteorClientMethodCallback)responseCallback {
+- (void)logonWithUserParameters:(NSDictionary *)userParameters plainPassword:(NSString *)password responseCallback:(MeteorClientMethodCallback)responseCallback {
     if (self.authState == AuthStateLoggingIn) {
         NSString *errorDesc = [NSString stringWithFormat:@"You must wait for the current logon request to finish before sending another."];
         NSError *logonError = [NSError errorWithDomain:MeteorClientTransportErrorDomain code:MeteorClientErrorLogonRejected userInfo:@{NSLocalizedDescriptionKey: errorDesc}];
@@ -151,7 +151,8 @@ double const MeteorClientMaxRetryIncrease = 6;
     [self callMethodName:@"login" parameters:@[mutableUserParameters] responseCallback:^(NSDictionary *response, NSError *error) {
         if (error) {
             [self _setAuthStatetoLoggedOut];
-            [self.authDelegate authenticationFailedWithError:error];
+            //wrap in a checker for old password and auto retry
+            [self srpPasswordCheck:mutableUserParameters plainPassword:password withResponse:response withError:error responseCallback:responseCallback];
         } else {
             [self _setAuthStateToLoggedIn:response[@"result"][@"id"] withToken:response[@"result"][@"token"]];
             [self.authDelegate authenticationWasSuccessful];
@@ -159,6 +160,28 @@ double const MeteorClientMaxRetryIncrease = 6;
         responseCallback(response, error);
     }];
     
+}
+
+- (void) srpPasswordCheck:(NSMutableDictionary *) mutableUserParameters plainPassword:(NSString *)password withResponse:(NSDictionary *)response withError:(NSError *)error responseCallback:(MeteorClientMethodCallback)responseCallback {
+    // check for correct error
+    
+    if (error.code == 400 && [error.localizedDescription rangeOfString:@"old password format"].location != NSNotFound) {
+        //upgrade password and retry
+        NSString * details = response[@"error"][@"details"];
+        NSMutableDictionary *dictionary;
+        NSData *data = [details dataUsingEncoding:NSUTF8StringEncoding];
+        NSError *detailsError = nil;
+        dictionary[@"details"] = [NSJSONSerialization JSONObjectWithData:data options:0 error:&detailsError];
+        if (error) {
+            [self.authDelegate authenticationFailedWithError:detailsError];
+        }
+        
+        
+        NSDictionary * userParameters = [self _buildSrpUpgradeParameters:mutableUserParameters identity:dictionary[@"details"][@"identity"] password:password];
+        [self logonWithUserParameters:userParameters plainPassword:password responseCallback:responseCallback];
+    } else {
+        [self.authDelegate authenticationFailedWithError:error];
+    }
 }
 
 - (void)signupWithUsernameAndEmail:(NSString *)username email:(NSString *)email password:(NSString *)password fullname:(NSString *)fullname responseCallback:(MeteorClientMethodCallback)responseCallback {
@@ -177,7 +200,6 @@ double const MeteorClientMaxRetryIncrease = 6;
 	if (self.authState == AuthStateLoggingIn) {
         NSString *errorDesc = [NSString stringWithFormat:@"You must wait for the current signup request to finish before sending another."];
         NSError *logonError = [NSError errorWithDomain:MeteorClientTransportErrorDomain code:MeteorClientErrorLogonRejected userInfo:@{NSLocalizedDescriptionKey: errorDesc}];
-        [self.authDelegate authenticationFailedWithError:logonError];
         if (responseCallback) {
             responseCallback(nil, logonError);
         }
@@ -441,5 +463,13 @@ double const MeteorClientMaxRetryIncrease = 6;
         return [self _buildUserParametersWithEmail:usernameOrEmail password:password];
     }
 }
+
+- (NSDictionary *)_buildSrpUpgradeParameters:(NSDictionary *)parameters identity:(NSString *)identity password:(NSString *) password
+{
+    NSString * srpPass = [NSString stringWithFormat:@"%@:%@", identity, password];
+    return @{ @"user": parameters[@"user"], @"srp": [self sha256:srpPass], @"password": @{ @"digest": [self sha256:password], @"algorithm": @"sha-256" } };
+    
+}
+
 
 @end

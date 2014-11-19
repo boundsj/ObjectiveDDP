@@ -5,8 +5,6 @@
     NSMutableDictionary *_subscriptions;
     NSMutableSet *_methodIds;
     NSMutableDictionary *_responseCallbacks;
-    NSString *_userName;
-    NSString *_password;
     NSMutableDictionary *_subscriptionsParameters;
     BOOL _disconnecting;
     double _tries;

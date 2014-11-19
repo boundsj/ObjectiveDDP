@@ -9,15 +9,13 @@
             id response;
             if(message[@"error"]) {
                 NSDictionary *errorDesc = message[@"error"];
-                NSDictionary *userInfo = @{NSLocalizedDescriptionKey: errorDesc[@"message"]};
+                NSDictionary *userInfo = @{
+                                           NSLocalizedDescriptionKey: errorDesc[@"reason"],
+                                           NSUnderlyingErrorKey: errorDesc[@"message"]
+                                           };
                 NSError *responseError = [NSError errorWithDomain:errorDesc[@"errorType"] code:[errorDesc[@"error"] integerValue] userInfo:userInfo];
                 if (callback) {
-                    callback(nil, responseError);
-                }
-                response = responseError;
-            } else {
-                if (callback) {
-                    callback(message, nil);
+                    callback(message, responseError);
                 }
             }
             NSString *notificationName = [NSString stringWithFormat:@"response_%@", messageId];
