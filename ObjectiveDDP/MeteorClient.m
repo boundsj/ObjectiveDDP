@@ -150,7 +150,6 @@ double const MeteorClientMaxRetryIncrease = 6;
     
     [self callMethodName:@"login" parameters:@[mutableUserParameters] responseCallback:^(NSDictionary *response, NSError *error) {
         if (error) {
-            [self _setAuthStatetoLoggedOut];
             //wrap in a checker for old password and auto retry
             [self srpPasswordCheck:mutableUserParameters plainPassword:password withResponse:response withError:error responseCallback:responseCallback];
         } else {
@@ -167,12 +166,14 @@ double const MeteorClientMaxRetryIncrease = 6;
     
     if (error.code == 400 && [error.localizedDescription rangeOfString:@"old password format"].location != NSNotFound) {
         //upgrade password and retry
-        NSString * details = response[@"error"][@"details"];
+        NSDictionary *errors = response[@"error"];
+        NSString * details = errors[@"details"];
         NSMutableDictionary *dictionary;
         NSData *data = [details dataUsingEncoding:NSUTF8StringEncoding];
         NSError *detailsError = nil;
         dictionary[@"details"] = [NSJSONSerialization JSONObjectWithData:data options:0 error:&detailsError];
         if (error) {
+            [self _setAuthStatetoLoggedOut];
             [self.authDelegate authenticationFailedWithError:detailsError];
         }
         
@@ -180,7 +181,9 @@ double const MeteorClientMaxRetryIncrease = 6;
         NSDictionary * userParameters = [self _buildSrpUpgradeParameters:mutableUserParameters identity:dictionary[@"details"][@"identity"] password:password];
         [self logonWithUserParameters:userParameters plainPassword:password responseCallback:responseCallback];
     } else {
+        [self _setAuthStatetoLoggedOut];
         [self.authDelegate authenticationFailedWithError:error];
+
     }
 }
 
@@ -467,7 +470,7 @@ double const MeteorClientMaxRetryIncrease = 6;
 - (NSDictionary *)_buildSrpUpgradeParameters:(NSDictionary *)parameters identity:(NSString *)identity password:(NSString *) password
 {
     NSString * srpPass = [NSString stringWithFormat:@"%@:%@", identity, password];
-    return @{ @"user": parameters[@"user"], @"srp": [self sha256:srpPass], @"password": @{ @"digest": [self sha256:password], @"algorithm": @"sha-256" } };
+    return @{ @"user": parameters[@"user"], @"srp": [self sha256:srpPass], @"password": parameters[@"password"] };
     
 }
 
