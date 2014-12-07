@@ -140,12 +140,12 @@ double const MeteorClientMaxRetryIncrease = 6;
         }
         return;
     }
-    [self _setAuthStateToLoggingIn];
     
     if ([self _rejectIfNotConnected:responseCallback]) {
         return;
     }
-    
+
+    [self _setAuthStateToLoggingIn];
     NSMutableDictionary *mutableUserParameters = [userParameters mutableCopy];
     
     [self callMethodName:@"login" parameters:@[mutableUserParameters] responseCallback:^(NSDictionary *response, NSError *error) {
