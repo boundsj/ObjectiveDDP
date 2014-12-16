@@ -184,6 +184,10 @@ double const MeteorClientMaxRetryIncrease = 6;
     [self signupWithUserParameters:[self _buildUserParametersSignup:@"" email:email password:password fullname:fullname] responseCallback:responseCallback];
 }
 
+- (void)signupWithEmail:(NSString *)email password:(NSString *)password firstName:(NSString *)firstName lastName:(NSString *)lastName responseCallback:(MeteorClientMethodCallback)responseCallback {
+    [self signupWithUserParameters:[self _buildUserParametersSignup:@"" email:email password:password firstName:firstName lastName:lastName] responseCallback:responseCallback];
+}
+
 - (void)signupWithUserParameters:userParameters responseCallback:(MeteorClientMethodCallback) responseCallback {
 	if (self.authState == AuthStateLoggingIn) {
         NSString *errorDesc = [NSString stringWithFormat:@"You must wait for the current signup request to finish before sending another."];
@@ -430,6 +434,16 @@ double const MeteorClientMaxRetryIncrease = 6;
     return @{ @"username": username,@"email": email,
               @"password": @{ @"digest": [self sha256:password], @"algorithm": @"sha-256" },
               @"profile": @{ @"fullname": fullname,
+                             @"signupToken": @""
+                             } };
+}
+
+- (NSDictionary *)_buildUserParametersSignup:(NSString *)username email:(NSString *)email password:(NSString *)password firstName:(NSString *)firstName lastName:(NSString*)lastName
+{
+    return @{ @"username": username,@"email": email,
+              @"password": @{ @"digest": [self sha256:password], @"algorithm": @"sha-256" },
+              @"profile": @{ @"first_name": firstName,
+                             @"last_name": lastName,
                              @"signupToken": @""
                              } };
 }
