@@ -89,7 +89,7 @@ class ListViewController: UIViewController, UITableViewDataSource, UITableViewDe
         println(indexPath.row)
         var list:NSDictionary = self.lists.objectAtIndex(UInt(indexPath.row)) as NSDictionary
         selectedList = list
-        cell.textLabel.text = list["name"] as NSString
+        cell.textLabel?.text = list["name"] as NSString
         
         var shareButton:UIButton = UIButton.buttonWithType(UIButtonType.Custom) as UIButton
         

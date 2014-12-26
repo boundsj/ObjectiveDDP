@@ -48,7 +48,7 @@
 		02E3996E1969A81300E2FE77 /* swiftddpTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = swiftddpTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		02E399731969A81300E2FE77 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		02E399741969A81300E2FE77 /* swiftddpTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = swiftddpTests.swift; sourceTree = "<group>"; };
-		46CBDC54F1E0472986D27AF4 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
+		68DC64A1F8BABCBDDEDFBCE4 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		EA1C0B46199AEFC4005545A7 /* ListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListViewController.swift; sourceTree = "<group>"; };
 		EA8054BD199B5C3B00805893 /* AddViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddViewController.swift; sourceTree = "<group>"; };
 		EA97639519998E2E00866844 /* ViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ViewController.xib; sourceTree = "<group>"; };
@@ -62,6 +62,7 @@
 		EA9763A119998E7600866844 /* Example-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Example-Info.plist"; sourceTree = "<group>"; };
 		EA9763A71999905400866844 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		EBABBCC4B77C49EAA6854302 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		FAD4C15CAE906A029B1F8C9C /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -91,8 +92,8 @@
 				02E3995E1969A81300E2FE77 /* swiftddp */,
 				02E399711969A81300E2FE77 /* swiftddpTests */,
 				02E3995D1969A81300E2FE77 /* Products */,
-				46CBDC54F1E0472986D27AF4 /* Pods.xcconfig */,
 				71997703989144BE8A6BA401 /* Frameworks */,
+				2ADD1B4FCCC14601FC099EA0 /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -151,6 +152,15 @@
 				02E399731969A81300E2FE77 /* Info.plist */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		2ADD1B4FCCC14601FC099EA0 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				FAD4C15CAE906A029B1F8C9C /* Pods.debug.xcconfig */,
+				68DC64A1F8BABCBDDEDFBCE4 /* Pods.release.xcconfig */,
+			);
+			name = Pods;
 			sourceTree = "<group>";
 		};
 		71997703989144BE8A6BA401 /* Frameworks */ = {
@@ -278,7 +288,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Pods-resources.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		F9079674B49640559CB2094C /* Check Pods Manifest.lock */ = {
@@ -410,12 +420,13 @@
 		};
 		02E399791969A81300E2FE77 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 46CBDC54F1E0472986D27AF4 /* Pods.xcconfig */;
+			baseConfigurationReference = FAD4C15CAE906A029B1F8C9C /* Pods.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_MODULES = YES;
 				INFOPLIST_FILE = swiftddp/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "swiftddp-Bridging-Header.h";
@@ -425,12 +436,13 @@
 		};
 		02E3997A1969A81300E2FE77 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 46CBDC54F1E0472986D27AF4 /* Pods.xcconfig */;
+			baseConfigurationReference = 68DC64A1F8BABCBDDEDFBCE4 /* Pods.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_MODULES = YES;
 				INFOPLIST_FILE = swiftddp/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "swiftddp-Bridging-Header.h";

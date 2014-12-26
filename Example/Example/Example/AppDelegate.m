@@ -9,15 +9,15 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     
-    self.meteorClient = [[MeteorClient alloc] initWithDDPVersion:@"1"];
+    self.meteorClient = [[MeteorClient alloc] initWithDDPVersion:@"pre2"];
     [self.meteorClient addSubscription:@"things"];
     [self.meteorClient addSubscription:@"lists"];
     LoginViewController *loginController = [[LoginViewController alloc] initWithNibName:@"LoginViewController"
                                                                                  bundle:nil];
     loginController.meteor = self.meteorClient;
-//    ObjectiveDDP *ddp = [[ObjectiveDDP alloc] initWithURLString:@"wss://ddptester.meteor.com/websocket" delegate:self.meteorClient];
+    ObjectiveDDP *ddp = [[ObjectiveDDP alloc] initWithURLString:@"wss://ddptester.meteor.com/websocket" delegate:self.meteorClient];
     // local testing
-    ObjectiveDDP *ddp = [[ObjectiveDDP alloc] initWithURLString:@"ws://localhost:3000/websocket" delegate:self.meteorClient];
+    //ObjectiveDDP *ddp = [[ObjectiveDDP alloc] initWithURLString:@"ws://localhost:3000/websocket" delegate:self.meteorClient];
 
     self.meteorClient.ddp = ddp;
     [self.meteorClient.ddp connectWebSocket];

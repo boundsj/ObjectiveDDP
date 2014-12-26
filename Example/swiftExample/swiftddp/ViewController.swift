@@ -43,8 +43,9 @@ class ViewController: UIViewController,UITableViewDataSource, AddViewControllerD
     
     override func viewWillAppear(animated: Bool) {
         self.navigationItem.title = self.listName
-        UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Add, target: self, action: "didTouchAdd:")
+        var addButton:UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Add, target: self, action: "didTouchAdd:")
         
+        self.navigationItem.setRightBarButtonItem(addButton, animated: true)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "didReceiveUpdate:", name: "added", object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "didReceiveUpdate:", name: "removed", object: nil)
     }
@@ -63,7 +64,7 @@ class ViewController: UIViewController,UITableViewDataSource, AddViewControllerD
         
         var pred:NSPredicate = NSPredicate(format: "(listName like %@)", self.listName)!
         let temp = self.meteor.collections["things"] as M13MutableOrderedDictionary
-        let temp2 = temp.getArray() as NSArray
+        let temp2 = temp.allObjects() as NSArray
         return temp2.filteredArrayUsingPredicate(pred)
         
         
@@ -96,10 +97,10 @@ class ViewController: UIViewController,UITableViewDataSource, AddViewControllerD
         //If statement prevents crash
         if(self.meteor.collections["things"] != nil){
             var thing:NSDictionary = self.computedList()[indexPath.row] as NSDictionary
-            cell.textLabel.text = thing["msg"] as String
+            cell.textLabel?.text = thing["msg"] as String
             return cell
         }
-        cell.textLabel.text = "dummy"
+        cell.textLabel?.text = "dummy"
         return cell
         
     }

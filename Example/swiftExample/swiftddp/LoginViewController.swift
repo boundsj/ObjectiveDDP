@@ -25,11 +25,11 @@ class LoginViewController: UIViewController {
     }
     
     
-    override func observeValueForKeyPath(keyPath: String!, ofObject object: AnyObject!, change: [NSObject : AnyObject]!, context: UnsafeMutablePointer<()>) {
+    override func observeValueForKeyPath(keyPath: String, ofObject object: AnyObject, change: [NSObject : AnyObject], context: UnsafeMutablePointer<()>) {
         
         if (keyPath == "websocketReady" && meteor.websocketReady) {
             connectionStatusText.text = "Connected to Todo Server"
-            var image:UIImage = UIImage(named: "green_light.png")
+            var image:UIImage = UIImage(named: "green_light.png")!
             connectionStatusLight.image = image
         }
     }
@@ -50,7 +50,7 @@ class LoginViewController: UIViewController {
         
         meteor.logonWithEmail(self.email.text, password: self.password.text, responseCallback: {(response, error) -> Void in
             
-            if(error) {
+            if((error) != nil) {
                 self.handleFailedAuth(error)
                 return
             }
@@ -62,7 +62,7 @@ class LoginViewController: UIViewController {
         var listViewController = ListViewController(nibName: "ListViewController", bundle: nil, meteor: self.meteor)
         
         listViewController.userId = self.meteor.userId
-        self.navigationController.pushViewController(listViewController, animated: true)
+        self.navigationController?.pushViewController(listViewController, animated: true)
     }
     
     func handleFailedAuth(error: NSError) {
