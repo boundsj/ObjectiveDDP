@@ -119,6 +119,9 @@ double const MeteorClientMaxRetryIncrease = 6;
             [self _setAuthStateToLoggedIn:response[@"result"][@"id"] withToken:response[@"result"][@"token"]];
             [self.authDelegate authenticationWasSuccessful];
         }
+        if (responseCallback) {
+            responseCallback(response, error);
+        }
     }];
 }
 
