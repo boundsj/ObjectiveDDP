@@ -6,3 +6,4 @@ Example/swiftExample/Pods
 build
 Pods
 .DS_Store
+Podfile.lock
