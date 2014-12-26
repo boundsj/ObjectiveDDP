@@ -107,12 +107,19 @@ double const MeteorClientMaxRetryIncrease = 6;
     return YES;
 }
 
-- (void) logonWithSessionToken:(NSString *) sessionToken {
+// tokenExpires.$date : expiry date
+- (void) logonWithSessionToken:(NSString *) sessionToken responseCallback:(MeteorClientMethodCallback)responseCallback {
     self.sessionToken = sessionToken;
-    [self.ddp methodWithId:[BSONIdGenerator generate]
-                    method:@"login"
-                parameters:@[@{@"resume": self.sessionToken}]];
-    
+    [self _setAuthStateToLoggingIn];
+    [self callMethodName:@"login" parameters:@[@{@"resume": self.sessionToken}] responseCallback:^(NSDictionary *response, NSError *error) {
+        if (error) {
+            [self _setAuthStatetoLoggedOut];
+            [self.authDelegate authenticationFailedWithError:error];
+        } else {
+            [self _setAuthStateToLoggedIn:response[@"result"][@"id"] withToken:response[@"result"][@"token"]];
+            [self.authDelegate authenticationWasSuccessful];
+        }
+    }];
 }
 
 - (void)logonWithUsername:(NSString *)username password:(NSString *)password {
@@ -153,6 +160,7 @@ double const MeteorClientMaxRetryIncrease = 6;
             [self _setAuthStatetoLoggedOut];
             [self.authDelegate authenticationFailedWithError:error];
         } else {
+            // tokenExpires.$date : expiry date
             [self _setAuthStateToLoggedIn:response[@"result"][@"id"] withToken:response[@"result"][@"token"]];
             [self.authDelegate authenticationWasSuccessful];
         }
