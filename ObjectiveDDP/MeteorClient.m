@@ -279,8 +279,8 @@ double const MeteorClientMaxRetryIncrease = 6;
     if ([msg isEqualToString:@"connected"]) {
         self.connected = YES;
         [[NSNotificationCenter defaultCenter] postNotificationName:MeteorClientConnectionReadyNotification object:self];
-        if (self.sessionToken) {
-            [self logonWithSessionToken:self.sessionToken];
+        if (self.sessionToken) { //TODO check expiry date
+            [self logonWithSessionToken:self.sessionToken responseCallback:nil];
         }
         [self _makeMeteorDataSubscriptions];
     }
