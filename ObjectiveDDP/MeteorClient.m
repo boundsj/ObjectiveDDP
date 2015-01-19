@@ -141,6 +141,12 @@ double const MeteorClientMaxRetryIncrease = 6;
     [self logonWithUserParameters:[self _buildUserParametersWithUsernameOrEmail:usernameOrEmail password:password] responseCallback:responseCallback];
 }
 
+- (void)logonWithOAuthAccessToken:(NSString *)accessToken andServiceName:(NSString *)serviceName responseCallback:(MeteorClientMethodCallback)responseCallback {
+    //generates random secret (credentialToken)
+    NSString* credentialToken = [self _randomSecret];
+    
+}
+
 - (void)logonWithUserParameters:(NSDictionary *)userParameters responseCallback:(MeteorClientMethodCallback)responseCallback {
     if (self.authState == AuthStateLoggingIn) {
         NSString *errorDesc = [NSString stringWithFormat:@"You must wait for the current logon request to finish before sending another."];
@@ -451,6 +457,45 @@ double const MeteorClientMaxRetryIncrease = 6;
     } else {
         return [self _buildUserParametersWithEmail:usernameOrEmail password:password];
     }
+}
+
+- (NSDictionary *)_buildOAuthPostRequestWithAccessToken:(NSString *)accessToken {
+    return @{ @"code": accessToken, @"state": [self _generateStateWithToken: [self _randomSecret]]};
+}
+
+- (NSDictionary *)_buildUserParametersWithOAuthAccessToken:(NSString *)accessToken
+{
+    return @{};
+}
+
+//functions for OAuth
+
+//generates base64 string for json
+- (NSString *)_generateStateWithToken:(NSString *)credentialToken {
+    NSData* jsonData = [NSJSONSerialization dataWithJSONObject:@{ @"credentialToken": credentialToken } options:0 error:NULL];
+    if(!jsonData) {
+        //error
+        return @"";
+    }
+    //set jsonString equal to base64 conversion
+    NSString* jsonString;
+    return jsonString;
+}
+
+//generates random secret for credential token
+- (NSString *)_randomSecret {
+    NSString *BASE64_CHARS = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-_";
+    NSMutableString *s = [NSMutableString stringWithCapacity:20];
+    for (NSUInteger i = 0U; i < 20; i++) {
+        u_int32_t r = arc4random() % [BASE64_CHARS length];
+        unichar c = [BASE64_CHARS characterAtIndex:r];
+        [s appendFormat:@"%C", c];
+    }
+    return s;
+}
+
+- (void)_makeHTTPRequestAtUrl:(NSString*)postUrl {
+    
 }
 
 @end
