@@ -143,8 +143,10 @@ double const MeteorClientMaxRetryIncrease = 6;
 
 - (void)logonWithOAuthAccessToken:(NSString *)accessToken andServiceName:(NSString *)serviceName responseCallback:(MeteorClientMethodCallback)responseCallback {
     //generates random secret (credentialToken)
-    NSString* credentialToken = [self _randomSecret];
-    
+    NSString *url = [self _buildOAuthRequestStringWithAccessToken:accessToken];
+    NSLog(@"%@", url);
+    NSString *callback = [self _makeHTTPRequestAtUrl:url];
+    NSLog(@"%@", url);
 }
 
 - (void)logonWithUserParameters:(NSDictionary *)userParameters responseCallback:(MeteorClientMethodCallback)responseCallback {
@@ -459,8 +461,8 @@ double const MeteorClientMaxRetryIncrease = 6;
     }
 }
 
-- (NSDictionary *)_buildOAuthPostRequestWithAccessToken:(NSString *)accessToken {
-    return @{ @"code": accessToken, @"state": [self _generateStateWithToken: [self _randomSecret]]};
+- (NSString *)_buildOAuthRequestStringWithAccessToken:(NSString *)accessToken {
+    return [NSString stringWithFormat: @"%@/?accessToken=%@&state=%@", [[self ddp] urlString], accessToken, [self _generateStateWithToken: [self _randomSecret]]];
 }
 
 - (NSDictionary *)_buildUserParametersWithOAuthAccessToken:(NSString *)accessToken
@@ -472,7 +474,7 @@ double const MeteorClientMaxRetryIncrease = 6;
 
 //generates base64 string for json
 - (NSString *)_generateStateWithToken:(NSString *)credentialToken {
-    NSData* jsonData = [NSJSONSerialization dataWithJSONObject:@{ @"credentialToken": credentialToken } options:0 error:NULL];
+    NSData* jsonData = [NSJSONSerialization dataWithJSONObject:@{ @"credentialToken": credentialToken, @"loginStyle": @"popup" } options:0 error:NULL];
     if(!jsonData) {
         //error
         return @"";
@@ -494,8 +496,22 @@ double const MeteorClientMaxRetryIncrease = 6;
     return s;
 }
 
-- (void)_makeHTTPRequestAtUrl:(NSString*)postUrl {
+- (NSString *)_makeHTTPRequestAtUrl:(NSString*)url {
+    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
+    [request setHTTPMethod:@"GET"];
+    [request setURL:[NSURL URLWithString:url]];
     
+    NSError *error = [[NSError alloc] init];
+    NSHTTPURLResponse *responseCode = nil;
+    
+    NSData *oResponseData = [NSURLConnection sendSynchronousRequest:request returningResponse:&responseCode error:&error];
+    
+    if([responseCode statusCode] != 200){
+        NSLog(@"Error getting %@, HTTP status code %li", url, (long)[responseCode statusCode]);
+        return nil;
+    }
+    
+    return [[NSString alloc] initWithData:oResponseData encoding:NSUTF8StringEncoding];
 }
 
 @end
