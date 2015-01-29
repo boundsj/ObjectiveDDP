@@ -141,12 +141,12 @@ double const MeteorClientMaxRetryIncrease = 6;
     [self logonWithUserParameters:[self _buildUserParametersWithUsernameOrEmail:usernameOrEmail password:password] responseCallback:responseCallback];
 }
 
-- (void)logonWithOAuthAccessToken:(NSString *)accessToken andServiceName:(NSString *)serviceName responseCallback:(MeteorClientMethodCallback)responseCallback {
+- (void)logonWithOAuthAccessToken:(NSString *)accessToken serviceName:(NSString *)serviceName responseCallback:(MeteorClientMethodCallback)responseCallback {
     //generates random secret (credentialToken)
-    NSString *url = [self _buildOAuthRequestStringWithAccessToken:accessToken];
+    NSString *url = [self _buildOAuthRequestStringWithAccessToken:accessToken serviceName: serviceName];
     NSLog(@"%@", url);
     NSString *callback = [self _makeHTTPRequestAtUrl:url];
-    NSLog(@"%@", url);
+    NSLog(callback.description);
 }
 
 - (void)logonWithUserParameters:(NSDictionary *)userParameters responseCallback:(MeteorClientMethodCallback)responseCallback {
@@ -461,8 +461,10 @@ double const MeteorClientMaxRetryIncrease = 6;
     }
 }
 
-- (NSString *)_buildOAuthRequestStringWithAccessToken:(NSString *)accessToken {
-    return [NSString stringWithFormat: @"%@/?accessToken=%@&state=%@", [[self ddp] urlString], accessToken, [self _generateStateWithToken: [self _randomSecret]]];
+- (NSString *)_buildOAuthRequestStringWithAccessToken:(NSString *)accessToken serviceName: (NSString *)serviceName
+{
+    NSString* homeUrl = [[[self ddp] urlString] stringByReplacingOccurrencesOfString:@"/websocket" withString:@""];
+    return [NSString stringWithFormat: @"%@/_oauth/%@/?accessToken=%@&state=%@", homeUrl, serviceName, accessToken, [self _generateStateWithToken: [self _randomSecret]]];
 }
 
 - (NSDictionary *)_buildUserParametersWithOAuthAccessToken:(NSString *)accessToken
@@ -481,6 +483,7 @@ double const MeteorClientMaxRetryIncrease = 6;
     }
     //set jsonString equal to base64 conversion
     NSString* jsonString;
+    NSLog(@"%@", jsonString);
     return jsonString;
 }
 
@@ -500,6 +503,8 @@ double const MeteorClientMaxRetryIncrease = 6;
     NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
     [request setHTTPMethod:@"GET"];
     [request setURL:[NSURL URLWithString:url]];
+    
+    NSLog(@"Url is %@", url);
     
     NSError *error = [[NSError alloc] init];
     NSHTTPURLResponse *responseCode = nil;
