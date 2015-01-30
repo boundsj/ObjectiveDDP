@@ -141,6 +141,20 @@ double const MeteorClientMaxRetryIncrease = 6;
     [self logonWithUserParameters:[self _buildUserParametersWithUsernameOrEmail:usernameOrEmail password:password] responseCallback:responseCallback];
 }
 
+/*
+ * Logs in using access token -- this breaks the current convention,
+ * but the method call is dependent on some of this class's variables
+ * @param serviceName service name i.e facebook, google
+ * @param accessToken short-lived one-time code received, or long-lived access token for Facebook login
+ * For some logins, such as Facebook, login with OAuth may only work after customizing the accounts-x packages. This is because Facebook only returns long-lived access tokens for mobile clients
+ * until meteor decides to change the packages themselves.
+ * use https://github.com/jasper-lu/accounts-facebook-ddp and
+ *     https://github.com/jasper-lu/facebook-ddp for reference
+ *
+ * If an sdk only allows login returns long-lived token, modify your accounts-x package,
+ * and add your package to the if(serviceName.compare("facebook")) in _buildOAuthRequestStringWithAccessToken
+ */
+
 - (void)logonWithOAuthAccessToken:(NSString *)accessToken serviceName:(NSString *)serviceName responseCallback:(MeteorClientMethodCallback)responseCallback {
     //generates random secret (credentialToken)
     NSString *url = [self _buildOAuthRequestStringWithAccessToken:accessToken serviceName: serviceName];
@@ -478,7 +492,15 @@ double const MeteorClientMaxRetryIncrease = 6;
         homeUrl = [@"https" stringByAppendingString:[homeUrl substringFromIndex:[@"wss" length]]];
     }
     
-    return [NSString stringWithFormat: @"%@/_oauth/%@/?accessToken=%@&state=%@", homeUrl, serviceName, accessToken, [self _generateStateWithToken: [self _randomSecret]]];
+    NSString* tokenType = @"";
+    //facebook sdk can only send access token, others send a one time code
+    if ([serviceName compare: @"facebook"]) {
+        tokenType = @"accessToken";
+    } else {
+        tokenType = @"code";
+    }
+    
+    return [NSString stringWithFormat: @"%@/_oauth/%@/?%@=%@&state=%@", homeUrl, serviceName, tokenType, accessToken, [self _generateStateWithToken: [self _randomSecret]]];
 }
 
 - (NSDictionary *)_buildUserParametersWithOAuthAccessToken:(NSString *)accessToken
