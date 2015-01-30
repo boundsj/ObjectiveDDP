@@ -145,8 +145,15 @@ double const MeteorClientMaxRetryIncrease = 6;
     //generates random secret (credentialToken)
     NSString *url = [self _buildOAuthRequestStringWithAccessToken:accessToken serviceName: serviceName];
     NSLog(@"%@", url);
+    //callback gives an html page in string. credential token & credential secret are stored in a hidden element
     NSString *callback = [self _makeHTTPRequestAtUrl:url];
-    NSLog(callback.description);
+    
+    NSDictionary *jsonData = [self handleOAuthCallback:callback];
+    
+    NSDictionary* options = @{@"oauth": @{@"credentialToken": [jsonData objectForKey: @"credentialToken"], @"credentialSecret": [jsonData objectForKey:@"credentialSecret"]}};
+
+    [self logonWithUserParameters:options responseCallback:responseCallback];
+    
 }
 
 - (void)logonWithUserParameters:(NSDictionary *)userParameters responseCallback:(MeteorClientMethodCallback)responseCallback {
@@ -464,6 +471,13 @@ double const MeteorClientMaxRetryIncrease = 6;
 - (NSString *)_buildOAuthRequestStringWithAccessToken:(NSString *)accessToken serviceName: (NSString *)serviceName
 {
     NSString* homeUrl = [[[self ddp] urlString] stringByReplacingOccurrencesOfString:@"/websocket" withString:@""];
+    //remove ws/wss and replace with http/https
+    if ([homeUrl hasPrefix:@"ws"]) {
+        homeUrl = [@"http" stringByAppendingString:[homeUrl substringFromIndex:[@"ws" length]]];
+    } else {
+        homeUrl = [@"https" stringByAppendingString:[homeUrl substringFromIndex:[@"wss" length]]];
+    }
+    
     return [NSString stringWithFormat: @"%@/_oauth/%@/?accessToken=%@&state=%@", homeUrl, serviceName, accessToken, [self _generateStateWithToken: [self _randomSecret]]];
 }
 
@@ -518,6 +532,16 @@ double const MeteorClientMaxRetryIncrease = 6;
     }
     
     return [[NSString alloc] initWithData:oResponseData encoding:NSUTF8StringEncoding];
+}
+
+- (NSDictionary*)handleOAuthCallback: (NSString *)callback {
+    NSRegularExpression* regex = [NSRegularExpression regularExpressionWithPattern:@"<div id=\"config\" style=\"display:none;\">(.*?)</div>" options:0 error:nil];
+    callback = [callback substringWithRange:[[regex firstMatchInString:callback options:0 range:NSMakeRange(0, [callback length])] rangeAtIndex: 1]];
+    
+    NSLog(@"callback is: %@", callback);
+    
+    NSDictionary* jsonData = [NSJSONSerialization JSONObjectWithData:[callback dataUsingEncoding:NSUTF8StringEncoding] options:0 error:nil];
+    return jsonData;
 }
 
 @end
