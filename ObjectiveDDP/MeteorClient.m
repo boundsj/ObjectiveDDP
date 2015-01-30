@@ -482,9 +482,10 @@ double const MeteorClientMaxRetryIncrease = 6;
         return @"";
     }
     //set jsonString equal to base64 conversion
-    NSString* jsonString;
-    NSLog(@"%@", jsonString);
-    return jsonString;
+    NSString* base64String = [jsonData base64EncodedStringWithOptions: NSDataBase64EncodingEndLineWithLineFeed];
+    NSLog(@"%@", base64String);
+    return base64String;
+    
 }
 
 //generates random secret for credential token
