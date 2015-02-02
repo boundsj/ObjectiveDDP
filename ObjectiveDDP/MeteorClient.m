@@ -494,7 +494,7 @@ double const MeteorClientMaxRetryIncrease = 6;
     
     NSString* tokenType = @"";
     //facebook sdk can only send access token, others send a one time code
-    if ([serviceName compare: @"facebook"]) {
+    if ([serviceName isEqualToString: @"facebook"]) {
         tokenType = @"accessToken";
     } else {
         tokenType = @"code";
