@@ -11,14 +11,14 @@ import UIKit
 
 class LoginViewController: UIViewController {
     
-
+    
     @IBOutlet weak var email: UITextField!
     @IBOutlet weak var password: UITextField!
     
     @IBOutlet weak var connectionStatusLight: UIImageView!
     @IBOutlet weak var connectionStatusText: UILabel!
     var meteor:MeteorClient!
-   
+    
     override func viewWillAppear(animated: Bool) {
         var observingOption = NSKeyValueObservingOptions.New
         meteor.addObserver(self, forKeyPath:"websocketReady", options: observingOption, context:nil)
@@ -33,7 +33,7 @@ class LoginViewController: UIViewController {
             connectionStatusLight.image = image
         }
     }
-
+    
     
     @IBAction func didTapLoginButton(sender: AnyObject) {
         if (!meteor.websocketReady) {
@@ -64,7 +64,7 @@ class LoginViewController: UIViewController {
     }
     
     @IBAction func didTapSayHiButton(sender: AnyObject) {
-        self.meteor.callMethodName("sayHelloTo", parameters:[self.email.text], responseCallback: {(response, error) -> Void in
+        self.meteor.callMethodName("sayHelloTo", parameters:[self.email.text]) {(response, error) -> Void in
             
             if((error) != nil) {
                 self.handleFailedAuth(error)
@@ -72,7 +72,7 @@ class LoginViewController: UIViewController {
             }
             var message = response["result"] as String
             UIAlertView(title: "Meteor Todos", message: message, delegate: nil, cancelButtonTitle:"Great").show()
-        })
+        }
     }
     
     override func didReceiveMemoryWarning() {

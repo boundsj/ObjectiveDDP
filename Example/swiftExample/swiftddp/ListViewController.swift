@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 
 class ListViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
-
+    
     @IBOutlet weak var tableview: UITableView!
     var meteor:MeteorClient!
     var lists:M13MutableOrderedDictionary!
@@ -23,13 +23,13 @@ class ListViewController: UIViewController, UITableViewDataSource, UITableViewDe
     init(nibName nibNameOrNil: String!, bundle nibBundleOrNil: NSBundle!, meteor: MeteorClient!) {
         
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
-            self.meteor = meteor
-            self.lists = self.meteor.collections["lists"] as M13MutableOrderedDictionary
-
+        self.meteor = meteor
+        self.lists = self.meteor.collections["lists"] as M13MutableOrderedDictionary
+        
     }
-
-
-
+    
+    
+    
     
     override func viewWillAppear(animated: Bool) {
         self.meteor.addObserver(self, forKeyPath: "websocketReady", options: NSKeyValueObservingOptions.New, context: nil)
@@ -42,8 +42,8 @@ class ListViewController: UIViewController, UITableViewDataSource, UITableViewDe
         self.navigationItem.rightBarButtonItem = logoutButton
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "didReceiveUpdate:", name: "lists_added", object: nil)
-           NSNotificationCenter.defaultCenter().addObserver(self, selector: "didReceiveUpdate:", name: "lists_removed", object: nil)
-
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "didReceiveUpdate:", name: "lists_removed", object: nil)
+        
         
     }
     
@@ -63,12 +63,11 @@ class ListViewController: UIViewController, UITableViewDataSource, UITableViewDe
     override func observeValueForKeyPath(keyPath: String, ofObject object: AnyObject!, change: [NSObject : AnyObject]!, context: UnsafeMutablePointer<()>) {
         
         if (keyPath == "websocketReady" && meteor.websocketReady) {
-            println("reseting, but not")
-       
+            
         }
     }
     
-
+    
     
     var selectedList:[String:String]!
     
@@ -133,7 +132,7 @@ class ListViewController: UIViewController, UITableViewDataSource, UITableViewDe
     func didClickShareWithButton(sender: AnyObject!) {
         var id = selectedList["_id"] as String!
         var parameters = [["_id":id], ["set": ["share_with":shareWithTF.text]]] //This has to be an NSArray
-        self.meteor.callMethodName("/lists/update", parameters: parameters, responseCallback: nil)
+        self.meteor.callMethodName("/lists/update", parameters: parameters)
         self.view.subviews.last?.removeFromSuperview()
         self.view.subviews.last?.removeFromSuperview()
         
@@ -146,7 +145,7 @@ class ListViewController: UIViewController, UITableViewDataSource, UITableViewDe
     func tableView(tableView: UITableView!, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath!) {
         var list = self.lists.objectAtIndex(UInt(indexPath.row)) as [String:AnyObject]
         var id = list["_id"] as String
-        self.meteor.callMethodName("/lists/remove", parameters: [["_id":id]], responseCallback: nil)
+        self.meteor.callMethodName("/lists/remove", parameters: [["_id":id]])
     }
     
     func tableView(tableView: UITableView!, didSelectRowAtIndexPath indexPath: NSIndexPath!) {
@@ -159,5 +158,5 @@ class ListViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     
     
-
+    
 }
