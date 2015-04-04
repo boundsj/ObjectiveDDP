@@ -18,16 +18,12 @@ class ViewController: UIViewController,UITableViewDataSource, AddViewControllerD
     
     required init(coder aDecoder: NSCoder) {
         super.init()
-        /* if aDecoder != nil {
         
-        }*/
         
     }
     
     override init(nibName nibNameOrNil: String!, bundle nibBundleOrNil: NSBundle!) {
-        /*if(self != nil) {
         
-        }*/
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
         
     }
@@ -46,8 +42,10 @@ class ViewController: UIViewController,UITableViewDataSource, AddViewControllerD
         var addButton:UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Add, target: self, action: "didTouchAdd:")
         
         self.navigationItem.setRightBarButtonItem(addButton, animated: true)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "didReceiveUpdate:", name: "added", object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "didReceiveUpdate:", name: "removed", object: nil)
+
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "didReceiveUpdate:", name: "things_added", object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "didReceiveUpdate:", name: "things_changed", object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "didReceiveUpdate:", name: "things_removed", object: nil)
     }
     
     override func viewWillDisappear(animated: Bool) {
@@ -94,7 +92,7 @@ class ViewController: UIViewController,UITableViewDataSource, AddViewControllerD
         } else {
             cell = UITableViewCell(style: UITableViewCellStyle.Default, reuseIdentifier: cellIdentifier) as UITableViewCell
         }
-        //If statement prevents crash
+        
         if(self.meteor.collections["things"] != nil){
             var thing:NSDictionary = self.computedList()[indexPath.row] as NSDictionary
             cell.textLabel?.text = thing["msg"] as String
@@ -115,7 +113,7 @@ class ViewController: UIViewController,UITableViewDataSource, AddViewControllerD
             if(self.meteor.collections["things"] != nil){
                 var thing:NSDictionary = self.computedList()[indexPath.row] as NSDictionary
                 let thingy = thing["_id"] as NSString
-                self.meteor.callMethodName("/things/remove", parameters: [["_id":thingy]], responseCallback: nil)
+                self.meteor.callMethodName("/things/remove", parameters: [["_id":thingy]])
             }
         }
     }
@@ -127,7 +125,7 @@ class ViewController: UIViewController,UITableViewDataSource, AddViewControllerD
             "owner":self.userId,
             "listName":self.listName]]
         
-        self.meteor.callMethodName("/things/insert", parameters: parameters, responseCallback: nil)
+        self.meteor.callMethodName("/things/insert", parameters: parameters)
     }
     
     override func viewDidLoad() {

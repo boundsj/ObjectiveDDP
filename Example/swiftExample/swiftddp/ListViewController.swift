@@ -10,11 +10,11 @@ import Foundation
 import UIKit
 
 class ListViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
-
+    
     @IBOutlet weak var tableview: UITableView!
     var meteor:MeteorClient!
     var lists:M13MutableOrderedDictionary!
-    var userId:NSString?
+    var userId:String?
     
     required init(coder aDecoder: NSCoder) {
         fatalError("NSCoding not supported")
@@ -23,14 +23,13 @@ class ListViewController: UIViewController, UITableViewDataSource, UITableViewDe
     init(nibName nibNameOrNil: String!, bundle nibBundleOrNil: NSBundle!, meteor: MeteorClient!) {
         
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
-       // if(self != nil) {
-            self.meteor = meteor
-            self.lists = self.meteor.collections["lists"] as M13MutableOrderedDictionary
-        //}
+        self.meteor = meteor
+        self.lists = self.meteor.collections["lists"] as M13MutableOrderedDictionary
+        
     }
-
-
-
+    
+    
+    
     
     override func viewWillAppear(animated: Bool) {
         self.meteor.addObserver(self, forKeyPath: "websocketReady", options: NSKeyValueObservingOptions.New, context: nil)
@@ -42,8 +41,9 @@ class ListViewController: UIViewController, UITableViewDataSource, UITableViewDe
         
         self.navigationItem.rightBarButtonItem = logoutButton
         
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "didReceiveUpdate:", name: "added", object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "didReceiveUpdate:", name: "removed", object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "didReceiveUpdate:", name: "lists_added", object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "didReceiveUpdate:", name: "lists_removed", object: nil)
+        
         
     }
     
@@ -60,23 +60,22 @@ class ListViewController: UIViewController, UITableViewDataSource, UITableViewDe
         return Int(self.lists.count())
     }
     
-    override func observeValueForKeyPath(keyPath: String!, ofObject object: AnyObject!, change: [NSObject : AnyObject]!, context: UnsafeMutablePointer<()>) {
+    override func observeValueForKeyPath(keyPath: String, ofObject object: AnyObject!, change: [NSObject : AnyObject]!, context: UnsafeMutablePointer<()>) {
         
         if (keyPath == "websocketReady" && meteor.websocketReady) {
-            println("reseting, but not")
-       
+            
         }
     }
     
-
     
-    var selectedList:NSDictionary!
+    
+    var selectedList:[String:String]!
     
     
     
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        var cellIdentifier:NSString = "list"
+        var cellIdentifier = "list"
         var cell:UITableViewCell
         
         if var tmpCell: AnyObject = tableView.dequeueReusableCellWithIdentifier(cellIdentifier) {
@@ -86,10 +85,8 @@ class ListViewController: UIViewController, UITableViewDataSource, UITableViewDe
         }
         
         
-        println(indexPath.row)
-        var list:NSDictionary = self.lists.objectAtIndex(UInt(indexPath.row)) as NSDictionary
-        selectedList = list
-        cell.textLabel?.text = list["name"] as NSString
+        selectedList  = self.lists.objectAtIndex(UInt(indexPath.row)) as? [String:String]
+        cell.textLabel?.text = selectedList["name"]
         
         var shareButton:UIButton = UIButton.buttonWithType(UIButtonType.Custom) as UIButton
         
@@ -133,9 +130,9 @@ class ListViewController: UIViewController, UITableViewDataSource, UITableViewDe
     }
     
     func didClickShareWithButton(sender: AnyObject!) {
-        var id = selectedList["_id"] as NSDictionary
-        var parameters:NSArray = [["_id":id], ["set": ["share_with":shareWithTF.text]]]
-        self.meteor.callMethodName("/lists/update", parameters: parameters, responseCallback: nil)
+        var id = selectedList["_id"] as String!
+        var parameters = [["_id":id], ["set": ["share_with":shareWithTF.text]]] //This has to be an NSArray
+        self.meteor.callMethodName("/lists/update", parameters: parameters)
         self.view.subviews.last?.removeFromSuperview()
         self.view.subviews.last?.removeFromSuperview()
         
@@ -146,32 +143,20 @@ class ListViewController: UIViewController, UITableViewDataSource, UITableViewDe
     }
     
     func tableView(tableView: UITableView!, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath!) {
-        var list:NSDictionary = self.lists.objectAtIndex(UInt(indexPath.row)) as NSDictionary
-        var id = list["_id"] as NSString
-        self.meteor.callMethodName("/lists/remove", parameters: [["_id":id]], responseCallback: nil)
+        var list = self.lists.objectAtIndex(UInt(indexPath.row)) as [String:AnyObject]
+        var id = list["_id"] as String
+        self.meteor.callMethodName("/lists/remove", parameters: [["_id":id]])
     }
     
     func tableView(tableView: UITableView!, didSelectRowAtIndexPath indexPath: NSIndexPath!) {
-        var list:NSDictionary = self.lists.objectAtIndex(UInt(indexPath.row)) as NSDictionary
-        var viewController:ViewController = ViewController(nibNameOrNil: "ViewController", bundle: nil, meteor: self.meteor, listName: list["name"] as NSString)
+        var list = self.lists.objectAtIndex(UInt(indexPath.row)) as [String:AnyObject]
+        var viewController:ViewController = ViewController(nibNameOrNil: "ViewController", bundle: nil, meteor: self.meteor, listName: list["name"] as String)
         
         viewController.userId = self.userId
         self.navigationController?.pushViewController(viewController, animated: true)
     }
     
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
-        
-    }
-    
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
     
     
-    
-
 }

@@ -11,14 +11,14 @@ import UIKit
 
 class LoginViewController: UIViewController {
     
-
+    
     @IBOutlet weak var email: UITextField!
     @IBOutlet weak var password: UITextField!
     
     @IBOutlet weak var connectionStatusLight: UIImageView!
     @IBOutlet weak var connectionStatusText: UILabel!
     var meteor:MeteorClient!
-   
+    
     override func viewWillAppear(animated: Bool) {
         var observingOption = NSKeyValueObservingOptions.New
         meteor.addObserver(self, forKeyPath:"websocketReady", options: observingOption, context:nil)
@@ -34,12 +34,6 @@ class LoginViewController: UIViewController {
         }
     }
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
-        
-        
-    }
     
     @IBAction func didTapLoginButton(sender: AnyObject) {
         if (!meteor.websocketReady) {
@@ -48,14 +42,14 @@ class LoginViewController: UIViewController {
             return
         }
         
-        meteor.logonWithEmail(self.email.text, password: self.password.text, responseCallback: {(response, error) -> Void in
+        meteor.logonWithEmail(self.email.text, password: self.password.text) {(response, error) -> Void in
             
             if((error) != nil) {
                 self.handleFailedAuth(error)
                 return
             }
             self.handleSuccessfulAuth()
-        })
+        }
     }
     
     func handleSuccessfulAuth() {
@@ -70,10 +64,15 @@ class LoginViewController: UIViewController {
     }
     
     @IBAction func didTapSayHiButton(sender: AnyObject) {
-        self.meteor.callMethodName("sayHelloTo", parameters:[self.email.text], responseCallback: {(response, error) -> Void in
-            var message:NSString! = response["result"] as NSString
+        self.meteor.callMethodName("sayHelloTo", parameters:[self.email.text]) {(response, error) -> Void in
+            
+            if((error) != nil) {
+                self.handleFailedAuth(error)
+                return
+            }
+            var message = response["result"] as String
             UIAlertView(title: "Meteor Todos", message: message, delegate: nil, cancelButtonTitle:"Great").show()
-        })
+        }
     }
     
     override func didReceiveMemoryWarning() {
