@@ -7,12 +7,25 @@ ObjectiveDDP
 
 ```
 Note:
-Recent changes to meteor (https://github.com/meteor/meteor/blob/release/0.8.2/History.md) 
-have fundamentally changed the way authorization works. Because of this, the current 
-version of the master branch of this project (and all future releases) will only be 
-compatible with meteor 0.8.2 and above. Please update your meteor server 
-as soon as possible.
+supports meteor 0.8.2 and above.
+If you need to migrate please see the srp-upgrade-support branch
 ```
+
+###### Now with support for OAuth with Facebook and other services [experiemental]
+
+This is unsupported so don't come crying if it eats your cat! or destroys any data.
+
+```
+(void)logonWithOAuthAccessToken: (NSString *)accessToken serviceName: (NSString *) serviceName responseCallback: (MeteorClientMethodCallback)responseCallback;
+```
+
+Please require the following project to your meteor server for this to work.
+```
+https://github.com/jasper-lu/facebook-ddp
+```
+
+Hopefully meteor will support this natively in the future https://github.com/meteor/meteor/pull/3515
+
 
 Connect your iOS applications written in Objective-C to server applications that communicate with the [DDP protocol created by Meteor](https://github.com/meteor/meteor/blob/devel/packages/ddp/DDP.md) and, if required by your server, authenticate with it.
 
