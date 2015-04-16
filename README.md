@@ -5,6 +5,8 @@ ObjectiveDDP
 
 [![Build Status](https://travis-ci.org/boundsj/ObjectiveDDP.png)](https://travis-ci.org/boundsj/ObjectiveDDP)
 
+Connect your iOS/OSX applications written in Objective-C or Swift to server applications that communicate with the [DDP protocol created by Meteor](https://github.com/meteor/meteor/blob/devel/packages/ddp/DDP.md) and, if required by your server, authenticate with it.
+
 ```
 Note:
 supports meteor 0.8.2 and above.
@@ -27,7 +29,6 @@ https://github.com/jasper-lu/facebook-ddp
 Hopefully meteor will support this natively in the future https://github.com/meteor/meteor/pull/3515
 
 
-Connect your iOS applications written in Objective-C to server applications that communicate with the [DDP protocol created by Meteor](https://github.com/meteor/meteor/blob/devel/packages/ddp/DDP.md) and, if required by your server, authenticate with it.
 
 What's Inside
 -------------
