@@ -11,7 +11,7 @@ extern NSString * const MeteorClientDidDisconnectNotification;
 extern NSString * const MeteorClientTransportErrorDomain;
 
 // xxx:
-NS_ENUM(NSUInteger, MeteorClientError) {
+typedef NS_ENUM(NSUInteger, MeteorClientError) {
     MeteorClientErrorNotConnected,
     MeteorClientErrorDisconnectedBeforeCallbackComplete,
     MeteorClientErrorLogonRejected
