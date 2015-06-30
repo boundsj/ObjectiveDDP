@@ -179,7 +179,7 @@ NSArray *parameters = @[@{@"_id": anId,
 
 ##### Listen for notifications:
 
-MeteorClientConnectionReadyNotification - When the server responds as accepting the DDP protocal version to communicate on, you won't be able to call any methods to meteor until this happens
+MeteorClientConnectionReadyNotification - When the server responds as accepting the DDP protocol version to communicate on, you won't be able to call any methods to meteor until this happens
 
 ```objective-c
 
