@@ -154,8 +154,12 @@ double const MeteorClientMaxRetryIncrease = 6;
  * If an sdk only allows login returns long-lived token, modify your accounts-x package,
  * and add your package to the if(serviceName.compare("facebook")) in _buildOAuthRequestStringWithAccessToken
  */
-
 - (void)logonWithOAuthAccessToken:(NSString *)accessToken serviceName:(NSString *)serviceName responseCallback:(MeteorClientMethodCallback)responseCallback {
+    [self logonWithOAuthAccessToken:accessToken serviceName:serviceName optionsKey:@"oauth" responseCallback:responseCallback];
+}
+
+// some meteor servers provide a custom login handler with a custom options key. Allow client to configure the key instead of always using "oauth"
+- (void)logonWithOAuthAccessToken:(NSString *)accessToken serviceName:(NSString *)serviceName optionsKey:(NSString *)key responseCallback:(MeteorClientMethodCallback)responseCallback {
     //generates random secret (credentialToken)
     NSString *url = [self _buildOAuthRequestStringWithAccessToken:accessToken serviceName: serviceName];
     NSLog(@"%@", url);
@@ -164,10 +168,9 @@ double const MeteorClientMaxRetryIncrease = 6;
     
     NSDictionary *jsonData = [self handleOAuthCallback:callback];
     
-    NSDictionary* options = @{@"oauth": @{@"credentialToken": [jsonData objectForKey: @"credentialToken"], @"credentialSecret": [jsonData objectForKey:@"credentialSecret"]}};
-
-    [self logonWithUserParameters:options responseCallback:responseCallback];
+    NSDictionary* options = @{key: @{@"credentialToken": [jsonData objectForKey: @"credentialToken"], @"credentialSecret": [jsonData objectForKey:@"credentialSecret"]}};
     
+    [self logonWithUserParameters:options responseCallback:responseCallback];
 }
 
 - (void)logonWithUserParameters:(NSDictionary *)userParameters responseCallback:(MeteorClientMethodCallback)responseCallback {
