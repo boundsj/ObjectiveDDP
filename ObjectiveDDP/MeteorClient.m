@@ -166,6 +166,14 @@ double const MeteorClientMaxRetryIncrease = 6;
     //callback gives an html page in string. credential token & credential secret are stored in a hidden element
     NSString *callback = [self _makeHTTPRequestAtUrl:url];
     
+    if (!callback) {
+        NSError *logonError = [NSError errorWithDomain:MeteorClientTransportErrorDomain code:MeteorClientErrorLogonRejected userInfo:@{NSLocalizedDescriptionKey: @"Unable to authenticate"}];
+        if (responseCallback) {
+            responseCallback(nil, logonError);
+        }
+        return;
+    }
+    
     NSDictionary *jsonData = [self handleOAuthCallback:callback];
     
     NSDictionary* options = @{key: @{@"credentialToken": [jsonData objectForKey: @"credentialToken"], @"credentialSecret": [jsonData objectForKey:@"credentialSecret"]}};
