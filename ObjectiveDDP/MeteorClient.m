@@ -166,15 +166,16 @@ double const MeteorClientMaxRetryIncrease = 6;
     //callback gives an html page in string. credential token & credential secret are stored in a hidden element
     NSString *callback = [self _makeHTTPRequestAtUrl:url];
     
-    if (!callback) {
+    NSDictionary *jsonData = [self handleOAuthCallback:callback];
+
+    // setCredentialToken gets set to false if the call fails
+    if (jsonData == nil || ![jsonData[@"setCredentialToken"] boolValue]) {
         NSError *logonError = [NSError errorWithDomain:MeteorClientTransportErrorDomain code:MeteorClientErrorLogonRejected userInfo:@{NSLocalizedDescriptionKey: @"Unable to authenticate"}];
         if (responseCallback) {
             responseCallback(nil, logonError);
         }
         return;
     }
-    
-    NSDictionary *jsonData = [self handleOAuthCallback:callback];
     
     NSDictionary* options = @{key: @{@"credentialToken": [jsonData objectForKey: @"credentialToken"], @"credentialSecret": [jsonData objectForKey:@"credentialSecret"]}};
     
@@ -198,7 +199,9 @@ double const MeteorClientMaxRetryIncrease = 6;
     [self _setAuthStateToLoggingIn];
     NSMutableDictionary *mutableUserParameters = [userParameters mutableCopy];
     
+    
     [self callMethodName:@"login" parameters:@[mutableUserParameters] responseCallback:^(NSDictionary *response, NSError *error) {
+
         if (error) {
             [self _setAuthStatetoLoggedOut];
             [self.authDelegate authenticationFailedWithError:error];
@@ -582,6 +585,11 @@ double const MeteorClientMaxRetryIncrease = 6;
 }
 
 - (NSDictionary*)handleOAuthCallback: (NSString *)callback {
+    // it's possible callback is nil
+    if (callback == nil) {
+        NSLog(@"Callback is nil");
+        return nil;
+    }
     NSRegularExpression* regex = [NSRegularExpression regularExpressionWithPattern:@"<div id=\"config\" style=\"display:none;\">(.*?)</div>" options:0 error:nil];
     callback = [callback substringWithRange:[[regex firstMatchInString:callback options:0 range:NSMakeRange(0, [callback length])] rangeAtIndex: 1]];
     
