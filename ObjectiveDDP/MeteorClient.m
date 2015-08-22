@@ -420,7 +420,7 @@ double const MeteorClientMaxRetryIncrease = 6;
     for (NSString *methodId in _methodIds) {
         MeteorClientMethodCallback callback = _responseCallbacks[methodId];
         if (callback) {
-            [callback(nil, [NSError errorWithDomain:MeteorClientTransportErrorDomain code:MeteorClientErrorDisconnectedBeforeCallbackComplete userInfo:@{NSLocalizedDescriptionKey: @"You were disconnected"}])];
+            callback(nil, [NSError errorWithDomain:MeteorClientTransportErrorDomain code:MeteorClientErrorDisconnectedBeforeCallbackComplete userInfo:@{NSLocalizedDescriptionKey: @"You were disconnected"}]);
          }
     }
     [_methodIds removeAllObjects];
