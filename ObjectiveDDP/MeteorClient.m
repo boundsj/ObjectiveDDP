@@ -587,7 +587,6 @@ double const MeteorClientMaxRetryIncrease = 6;
 - (NSDictionary*)handleOAuthCallback: (NSString *)callback {
     // it's possible callback is nil
     if (callback == nil) {
-        NSLog(@"Callback is nil");
         return nil;
     }
     NSRegularExpression* regex = [NSRegularExpression regularExpressionWithPattern:@"<div id=\"config\" style=\"display:none;\">(.*?)</div>" options:0 error:nil];
