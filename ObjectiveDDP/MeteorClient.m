@@ -20,11 +20,6 @@ double const MeteorClientMaxRetryIncrease = 6;
 
 @implementation MeteorClient
 
-- (id)init {
-    [self doesNotRecognizeSelector:_cmd];
-    return nil;
-}
-
 - (id)initWithDDPVersion:(NSString *)ddpVersion {
     self = [super init];
     if (self) {
