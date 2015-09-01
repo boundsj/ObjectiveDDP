@@ -45,6 +45,10 @@ typedef void(^MeteorClientMethodCallback)(NSDictionary *response, NSError *error
 //          use "1" for meteor versions v0.8.9 and above
 - (id)initWithDDPVersion:(NSString *)ddpVersion;
 
+// Prevent user from start with this methods
+- (id)init __attribute__((unavailable("Must use initWithDDPVersion: instead.")));
++ (instancetype)new __attribute__((unavailable("Must use initWithDDPVersion: instead.")));
+
 #pragma mark - Methods
 
 - (void) logonWithSessionToken:(NSString *) sessionToken responseCallback:(MeteorClientMethodCallback)responseCallback;
