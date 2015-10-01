@@ -24,7 +24,7 @@ class ListViewController: UIViewController, UITableViewDataSource, UITableViewDe
         
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
         self.meteor = meteor
-        self.lists = self.meteor.collections["lists"] as M13MutableOrderedDictionary
+        self.lists = self.meteor.collections["lists"] as! M13MutableOrderedDictionary
         
     }
     
@@ -37,7 +37,7 @@ class ListViewController: UIViewController, UITableViewDataSource, UITableViewDe
         self.navigationController?.navigationBarHidden = false
         self.navigationItem.hidesBackButton = true
         
-        var logoutButton:UIBarButtonItem = UIBarButtonItem(title: "Logout", style: UIBarButtonItemStyle.Plain, target: self, action: "logout")
+        let logoutButton:UIBarButtonItem = UIBarButtonItem(title: "Logout", style: UIBarButtonItemStyle.Plain, target: self, action: "logout")
         
         self.navigationItem.rightBarButtonItem = logoutButton
         
@@ -59,13 +59,13 @@ class ListViewController: UIViewController, UITableViewDataSource, UITableViewDe
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return Int(self.lists.count())
     }
-    
-    override func observeValueForKeyPath(keyPath: String, ofObject object: AnyObject!, change: [NSObject : AnyObject]!, context: UnsafeMutablePointer<()>) {
-        
-        if (keyPath == "websocketReady" && meteor.websocketReady) {
-            
-        }
-    }
+//
+//    override func observeValueForKeyPath(keyPath: String, ofObject object: AnyObject!, change: [NSObject : AnyObject]!, context: UnsafeMutablePointer<()>) {
+//        
+//        if (keyPath == "websocketReady" && meteor.websocketReady) {
+//            
+//        }
+//    }
     
     
     
@@ -75,11 +75,11 @@ class ListViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        var cellIdentifier = "list"
+        let cellIdentifier = "list"
         var cell:UITableViewCell
         
-        if var tmpCell: AnyObject = tableView.dequeueReusableCellWithIdentifier(cellIdentifier) {
-            cell = tmpCell as UITableViewCell
+        if let tmpCell: AnyObject = tableView.dequeueReusableCellWithIdentifier(cellIdentifier) {
+            cell = tmpCell as! UITableViewCell
         } else {
             cell = UITableViewCell(style: UITableViewCellStyle.Default, reuseIdentifier: cellIdentifier) as UITableViewCell
         }
@@ -88,7 +88,7 @@ class ListViewController: UIViewController, UITableViewDataSource, UITableViewDe
         selectedList  = self.lists.objectAtIndex(UInt(indexPath.row)) as? [String:String]
         cell.textLabel?.text = selectedList["name"]
         
-        var shareButton:UIButton = UIButton.buttonWithType(UIButtonType.Custom) as UIButton
+        let shareButton:UIButton = UIButton(type: UIButtonType.Custom) as UIButton
         
         shareButton.frame = CGRectMake(255.0, 5.0, 55.0, 34.0)
         shareButton.backgroundColor = UIColor.greenColor()
@@ -104,23 +104,23 @@ class ListViewController: UIViewController, UITableViewDataSource, UITableViewDe
     var shareWithTF:UITextField!
     
     func didClickShareButton(sender:AnyObject!,forEvent event:UIEvent!) {
-        var touch:UITouch = event.allTouches()!.anyObject() as UITouch
-        var location:CGPoint = touch.locationInView(self.view)
+        let touch = event.allTouches()! as Set<UITouch>
+        let location:CGPoint = touch.first!.locationInView(self.view)
         
-        var view:UIView = UIView(frame: CGRectMake(0.0, location.y, 320.0, 100.0))
+        let view:UIView = UIView(frame: CGRectMake(0.0, location.y, 320.0, 100.0))
         view.backgroundColor = UIColor.whiteColor()
-        var shareWithTextField:UITextField = UITextField(frame: CGRectMake(10.0, 50.0, 240.0, 44.0))
+        let shareWithTextField:UITextField = UITextField(frame: CGRectMake(10.0, 50.0, 240.0, 44.0))
         shareWithTF = shareWithTextField
         shareWithTextField.borderStyle = UITextBorderStyle.Line
-        var button:UIButton = UIButton.buttonWithType(UIButtonType.Custom) as UIButton
+        let button:UIButton = UIButton(type: UIButtonType.Custom) as UIButton
         button.frame = CGRectMake(255.0, 50.0, 60.0, 44.0)
         button.backgroundColor = UIColor.greenColor()
         button.setTitle("Send", forState: UIControlState.Normal)
-        button.addTarget(self, action: "didClickShareWithButton", forControlEvents: .TouchUpInside)
+        button.addTarget(self, action: "didClickShareWithButton:forEvent:", forControlEvents: .TouchUpInside)
         view .addSubview(shareWithTextField)
         view .addSubview(button)
         
-        var modalBackground:UIView = UIView(frame: self.view.frame)
+        let modalBackground:UIView = UIView(frame: self.view.frame)
         modalBackground.backgroundColor = UIColor.blackColor()
         modalBackground.alpha = 0.7
         
@@ -129,33 +129,48 @@ class ListViewController: UIViewController, UITableViewDataSource, UITableViewDe
         
     }
     
-    func didClickShareWithButton(sender: AnyObject!) {
-        var id = selectedList["_id"] as String!
-        var parameters = [["_id":id], ["set": ["share_with":shareWithTF.text]]] //This has to be an NSArray
-        self.meteor.callMethodName("/lists/update", parameters: parameters)
+    func didClickShareWithButton(sender: AnyObject!, forEvent event:UIEvent!) {
+        let id = selectedList["_id"] as String!
+        let parameters = [["_id":id!], ["set": ["share_with":shareWithTF.text!]]] //This has to be an NSArray
+        self.meteor.callMethodName("/lists/update", parameters: parameters, responseCallback: {(response, error) -> Void in
+            
+            if((error) != nil) {
+                self.handleFailedShare(error)
+                return
+            }
+            self.handleSuccessfulShare()
+            }
+        )
         self.view.subviews.last?.removeFromSuperview()
         self.view.subviews.last?.removeFromSuperview()
         
     }
     
-    func tableView(tableView: UITableView!, canEditRowAtIndexPath indexPath: NSIndexPath!) -> Bool {
+    func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
         return true
     }
     
-    func tableView(tableView: UITableView!, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath!) {
-        var list = self.lists.objectAtIndex(UInt(indexPath.row)) as [String:AnyObject]
-        var id = list["_id"] as String
-        self.meteor.callMethodName("/lists/remove", parameters: [["_id":id]])
+    func tableView(tableView: UITableView,commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath){
+        var list = self.lists.objectAtIndex(UInt(indexPath.row)) as! [String:AnyObject]
+        let id = list["_id"] as! String
+        self.meteor.callMethodName("/lists/remove", parameters: [["_id":id]], responseCallback: nil)
     }
     
-    func tableView(tableView: UITableView!, didSelectRowAtIndexPath indexPath: NSIndexPath!) {
-        var list = self.lists.objectAtIndex(UInt(indexPath.row)) as [String:AnyObject]
-        var viewController:ViewController = ViewController(nibNameOrNil: "ViewController", bundle: nil, meteor: self.meteor, listName: list["name"] as String)
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        var list = self.lists.objectAtIndex(UInt(indexPath.row)) as! [String:AnyObject]
+        let viewController:ViewController = ViewController(nibNameOrNil: "ViewController", bundle: nil, meteor: self.meteor, listName: list["name"] as! String)
         
         viewController.userId = self.userId
         self.navigationController?.pushViewController(viewController, animated: true)
     }
     
+    func handleSuccessfulShare() {
+        UIAlertView(title: "Shared", message:"Success", delegate: nil, cancelButtonTitle: "Dismiss").show()
+    }
+    
+    func handleFailedShare(error: NSError) {
+        UIAlertView(title: "Meteor Todos", message:error.localizedDescription, delegate: nil, cancelButtonTitle: "Try Again").show()
+    }
     
     
     

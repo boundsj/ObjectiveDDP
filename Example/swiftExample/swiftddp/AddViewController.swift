@@ -25,10 +25,9 @@ class AddViewController : UIViewController {
         
     }
     
-    
-    override func touchesBegan(touches: NSSet!, withEvent event: UIEvent) {
+    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
         self.view.endEditing(true)
-    }
+    }    
     
     @IBAction func didTouchAddButton(sender: AnyObject!) {
         self.delegate.didAddThing(self.messageTextView.text)

@@ -20,19 +20,20 @@ class LoginViewController: UIViewController {
     var meteor:MeteorClient!
     
     override func viewWillAppear(animated: Bool) {
-        var observingOption = NSKeyValueObservingOptions.New
+        let observingOption = NSKeyValueObservingOptions.New
         meteor.addObserver(self, forKeyPath:"websocketReady", options: observingOption, context:nil)
     }
     
-    
-    override func observeValueForKeyPath(keyPath: String, ofObject object: AnyObject, change: [NSObject : AnyObject], context: UnsafeMutablePointer<()>) {
+    override func observeValueForKeyPath(keyPath: String?, ofObject object: AnyObject?, change: [String : AnyObject]?, context: UnsafeMutablePointer<Void>) {
         
         if (keyPath == "websocketReady" && meteor.websocketReady) {
             connectionStatusText.text = "Connected to Todo Server"
-            var image:UIImage = UIImage(named: "green_light.png")!
+            let image:UIImage = UIImage(named: "green_light.png")!
             connectionStatusLight.image = image
         }
+        
     }
+
     
     
     @IBAction func didTapLoginButton(sender: AnyObject) {
@@ -53,7 +54,7 @@ class LoginViewController: UIViewController {
     }
     
     func handleSuccessfulAuth() {
-        var listViewController = ListViewController(nibName: "ListViewController", bundle: nil, meteor: self.meteor)
+        let listViewController = ListViewController(nibName: "ListViewController", bundle: nil, meteor: self.meteor)
         
         listViewController.userId = self.meteor.userId
         self.navigationController?.pushViewController(listViewController, animated: true)
@@ -64,13 +65,13 @@ class LoginViewController: UIViewController {
     }
     
     @IBAction func didTapSayHiButton(sender: AnyObject) {
-        self.meteor.callMethodName("sayHelloTo", parameters:[self.email.text]) {(response, error) -> Void in
+        self.meteor.callMethodName("sayHelloTo", parameters:[self.email.text!]) {(response, error) -> Void in
             
             if((error) != nil) {
                 self.handleFailedAuth(error)
                 return
             }
-            var message = response["result"] as String
+            let message = response["result"] as! String
             UIAlertView(title: "Meteor Todos", message: message, delegate: nil, cancelButtonTitle:"Great").show()
         }
     }
@@ -80,7 +81,9 @@ class LoginViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    
+    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
+        self.view.endEditing(true)
+    }
     
     
 }
