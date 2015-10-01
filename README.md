@@ -38,7 +38,7 @@ ObjectiveDDP should run well with iOS projects using ARC and iOS 7.1 or above. _
 ##### Integrate it with your project using CocoaPods:
 
 ```
-pod 'ObjectiveDDP', '~> 0.1.8'
+pod 'ObjectiveDDP', '~> 0.2.0'
 ```
 For more information about this, check out [Linking and Building](https://github.com/boundsj/ObjectiveDDP/wiki/Linking-and-using-ObjectiveDDP) in the wiki.
 
