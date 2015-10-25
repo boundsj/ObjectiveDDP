@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6205" systemVersion="13E28" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="8191" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6198"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8154"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="LoginViewController">
@@ -56,7 +57,7 @@
                         <action selector="didTapLoginButton:" destination="-1" eventType="touchUpInside" id="SjW-vH-7nE"/>
                     </connections>
                 </button>
-                <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="abm-Si-OaD">
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="abm-Si-OaD">
                     <rect key="frame" x="20" y="315" width="280" height="44"/>
                     <color key="backgroundColor" red="0.90196079019999997" green="0.90196079019999997" blue="0.90196079019999997" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
@@ -119,18 +120,13 @@
                 <constraint firstItem="111" firstAttribute="top" secondItem="95" secondAttribute="top" id="139"/>
                 <constraint firstItem="111" firstAttribute="leading" secondItem="1" secondAttribute="leading" constant="20" symbolic="YES" id="142"/>
                 <constraint firstAttribute="bottom" secondItem="95" secondAttribute="bottom" constant="20" symbolic="YES" id="143"/>
+                <constraint firstItem="abm-Si-OaD" firstAttribute="trailing" secondItem="33" secondAttribute="trailing" id="E8o-Dq-uWz"/>
+                <constraint firstItem="abm-Si-OaD" firstAttribute="top" secondItem="33" secondAttribute="bottom" constant="8" symbolic="YES" id="IcR-I3-Rv4"/>
+                <constraint firstItem="abm-Si-OaD" firstAttribute="leading" secondItem="33" secondAttribute="leading" id="r71-nk-QOW"/>
             </constraints>
         </view>
     </objects>
     <resources>
         <image name="red_light.png" width="50" height="50"/>
     </resources>
-    <simulatedMetricsContainer key="defaultSimulatedMetrics">
-        <simulatedStatusBarMetrics key="statusBar"/>
-        <simulatedOrientationMetrics key="orientation"/>
-        <simulatedScreenMetrics key="destination" type="retina4">
-            <size key="portraitSize" width="320" height="568"/>
-            <size key="landscapeSize" width="568" height="320"/>
-        </simulatedScreenMetrics>
-    </simulatedMetricsContainer>
 </document>

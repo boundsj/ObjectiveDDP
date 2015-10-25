@@ -11,13 +11,13 @@ import UIKit
 class ViewController: UIViewController,UITableViewDataSource, AddViewControllerDelegate {
     
     var meteor:MeteorClient!
-    var listName:NSString!
-    var userId:NSString!
+    var listName:String!
+    var userId:String!
     
     @IBOutlet weak var tableview: UITableView!
     
     required init(coder aDecoder: NSCoder) {
-        super.init()
+        super.init(coder: aDecoder)!
         
         
     }
@@ -28,7 +28,7 @@ class ViewController: UIViewController,UITableViewDataSource, AddViewControllerD
         
     }
     
-    init(nibNameOrNil: String!, bundle nibBundleOrNil: NSBundle!, meteor: MeteorClient!, listName:NSString!) {
+    init(nibNameOrNil: String!, bundle nibBundleOrNil: NSBundle!, meteor: MeteorClient!, listName:String!) {
         
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
         // if(self != nil) {
@@ -39,7 +39,7 @@ class ViewController: UIViewController,UITableViewDataSource, AddViewControllerD
     
     override func viewWillAppear(animated: Bool) {
         self.navigationItem.title = self.listName
-        var addButton:UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Add, target: self, action: "didTouchAdd:")
+        let addButton:UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Add, target: self, action: "didTouchAdd:")
         
         self.navigationItem.setRightBarButtonItem(addButton, animated: true)
 
@@ -60,8 +60,8 @@ class ViewController: UIViewController,UITableViewDataSource, AddViewControllerD
     func computedList() -> NSArray {
         
         
-        var pred:NSPredicate = NSPredicate(format: "(listName like %@)", self.listName)!
-        let temp = self.meteor.collections["things"] as M13MutableOrderedDictionary
+        let pred:NSPredicate = NSPredicate(format: "(listName like %@)", self.listName)
+        let temp = self.meteor.collections["things"] as! M13MutableOrderedDictionary
         let temp2 = temp.allObjects() as NSArray
         return temp2.filteredArrayUsingPredicate(pred)
         
@@ -69,7 +69,7 @@ class ViewController: UIViewController,UITableViewDataSource, AddViewControllerD
     }
     
     @IBAction func didTouchAdd(sender: AnyObject) {
-        var addController = AddViewController(nibName: "AddViewController", bundle: nil)
+        let addController = AddViewController(nibName: "AddViewController", bundle: nil)
         
         addController.delegate = self
         self.presentViewController(addController, animated: true, completion: nil)
@@ -84,18 +84,18 @@ class ViewController: UIViewController,UITableViewDataSource, AddViewControllerD
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cellIdentifier:NSString! = "thing"
+        let cellIdentifier:String! = "thing"
         var cell:UITableViewCell
         
-        if var tmpCell: AnyObject = tableView.dequeueReusableCellWithIdentifier(cellIdentifier) {
-            cell = tmpCell as UITableViewCell
+        if let tmpCell: AnyObject = tableView.dequeueReusableCellWithIdentifier(cellIdentifier) {
+            cell = tmpCell as! UITableViewCell
         } else {
             cell = UITableViewCell(style: UITableViewCellStyle.Default, reuseIdentifier: cellIdentifier) as UITableViewCell
         }
         
         if(self.meteor.collections["things"] != nil){
-            var thing:NSDictionary = self.computedList()[indexPath.row] as NSDictionary
-            cell.textLabel?.text = thing["msg"] as String
+            let thing:NSDictionary = self.computedList()[indexPath.row] as! NSDictionary
+            cell.textLabel?.text = thing["msg"] as? String
             return cell
         }
         cell.textLabel?.text = "dummy"
@@ -111,21 +111,21 @@ class ViewController: UIViewController,UITableViewDataSource, AddViewControllerD
         if(editingStyle == UITableViewCellEditingStyle.Delete) {
             //If statement prevents crash
             if(self.meteor.collections["things"] != nil){
-                var thing:NSDictionary = self.computedList()[indexPath.row] as NSDictionary
-                let thingy = thing["_id"] as NSString
-                self.meteor.callMethodName("/things/remove", parameters: [["_id":thingy]])
+                let thing:NSDictionary = self.computedList()[indexPath.row] as! NSDictionary
+                let thingy = thing["_id"] as! String
+                self.meteor.callMethodName("/things/remove", parameters: [["_id":thingy]], responseCallback: nil)
             }
         }
     }
     
     func didAddThing(message: NSString!) {
         self.dismissViewControllerAnimated(true, completion: nil)
-        var parameters:NSArray = [["_id": NSUUID().UUIDString,
+        let parameters:NSArray = [["_id": NSUUID().UUIDString,
             "msg":message,
             "owner":self.userId,
             "listName":self.listName]]
         
-        self.meteor.callMethodName("/things/insert", parameters: parameters)
+        self.meteor.callMethodName("/things/insert", parameters: parameters as [AnyObject], responseCallback: nil)
     }
     
     override func viewDidLoad() {

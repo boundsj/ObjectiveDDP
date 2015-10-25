@@ -18,14 +18,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var meteorClient = initialiseMeteor("pre2", "wss://ddptester.meteor.com/websocket");
     
     
-    func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: NSDictionary?) -> Bool {
+    func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         
         
         
         meteorClient.addSubscription("things")
         meteorClient.addSubscription("lists")
         
-        var loginController:LoginViewController = LoginViewController(nibName: "LoginViewController", bundle: nil)
+        let loginController:LoginViewController = LoginViewController(nibName: "LoginViewController", bundle: nil)
         loginController.meteor = self.meteorClient
         
         self.navController = UINavigationController(rootViewController:loginController)
@@ -35,7 +35,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         self.window = UIWindow(frame: UIScreen.mainScreen().bounds)
         self.window!.rootViewController = self.navController
         self.window!.makeKeyAndVisible()
-        println(self.window?.frame)
+        print(self.window?.frame)
         
         
         
@@ -46,11 +46,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func reportConnection() {
-        println("================> connected to server!")
+        print("================> connected to server!")
     }
     
     func reportDisconnection() {
-        println("================> disconnected from server!")
+        print("================> disconnected from server!")
     }
     
     func applicationWillResignActive(application: UIApplication) {
