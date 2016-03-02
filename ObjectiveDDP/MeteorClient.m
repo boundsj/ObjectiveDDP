@@ -102,22 +102,12 @@ double const MeteorClientMaxRetryIncrease = 6;
     return YES;
 }
 
+- (void)logonWithSessionToken:(NSString *)sessionToken {
+    [self logonWithSessionToken:sessionToken responseCallback:nil];
+}
 // tokenExpires.$date : expiry date
-- (void) logonWithSessionToken:(NSString *) sessionToken responseCallback:(MeteorClientMethodCallback)responseCallback {
-    self.sessionToken = sessionToken;
-    [self _setAuthStateToLoggingIn];
-    [self callMethodName:@"login" parameters:@[@{@"resume": self.sessionToken}] responseCallback:^(NSDictionary *response, NSError *error) {
-        if (error) {
-            [self _setAuthStatetoLoggedOut];
-            [self.authDelegate authenticationFailedWithError:error];
-        } else {
-            [self _setAuthStateToLoggedIn:response[@"result"][@"id"] withToken:response[@"result"][@"token"]];
-            [self.authDelegate authenticationWasSuccessful];
-        }
-        if (responseCallback) {
-            responseCallback(response, error);
-        }
-    }];
+- (void)logonWithSessionToken:(NSString *) sessionToken responseCallback:(MeteorClientMethodCallback)responseCallback {
+    [self logonWithUserParameters:@{@"resume": sessionToken} responseCallback:responseCallback];
 }
 
 - (void)logonWithUsername:(NSString *)username password:(NSString *)password {
