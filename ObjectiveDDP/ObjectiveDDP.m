@@ -1,5 +1,7 @@
 #import "ObjectiveDDP.h"
 #import "DependencyProvider.h"
+#import <SocketRocket/SRWebSocket.h>
+#import <M13OrderedDictionary/M13OrderedDictionary.h>
 
 @implementation ObjectiveDDP
 

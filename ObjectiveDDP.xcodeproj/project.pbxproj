@@ -43,8 +43,8 @@
 		888B6DFC173B6508001EED80 /* MeteorClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 888B6DFB173B6508001EED80 /* MeteorClient.m */; };
 		888B6DFF173B66EA001EED80 /* BSONIdGenerator.m in Sources */ = {isa = PBXBuildFile; fileRef = 888B6DFE173B66EA001EED80 /* BSONIdGenerator.m */; };
 		9D3C062D54114FB1AC5700F0 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 22BE0B3F1B814D98AAAE26CF /* libPods.a */; };
-		BB640DE0F8BA274F03ADDF84 /* libPods-ObjectiveDDP.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B7C2BCE4B341D5B1B389A0E7 /* libPods-ObjectiveDDP.a */; };
-		ED43BD310BEA4CD183E8105E /* libPods-Specs.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 328562DF57374E8FB55B78B0 /* libPods-Specs.a */; };
+		BC2C3115142F54C55A92F9FD /* libPods-ObjectiveDDP.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 39ACA448F5A7B3CDD0FC5858 /* libPods-ObjectiveDDP.a */; };
+		FD7BC8FE2078D7295BEFE6FA /* libPods-Specs.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 320AA851EDF28E77008B96B8 /* libPods-Specs.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -66,7 +66,8 @@
 		194F89D9560FD1856AE79721 /* Pods-ObjectiveDDP.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ObjectiveDDP.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ObjectiveDDP/Pods-ObjectiveDDP.debug.xcconfig"; sourceTree = "<group>"; };
 		22BE0B3F1B814D98AAAE26CF /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		2C1F0C9084EA4B2DBD349673 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		328562DF57374E8FB55B78B0 /* libPods-Specs.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Specs.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		320AA851EDF28E77008B96B8 /* libPods-Specs.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Specs.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		39ACA448F5A7B3CDD0FC5858 /* libPods-ObjectiveDDP.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-ObjectiveDDP.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4000D636170E880400296229 /* libObjectiveDDP.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libObjectiveDDP.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		4000D639170E880400296229 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		4000D63D170E880400296229 /* ObjectiveDDP-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ObjectiveDDP-Prefix.pch"; sourceTree = "<group>"; };
@@ -104,7 +105,6 @@
 		888B6DFB173B6508001EED80 /* MeteorClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MeteorClient.m; sourceTree = "<group>"; };
 		888B6DFD173B66EA001EED80 /* BSONIdGenerator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BSONIdGenerator.h; sourceTree = "<group>"; };
 		888B6DFE173B66EA001EED80 /* BSONIdGenerator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BSONIdGenerator.m; sourceTree = "<group>"; };
-		B7C2BCE4B341D5B1B389A0E7 /* libPods-ObjectiveDDP.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-ObjectiveDDP.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D05E1D000A1228EEFAD5C7A9 /* Pods-ObjectiveDDP.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ObjectiveDDP.release.xcconfig"; path = "Pods/Target Support Files/Pods-ObjectiveDDP/Pods-ObjectiveDDP.release.xcconfig"; sourceTree = "<group>"; };
 		F50CB09B9E9DA61FFDCC00AF /* Pods-Specs.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Specs.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Specs/Pods-Specs.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -120,7 +120,7 @@
 				4000D63A170E880400296229 /* Foundation.framework in Frameworks */,
 				401AEB7E170E9EC7008B38EA /* libicucore.dylib in Frameworks */,
 				9D3C062D54114FB1AC5700F0 /* libPods.a in Frameworks */,
-				BB640DE0F8BA274F03ADDF84 /* libPods-ObjectiveDDP.a in Frameworks */,
+				BC2C3115142F54C55A92F9FD /* libPods-ObjectiveDDP.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -136,7 +136,7 @@
 				4079F9DC170EB31D00194B4A /* Foundation.framework in Frameworks */,
 				4079F9DE170EB31D00194B4A /* CoreGraphics.framework in Frameworks */,
 				570DE62F4BD74C18AE51ED8C /* libPods.a in Frameworks */,
-				ED43BD310BEA4CD183E8105E /* libPods-Specs.a in Frameworks */,
+				FD7BC8FE2078D7295BEFE6FA /* libPods-Specs.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -175,8 +175,8 @@
 				4000D639170E880400296229 /* Foundation.framework */,
 				4079F9DA170EB31D00194B4A /* UIKit.framework */,
 				2C1F0C9084EA4B2DBD349673 /* libPods.a */,
-				328562DF57374E8FB55B78B0 /* libPods-Specs.a */,
-				B7C2BCE4B341D5B1B389A0E7 /* libPods-ObjectiveDDP.a */,
+				39ACA448F5A7B3CDD0FC5858 /* libPods-ObjectiveDDP.a */,
+				320AA851EDF28E77008B96B8 /* libPods-Specs.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -289,6 +289,7 @@
 				4079F9D6170EB31D00194B4A /* Frameworks */,
 				4079F9D7170EB31D00194B4A /* Resources */,
 				063296B82B464E808F5E3E74 /* Copy Pods Resources */,
+				B4B4E8EB045D267FC8470639 /* Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -382,6 +383,21 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-ObjectiveDDP/Pods-ObjectiveDDP-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		B4B4E8EB045D267FC8470639 /* Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Specs/Pods-Specs-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		CE13F78A2A3541BFB51C1FA9 /* Check Pods Manifest.lock */ = {

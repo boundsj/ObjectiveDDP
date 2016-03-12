@@ -1,5 +1,6 @@
 #import "MeteorClient+Private.h"
 #import "ObjectiveDDP.h"
+#import <M13OrderedDictionary/M13OrderedDictionary.h>
 
 using namespace Cedar::Matchers;
 using namespace Cedar::Doubles;
