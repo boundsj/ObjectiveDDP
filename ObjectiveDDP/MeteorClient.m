@@ -207,6 +207,12 @@ double const MeteorClientMaxRetryIncrease = 6;
     [self signupWithUserParameters:[self _buildUserParametersSignup:username email:email password:password fullname:fullname] responseCallback:responseCallback];
 }
 
+- (void)signupWithUsernameAndEmail:(NSString *)username email:(NSString *)email password:(NSString *)password userParameters:(NSDictionary *)userParameters responseCallback:(MeteorClientMethodCallback)responseCallback{
+    NSMutableDictionary *parameters = [[self _buildUserParametersSignup:username email:email password:password] mutableCopy];
+    [parameters addEntriesFromDictionary:userParameters];
+    [self signupWithUserParameters:parameters responseCallback:responseCallback];
+}
+
 - (void)signupWithUsername:(NSString *)username password:(NSString *)password fullname:(NSString *)fullname responseCallback:(MeteorClientMethodCallback)responseCallback {
     [self signupWithUserParameters:[self _buildUserParametersSignup:username email:@"" password:password fullname:fullname] responseCallback:responseCallback];
 }
@@ -479,6 +485,13 @@ double const MeteorClientMaxRetryIncrease = 6;
                              @"last_name": lastName,
                              @"signupToken": @""
                              } };
+}
+
+- (NSDictionary *)_buildUserParametersSignup:(NSString *)username email:(NSString *)email password:(NSString *)password
+{
+    return @{ @"username": username,@"email": email,
+              @"password": @{ @"digest": [self sha256:password], @"algorithm": @"sha-256" }
+            };
 }
 
 - (NSDictionary *)_buildUserParametersWithUsername:(NSString *)username password:(NSString *)password
