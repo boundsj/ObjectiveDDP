@@ -1,4 +1,5 @@
 #import "MeteorClient+Private.h"
+#import <M13OrderedDictionary/M13OrderedDictionary.h>
 
 @implementation MeteorClient (Parsing)
 

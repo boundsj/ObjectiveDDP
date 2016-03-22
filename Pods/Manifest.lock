@@ -6,15 +6,11 @@ PODS:
 DEPENDENCIES:
   - Cedar
   - M13OrderedDictionary
-  - SocketRocket (from `git@github.com:square/SocketRocket.git`)
-
-EXTERNAL SOURCES:
-  SocketRocket:
-    :git: git@github.com:square/SocketRocket.git
+  - SocketRocket (= 0.3.1-beta2)
 
 SPEC CHECKSUMS:
-  Cedar: 65b780d0e75ccb626a43890347315de1b822ec8e
-  M13OrderedDictionary: fe00e7cd13f00719e208a85ce1f33a79db19fd71
-  SocketRocket: 9cbe08469513356cddc0afcab1ff160bd190296a
+  Cedar: 7e158d3b9d51d47fb44d9add628195f7cf8e269c
+  M13OrderedDictionary: 0c2c025179f9733a33e24e88be11ff47a0ff9c53
+  SocketRocket: 7284ab9370a06c99aba92b2fe3a32aedd0f9a6fa
 
-COCOAPODS: 0.34.2
+COCOAPODS: 0.39.0
