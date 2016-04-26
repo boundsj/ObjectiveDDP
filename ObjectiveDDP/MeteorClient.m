@@ -197,7 +197,7 @@ double const MeteorClientMaxRetryIncrease = 6;
             [self.authDelegate authenticationWasSuccessful];
         }
         if (responseCallback) {
-            responseCallback(response, nil);
+            responseCallback(response, error);
         }
     }];
     
