@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
   s.name           = 'ObjectiveDDP'
   s.ios.deployment_target = '7.1'
-  s.osx.deployment_target = '10.7'
+  s.osx.deployment_target = '10.8'
   s.version        = '0.2.0'
   s.license        = 'MIT'
   s.summary        = 'Facilitates communication between iOS clients and meteor.js servers'
